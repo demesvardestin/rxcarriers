@@ -9,7 +9,7 @@ class AddDetailsToModels < ActiveRecord::Migration
     add_column :requests, :patients, :hash
     add_column :requests, :batch_id, :integer
     add_column :requests, :count, :integer
-    add_column :requests, :driver, :hash
+    add_column :requests, :driver, :array
     add_column :requests, :status, :string
     add_column :requests, :body, :string
     add_column :patients, :name, :string
