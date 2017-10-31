@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  get 'welcome/sms/reply', to: "batches#driver_response"
+  post 'welcome/sms/reply', to: "batches#driver_response"
   get 'cancellation_message/create'
 
   get 'request_message/create'
