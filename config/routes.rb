@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   
-  post 'welcome/sms/reply', to: "batches#driver_response"
   get 'cancellation_message/create'
 
   get 'request_message/create'
@@ -18,6 +17,10 @@ Rails.application.routes.draw do
   get 'delivery_batch/create'
 
   get 'delivery_batch/destroy'
+  # resources :batches do
+  #   post 'welcome/sms/reply', to: 'batches#driver_response'
+  # end
+  post 'welcome/sms/reply', to: 'batches#driver_response'
   resources :drivers
   resources :pharmacies
   resources :cancellation_messages
