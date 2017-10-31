@@ -1,4 +1,23 @@
 Rails.application.routes.draw do
+  
+  get 'welcome/sms/reply', to: "batches#driver_response"
+  get 'cancellation_message/create'
+
+  get 'request_message/create'
+
+  get 'patients/create'
+
+  get 'request/create'
+
+  get 'request/update'
+
+  get 'request/destroy'
+
+  get 'delivery_batch/new'
+
+  get 'delivery_batch/create'
+
+  get 'delivery_batch/destroy'
   resources :drivers
   resources :pharmacies
   resources :cancellation_messages
