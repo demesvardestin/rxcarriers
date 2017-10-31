@@ -13,7 +13,7 @@ class Batch < ActiveRecord::Base
             # if the driver accepted the request, we notify the pharmacy
             # Pharmacy.notify_pharmacy(pharmacy, driver) --> may use this later on
             # we then charge the pharmacy. timing of this may vary
-            Charge.create!(pharmacy_id: pharmacy.id, batch_id: _batch_id)
+            # Charge.create!(pharmacy_id: pharmacy.id, batch_id: _batch_id)
             # find a way to notify all drivers besides this one, that the request is no longer valid
             Driver.notify_drivers_request_invalidated(driver, pharmacy, _batch_id)
             # initiate a final update on the initial request to record the driver's info

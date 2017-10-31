@@ -43,7 +43,7 @@ class BatchesController < ApplicationController
     number = params['From']
     request_response =  params["Body"].downcase
     # fetch the original message sent to drivers. driver number is used since we delete every message we sent to drivers to avoid clogging
-    initial_request_message = RequestMessage.find_by(driver_number: number, request_type: 'New Request').last.message_body
+    initial_request_message = RequestMessage.select{|req| req.driver_number == "3473362973"}.last.message_body
     # pharmacy is looked up
     pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
     # figure out the details of the initial request
@@ -51,7 +51,7 @@ class BatchesController < ApplicationController
     # decide what to do depending on the driver's response
     if request_response == 'yes'
       # if the response is 'yes', update the initial request
-      initial_request.update!(status: accepted, count: count + 1)
+      initial_request.update!(status: 'accepted', count: count + 1)
       # send directions to driver, notify other drivers
       respond_to_drivers(number, pharmacy, request_responses, initial_request_message, initial_request, initial_request.batch_id)
     elsif request_response == 'cancel'
