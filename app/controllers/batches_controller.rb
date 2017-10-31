@@ -42,9 +42,11 @@ class BatchesController < ApplicationController
     directions = "Thank you for accepting this request. Your pickup is now ready at #{pharmacy.name}.\n
                         For verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
     # retrieve message details
-    params_hash = CGI::parse(URI.parse(url).query)
-    number = params_hash['From']
-    request_response =  params_hash["Body"].downcase
+    # params_hash = CGI::parse(URI.parse(url).query)
+    # number = params_hash['From']
+    # request_response =  params_hash["Body"].downcase
+    number = params['From']
+    request_response = params['Body'].downcase
     # fetch the original message sent to drivers. driver number is used since we delete every message we sent to drivers to avoid clogging
     initial_request_message = RequestMessage.select{|req| req.driver_number == "3473362973"}.last.message_body
     # pharmacy is looked up
@@ -56,14 +58,7 @@ class BatchesController < ApplicationController
       # if the response is 'yes', update the initial request
       initial_request.update!(status: 'accepted', count: count + 1)
       # send directions to driver, notify other drivers
-      while initial_request.count == 1
-        Driver.twilio_client.api.account.messages.create(
-                    from: '+13474640621',
-                    to: number,
-                    body: directions
-                )
-      end
-      # respond_to_drivers(number, pharmacy, request_responses, initial_request_message, initial_request, initial_request.batch_id)
+      respond_to_drivers(number, pharmacy, request_responses, initial_request_message, initial_request, initial_request.batch_id)
     elsif request_response == 'cancel'
       # this response means a driver previously accepted a request, and is now cancelling
       # so we first fetch the driver
