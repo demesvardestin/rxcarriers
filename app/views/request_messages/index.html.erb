@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Request Messages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @request_messages.each do |request_message| %>
+      <tr>
+        <td><%= link_to 'Show', request_message %></td>
+        <td><%= link_to 'Edit', edit_request_message_path(request_message) %></td>
+        <td><%= link_to 'Destroy', request_message, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Request message', new_request_message_path %>

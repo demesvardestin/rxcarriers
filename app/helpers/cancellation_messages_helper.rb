@@ -1,0 +1,2 @@
+module CancellationMessagesHelper
+end
