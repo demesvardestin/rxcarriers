@@ -39,36 +39,36 @@ class BatchesController < ApplicationController
   end
   
   def driver_response
-    directions = "Thank you for accepting this request. Your pickup is now ready at #{pharmacy.name}.\n
-                        For verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
     # retrieve message details
     # params_hash = CGI::parse(URI.parse(url).query)
     # number = params_hash['From']
     # request_response =  params_hash["Body"].downcase
-    number = params['From']
-    request_response = params['Body'].downcase
-    # fetch the original message sent to drivers. driver number is used since we delete every message we sent to drivers to avoid clogging
-    initial_request_message = RequestMessage.select{|req| req.driver_number == "3473362973"}.last.message_body
-    # pharmacy is looked up
-    pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
-    # figure out the details of the initial request
-    initial_request = Request.find_by(body: initial_request_message)
-    # decide what to do depending on the driver's response
-    if request_response == 'yes'
-      # if the response is 'yes', update the initial request
-      initial_request.update!(status: 'accepted', count: count + 1)
-      # send directions to driver, notify other drivers
-      respond_to_drivers(number, pharmacy, request_responses, initial_request_message, initial_request, initial_request.batch_id)
-    elsif request_response == 'cancel'
-      # this response means a driver previously accepted a request, and is now cancelling
-      # so we first fetch the driver
-      driver = Driver.find_by(number: number)
-      # then the initial request
-      initial_request = Request.find_by(driver: driver, status: 'accepted', body: initial_request_message)
-      # update request to show pending status, and reset count to 0
-      initial_request.update!(status: 'pending', count: 0)
-      # resend the request to all but the cancelling driver
-      Request.resend_request(initial_request.batch_id, initial_request.pharmacy, initial_request, driver)
+    number = params['From'] if params['From']
+    request_response = params['Body'].downcase if params['Body']
+    if number && request_response
+      # fetch the original message sent to drivers. driver number is used since we delete every message we sent to drivers to avoid clogging
+      initial_request_message = RequestMessage.select{|req| req.driver_number == "3473362973"}.last.message_body
+      # pharmacy is looked up
+      pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
+      # figure out the details of the initial request
+      initial_request = Request.find_by(body: initial_request_message)
+      # decide what to do depending on the driver's response
+      if request_response == 'yes'
+        # if the response is 'yes', update the initial request
+        initial_request.update!(status: 'accepted', count: count + 1)
+        # send directions to driver, notify other drivers
+        respond_to_drivers(number, pharmacy, request_responses, initial_request_message, initial_request, initial_request.batch_id)
+      elsif request_response == 'cancel'
+        # this response means a driver previously accepted a request, and is now cancelling
+        # so we first fetch the driver
+        driver = Driver.find_by(number: number)
+        # then the initial request
+        initial_request = Request.find_by(driver: driver, status: 'accepted', body: initial_request_message)
+        # update request to show pending status, and reset count to 0
+        initial_request.update!(status: 'pending', count: 0)
+        # resend the request to all but the cancelling driver
+        Request.resend_request(initial_request.batch_id, initial_request.pharmacy, initial_request, driver)
+      end
     end
   end
 
