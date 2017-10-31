@@ -56,21 +56,10 @@ class BatchesController < ApplicationController
       # figure out the details of the initial request
       initial_request = Request.find_by(body: initial_request_message)
       # decide what to do depending on the driver's response
-      directions = "Thank you for accepting this request. Your pickup is now ready at #{pharmacy.name}.\nFor verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
       if request_response == 'yes'
         # if the response is 'yes', update the initial request
         initial_request.update!(status: 'accepted', count: count + 1)
         # send directions to driver, notify other drivers
-        driver = Driver.find_by(phone_number: number)
-        Driver.notify_drivers_request_invalidated(driver, pharmacy, _batch_id)
-        # initiate a final update on the initial request to record the driver's info
-        initial_request.update!(delivery_driver: driver)
-        twiml = Twilio::TwiML::MessagingResponse.new do |r|
-          r.message(
-              body: directions,
-              to: number
-            )
-        end
         respond_to_drivers(number, pharmacy, request_responses, initial_request_message, initial_request, initial_request.batch_id)
       elsif request_response == 'can'
         # this response means a driver previously accepted a request, and is now cancelling
