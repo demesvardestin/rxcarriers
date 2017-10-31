@@ -40,11 +40,14 @@ class BatchesController < ApplicationController
   
   def driver_response
     # retrieve message details
+    url = request.original_url
+    if url.include?('From') && url.include?('Body')
+      num_start = url.index('From') + 5
+      body_start = url.index('Body') + 5
+      number = url[num_start..num_start + 11]
+      request_response = url[body_start + 4]
+    end
     # params_hash = CGI::parse(URI.parse(url).query)
-    # number = params_hash['From']
-    # request_response =  params_hash["Body"].downcase
-    number = params['From'] if params['From']
-    request_response = params['Body'].downcase if params['Body']
     if number && request_response
       # fetch the original message sent to drivers. driver number is used since we delete every message we sent to drivers to avoid clogging
       initial_request_message = RequestMessage.select{|req| req.driver_number == "3473362973"}.last.message_body
@@ -58,7 +61,7 @@ class BatchesController < ApplicationController
         initial_request.update!(status: 'accepted', count: count + 1)
         # send directions to driver, notify other drivers
         respond_to_drivers(number, pharmacy, request_responses, initial_request_message, initial_request, initial_request.batch_id)
-      elsif request_response == 'cancel'
+      elsif request_response == 'can'
         # this response means a driver previously accepted a request, and is now cancelling
         # so we first fetch the driver
         driver = Driver.find_by(number: number)
