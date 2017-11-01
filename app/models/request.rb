@@ -35,7 +35,7 @@ class Request < ActiveRecord::Base
         # look for the driver's response
         Driver.fetch_driver_response(request_location, batch.id, pharmacy, message, initial_driver=nil, req_type=true)
         # add this message to the request
-        Request.find_by(id: original_request.id).update!(body: message)
+        Request.find_by(id: original_request.id).update!(body: 'Sent from your Twilio trial account - ' + message)
     end
     
     def self.resend_request(batch, pharmacy, req, driver)
@@ -48,7 +48,7 @@ class Request < ActiveRecord::Base
         # look for the driver's response
         Driver.fetch_driver_response(req, batch.id, pharmacy, text_message, driver=driver, new_req=false)
         # add this message to the request
-        req.update!(body: message)
+        req.update!(body:'Sent from your Twilio trial account - ' + message)
     end
     
 end
