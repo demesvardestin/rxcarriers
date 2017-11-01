@@ -54,12 +54,13 @@ class BatchesController < ApplicationController
       # initial_request = Request.find_by(body: initial_request_message.message_body)
       # if request_response == 'yes'
       #   initial_request.update!(status: 'accepted', count: count + 1)
+      twilio_client
         directions = "Thank you for accepting this request. Your pickup is now ready at MedCab.\n
                         For verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
       #   if initial_request.count == 1
       #       Driver.notify_drivers_request_invalidated(driver, pharmacy, batch_id)
       #       initial_request.update!(delivery_driver: driver)
-            Driver.twilio_client.api.account.messages.create(
+            @client.api.account.messages.create(
                     from: '+13474640621',
                     to: number,
                     body: directions
@@ -78,6 +79,12 @@ class BatchesController < ApplicationController
   end
   
   private
+  
+    def twilio_client
+      account_sid = 'AC7b0eae323dc72522bb616648567a7de6'
+      auth_token = '2a27c125b10a4429e8a24ccd08584670'
+      @client = Twilio::REST::Client.new(account_sid, auth_token)
+    end
     
     def batch_params
       params.fetch(:batch, {}).require(:notes)
