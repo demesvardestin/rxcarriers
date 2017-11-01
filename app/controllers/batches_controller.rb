@@ -46,7 +46,7 @@ class BatchesController < ApplicationController
       num_start = url.index('From') + 5
       body_start = url.index('Body') + 5
       number = url[num_start..num_start + 11]
-      request_response = url[body_start..body_start + 4]
+      request_response = url[body_start..body_start + 4].downcase
     end
     if number && request_response
       initial_request_message = RequestMessage.find_by(driver_number: number)
