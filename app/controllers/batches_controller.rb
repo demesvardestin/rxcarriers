@@ -49,9 +49,9 @@ class BatchesController < ApplicationController
     initialize_twilio
     if request_response == 'Yes'
       new_request = Request.find_by(body: initial_request_message.message_body)
-      # counter = new_request.count
-      # counter += 1
-      Request.find(new_request.id).update!(status: 'accepted', count: count + 1)
+      counter = new_request.count
+      counter += 1
+      Request.find(new_request.id).update!(status: 'accepted', count: counter)
       new_request = Request.find(new_request.id)
       if new_request.count == 1
         @client.api.account.messages.create(
