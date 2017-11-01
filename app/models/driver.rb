@@ -21,17 +21,20 @@ class Driver < ActiveRecord::Base
               body: text_message
             )
             # upon sending message, retrieve message details
-            self.twilio_client.api.account.messages.list(
+            to_driver = self.twilio_client.api.account.messages.list(
               to: driver.number,
               from: '+13474640621'
             #   body: text_message
-            ).each do |message|
-                # store message in database
-                RequestMessage.create!(driver_number: driver.number, from_number: '+13474640621', 
-                                message_sid: message.sid, date_created: message.date_created, message_body: message.body, date_sent: message.date_sent,
-                                pharmacy_id: pharmacy.id, batch_id: package_id, request_type: req_type[new_req])
-                # delete message to avoid overload
-                message.delete
+            )
+            to_driver.each do |message|
+                if message == to_driver.last
+                    # store message in database
+                    RequestMessage.create!(driver_number: driver.number, from_number: '+13474640621', 
+                                    message_sid: message.sid, date_created: message.date_created, message_body: message.body, date_sent: message.date_sent,
+                                    pharmacy_id: pharmacy.id, batch_id: package_id, request_type: req_type[new_req])
+                    # delete message to avoid overload
+                    message.delete
+                end
             end
         end
     end
