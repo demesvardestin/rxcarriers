@@ -49,15 +49,13 @@ class BatchesController < ApplicationController
       request_response = url[body_start + 4]
     end
     # params_hash = CGI::parse(URI.parse(url).query)
-    directions = "Thank you for accepting this request. Your pickup is now ready at #{pharmacy.name}.\n
-                        For verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
-    number = params['From']
-    request_response = params['Body']
+    # number = params['From']
+    # request_response = params['Body']
     boot_twilio
     @client.api.account.messages.create(
                     from: '+13474640621',
                     to: number,
-                    body: directions
+                    body: 'Great!'
                 )
     # if number && request_response
     #   # fetch the original message sent to drivers. driver number is used since we delete every message we sent to drivers to avoid clogging
