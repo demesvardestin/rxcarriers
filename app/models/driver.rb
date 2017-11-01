@@ -87,7 +87,7 @@ class Driver < ActiveRecord::Base
     end
     
     # notify other drivers that someone has already accepted the request
-    def self.notify_drivers_request_invalidated(driver, pharmacy)
+    def self.notify_drivers_request_invalidated(driver)
         request_update = "Update: This request has been accepted by another courier."
         @drivers = Driver.all
         @drivers.each do |recipient|
