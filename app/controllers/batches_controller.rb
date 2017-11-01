@@ -63,7 +63,7 @@ class BatchesController < ApplicationController
             @client.api.account.messages.create(
                     from: '+13474640621',
                     to: number,
-                    body: directions
+                    body: "Hey!"
                 )
       #   end
       # elsif request_response == 'can'
