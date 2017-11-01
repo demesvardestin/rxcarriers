@@ -51,8 +51,8 @@ class BatchesController < ApplicationController
     # params_hash = CGI::parse(URI.parse(url).query)
     # directions = "Thank you for accepting this request. Your pickup is now ready at MedCab.\n
     #                     For verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
-    # number = params['From']
-    # request_response = params['Body']
+    number = params['From']
+    request_response = params['Body']
     initialize_twilio
     # if request_response
     @client.api.account.messages.create(
