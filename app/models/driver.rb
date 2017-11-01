@@ -87,24 +87,22 @@ class Driver < ActiveRecord::Base
     end
     
     # notify other drivers that someone has already accepted the request
-    def self.notify_drivers_request_invalidated(driver, pharmacy, _batch_id)
+    def self.notify_drivers_request_invalidated(driver, pharmacy)
         request_update = "Update: This request has been accepted by another courier."
-        # find the initial request
-        initial_request = Request.find_by(batch_id: _batch_id)
         @drivers = Driver.all
         @drivers.each do |recipient|
             # message each driver except the one who accepted the request
             unless recipient == driver
                 Driver.twilio_client.api.account.messages.create(
                     from: '+13474640621',
-                    to: driver.number,
+                    to: recipient.number,
                     body: request_update
                 )
                 # retrieve message immediately after
-                self.twilio_client.api.messages.list(
-                    to: driver.number,
-                    from: '+13474640621',
-                    body: request_update
+                self.twilio_client.api.acount.messages.list(
+                    to: recipient.number,
+                    from: '+13474640621'
+                    # body: request_update
                 ).last do |message|
                     # delete message to avoid overload
                     message.delete

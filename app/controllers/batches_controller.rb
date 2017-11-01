@@ -51,20 +51,19 @@ class BatchesController < ApplicationController
     if request_response == 'Yes'
       counter = initial_request.count
       counter += 1
-      Request.find(initial_request.id).update!(status: 'accepted', count: counter)
-      if initial_request.count == 1
+      new_request = Request.find(initial_request.id).update!(status: 'accepted', count: counter)
+      if new_request.count == 1
         @client.api.account.messages.create(
                 from: '+13474640621',
                 to: number,
                 body: directions
             )
-        driver = Driver.find_by(phone_number: number)
-        Driver.notify_drivers_request_invalidated(driver, pharmacy, batch_id)
-        initial_request.update!(delivery_driver: driver)
+        Driver.notify_drivers_request_invalidated(@driver, pharmacy)
+        Request.find(initial_request.id).update!(delivery_driver: driver)
       end
     elsif request_response == 'can'
       initial_request = Request.find_by(driver: @driver.phone_number, status: 'accepted', body: initial_request_message.message_body)
-      Request.find(initial_request).update!(status: 'pending', count: 0)
+      Request.find(initial_request.id).update!(status: 'pending', count: 0)
       Request.resend_request(initial_request.batch_id, initial_request.pharmacy, initial_request, @driver)
     end
   end
