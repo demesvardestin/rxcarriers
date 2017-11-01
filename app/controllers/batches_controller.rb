@@ -47,7 +47,7 @@ class BatchesController < ApplicationController
     pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
     initial_request = Request.find_by(body: initial_request_message.message_body)
     initialize_twilio
-    if request_response == 'yes'
+    if request_response == 'Yes'
       initial_request.update!(status: 'accepted', count: count + 1)
       if initial_request.count == 1
         @client.api.account.messages.create(
