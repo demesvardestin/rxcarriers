@@ -41,16 +41,16 @@ class BatchesController < ApplicationController
   
   def driver_response
     # retrieve message details
-    url = request.original_url
-    if url.include?('From') && url.include?('Body')
-      num_start = url.index('From') + 5
-      body_start = url.index('Body') + 5
-      number = url[num_start..num_start + 11]
-      request_response = url[body_start + 4]
-    end
+    # url = request.original_url
+    # if url.include?('From') && url.include?('Body')
+    #   num_start = url.index('From') + 5
+    #   body_start = url.index('Body') + 5
+    #   number = url[num_start..num_start + 11]
+    #   request_response = url[body_start + 4]
+    # end
     # params_hash = CGI::parse(URI.parse(url).query)
-    # number = params['From']
-    # request_response = params['Body']
+    number = params['From']
+    request_response = params['Body']
     boot_twilio
     @client.api.account.messages.create(
                     from: '+13474640621',
