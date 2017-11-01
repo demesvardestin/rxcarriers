@@ -60,7 +60,7 @@ class BatchesController < ApplicationController
                 body: directions
             )
         Driver.notify_drivers_request_invalidated(@driver, pharmacy)
-        Request.find(new_request.id).update!(delivery_driver: @driver.number)
+        Request.find(new_request.id).update!(driver: @driver.number)
       end
     elsif request_response == 'can'
       initial_request = Request.find_by(driver: @driver.number, status: 'accepted', body: initial_request_message.message_body)
