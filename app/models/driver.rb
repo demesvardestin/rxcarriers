@@ -56,7 +56,7 @@ class Driver < ActiveRecord::Base
                 to: driver.number,
                 body: request_cancellation
             )
-        self.twilio_client.api.messages.list(
+        self.twilio_client.api.account.messages.list(
                 to: driver.number,
                 from: '+13474640621',
                 body: request_cancellation
