@@ -3,7 +3,7 @@ class Batch < ActiveRecord::Base
     belongs_to :pharmacy
     has_many :patients, :as => :patable
     
-    def self.respond_to_drivers(number, pharmacy, request_response, initial_request_message, initial_request, _batch_id)
+    def self.respond_to_drivers(number, pharmacy, initial_request, _batch_id)
         directions = "Thank you for accepting this request. Your pickup is now ready at #{pharmacy.name}.\n
                         For verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
         # ensuring that we select the first one to respond to

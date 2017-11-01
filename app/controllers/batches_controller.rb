@@ -46,30 +46,19 @@ class BatchesController < ApplicationController
       num_start = url.index('From') + 5
       body_start = url.index('Body') + 5
       number = url[num_start..num_start + 11]
-      request_response = url[body_start + 4]
+      request_response = url[body_start..body_start + 4]
     end
     if number && request_response
-      # fetch the original message sent to drivers. driver number is used since we delete every message we sent to drivers to avoid clogging
-      initial_request_message = RequestMessage.find_by(driver_number: number).message_body
-      # pharmacy is looked up
+      initial_request_message = RequestMessage.find_by(driver_number: number)
       pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
-      # figure out the details of the initial request
-      initial_request = Request.find_by(body: initial_request_message)
-      # decide what to do depending on the driver's response
+      initial_request = Request.find_by(body: initial_request_message.message_body)
       if request_response == 'yes'
-        # if the response is 'yes', update the initial request
-        Request.find_by(id: initial_request.id).update!(status: 'accepted', count: count + 1)
-        # send directions to driver, notify other drivers
-        Batch.respond_to_drivers(number, pharmacy, request_responses, initial_request_message, initial_request, initial_request.batch_id)
+        initial_request.update!(status: 'accepted', count: count + 1)
+        Batch.respond_to_drivers(number, pharmacy, initial_request, initial_request.batch_id)
       elsif request_response == 'can'
-        # this response means a driver previously accepted a request, and is now cancelling
-        # so we first fetch the driver
         driver = Driver.find_by(number: number)
-        # then the initial request
         initial_request = Request.find_by(driver: driver, status: 'accepted', body: initial_request_message)
-        # update request to show pending status, and reset count to 0
         initial_request.update!(status: 'pending', count: 0)
-        # resend the request to all but the cancelling driver
         Request.resend_request(initial_request.batch_id, initial_request.pharmacy, initial_request, driver)
       end
     end
