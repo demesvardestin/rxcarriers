@@ -50,7 +50,7 @@ class BatchesController < ApplicationController
     if request_response == 'Yes'
       # Request.find(initial_request.id).update!(status: 'accepted', count: count + 1)
       # if initial_request.count == 1
-        @client.api.account.messages.create(
+        @client.account.messages.create(
                 from: '+13474640621',
                 to: number,
                 body: directions
