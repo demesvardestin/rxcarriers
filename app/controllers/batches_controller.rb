@@ -65,11 +65,11 @@ class BatchesController < ApplicationController
       # pharmacy is looked up
       pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
       # figure out the details of the initial request
-      initial_request = Request.find_by(body: initial_request_message)
+      initial_request = Request.find_by(body: initial_request_message.message_body)
       # decide what to do depending on the driver's response
       if request_response == 'yes'
         # if the response is 'yes', update the initial request
-        Request.find_by(id: initial_request.id).update!(status: 'accepted', count: count + 1)
+        initial_request.update!(status: 'accepted', count: count + 1)
         # send directions to driver, notify other drivers
         Batch.respond_to_drivers(number, pharmacy, initial_request, initial_request.batch_id)
       elsif request_response == 'can'
