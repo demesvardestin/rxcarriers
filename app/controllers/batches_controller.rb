@@ -48,17 +48,29 @@ class BatchesController < ApplicationController
       number = url[num_start..num_start + 11]
       request_response = url[body_start..body_start + 4].downcase
     end
-    initial_request_message = RequestMessage.find_by(driver_number: number)
-    pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
-    initial_request = Request.find_by(body: initial_request_message.message_body)
-    if request_response == 'yes'
-      initial_request.update!(status: 'accepted', count: count + 1)
-      Batch.respond_to_drivers(number, pharmacy, initial_request, initial_request.batch_id)
-    elsif request_response == 'can'
-      driver = Driver.find_by(number: number)
-      initial_request = Request.find_by(driver: driver, status: 'accepted', body: initial_request_message)
-      initial_request.update!(status: 'pending', count: 0)
-      Request.resend_request(initial_request.batch_id, initial_request.pharmacy, initial_request, driver)
+    unless number.nil? || request_response.nil?
+      initial_request_message = RequestMessage.find_by(driver_number: number)
+      pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
+      initial_request = Request.find_by(body: initial_request_message.message_body)
+      if request_response == 'yes'
+        initial_request.update!(status: 'accepted', count: count + 1)
+        directions = "Thank you for accepting this request. Your pickup is now ready at #{pharmacy.name}.\n
+                        For verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
+        if initial_request.count == 1
+            Driver.notify_drivers_request_invalidated(driver, pharmacy, batch_id)
+            initial_request.update!(delivery_driver: driver)
+            Driver.twilio_client.api.account.messages.create(
+                    from: '+13474640621',
+                    to: number,
+                    body: directions
+                )
+        end
+      elsif request_response == 'can'
+        driver = Driver.find_by(number: number)
+        initial_request = Request.find_by(driver: driver, status: 'accepted', body: initial_request_message)
+        initial_request.update!(status: 'pending', count: 0)
+        Request.resend_request(initial_request.batch_id, initial_request.pharmacy, initial_request, driver)
+      end
     end
   end
 
