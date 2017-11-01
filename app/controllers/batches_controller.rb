@@ -60,7 +60,7 @@ class BatchesController < ApplicationController
       #   if initial_request.count == 1
       #       Driver.notify_drivers_request_invalidated(driver, pharmacy, batch_id)
       #       initial_request.update!(delivery_driver: driver)
-            @client.api.account.messages.create(
+            sms = @client.api.account.messages.create(
                     from: '+13474640621',
                     to: number,
                     body: "Hey!"
