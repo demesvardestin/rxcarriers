@@ -40,29 +40,29 @@ class BatchesController < ApplicationController
   end
   
   def driver_response
-    number = params['From']
+    from = params['From']
     request_response = params['Body']
-    @driver = Driver.find_by(number: number)
+    @driver = Driver.find_by(number: from)
     directions = "#{@driver.first_name}, thank you for accepting this request. Your pickup is now ready at MedCab.\nFor verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
-    initial_request_message = RequestMessage.find_by(driver_number: number)
+    initial_request_message = RequestMessage.find_by(driver_number: from)
     # pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
-    initial_request = Request.find_by(body: initial_request_message.message_body)
     initialize_twilio
     if request_response == 'Yes'
-      counter = initial_request.count
-      counter += 1
-      new_request = Request.find(initial_request.id).update!(status: 'accepted', count: counter)
+      new_request = Request.find_by(body: initial_request_message.message_body)
+      # counter = new_request.count
+      # counter += 1
+      new_request.update!(status: 'accepted', count: count + 1)
       if new_request.count == 1
         @client.api.account.messages.create(
                 from: '+13474640621',
-                to: number,
+                to: from,
                 body: directions
             )
         Driver.notify_drivers_request_invalidated(@driver, pharmacy)
-        Request.find(initial_request.id).update!(delivery_driver: driver)
+        Request.find(new_request.id).update!(delivery_driver: @driver)
       end
     elsif request_response == 'can'
-      initial_request = Request.find_by(driver: @driver.phone_number, status: 'accepted', body: initial_request_message.message_body)
+      initial_request = Request.find_by(driver: @driver.number, status: 'accepted', body: initial_request_message.message_body)
       Request.find(initial_request.id).update!(status: 'pending', count: 0)
       Request.resend_request(initial_request.batch_id, initial_request.pharmacy, initial_request, @driver)
     end
