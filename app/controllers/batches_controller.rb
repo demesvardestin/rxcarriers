@@ -48,7 +48,7 @@ class BatchesController < ApplicationController
       number = url[num_start..num_start + 11]
       request_response = url[body_start..body_start + 4].downcase
     end
-    unless number.nil? || request_response.nil?
+    # unless number.nil? || request_response.nil?
       initial_request_message = RequestMessage.find_by(driver_number: number)
       pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
       initial_request = Request.find_by(body: initial_request_message.message_body)
@@ -71,7 +71,7 @@ class BatchesController < ApplicationController
         initial_request.update!(status: 'pending', count: 0)
         Request.resend_request(initial_request.batch_id, initial_request.pharmacy, initial_request, driver)
       end
-    end
+    # end
   end
 
   def destroy
