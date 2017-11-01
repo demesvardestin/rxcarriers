@@ -16,7 +16,8 @@ class Request < ActiveRecord::Base
         patients.each_with_index do |patient, i|
             @distances << Geocoder::Calculations.distance_between("#{patient.address}", "#{pharmacy.street}, #{pharmacy.town}")
             unless @distances.nil?
-                if @distances[i] == @distances.sort.reverse[0]
+                @inverse = @distances.sort
+                if @distances[i] == @inverse.reverse[0]
                     @addresses << patient.address
                 end
             end
