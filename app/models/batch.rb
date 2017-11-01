@@ -28,3 +28,4 @@ class Batch < ActiveRecord::Base
     end
     
 end
+
