@@ -42,7 +42,7 @@ class BatchesController < ApplicationController
   def driver_response
     directions = "Thank you for accepting this request. Your pickup is now ready at MedCab.\nFor verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
     number = params['From']
-    request_response = params['Body']
+    request_response = params['Body'].downcase
     initial_request_message = RequestMessage.find_by(driver_number: number)
     pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
     initial_request = Request.find_by(body: initial_request_message.message_body)
