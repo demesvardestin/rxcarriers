@@ -58,7 +58,7 @@ class BatchesController < ApplicationController
     @client.api.account.messages.create(
                     from: '+13474640621',
                     to: number,
-                    body: directions
+                    body: 'Great!'
                 )
     # if number && request_response
     #   # fetch the original message sent to drivers. driver number is used since we delete every message we sent to drivers to avoid clogging
