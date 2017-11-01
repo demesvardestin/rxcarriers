@@ -48,8 +48,8 @@ class BatchesController < ApplicationController
     initial_request = Request.find_by(body: initial_request_message.message_body)
     initialize_twilio
     if request_response == 'Yes'
-      Request.find(initial_request.id).update!(status: 'accepted', count: count + 1)
-      if initial_request.count == 1
+      # Request.find(initial_request.id).update!(status: 'accepted', count: count + 1)
+      # if initial_request.count == 1
         @client.api.account.messages.create(
                 from: '+13474640621',
                 to: number,
@@ -58,7 +58,7 @@ class BatchesController < ApplicationController
         driver = Driver.find_by(phone_number: number)
         Driver.notify_drivers_request_invalidated(driver, pharmacy, batch_id)
         initial_request.update!(delivery_driver: driver)
-      end
+      # end
     elsif request_response == 'can'
       driver = Driver.find_by(number: number)
       initial_request = Request.find_by(driver: driver, status: 'accepted', body: initial_request_message)
