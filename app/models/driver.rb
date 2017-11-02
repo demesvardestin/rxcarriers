@@ -26,7 +26,9 @@ class Driver < ActiveRecord::Base
               from: '+13474640621'
             #   body: text_message
             )
-            while to_driver != nil && to_driver.count >= 1
+            i = 1
+            while i >= 1
+                break if to_driver.count == 0
                 to_driver.each do |message|
                     # store message in database
                     RequestMessage.create!(driver_number: driver.number, from_number: '+13474640621', 
@@ -35,6 +37,7 @@ class Driver < ActiveRecord::Base
                     # delete message to avoid overload
                     message.delete
                 end
+                i += 1
             end
         end
     end
