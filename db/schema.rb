@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171031032747) do
+ActiveRecord::Schema.define(version: 20171102020748) do
 
   create_table "batches", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20171031032747) do
     t.string   "date_created"
     t.string   "message_body"
     t.string   "type"
+    t.string   "request_type"
   end
 
   create_table "charges", force: :cascade do |t|
@@ -96,6 +97,7 @@ ActiveRecord::Schema.define(version: 20171031032747) do
     t.string   "type"
     t.string   "date_sent"
     t.string   "request_type"
+    t.string   "driver"
   end
 
 # Could not dump table "requests" because of following NoMethodError

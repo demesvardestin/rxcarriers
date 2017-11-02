@@ -34,29 +34,39 @@ class BatchesController < ApplicationController
     from = params['From']
     request_response = params['Body'].downcase
     @driver = Driver.find_by(number: from)
-    initial_request_message = RequestMessage.where(driver_number: from).last
-    pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
     directions = "Thank you for accepting, #{@driver.first_name}. Your pickup is now ready at #{pharmacy.name}.\nFor verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
     initialize_twilio
+    count = 0
+    count += 1
     if request_response == 'yes'
-      new_request = Request.find_by(body: initial_request_message.message_body)
-      counter = new_request.count
-      counter += 1
-      Request.find(new_request.id).update!(status: 'accepted', count: counter)
-      new_request = Request.find(new_request.id)
-      if new_request.count == 1
-        @client.api.account.messages.create(
-                from: '+13474640621',
-                to: from,
-                body: directions
-            )
-        Request.find(new_request.id).update!(driver: @driver.number)
-        Driver.notify_drivers_request_invalidated(@driver)
+      if count == 1
+        initial_request_message = RequestMessage.where(driver_number: from, driver: nil).last
+        pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
+        new_request = Request.where(body: initial_request_message.message_body, pharmacy_id: pharmacy.id, driver: nil, count: 0).last
+        counter = new_request.count
+        counter += 1
+        Request.find(new_request.id).update!(status: 'accepted', count: counter)
+        new_request = Request.find(new_request.id)
+        if new_request.count == 1
+          @client.api.account.messages.create(
+                  from: '+13474640621',
+                  to: from,
+                  body: directions
+              )
+          Request.find(new_request.id).update!(driver: @driver.number)
+          Driver.notify_drivers_request_invalidated(@driver)
+          RequestMessage.find(id: initial_request_message.id).update!(driver: @driver.number)
+        end
       end
     elsif request_response == 'cancel pickup'
-      initial_request = Request.where(driver: @driver.number, status: 'accepted', body: initial_request_message.message_body).last
-      Request.find(initial_request.id).update!(status: 'pending', count: 0, driver: nil)
-      Request.resend_request(initial_request.batch_id, pharmacy, initial_request, @driver)
+      initial_request_message = RequestMessage.where(driver_number: from, driver: @driver.number).last
+      unless initial_request_message.nil?
+        pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
+        initial_request = Request.where(driver: @driver.number, status: 'accepted', body: initial_request_message.message_body).last
+        Request.find(initial_request.id).update!(status: 'pending', count: 0, driver: nil)
+        Request.resend_request(initial_request.batch_id, pharmacy, initial_request, @driver)
+        RequestMessage.find(id: initial_request_message.id).update!(driver: @driver.number)
+      end
     end
   end
 
