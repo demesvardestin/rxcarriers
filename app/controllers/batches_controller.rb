@@ -34,7 +34,7 @@ class BatchesController < ApplicationController
     from = params['From']
     request_response = params['Body'].downcase
     @driver = Driver.find_by(number: from)
-    initial_request_message = RequestMessage.find_by(driver_number: from)
+    initial_request_message = RequestMessage.where(driver_number: from).last
     pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
     directions = "Thank you for accepting, #{@driver.first_name}. Your pickup is now ready at #{pharmacy.name}.\nFor verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
     initialize_twilio
