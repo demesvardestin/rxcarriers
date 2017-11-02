@@ -2,6 +2,7 @@ class BatchesController < ApplicationController
   skip_before_action :verify_authenticity_token
   
   def new
+    @batch = Batch.new
   end
   
   # create a new batch
@@ -14,26 +15,16 @@ class BatchesController < ApplicationController
     end
   end
   
-  # add a few patients (up to 10 per batch)
-  # def add_patient
-  #   @patient = Patient.new(patient_params)
-  #   respond_to do |format|
-  #     if @patient.save
-  #       format.js {render layout: false}
-  #     end
-  #   end
-  # end
-  
   # initiate a request for a local driver
   def request_driver
     @batch = Batch.find_by(id: params[:id])
     @patients = @batch.patients
     @pharmacy = current_pharmacy
     # create the request into database
-    @request = Request.create!(pharmacy_id: @pharmacy.id, pharmacy: @pharmacy, patients: @patients, batch_id: @batch.id, count: 0, status: 'pending')
+    @request = Request.create!(pharmacy_id: @pharmacy.id, batch_id: @batch.id, count: 0, status: 'pending')
     # initiate the request
-    @initial_request = Request.initiate_request(@batch.id, @patients, @pharmacy)
-    Request.send_request(@batch.id, @pharmacy, @initial_request, @request) # send requests to drivers
+    @request_details = Request.initiate_request(@batch.id, @patients, @pharmacy)
+    Request.send_request(@batch.id, @pharmacy, @request_details, @request) # send requests to drivers
     respond_to do |format|
       format.js {render layout: false}
     end
@@ -43,11 +34,11 @@ class BatchesController < ApplicationController
     from = params['From']
     request_response = params['Body']
     @driver = Driver.find_by(number: from)
-    directions = "#{@driver.first_name}, thank you for accepting this request. Your pickup is now ready at MedCab.\nFor verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
+    pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
+    directions = "Thank you for accepting, #{@driver.first_name}. Your pickup is now ready at #{pharmacy.name}.\nFor verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
     initial_request_message = RequestMessage.find_by(driver_number: from)
-    # pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
     initialize_twilio
-    if request_response == 'Yes'
+    if request_response == 'yes'
       new_request = Request.find_by(body: initial_request_message.message_body)
       counter = new_request.count
       counter += 1
@@ -62,10 +53,10 @@ class BatchesController < ApplicationController
         Request.find(new_request.id).update!(driver: @driver.number)
         Driver.notify_drivers_request_invalidated(@driver)
       end
-    elsif request_response == 'can'
+    elsif request_response == 'cancel'
       initial_request = Request.find_by(driver: @driver.number, status: 'accepted', body: initial_request_message.message_body)
-      Request.find(initial_request.id).update!(status: 'pending', count: 0)
-      Request.resend_request(initial_request.batch_id, initial_request.pharmacy, initial_request, @driver)
+      Request.find(initial_request.id).update!(status: 'pending', count: 0, driver: nil)
+      Request.resend_request(initial_request.batch_id, pharmacy, initial_request, @driver)
     end
   end
 

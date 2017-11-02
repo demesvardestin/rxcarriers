@@ -2,27 +2,12 @@ class Request < ActiveRecord::Base
     
     belongs_to :pharmacy
   
-    def self.initiate_request(batch, patients, pharmacy, item)
+    def self.initiate_request(batch, patients, pharmacy)
         req = {
           "id" => pharmacy.id,
-          "location" => item
+          "location" => pharmacy.full_address
         }
         return req
-    end
-    
-    def find_farthest_location(patients, pharmacy)
-        @addresses = []
-        @distances = []
-        patients.each_with_index do |patient, i|
-            @distances << Geocoder::Calculations.distance_between("#{patient.address}", "#{pharmacy.street}, #{pharmacy.town}")
-            unless @distances.nil?
-                @inverse = @distances.sort
-                if @distances[i] == @inverse.reverse[0]
-                    @addresses << patient.address
-                end
-            end
-        end
-        return @addresses.last
     end
     
     def pharmacy_distance(pharmacy)
@@ -42,13 +27,11 @@ class Request < ActiveRecord::Base
         # text cancelling driver with udpate
         Driver.request_cancelled(driver, pharmacy)
         # template message for resending request to drivers
-        text_message = "[Message Type: request resend]\n\nUpdated delivery request from #{pharmacy.name} (#{pharmacy_distance(pharmacy)} away)
-                        at #{pharmacy.street}, #{pharmacy.town} #{pharmacy.zipcode}. Est total delivery route mileage: #{total_delivery_route_mileage}. 
-                        Reply 'yes' to accepted this request."
+        text_message = "[Message Type: request resend]\n\nUpdated delivery request from #{pharmacy.name} at #{pharmacy.street}, #{pharmacy.town} #{pharmacy.zipcode}. Est total delivery route mileage: #{total_delivery_route_mileage}. Reply 'yes' to accepted this request."
         # look for the driver's response
-        Driver.fetch_driver_response(req, batch.id, pharmacy, text_message, driver=driver, new_req=false)
+        Driver.fetch_driver_response(req, batch.id, pharmacy, text_message, initial_driver=driver, new_req=false)
         # add this message to the request
-        req.update!(body:'Sent from your Twilio trial account - ' + message)
+        Request.find_by(id: req.id).update!(body:'Sent from your Twilio trial account - ' + message)
     end
     
 end
