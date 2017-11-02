@@ -34,7 +34,6 @@ class BatchesController < ApplicationController
     from = params['From']
     request_response = params['Body'].downcase
     @driver = Driver.find_by(number: from)
-    directions = "Thank you for accepting, #{@driver.first_name}. Your pickup is now ready at #{pharmacy.name}.\nFor verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
     initialize_twilio
     count = 0
     count += 1
@@ -42,6 +41,7 @@ class BatchesController < ApplicationController
       if count == 1
         initial_request_message = RequestMessage.where(driver_number: from, driver: nil).last
         pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
+        directions = "Thank you for accepting, #{@driver.first_name}. Your pickup is now ready at #{pharmacy.name}.\nFor verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
         new_request = Request.where(body: initial_request_message.message_body, pharmacy_id: pharmacy.id, driver: nil, count: 0).last
         counter = new_request.count
         counter += 1
