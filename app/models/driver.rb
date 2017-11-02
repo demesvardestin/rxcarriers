@@ -15,13 +15,13 @@ class Driver < ActiveRecord::Base
         @drivers = Driver.filter_by_location(req['location'], drivers)
         @drivers.each do |driver|
             # send a message request to drivers
-            self.initialize_twilio.account.messages.create(
+            self.initialize_twilio.api.account.messages.create(
               from: '+13474640621',
               to: driver.number,
               body: text_message
             )
             # upon sending message, retrieve message details
-            to_driver = self.initialize_twilio.account.messages.list(
+            to_driver = self.initialize_twilio.api.account.messages.list(
               to: driver.number,
               from: '+13474640621',
               body: text_message
