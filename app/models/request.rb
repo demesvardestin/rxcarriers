@@ -23,13 +23,13 @@ class Request < ActiveRecord::Base
         Request.find_by(id: request_object.id).update!(body: 'Sent from your Twilio trial account - ' + message)
     end
     
-    def self.resend_request(batch, pharmacy, req, driver)
+    def self.resend_request(batch_id, pharmacy, req, driver)
         # text cancelling driver with udpate
         Driver.request_cancelled(driver, pharmacy)
         # template message for resending request to drivers
-        text_message = "[Type: request resend - ID: #{batch.id}]\n\nUpdated delivery request from #{pharmacy.name} at #{pharmacy.street}, #{pharmacy.town} #{pharmacy.zipcode}. Est total delivery route mileage: #{total_delivery_route_mileage}. Reply 'yes' to accepted this request."
+        text_message = "[Type: request resend - ID: #{batch_id}]\n\nUpdated delivery request from #{pharmacy.name} at #{pharmacy.street}, #{pharmacy.town} #{pharmacy.zipcode}. Est total delivery route mileage: #{total_delivery_route_mileage}. Reply 'yes' to accepted this request."
         # look for the driver's response
-        Driver.fetch_driver_response(req, batch.id, pharmacy, text_message, initial_driver=driver, new_req=false)
+        Driver.fetch_driver_response(req, batch_id, pharmacy, text_message, initial_driver=driver, new_req=false)
         # add this message to the request
         Request.find_by(id: req.id).update!(body:'Sent from your Twilio trial account - ' + text_message)
     end

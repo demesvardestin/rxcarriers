@@ -54,7 +54,7 @@ class BatchesController < ApplicationController
         Driver.notify_drivers_request_invalidated(@driver)
       end
     elsif request_response == 'cancel pickup'
-      initial_request = Request.where(driver: @driver.number, status: 'accepted', body: initial_request_message.message_body)
+      initial_request = Request.where(driver: @driver.number, status: 'accepted', body: initial_request_message.message_body).last
       Request.find(initial_request.id).update!(status: 'pending', count: 0, driver: nil)
       Request.resend_request(initial_request.batch_id, pharmacy, initial_request, @driver)
     end
