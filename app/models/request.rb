@@ -14,13 +14,13 @@ class Request < ActiveRecord::Base
         # distance = Geocoder::Calculations.distance_between() 
     end
   
-    def self.send_request(batch, pharmacy, request_location, original_request)
+    def self.send_request(batch, pharmacy, request_details, request_object)
         # template message for each request
         message = "[Message Type: new request]\n\nNew delivery request from #{pharmacy.name} at #{pharmacy.street}, #{pharmacy.town} #{pharmacy.zipcode}. Est total delivery route mileage: 5mi. Reply 'yes' to accept this request."
         # look for the driver's response
-        Driver.fetch_driver_response(request_location, batch.id, pharmacy, message, initial_driver=nil, req_type=true)
+        Driver.fetch_driver_response(request_details, batch.id, pharmacy, message, initial_driver=nil, req_type=true)
         # add this message to the request
-        Request.find_by(id: original_request.id).update!(body: 'Sent from your Twilio trial account - ' + message)
+        Request.find_by(id: request_object.id).update!(body: 'Sent from your Twilio trial account - ' + message)
     end
     
     def self.resend_request(batch, pharmacy, req, driver)
