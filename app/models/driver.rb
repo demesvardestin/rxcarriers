@@ -23,8 +23,8 @@ class Driver < ActiveRecord::Base
             # upon sending message, retrieve message details
             to_driver = self.initialize_twilio.api.account.messages.list(
               to: driver.number,
-              from: '+13474640621',
-              body: text_message
+              from: '+13474640621'
+            #   body: text_message
             )
             while to_driver != nil && to_driver.count >= 1
                 to_driver.each do |message|
@@ -56,8 +56,8 @@ class Driver < ActiveRecord::Base
             )
         self.initialize_twilio.api.account.messages.list(
                 to: driver.number,
-                from: '+13474640621',
-                body: 'Sent from your Twilio trial account - ' + request_cancellation
+                from: '+13474640621'
+                # body: 'Sent from your Twilio trial account - ' + request_cancellation
             ).last do |message|
                 # store message in database
                 CancellationMessage.create!(driver_number: driver.number, from_number: '+13474640621', 
@@ -97,8 +97,8 @@ class Driver < ActiveRecord::Base
                 # retrieve message immediately after
                 self.initialize_twilio.api.acount.messages.list(
                     to: recipient.number,
-                    from: '+13474640621',
-                    body: 'Sent from your Twilio trial account - ' + request_update
+                    from: '+13474640621'
+                    # body: 'Sent from your Twilio trial account - ' + request_update
                 ).last do |message|
                     # delete message to avoid overload
                     message.delete
