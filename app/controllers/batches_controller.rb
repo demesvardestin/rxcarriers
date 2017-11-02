@@ -32,7 +32,7 @@ class BatchesController < ApplicationController
   
   def driver_response
     from = params['From']
-    request_response = params['Body']
+    request_response = params['Body'].downcase
     @driver = Driver.find_by(number: from)
     initial_request_message = RequestMessage.find_by(driver_number: from)
     pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
@@ -53,8 +53,8 @@ class BatchesController < ApplicationController
         Request.find(new_request.id).update!(driver: @driver.number)
         Driver.notify_drivers_request_invalidated(@driver)
       end
-    elsif request_response == 'cancel'
-      initial_request = Request.find_by(driver: @driver.number, status: 'accepted', body: initial_request_message.message_body)
+    elsif request_response == 'cancel pickup'
+      initial_request = Request.where(driver: @driver.number, status: 'accepted', body: initial_request_message.message_body)
       Request.find(initial_request.id).update!(status: 'pending', count: 0, driver: nil)
       Request.resend_request(initial_request.batch_id, pharmacy, initial_request, @driver)
     end

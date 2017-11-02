@@ -16,7 +16,7 @@ class Request < ActiveRecord::Base
   
     def self.send_request(batch, pharmacy, request_details, request_object)
         # template message for each request
-        message = "[Message Type: new request]\n\nNew delivery request from #{pharmacy.name} at #{pharmacy.street}, #{pharmacy.town} #{pharmacy.zipcode}. Est total delivery route mileage: 5mi. Reply 'yes' to accept this request."
+        message = "[Type: new request - ID: #{batch.id}]\n\nNew delivery request from #{pharmacy.name} at #{pharmacy.street}, #{pharmacy.town} #{pharmacy.zipcode}. Est total delivery route mileage: 5mi. Reply 'yes' to accept this request."
         # look for the driver's response
         Driver.fetch_driver_response(request_details, batch.id, pharmacy, message, initial_driver=nil, req_type=true)
         # add this message to the request
@@ -27,11 +27,11 @@ class Request < ActiveRecord::Base
         # text cancelling driver with udpate
         Driver.request_cancelled(driver, pharmacy)
         # template message for resending request to drivers
-        text_message = "[Message Type: request resend]\n\nUpdated delivery request from #{pharmacy.name} at #{pharmacy.street}, #{pharmacy.town} #{pharmacy.zipcode}. Est total delivery route mileage: #{total_delivery_route_mileage}. Reply 'yes' to accepted this request."
+        text_message = "[Type: request resend - ID: #{batch.id}]\n\nUpdated delivery request from #{pharmacy.name} at #{pharmacy.street}, #{pharmacy.town} #{pharmacy.zipcode}. Est total delivery route mileage: #{total_delivery_route_mileage}. Reply 'yes' to accepted this request."
         # look for the driver's response
         Driver.fetch_driver_response(req, batch.id, pharmacy, text_message, initial_driver=driver, new_req=false)
         # add this message to the request
-        Request.find_by(id: req.id).update!(body:'Sent from your Twilio trial account - ' + message)
+        Request.find_by(id: req.id).update!(body:'Sent from your Twilio trial account - ' + text_message)
     end
     
 end
