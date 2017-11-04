@@ -35,8 +35,8 @@ class BatchesController < ApplicationController
     request_response = params['Body'].downcase
     @driver = Driver.find_by(number: from)
     initialize_twilio
-    count = 0
-    count += 1
+    # count = 0
+    # count += 1
     if request_response == 'yes'
       if count == 1
         initial_request_message = RequestMessage.where(driver_number: from, driver: nil).last
