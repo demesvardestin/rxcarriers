@@ -39,23 +39,22 @@ class BatchesController < ApplicationController
     count += 1
     if request_response == 'yes'
       if count == 1
-        initial_request_message = RequestMessage.where(driver_number: from, driver: nil).last
-        pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
-        directions = "Thank you for accepting, #{@driver.first_name}. Your pickup is now ready at #{pharmacy.name}.\nFor verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
-        new_request = Request.where(body: initial_request_message.message_body, pharmacy_id: pharmacy.id, driver: nil, count: 0).last
-        counter = new_request.count
+        @initial_request_message = RequestMessage.where(driver_number: from, driver: nil).last
+        @pharmacy = Pharmacy.find(@initial_request_message.pharmacy_id)
+        directions = "Thank you for accepting, #{@driver.first_name}. Your pickup is now ready at #{@pharmacy.name}.\nFor verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
+        @new_request = Request.where(body: @initial_request_message.message_body, pharmacy_id: @pharmacy.id, driver: nil, count: 0).last
+        counter = @new_request.count
         counter += 1
-        Request.find(new_request.id).update!(status: 'accepted', count: counter)
-        new_request = Request.find(new_request.id)
-        if new_request.count == 1
+        @new_request.update!(status: 'accepted', count: counter)
+        if @new_request.count == 1
           @client.api.account.messages.create(
                   from: '+13474640621',
                   to: from,
                   body: directions
               )
-          Request.find(new_request.id).update!(driver: @driver.number)
+          @new_request.update!(driver: @driver.number)
           Driver.notify_drivers_request_invalidated(@driver)
-          RequestMessage.find(id: initial_request_message.id).update!(driver: @driver.number)
+          @initial_request_message.update!(driver: @driver.number)
         end
       end
     elsif request_response == 'cancel pickup'
