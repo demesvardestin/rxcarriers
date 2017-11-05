@@ -7,7 +7,7 @@ class Batch < ActiveRecord::Base
         Batch.initialize_twilio
         @initial_request_message = RequestMessage.where(driver_number: driver.number, driver: nil).last
         @pharmacy = Pharmacy.find(@initial_request_message.pharmacy_id)
-        directions = "Thank you for accepting, #{driver.first_name}. Your pickup is now ready at #{@pharmacy.name}.\nFor verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
+        directions = "Thank you for accepting, #{driver.first_name}. Your pickup is now ready at #{@pharmacy.name}.\nFor verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel pickup'."
         @new_request = Request.where(body: @initial_request_message.message_body, pharmacy_id: @pharmacy.id, driver: nil, count: 0).last
         counter = @new_request.count
         counter += 1
@@ -24,6 +24,7 @@ class Batch < ActiveRecord::Base
     end
     
     def self.cancel_driver(driver)
+        Batch.initialize_twilio
         @initial_request_message = RequestMessage.where(driver_number: driver.number, driver: driver.number).last
         unless @initial_request_message.nil?
             @pharmacy = Pharmacy.find(@initial_request_message.pharmacy_id)
