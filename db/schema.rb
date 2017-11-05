@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171102020748) do
+ActiveRecord::Schema.define(version: 20171105042315) do
 
   create_table "batches", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20171102020748) do
     t.string   "zipcode"
     t.float    "latitude"
     t.float    "longitude"
+    t.boolean  "requested"
   end
 
   create_table "patients", force: :cascade do |t|

@@ -33,7 +33,7 @@ class Driver < ActiveRecord::Base
                     # store message in database
                     RequestMessage.create!(driver_number: driver.number, from_number: '+13474640621', 
                                     message_sid: message.sid, date_created: message.date_created, message_body: message.body, date_sent: message.date_sent,
-                                    pharmacy_id: pharmacy.id, batch_id: package_id, request_type: req_type[new_req], driver: nil)
+                                    pharmacy_id: pharmacy.id, batch_id: req.batch_id, request_type: req_type[new_req], driver: nil)
                     # delete message to avoid overload
                     message.delete
                 end
