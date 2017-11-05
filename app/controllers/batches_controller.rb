@@ -45,12 +45,6 @@ class BatchesController < ApplicationController
   end
   
   private
-  
-    def initialize_twilio
-      account_sid = 'AC7b0eae323dc72522bb616648567a7de6'
-      auth_token = '2a27c125b10a4429e8a24ccd08584670'
-      @client = Twilio::REST::Client.new account_sid, auth_token
-    end
     
     def batch_params
       params.fetch(:batch, {}).require(:notes)
