@@ -56,11 +56,11 @@ class Driver < ActiveRecord::Base
                 to: driver.number,
                 body: request_cancellation
             )
-        self.initialize_twilio.api.account.messages.list(
+        Driver.initialize_twilio.api.account.messages.list(
                 to: driver.number,
                 from: '+13474640621'
                 # body: 'Sent from your Twilio trial account - ' + request_cancellation
-            ).last do |message|
+            ).each do |message|
                 # store message in database
                 CancellationMessage.create!(driver_number: driver.number, from_number: '+13474640621', 
                                 message_sid: message.sid, date_created: message.date_created, message_body: message.body,

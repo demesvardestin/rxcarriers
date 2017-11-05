@@ -18,6 +18,12 @@ class Batch < ActiveRecord::Base
                     to: driver.number,
                     body: directions
                 )
+            @client.api.account.messages.list(
+                    from: '+13474640621',
+                    to: driver.number
+                ).each do |message|
+                   message.delete 
+                end
             @new_request.update!(driver: driver.number)
             Driver.notify_drivers_request_invalidated(driver)
         end
