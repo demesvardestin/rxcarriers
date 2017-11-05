@@ -33,7 +33,6 @@ class BatchesController < ApplicationController
       from = params['From']
       request_response = params['Body'].downcase
       @driver = Driver.find_by(number: from)
-      initialize_twilio
       if request_response == 'yes'
         Batch.respond_to_driver(@driver)
       elsif request_response == 'cancel pickup'
