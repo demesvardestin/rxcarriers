@@ -23,50 +23,22 @@ class BatchesController < ApplicationController
     # create the request into database
     @request = Request.create!(pharmacy_id: @pharmacy.id, batch_id: @batch.id, count: 0, status: 'pending')
     # initiate the request
-    @request_details = Request.initiate_request(@batch.id, @patients, @pharmacy)
-    Request.send_request(@batch.id, @pharmacy, @request_details, @request) # send requests to drivers
+    Request.send_request(@request)
     respond_to do |format|
       format.js {render layout: false}
     end
   end
   
   def driver_response
-    from = params['From']
-    request_response = params['Body'].downcase
-    @driver = Driver.find_by(number: from)
-    initialize_twilio
-    count = 0
-    count += 1
-    if request_response == 'yes'
-      if count == 1
-        @initial_request_message = RequestMessage.where(driver_number: from, driver: nil).last
-        @pharmacy = Pharmacy.find(@initial_request_message.pharmacy_id)
-        directions = "Thank you for accepting, #{@driver.first_name}. Your pickup is now ready at #{@pharmacy.name}.\nFor verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
-        @new_request = Request.where(body: @initial_request_message.message_body, pharmacy_id: @pharmacy.id, driver: nil, count: 0).last
-        counter = @new_request.count
-        counter += 1
-        @new_request.update!(status: 'accepted', count: counter)
-        if @new_request.count == 1
-          @client.api.account.messages.create(
-                  from: '+13474640621',
-                  to: from,
-                  body: directions
-              )
-          @new_request.update!(driver: @driver.number)
-          Driver.notify_drivers_request_invalidated(@driver)
-          @initial_request_message.update!(driver: @driver.number)
-        end
+      from = params['From']
+      request_response = params['Body'].downcase
+      @driver = Driver.find_by(number: from)
+      initialize_twilio
+      if request_response == 'yes'
+        Batch.respond_to_driver(@driver)
+      elsif request_response == 'cancel pickup'
+        Batch.cancel_driver(@driver)
       end
-    elsif request_response == 'cancel pickup'
-      initial_request_message = RequestMessage.where(driver_number: from, driver: @driver.number).last
-      unless initial_request_message.nil?
-        pharmacy = Pharmacy.find_by(id: initial_request_message.pharmacy_id)
-        initial_request = Request.where(driver: @driver.number, status: 'accepted', body: initial_request_message.message_body).last
-        Request.find(initial_request.id).update!(status: 'pending', count: 0, driver: nil)
-        Request.resend_request(initial_request.batch_id, pharmacy, initial_request, @driver)
-        RequestMessage.find(id: initial_request_message.id).update!(driver: @driver.number)
-      end
-    end
   end
 
   def destroy

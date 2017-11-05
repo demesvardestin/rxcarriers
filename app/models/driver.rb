@@ -2,33 +2,35 @@ class Driver < ActiveRecord::Base
     
     geocoded_by :full_address
     after_validation :geocode
+    scope :available, -> {where(requested: false)}
     
     def full_address
         [street, town].join(", ")
     end
     
-    def self.fetch_driver_response(req, package_id, pharmacy, text_message, initial_driver=nil, new_req=true)
+    def self.fetch_driver_response(req, pharmacy, text_message, initial_driver=nil, new_req=true)
         # store request types for further use
         req_type = {true => 'new request', false => 'request resend'}
         # filter all drivers by location before going through selection process
         drivers = Driver.omit_driver(initial_driver)
-        @drivers = Driver.filter_by_location(req['location'], drivers)
-        @drivers.each do |driver|
+        @drivers = Driver.filter_by_location(@pharmacy.full_address, drivers)
+        @drivers.available.each do |driver|
             # send a message request to drivers
             self.initialize_twilio.api.account.messages.create(
               from: '+13474640621',
               to: driver.number,
               body: text_message
             )
+            driver.update!(requested: true)
             # upon sending message, retrieve message details
-            to_driver = self.initialize_twilio.api.account.messages.list(
+            sent_to_driver = self.initialize_twilio.api.account.messages.list(
               to: driver.number,
               from: '+13474640621'
             #   body: text_message
             )
             sleep(1)
-            if to_driver != nil && to_driver.count != 0
-                to_driver.each do |message|
+            if sent_to_driver != nil && sent_to_driver.count != 0
+                sent_to_driver.each do |message|
                     # store message in database
                     RequestMessage.create!(driver_number: driver.number, from_number: '+13474640621', 
                                     message_sid: message.sid, date_created: message.date_created, message_body: message.body, date_sent: message.date_sent,
@@ -104,6 +106,8 @@ class Driver < ActiveRecord::Base
                     # delete message to avoid overload
                     message.delete
                 end
+                recipient.update!(requested: false)
+                RequestMessage.find_by(driver_number: recipient.number, driver: nil).update!(driver: driver.number)
             end
         end
     end
