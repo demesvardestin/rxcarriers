@@ -4,7 +4,7 @@ class Batch < ActiveRecord::Base
     has_many :patients, :as => :patable
     
     def self.respond_to_driver(driver)
-        initialize_twilio
+        Batch.initialize_twilio
         @initial_request_message = RequestMessage.where(driver_number: driver.number, driver: nil).last
         @pharmacy = Pharmacy.find(@initial_request_message.pharmacy_id)
         directions = "Thank you for accepting, #{driver.first_name}. Your pickup is now ready at #{@pharmacy.name}.\nFor verification purposes, present your ID once you arrive.\nTo cancel this pickup, reply 'cancel'."
@@ -34,7 +34,7 @@ class Batch < ActiveRecord::Base
         end 
     end
     
-    def initialize_twilio
+    def self.initialize_twilio
         account_sid = 'AC7b0eae323dc72522bb616648567a7de6'
         auth_token = '2a27c125b10a4429e8a24ccd08584670'
         @client = Twilio::REST::Client.new account_sid, auth_token
