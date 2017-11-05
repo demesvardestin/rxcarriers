@@ -13,8 +13,7 @@ class Driver < ActiveRecord::Base
         req_type = {true => 'new request', false => 'request resend'}
         # filter all drivers by location before going through selection process
         drivers = Driver.omit_driver(initial_driver)
-        @drivers = Driver.filter_by_location(pharmacy.full_address, drivers)
-        @drivers.where(requested: false).each do |driver|
+        Driver.filter_by_location(pharmacy.full_address, drivers).available.each do |driver|
             # send a message request to drivers
             self.initialize_twilio.api.account.messages.create(
               from: '+13474640621',
