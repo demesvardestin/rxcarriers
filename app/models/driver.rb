@@ -106,8 +106,8 @@ class Driver < ActiveRecord::Base
                     message.delete
                 end
                 recipient.update!(requested: false)
-                RequestMessage.find_by(driver_number: recipient.number, driver: nil).update!(driver: driver.number)
             end
+            RequestMessage.find_by(driver_number: recipient.number, driver: nil).update!(driver: driver.number)
         end
     end
     
