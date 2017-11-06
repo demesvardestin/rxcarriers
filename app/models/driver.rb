@@ -29,6 +29,7 @@ class Driver < ActiveRecord::Base
                         from_number: '+13474640621',
                         message_body: 'Sent from your Twilio trial account - ' + text_message,
                         batch_id: req.batch_id,
+                        pharmacy_id: pharmacy.id,
                         request_type: req_type[new_req],
                         driver: nil,
                         status: 'in progress'
