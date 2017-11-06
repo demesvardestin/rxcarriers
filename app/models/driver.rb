@@ -28,7 +28,7 @@ class Driver < ActiveRecord::Base
                   from: '+13474640621'
                 #   body: text_message
                 )
-                sleep(1)
+                sleep(1.5)
                 if sent_to_driver != nil && sent_to_driver.count != 0
                     sent_to_driver.each do |message|
                         # store message in database
