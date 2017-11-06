@@ -18,9 +18,9 @@ class Batch < ActiveRecord::Base
                     to: driver.number,
                     body: directions
                 )
-            sleep(0.5)
             @new_request.update!(driver: driver.number)
             Driver.notify_drivers_request_invalidated(driver)
+            sleep(0.5)
             Batch.delete_twilio_messages
         end
     end
@@ -39,6 +39,7 @@ class Batch < ActiveRecord::Base
     end
     
     def self.delete_twilio_messages
+        Batch.initialize_twilio
         @client.api.account.messages.list(
             from: '+13474640621',
             to: driver.number
