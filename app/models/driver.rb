@@ -8,7 +8,7 @@ class Driver < ActiveRecord::Base
         [street, town].join(", ")
     end
     
-    def self.fetch_driver_response(req, pharmacy, text_message, initial_driver=nil, new_req=true)
+    def self.fetch_driver_response(req, pharmacy, text_message, request_message=nil, initial_driver=nil, new_req=true)
         req_type = {true => 'new request', false => 'request resend'}
         @drivers = Driver.omit_driver(initial_driver)
         if @drivers != nil
@@ -19,20 +19,20 @@ class Driver < ActiveRecord::Base
                   body: text_message
                 )
                 driver.update!(requested: true)
-                self.initialize_twilio.api.account.messages.list(
-                  to: driver.number,
-                  from: '+13474640621'
-                ).last do |message|
-                    RequestMessage.create!(driver_number: driver.number, from_number: '+13474640621', 
-                        message_sid: message.sid, date_created: message.date_created, message_body: message.body, date_sent: message.date_sent,
-                        pharmacy_id: pharmacy.id, batch_id: req.batch_id, request_type: req_type[new_req], driver: nil
+                if request_message
+                    RequestMessage.where(driver_number: driver.number, message_body: text_message, driver: initial_driver.number).update!(
+                        request_type: req_type[new_req]
                     )
-                    loop do
-                       break if message.nil?
-                       if message.status == 'delivered'
-                           message.delete
-                       end
-                    end
+                else
+                    RequestMessage.create!(
+                        driver_number: driver.number, 
+                        from_number: '+13474640621',
+                        message_body: text_message,
+                        batch_id: req.batch_id,
+                        request_type: req_type[new_req],
+                        driver: nil,
+                        status: 'in progress'
+                    )
                 end
             end
         end
@@ -45,26 +45,21 @@ class Driver < ActiveRecord::Base
         return @drivers
     end
     
-    def self.request_cancelled(driver, pharmacy)
+    def self.request_cancelled(driver, pharmacy, batch)
         request_cancellation = "[Message Type: request cancellation]\n\n#{driver.first_name}, your pickup at #{pharmacy.name} has been cancelled."
         Driver.initialize_twilio.api.account.messages.create(
             from: '+13474640621',
             to: driver.number,
             body: request_cancellation
         )
-        sleep(0.5)
-        Driver.initialize_twilio.api.account.messages.list(
-            to: driver.number,
-            from: '+13474640621'
-            # body: 'Sent from your Twilio trial account - ' + request_cancellation
-        ).each do |message|
-            # store message in database
-            CancellationMessage.create!(driver_number: driver.number, from_number: '+13474640621', 
-                            message_sid: message.sid, date_created: message.date_created, message_body: message.body,
-                            pharmacy_id: pharmacy.id, request_type: 'cancellation')
-            # delete message to avoid overload
-            message.delete
-        end
+        CancellationMessage.create!(
+            driver_number: driver.number, 
+            from_number: '+13474640621', 
+            message_body: message.body,
+            pharmacy_id: pharmacy.id,
+            batch_id: batch,
+            request_type: 'cancellation'
+        )
     end
     
     def self.initialize_twilio
@@ -83,26 +78,15 @@ class Driver < ActiveRecord::Base
     
     # notify other drivers that someone has already accepted the request
     def self.notify_drivers_request_invalidated(driver)
-        request_update = "Message Type: request update: This request has been accepted by another courier."
+        request_update = "[Message Type: request update]\n\nThis request has been accepted by another courier."
         @drivers = Driver.all
         @drivers.each do |recipient|
-            # message each driver except the one who accepted the request
             unless recipient == driver
                 Driver.initialize_twilio.api.account.messages.create(
                     from: '+13474640621',
                     to: recipient.number,
                     body: request_update
                 )
-                sleep(0.5)
-                # retrieve message immediately after
-                self.initialize_twilio.api.acount.messages.list(
-                    to: recipient.number,
-                    from: '+13474640621'
-                    # body: 'Sent from your Twilio trial account - ' + request_update
-                ).last do |message|
-                    # delete message to avoid overload
-                    message.delete
-                end
                 recipient.update!(requested: false)
             end
             RequestMessage.find_by(driver_number: recipient.number, driver: nil).update!(driver: driver.number)

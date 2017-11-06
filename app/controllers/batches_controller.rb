@@ -32,11 +32,16 @@ class BatchesController < ApplicationController
   def driver_response
       from = params['From']
       request_response = params['Body'].downcase
+      first_sample = ['yes', 'yea', 'yep', 'yas', 'yess']
+      second_sample = ['cancel', 'cancel pickup', 'cancell', 'cancel pickupp']
+      third_sample = ['completed', 'delivery completed', 'completed delivery', 'delivery complete']
       @driver = Driver.find_by(number: from)
-      if request_response == 'yes'
+      if first_sample.include?(request_response)
         Batch.respond_to_driver(@driver)
-      elsif request_response == 'cancel pickup'
+      elsif second_sample.include?(request_response)
         Batch.cancel_driver(@driver)
+      elsif third_sample.include?(request_response)
+        Batch.delivery_completed(@driver)
       end
   end
 
