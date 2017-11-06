@@ -46,7 +46,7 @@ class Driver < ActiveRecord::Base
     def self.omit_driver(driver)
         @drivers = Driver.all
         unless driver == nil
-            @drivers.delete_at(@drivers.index(driver))
+            @drivers.delete(driver)
         end
         return @drivers
     end
