@@ -30,7 +30,7 @@ class Request < ActiveRecord::Base
         # template message for resending request to drivers
         text_message = "[Type: request resend - ID: #{batch_id}]\n\nUpdated delivery request from #{pharmacy.name} at #{pharmacy.street}, #{pharmacy.town} #{pharmacy.zipcode}. Reply 'yes' to accepted this request."
         # look for the driver's response
-        Driver.fetch_driver_response(req, batch_id, pharmacy, text_message, initial_driver=driver, new_req=false)
+        Driver.fetch_driver_response(req, pharmacy, text_message, initial_driver=driver, new_req=false)
         # add this message to the request
         Request.find_by(id: req.id).update!(body:'Sent from your Twilio trial account - ' + text_message)
     end
