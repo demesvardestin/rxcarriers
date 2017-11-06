@@ -18,6 +18,7 @@ class Batch < ActiveRecord::Base
                     to: driver.number,
                     body: directions
                 )
+            sleep(0.5)
             @client.api.account.messages.list(
                     from: '+13474640621',
                     to: driver.number

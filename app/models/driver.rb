@@ -97,6 +97,7 @@ class Driver < ActiveRecord::Base
                     to: recipient.number,
                     body: request_update
                 )
+                sleep(0.5)
                 # retrieve message immediately after
                 self.initialize_twilio.api.acount.messages.list(
                     to: recipient.number,
