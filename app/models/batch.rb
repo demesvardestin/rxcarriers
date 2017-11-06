@@ -19,14 +19,9 @@ class Batch < ActiveRecord::Base
                     body: directions
                 )
             sleep(0.5)
-            @client.api.account.messages.list(
-                    from: '+13474640621',
-                    to: driver.number
-                ).each do |message|
-                   message.delete 
-                end
             @new_request.update!(driver: driver.number)
             Driver.notify_drivers_request_invalidated(driver)
+            Batch.delete_twilio_messages
         end
     end
     
@@ -39,7 +34,23 @@ class Batch < ActiveRecord::Base
             @initial_request.update!(status: 'pending', count: 0, driver: nil)
             Request.resend_request(@initial_request.batch_id, @pharmacy, @initial_request, driver)
             @initial_request_message.update!(driver: nil)
+            Batch.delete_twilio_messages
         end 
+    end
+    
+    def self.delete_twilio_messages
+        @client.api.account.messages.list(
+            from: '+13474640621',
+            to: driver.number
+        ).each do |message|
+           message.delete 
+        end
+        @client.api.account.messages.list(
+            from: driver.number,
+            to: '+13474640621'
+        ).each do |message|
+           message.delete 
+        end
     end
     
     def self.initialize_twilio
