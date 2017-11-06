@@ -13,29 +13,31 @@ class Driver < ActiveRecord::Base
         req_type = {true => 'new request', false => 'request resend'}
         # filter all drivers by location before going through selection process
         @drivers = Driver.omit_driver(initial_driver)
-        Driver.available.filter_by_location(pharmacy.full_address, @drivers).each do |driver|
-            # send a message request to drivers
-            self.initialize_twilio.api.account.messages.create(
-              from: '+13474640621',
-              to: driver.number,
-              body: text_message
-            )
-            driver.update!(requested: true)
-            # upon sending message, retrieve message details
-            sent_to_driver = self.initialize_twilio.api.account.messages.list(
-              to: driver.number,
-              from: '+13474640621'
-            #   body: text_message
-            )
-            sleep(1)
-            if sent_to_driver != nil && sent_to_driver.count != 0
-                sent_to_driver.each do |message|
-                    # store message in database
-                    RequestMessage.create!(driver_number: driver.number, from_number: '+13474640621', 
-                                    message_sid: message.sid, date_created: message.date_created, message_body: message.body, date_sent: message.date_sent,
-                                    pharmacy_id: pharmacy.id, batch_id: req.batch_id, request_type: req_type[new_req], driver: nil)
-                    # delete message to avoid overload
-                    message.delete
+        if @drivers != nil
+            Driver.available.filter_by_location(pharmacy.full_address, @drivers).each do |driver|
+                # send a message request to drivers
+                self.initialize_twilio.api.account.messages.create(
+                  from: '+13474640621',
+                  to: driver.number,
+                  body: text_message
+                )
+                driver.update!(requested: true)
+                # upon sending message, retrieve message details
+                sent_to_driver = self.initialize_twilio.api.account.messages.list(
+                  to: driver.number,
+                  from: '+13474640621'
+                #   body: text_message
+                )
+                sleep(1)
+                if sent_to_driver != nil && sent_to_driver.count != 0
+                    sent_to_driver.each do |message|
+                        # store message in database
+                        RequestMessage.create!(driver_number: driver.number, from_number: '+13474640621', 
+                                        message_sid: message.sid, date_created: message.date_created, message_body: message.body, date_sent: message.date_sent,
+                                        pharmacy_id: pharmacy.id, batch_id: req.batch_id, request_type: req_type[new_req], driver: nil)
+                        # delete message to avoid overload
+                        message.delete
+                    end
                 end
             end
         end
