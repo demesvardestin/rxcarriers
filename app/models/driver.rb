@@ -44,9 +44,8 @@ class Driver < ActiveRecord::Base
     end
     
     def self.omit_driver(driver)
-        @drivers = Driver.all
-        unless driver == nil
-            @drivers.delete(driver)
+        @drivers = Driver.select do |d|
+           d != driver 
         end
         return @drivers
     end
@@ -54,23 +53,23 @@ class Driver < ActiveRecord::Base
     def self.request_cancelled(driver, pharmacy)
         request_cancellation = "[Message Type: request cancellation]\n\n#{driver.first_name}, your pickup at #{pharmacy.name} has been cancelled."
         Driver.initialize_twilio.api.account.messages.create(
-                from: '+13474640621',
-                to: driver.number,
-                body: request_cancellation
-            )
+            from: '+13474640621',
+            to: driver.number,
+            body: request_cancellation
+        )
         sleep(0.5)
         Driver.initialize_twilio.api.account.messages.list(
-                to: driver.number,
-                from: '+13474640621'
-                # body: 'Sent from your Twilio trial account - ' + request_cancellation
-            ).each do |message|
-                # store message in database
-                CancellationMessage.create!(driver_number: driver.number, from_number: '+13474640621', 
-                                message_sid: message.sid, date_created: message.date_created, message_body: message.body,
-                                pharmacy_id: pharmacy.id, request_type: 'cancellation')
-                # delete message to avoid overload
-                message.delete
-            end
+            to: driver.number,
+            from: '+13474640621'
+            # body: 'Sent from your Twilio trial account - ' + request_cancellation
+        ).each do |message|
+            # store message in database
+            CancellationMessage.create!(driver_number: driver.number, from_number: '+13474640621', 
+                            message_sid: message.sid, date_created: message.date_created, message_body: message.body,
+                            pharmacy_id: pharmacy.id, request_type: 'cancellation')
+            # delete message to avoid overload
+            message.delete
+        end
     end
     
     def self.initialize_twilio
