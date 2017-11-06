@@ -20,14 +20,14 @@ class Driver < ActiveRecord::Base
                 )
                 driver.update!(requested: true)
                 if request_message
-                    RequestMessage.where(driver_number: driver.number, message_body: text_message, driver: initial_driver.number).update!(
+                    RequestMessage.where(driver_number: driver.number, message_body: 'Sent from your Twilio trial account' + text_message, driver: initial_driver.number).update!(
                         request_type: req_type[new_req]
                     )
                 else
                     RequestMessage.create!(
                         driver_number: driver.number, 
                         from_number: '+13474640621',
-                        message_body: text_message,
+                        message_body: 'Sent from your Twilio trial account' + text_message,
                         batch_id: req.batch_id,
                         request_type: req_type[new_req],
                         driver: nil,
