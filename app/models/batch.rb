@@ -21,7 +21,7 @@ class Batch < ActiveRecord::Base
             @new_request.update!(driver: driver.number)
             Driver.notify_drivers_request_invalidated(driver)
         end
-        Request.check_delivery_status
+        # Request.check_delivery_status
     end
     
     def self.cancel_driver(driver)
