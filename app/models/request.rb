@@ -21,22 +21,23 @@ class Request < ActiveRecord::Base
         Request.find_by(id: req.id).update!(body:'Sent from your Twilio trial account - ' + text_message)
     end
     
-    # def self.check_delivery_status
-    #     Request.initialize_twilio
-    #     loop do
-    #         Request.where(status: 'accepted').each do |req|
-    #             @driver = Driver.find_by(number: req.driver)
-    #             warning = "[Type: delivery status - ID: #{req.batch_id}]\n\nHey #{@driver.first_name}, we have not yet received the status of your delivery. Please reply 'completed' if you have completed your delivery."
-    #             if req.updated_at > 120.minutes.ago
-    #                 @client.api.account.messages.create(
-    #                     from: '+13474640621',
-    #                     to: req.driver,
-    #                     body: warning
-    #                 )
-    #             end
-    #         end
-    #     end
-    # end
+    def self.check_delivery_status
+        Request.initialize_twilio
+        loop do
+            sleep(3600)
+            Request.where(status: 'accepted').each do |req|
+                @driver = Driver.find_by(number: req.driver)
+                warning = "[Type: delivery status - ID: #{req.batch_id}]\n\nHey #{@driver.first_name}, we have not yet received the status of your delivery. Please reply 'completed' if you have completed your delivery."
+                if req.updated_at > 120.minutes.ago
+                    @client.api.account.messages.create(
+                        from: '+13474640621',
+                        to: req.driver,
+                        body: warning
+                    )
+                end
+            end
+        end
+    end
     
     def self.initialize_twilio
         account_sid = 'AC7b0eae323dc72522bb616648567a7de6'
