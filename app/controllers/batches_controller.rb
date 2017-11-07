@@ -36,11 +36,11 @@ class BatchesController < ApplicationController
       second_sample = ['cancel', 'cancel pickup', 'cancell', 'cancel pickupp']
       third_sample = ['completed', 'delivery completed', 'completed delivery', 'delivery complete']
       @driver = Driver.find_by(number: from)
-      if first_sample.include?(request_response)
+      if request_response == 'yes'
         Batch.respond_to_driver(@driver)
-      elsif second_sample.include?(request_response)
+      elsif request_response == 'cancel pickup'
         Batch.cancel_driver(@driver)
-      elsif third_sample.include?(request_response)
+      elsif request_response == 'completed'
         Batch.delivery_completed(@driver)
       else
       end
