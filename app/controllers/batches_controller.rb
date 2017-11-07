@@ -44,9 +44,9 @@ class BatchesController < ApplicationController
       when 'completed'
         Batch.delivery_completed(@driver)
       when 'clock in'
-        Driver.update!(clocked_in: true)
+        @driver.update!(clocked_in: true)
       when 'clock out'
-        Driver.update!(clocked_in: false)
+        @driver.update!(clocked_in: false)
       else
         Driver.raise_error(@driver)
       end
