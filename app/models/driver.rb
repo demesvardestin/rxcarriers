@@ -2,6 +2,7 @@ class Driver < ActiveRecord::Base
     
     geocoded_by :full_address
     after_validation :geocode
+    scope :on_shift, -> {where(clocked_in: true)}
     scope :available, -> {where(requested: false)}
     
     def full_address
@@ -12,7 +13,7 @@ class Driver < ActiveRecord::Base
         req_type = {true => 'new request', false => 'request resend'}
         @drivers = Driver.omit_driver(initial_driver)
         if @drivers != nil
-            Driver.available.filter_by_location(pharmacy.full_address, @drivers).each do |driver|
+            Driver.on_shift.available.filter_by_location(pharmacy.full_address, @drivers).each do |driver|
                 self.initialize_twilio.api.account.messages.create(
                   from: '+13474640621',
                   to: driver.number,
@@ -94,6 +95,24 @@ class Driver < ActiveRecord::Base
             end
             RequestMessage.find_by(driver_number: recipient.number, driver: nil).update!(driver: driver.number)
         end
+    end
+    
+    def self.clock_in(driver)
+        Driver.find(driver.id).update!(clocked_in: true)
+        self.initialize_twilio.api.account.messages.create(
+            from: '+13474640621',
+            to: driver.number,
+            body: "#{driver.first_name}, you are now clocked in."
+        )
+    end
+    
+    def self.clock_out(driver)
+        Driver.find(driver.id).update!(clocked_in: false)
+        self.initialize_twilio.api.account.messages.create(
+            from: '+13474640621',
+            to: driver.number,
+            body: "#{driver.first_name}, you have been clocked out."
+        )
     end
     
     def self.raise_error(driver)

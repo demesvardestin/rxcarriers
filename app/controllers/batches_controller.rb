@@ -37,19 +37,19 @@ class BatchesController < ApplicationController
       third_sample = ['completed', 'delivery completed', 'completed delivery', 'delivery complete']
       @driver = Driver.find_by(number: from)
       case request_response
-      when 'yes'
-        Batch.respond_to_driver(@driver)
-      when 'cancel pickup'
-        Batch.cancel_driver(@driver)
-      when 'completed'
-        Batch.delivery_completed(@driver)
-      when 'clock in'
-        @driver.update!(clocked_in: true)
-      when 'clock out'
-        @driver.update!(clocked_in: false)
-      else
-        Driver.raise_error(@driver)
-      end
+        when 'yes'
+          Batch.respond_to_driver(@driver)
+        when 'cancel pickup'
+          Batch.cancel_driver(@driver)
+        when 'completed'
+          Batch.delivery_completed(@driver)
+        when 'clock in'
+          Driver.clock_in(@driver)
+        when 'clock out'
+          Driver.clock_out(@driver)
+        else
+          Driver.raise_error(@driver)
+        end
   end
 
   def destroy
