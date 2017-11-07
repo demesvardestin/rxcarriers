@@ -42,6 +42,7 @@ class BatchesController < ApplicationController
         Batch.cancel_driver(@driver)
       elsif third_sample.include?(request_response)
         Batch.delivery_completed(@driver)
+      else
       end
   end
 

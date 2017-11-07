@@ -21,7 +21,8 @@ class Driver < ActiveRecord::Base
                 driver.update!(requested: true)
                 if request_message
                     RequestMessage.where(driver_number: driver.number, message_body: 'Sent from your Twilio trial account - ' + text_message, driver: initial_driver.number).update!(
-                        request_type: req_type[new_req]
+                        request_type: req_type[new_req],
+                        driver: nil
                     )
                 else
                     RequestMessage.create!(
@@ -56,7 +57,7 @@ class Driver < ActiveRecord::Base
         CancellationMessage.create!(
             driver_number: driver.number, 
             from_number: '+13474640621', 
-            message_body: message.body,
+            message_body: request_cancellation,
             pharmacy_id: pharmacy.id,
             batch_id: batch,
             request_type: 'cancellation'
