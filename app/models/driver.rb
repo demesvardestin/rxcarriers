@@ -81,7 +81,7 @@ class Driver < ActiveRecord::Base
     
     # notify other drivers that someone has already accepted the request
     def self.notify_drivers_request_invalidated(driver)
-        request_update = "[Message Type: request update]\n\nThis request has been accepted by another courier."
+        request_update = "[Type: request update]\n\nThis request has been accepted by another courier."
         @drivers = Driver.all
         @drivers.each do |recipient|
             unless recipient == driver
@@ -94,6 +94,15 @@ class Driver < ActiveRecord::Base
             end
             RequestMessage.find_by(driver_number: recipient.number, driver: nil).update!(driver: driver.number)
         end
+    end
+    
+    def self.raise_error(driver)
+        error_msg = "[Type: invalid command]\n\nThe command you entered is invalid."
+        self.initialize_twilio.api.account.messages.create(
+            from: '+13474640621',
+            to: driver.number,
+            body: error_msg
+        )
     end
     
 end
