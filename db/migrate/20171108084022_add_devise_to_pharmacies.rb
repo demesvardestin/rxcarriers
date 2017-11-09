@@ -35,7 +35,7 @@ class AddDeviseToPharmacies < ActiveRecord::Migration
       # t.timestamps null: false
     end
 
-    add_index :pharmacies, :email,                unique: true
+    add_index :pharmacies, :email
     add_index :pharmacies, :reset_password_token, unique: true
     # add_index :pharmacies, :confirmation_token,   unique: true
     # add_index :pharmacies, :unlock_token,         unique: true

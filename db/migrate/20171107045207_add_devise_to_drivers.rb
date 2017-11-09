@@ -35,7 +35,7 @@ class AddDeviseToDrivers < ActiveRecord::Migration
       # t.timestamps null: false
     end
 
-    add_index :drivers, :email,                unique: true
+    add_index :drivers, :email
     add_index :drivers, :reset_password_token, unique: true
     # add_index :drivers, :confirmation_token,   unique: true
     # add_index :drivers, :unlock_token,         unique: true
