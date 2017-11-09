@@ -1,7 +1,7 @@
 class Pharmacy::RegistrationsController < Devise::RegistrationsController
     
-    include Accessible
-    skip_before_action :check_user, only: :destroy
+    # include Accessible
+    # skip_before_action :check_user, only: :destroy
     before_filter :configure_permitted_parameters
     
     protected
