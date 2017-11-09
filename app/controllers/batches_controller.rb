@@ -1,6 +1,6 @@
 class BatchesController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :authenticate_pharmacy!, except: [:new]
+  # before_action :authenticate_pharmacy!, except: [:new]
   before_filter :load_patable, only: [:show]
   
   def new
