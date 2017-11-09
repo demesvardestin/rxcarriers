@@ -1,0 +1,43 @@
+<style>
+  .main-nav {
+    display: none;
+  }
+</style>
+<body>
+    <div class="col-md-2 vertical-panel">
+      <div class="profile-details">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <img class="rounded pharmacy-avatar" src="https://www.cannarecruiter.com/wp-content/uploads/2016/11/medical-marijuana-delivery-jobs.jpg">
+            <h4 class="white pharmacy-name"><%= current_driver.full_name %></h4>
+          </div>
+        </div>
+      </div>
+      <div class="nav-links">
+        <ul class="nav flex-column">
+          <li class="nav-item nav-item-pharmacy-view">
+            <a class="nav-link" href="/my-deliveries">Deliveries</a>
+          </li>
+          <li class="nav-item nav-item-pharmacy-view">
+            <a class="nav-link" href="/my-earnings">My Earnings</a>
+          </li>
+          <li class="nav-item nav-item-pharmacy-view">
+            <a class="nav-link" href="/transactions">Transactions</a>
+          </li>
+          <li class="nav-item nav-item-pharmacy-view">
+            <a class="nav-link" href="/settings">Settings</a>
+          </li>
+          <li class="nav-item nav-item-pharmacy-view">
+            <a class="nav-link" href="/support">Support</a>
+          </li>
+        </ul>
+      </div>
+      <div class="dashboard-control">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <%= link_to '', destroy_driver_session_path, class:"fa fa-power-off black pharmacy-logout no-underline", method: :delete %>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>

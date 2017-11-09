@@ -1,0 +1,23 @@
+<style>
+  .main-nav {
+    display: none;
+  }
+</style>
+<body>
+    <div class="col-md-2 vertical-panel" style="height: 100%;">
+      <div class="account-under-review">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h4 class="white pharmacy-name">Account under review</h4>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-control" style="padding-bottom: 100px;">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <%= link_to '', destroy_driver_session_path(current_driver), class:"fa fa-power-off black pharmacy-logout no-underline", method: :delete %>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>

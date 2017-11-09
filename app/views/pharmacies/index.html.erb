@@ -1,25 +1,49 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Pharmacies</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @pharmacies.each do |pharmacy| %>
-      <tr>
-        <td><%= link_to 'Show', pharmacy %></td>
-        <td><%= link_to 'Edit', edit_pharmacy_path(pharmacy) %></td>
-        <td><%= link_to 'Destroy', pharmacy, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Pharmacy', new_pharmacy_path %>
+<style>
+  .main-nav {
+    display: none;
+  }
+  body {
+    overflow-y: hidden !important;
+  }
+</style>
+<body>
+    <div class="col-md-2 vertical-panel">
+      <div class="profile-details">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <img class="rounded pharmacy-avatar" src="https://www.cannarecruiter.com/wp-content/uploads/2016/11/medical-marijuana-delivery-jobs.jpg">
+            <h2 class="white pharmacy-name">Medicine C...</h2>
+          </div>
+        </div>
+      </div>
+      <div class="nav-links">
+        <ul class="nav flex-column">
+          <li class="nav-item nav-item-pharmacy-view">
+            <a class="nav-link active" href="/batch/new">New Batch</a>
+          </li>
+          <li class="nav-item nav-item-pharmacy-view">
+            <a class="nav-link" href="/requests">Requests</a>
+          </li>
+          <li class="nav-item nav-item-pharmacy-view">
+            <a class="nav-link" href="/transactions">Transactions</a>
+          </li>
+          <li class="nav-item nav-item-pharmacy-view">
+            <a class="nav-link" href="/settings">Settings</a>
+          </li>
+          <li class="nav-item nav-item-pharmacy-view">
+            <a class="nav-link" href="/support">Support</a>
+          </li>
+        </ul>
+      </div>
+      <div class="dashboard-control">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <%= link_to '', new_driver_registration_path, class:"fa fa-power-off black pharmacy-logout no-underline" %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10 main-page">
+      
+    </div>
+</body>

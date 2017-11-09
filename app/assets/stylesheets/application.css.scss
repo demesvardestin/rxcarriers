@@ -1,0 +1,315 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ *= require font-awesome
+ */
+
+/* App Layout*/
+body {
+    overflow-x: hidden !important;
+    font-family: 'Roboto', sans-serif !important;
+}
+.navbar {
+    background-color: #007bff !important;
+}
+.logo {
+    color: #fff;
+}
+.theme-blue {
+    color: #007bff !important;
+}
+.theme-red {
+    color: #ff3232 !important;
+}
+.pharmacy-search {
+    display: block !important;
+    width: 80% !important;
+    height: 40px;
+    border-left: none !important;
+    border: 0.5px solid #007bff;
+    box-shadow: none !important;
+}
+.pharmacy-search-addon {
+    height: 40px;
+    border-right: none !important;
+    border: 0.5px solid #007bff;
+    background: #fff !important;
+}
+.background-transparent {
+    background: transparent !important;
+}
+.no-border-radius {
+    border-radius: 0 !important;
+}
+.right-nav{
+    padding-left: 35px;
+    padding-right: 35px;
+}
+.for-pharmacy-button {
+    color: #fff !important;
+    border: 1px solid #fff;
+    font-size: 14px;
+    padding: 9px;
+}
+.for-pharmacy-button:hover {
+    color: #007bff !important;
+    background: #FFF !important;
+    border: 1px solid #fff;
+    box-shadow: none !important;
+}
+.new-driver-button {
+    color: #007bff !important;
+    background: #fff !important;
+    border: 1px solid #fff;
+    font-size: 14px;
+    padding: 9px;
+    font-family: 'Roboto', sans-serif;
+}
+.new-driver-button:hover {
+    color: #fff !important;
+    background: transparent !important;
+    border: 1px solid #fff;
+}
+.sign-in-link {
+    color: #fff !important;
+    font-size: 16px !important;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 10px;
+}
+.sign-in-link:hover {
+    /*color: #007bff !important;*/
+}
+.vertical-align-center {
+    vertical-align: middle !important;
+}
+
+/* Devise */
+.driver-signup-banner {
+    padding-bottom: 20px;
+}
+.driver-signup-banner-text{
+    color: #007bff !important;
+}
+.placeholder-div {
+    float: right;
+    padding: 0 !important;
+    height: 100% !important;
+}
+.field {
+    padding-top: 20px;
+}
+.actions {
+    padding-top: 20px;
+}
+.form-control {
+    border: 1px solid #007bff;
+    height: 40px;
+}
+.driver-signup {
+    float: left !important;
+    height: 100% !important;
+}
+.courier-image {
+    width: 115% !important;
+    height: 115% !important;
+}
+.driver-signup-div {
+    vertical-align: middle !important;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.driver-login-button {
+    color: #fff !important;
+}
+.driver-signup-button {
+    cursor: pointer;
+}
+
+@media only screen and (max-device-width: 768px) {
+    .no-mobile {
+        display: none;
+    }
+    .driver-signup-form {
+        float: none !important;
+    }
+}
+
+/* Batches Views */
+.new-batch-card {
+    padding: 40px;
+    border: 1px solid #007bff;
+}
+.new-batch-card:hover {
+    background: #007bff !important;
+    .add-new-batch {
+        color: #fff !important;
+    }
+    .create-new-batch {
+        color: #fff !important;
+    }
+}
+.add-new-batch {
+    font-size: 28px !important;
+    color: #007bff !important;
+}
+.batch-index-body {
+    padding: 15px;
+}
+.create-new-batch {
+    font-size: 24px;
+}
+.new-batch-form {
+    padding-left: 240px;
+    padding-right: 240px;
+    padding-top: 200px;
+    padding-bottom: 200px;
+}
+.new-batch-button {
+    cursor: pointer;
+}
+.batch-notes-field {
+    height: 100px !important;
+}
+.show-batch {
+    padding: 40px;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.prescription-card-div {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.prescription-card {
+    border: 0.25px solid #99caff;
+}
+.border-theme-blue {
+    border: 1px solid #007bff;
+}
+
+/* Request Views */
+.all-requests {
+    padding: 40px;
+}
+.all-requests-header {
+    padding-bottom: 20px;
+}
+.request-card:hover {
+    border: 1px solid #007bff;
+    color: #000 !important;
+}
+.request-details {
+    margin-right: 120px;
+}
+.request-detail {
+    padding-bottom: 20px;
+}
+.show-request-header{
+    padding-bottom: 40px;
+}
+.theme-green {
+    color: #0ce710 !important;
+}
+.theme-yellow {
+    color: #f4f60f !important;
+}
+
+/* Driver Views*/
+.complete-signup-header{
+    padding-top: 20px;
+}
+.other-div {
+    float: center !important;
+}
+.post-driver-signup-notice {
+    padding-top: 30px;
+}
+.post-driver-signup-card{
+    border: 1px solid #007bff;
+}
+.account-under-review {
+    padding-top: 250px;
+    padding-bottom: 40px;
+}
+.log-out-from-notice {
+    color: #fff !important;
+}
+
+/* Pharmacy View */
+.no-underline {
+    text-decoration: none !important;
+}
+.vertical-panel {
+    float: left !important;
+    background: #007bff !important;
+    position: fixed !important;
+    border-right: 1px solid #004999;
+    box-shadow: inset 0px 0px 5px #004999;
+}
+.white {
+    color: #fff !important;
+}
+.black {
+    color: #000 !important;
+}
+.nav-item-pharmacy-view {
+    padding-top: 20px;
+}
+.nav-link {
+    font-size: 20px;
+    padding: 20px;
+    font-weight: 100 !important;
+}
+.nav-link:hover {
+    background: #fff !important;
+    color: #007bff;
+    border-radius: 5px;
+}
+.active {
+    background: #fff !important;
+    color: #007bff !important;
+    border-radius: 5px;
+}
+.flex-column {
+    padding-bottom: 20px;
+}
+.pharmacy-avatar {
+    height: 90px;
+}
+.profile-details {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.pharmacy-name {
+    margin-top: 10px;
+}
+.pharmacy-logout {
+    font-size: 24px !important;
+}
+.pharmacy-logout:hover {
+    background: transparent !important;
+    color: #fff !important;
+}
+.dashboard-control {
+    padding-top: 20px;
+    padding-bottom: 100px;
+}
+
+/* Mobile Rules */
+
+@media only screen and (max-device-width: 768px) {
+    body {
+        overflow: hidden !important;
+    }
+}

@@ -1,0 +1,18 @@
+<body>
+    <div class="row">
+        <div class="card-columns">
+            <% @deliveries.each do |del| %>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="..." alt="Card image cap">
+                        <div class="card-body">
+                          <h4 class="card-title"><%= find_pharmacy(del.pharmacy_id).name %></h4>
+                          <p class="card-text"><%= find_batch(del.batch_id).notes %></p>
+                          <p class="card-text"><small class="text-muted">Batch ID: <%= del.batch_id %></small></p>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</body>

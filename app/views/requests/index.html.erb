@@ -1,0 +1,18 @@
+<div class="all-requests">
+    <div class="col-md-12 all-requests-header"><h2>All Requests</h2></div>
+    <% @requests.each do |req| %>
+        <div class="col-md-8">
+            <a class="background-transparent no-underline" href="/requests/<%= req.id %>">
+                <div class="card request-card">
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            Batch ID: <span class="request-details"><%= req.batch_id %></span> 
+                            Status: <span class="request-details <%= status_color(req.status) %>"><%= prettify_nil(req.status) %></span>
+                            Driver: <span class="request-details"><%= prettify_nil(req.driver) %></span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    <% end %>
+</div>

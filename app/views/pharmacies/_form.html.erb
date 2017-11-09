@@ -10,8 +10,18 @@
       </ul>
     </div>
   <% end %>
+  
+  <div class="field">
+    <%= f.text_field :name, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Name" %>
+  </div>
 
+  <div class="field">
+    <%= f.text_field :number, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Phone Number" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :street, class:"form-control no-border-radius", autofocus: true, placeholder:"Street Address" %>
+  </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Update!", class:"btn btn-success btn-block no-border-radius driver-signup-button"%>
   </div>
 <% end %>

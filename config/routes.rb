@@ -1,30 +1,42 @@
 Rails.application.routes.draw do
   
+  devise_for :pharmacies, :controllers => {:registrations => "pharmacy/registrations"}
+  devise_for :drivers, :controllers => { :registrations => "driver/registrations"}
   get 'cancellation_message/create'
 
   get 'request_message/create'
 
   get 'patients/create'
 
-  get 'request/create'
+  get 'batch/new', to: 'batches#new'
 
-  get 'request/update'
+  get 'batch/create'
 
-  get 'request/destroy'
-
-  get 'delivery_batch/new'
-
-  get 'delivery_batch/create'
-
-  get 'delivery_batch/destroy'
-  # resources :batches do
-  #   post 'welcome/sms/reply', to: 'batches#driver_response'
-  # end
+  get 'batch/destroy'
+  get 'requests/:id', to: 'requests#show'
+  get 'requests', to: 'requests#index'
+  get 'request_driver', to: 'batches#request_driver'
+  get 'batches', to: 'batches#index'
+  get 'my-earnings', to: 'drivers#earnings'
+  get 'home', to: 'drivers#show'
+  get 'my-deliveries', to: 'drivers#deliveries'
+  get 'pharmacy/view', to: 'pharmacies#index'
   post 'welcome/sms/reply', to: 'batches#driver_response'
   resources :drivers
-  resources :pharmacies
+  resources :pharmacies do
+    
+  end
+  resources :batches do
+    resources :patients
+  end
   resources :cancellation_messages
   resources :request_messages
+  authenticated :driver do
+    root 'drivers#deliveries', as: :authenticated_driver_root
+  end
+  authenticated :pharmacy do
+    root 'batches#index', as: :authenticated_pharmacy_root
+  end
   root 'batches#new'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,5 +1,7 @@
 class DriversController < ApplicationController
-  before_action :set_driver, only: [:show, :edit, :update, :destroy]
+  before_action :set_driver, only: [:edit, :update, :destroy]
+  before_action :authenticate_driver!
+  before_action :check_driver
 
   # GET /drivers
   # GET /drivers.json
@@ -15,6 +17,22 @@ class DriversController < ApplicationController
   # GET /drivers/new
   def new
     @driver = Driver.new
+  end
+  
+  def deliveries
+    if current_driver.driver_approved
+      @deliveries = Request.where(driver: current_driver.number).all
+    else
+      if current_driver.registration_completed
+        redirect_to home_path
+      else
+        redirect_to edit_driver_path(current_driver)
+      end
+    end
+  end
+  
+  def earnings
+    
   end
 
   # GET /drivers/1/edit
@@ -42,7 +60,12 @@ class DriversController < ApplicationController
   def update
     respond_to do |format|
       if @driver.update(driver_params)
-        format.html { redirect_to @driver, notice: 'Driver was successfully updated.' }
+        @driver.update!(registration_completed: true)
+        if @driver.driver_approved
+          format.html { redirect_to root_path, notice: 'Registration successful' }
+        else
+          format.html { redirect_to home_path, notice: 'Registration successful' }
+        end
         format.json { render :show, status: :ok, location: @driver }
       else
         format.html { render :edit }
@@ -66,9 +89,15 @@ class DriversController < ApplicationController
     def set_driver
       @driver = Driver.find(params[:id])
     end
+    
+    # make sure the correct driver is authed
+    def check_driver
+      @driver = current_driver
+      redirect_to root_path, notice: "Not authorized to access this page" if @driver.nil?
+    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def driver_params
-      params.fetch(:driver, {}).require(:first_name, :last_name, :number, :street, :town, :zipcode)
+      params.require(:driver).permit(:first_name, :last_name, :number, :street, :town, :state, :zipcode, :license_plate, :car_make, :car_model, :car_year, :car_color, :approved)
     end
 end

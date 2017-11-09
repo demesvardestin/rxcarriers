@@ -1,4 +1,24 @@
-<p id="notice"><%= notice %></p>
-
-<%= link_to 'Edit', edit_driver_path(@driver) %> |
-<%= link_to 'Back', drivers_path %>
+<style>
+    .main-nav {
+        display: none;
+    }
+</style>
+<body>
+    <div class="other-div">
+        <div class="col-md-12 post-driver-signup-notice">
+            <div class="card text-center post-driver-signup-card no-border-radius">
+              <div class="card-header">
+                Status: <span class="theme-blue">In Process</span>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">Thanks for registering!</h4>
+                <p class="card-text">Our team will review your application over the next couple of days, and will email you as soon as you have been approved.</p>
+                <%= link_to 'Log Out', destroy_driver_session_path, class:"btn btn-primary no-border-radius log-out-from-notice", method: :delete %>
+              </div>
+              <div class="card-footer text-muted">
+                &copy; Darlynne
+              </div>
+            </div>
+        </div>
+    </div>
+</body>

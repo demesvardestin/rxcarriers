@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171107034710) do
+ActiveRecord::Schema.define(version: 20171109001330) do
 
   create_table "batches", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -42,8 +42,18 @@ ActiveRecord::Schema.define(version: 20171107034710) do
   end
 
   create_table "drivers", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "number"
@@ -54,7 +64,18 @@ ActiveRecord::Schema.define(version: 20171107034710) do
     t.float    "longitude"
     t.boolean  "requested"
     t.boolean  "clocked_in"
+    t.string   "state"
+    t.string   "license_plate"
+    t.string   "car_make"
+    t.string   "car_model"
+    t.string   "car_year"
+    t.string   "car_color"
+    t.boolean  "registration_completed"
+    t.boolean  "driver_approved"
   end
+
+  add_index "drivers", ["email"], name: "index_drivers_on_email", unique: true
+  add_index "drivers", ["reset_password_token"], name: "index_drivers_on_reset_password_token", unique: true
 
   create_table "patients", force: :cascade do |t|
     t.datetime "created_at",   null: false
@@ -75,8 +96,8 @@ ActiveRecord::Schema.define(version: 20171107034710) do
   add_index "patients", ["patable_type", "patable_id"], name: "index_patients_on_patable_type_and_patable_id"
 
   create_table "pharmacies", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "name"
     t.string   "street"
     t.string   "town"
@@ -84,7 +105,22 @@ ActiveRecord::Schema.define(version: 20171107034710) do
     t.integer  "identifier"
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "state"
+    t.string   "number"
   end
+
+  add_index "pharmacies", ["email"], name: "index_pharmacies_on_email", unique: true
+  add_index "pharmacies", ["reset_password_token"], name: "index_pharmacies_on_reset_password_token", unique: true
 
   create_table "request_messages", force: :cascade do |t|
     t.datetime "created_at",    null: false
@@ -103,7 +139,16 @@ ActiveRecord::Schema.define(version: 20171107034710) do
     t.string   "status"
   end
 
-# Could not dump table "requests" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "requests", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "patients"
+    t.integer  "batch_id"
+    t.integer  "count"
+    t.string   "driver"
+    t.string   "status"
+    t.string   "body"
+    t.integer  "pharmacy_id"
+  end
 
 end

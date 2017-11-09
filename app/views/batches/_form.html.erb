@@ -1,0 +1,19 @@
+<%= form_for(@batch) do |f| %>
+    <% if @batch.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@batch.errors.count, "error") %> prohibited this batch from being saved:</h2>
+    
+          <ul>
+          <% @batch.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <div class="field">
+        <%= f.text_area :notes, class:"form-control no-border-radius batch-notes-field", autofocus: true, placeholder:"Add a note to this batch" %>
+    </div>
+    <div class="actions">
+        <%= f.submit "Add", class:"btn btn-success btn-block btn-lg no-border-radius new-batch-button"%>
+    </div>
+<% end %>

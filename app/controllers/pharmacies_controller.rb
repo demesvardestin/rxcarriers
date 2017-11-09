@@ -1,5 +1,6 @@
 class PharmaciesController < ApplicationController
   before_action :set_pharmacy, only: [:show, :edit, :update, :destroy]
+  before_filter :load_patable, only: [:show]
 
   # GET /pharmacies
   # GET /pharmacies.json
@@ -42,7 +43,7 @@ class PharmaciesController < ApplicationController
   def update
     respond_to do |format|
       if @pharmacy.update(pharmacy_params)
-        format.html { redirect_to @pharmacy, notice: 'Pharmacy was successfully updated.' }
+        format.html { redirect_to root_path, notice: 'Pharmacy was successfully updated.' }
         format.json { render :show, status: :ok, location: @pharmacy }
       else
         format.html { render :edit }
@@ -66,9 +67,15 @@ class PharmaciesController < ApplicationController
     def set_pharmacy
       @pharmacy = Pharmacy.find(params[:id])
     end
+    
+    # Patient load
+    def load_patable
+      resource, id = request.path.split('/')[1, 2]
+      @patable = resource.singularize.classify.constantize.find(id)
+    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pharmacy_params
-      params.fetch(:pharmacy, {}).require(:name, :street, :town, :zipcode, :identifier)
+      params.require(:pharmacy).permit(:name, :street)
     end
 end

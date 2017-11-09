@@ -1,6 +1,20 @@
-<h1>Editing Pharmacy</h1>
 
-<%= render 'form' %>
-
-<%= link_to 'Show', @pharmacy %> |
-<%= link_to 'Back', pharmacies_path %>
+<style>
+    .main-nav {
+        display: none;
+    }
+</style>
+<body>
+    <div class="row complete-signup-header">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 text-center">
+            <h2>Update your info<h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <%= render 'form' %>
+        </div>
+    </div>
+</body>

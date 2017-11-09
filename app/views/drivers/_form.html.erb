@@ -10,8 +10,51 @@
       </ul>
     </div>
   <% end %>
+  
+  <div class="field">
+    <%= f.email_field :email, class:"form-control no-border-radius", autofocus: true, placeholder:"Email" %>
+  </div>
+
+  <div class="field">
+    <%= f.text_field :first_name, class:"form-control no-border-radius", autocomplete: "off", placeholder:"First Name" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :last_name, class:"form-control no-border-radius", autofocus: true, placeholder:"Last Name" %>
+  </div>
+
+  <div class="field">
+    <%= f.text_field :number, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Phone Number" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :street, class:"form-control no-border-radius", autofocus: true, placeholder:"Street Address" %>
+  </div>
+
+  <div class="field">
+    <%= f.text_field :town, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Town" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :state, class:"form-control no-border-radius", autocomplete: "off", placeholder:"State" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :zipcode, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Zipcode" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :license_plate, class:"form-control no-border-radius", autocomplete: "off", placeholder:"License Plate Number" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :car_make, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Car Make" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :car_model, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Car Model" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :car_year, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Car Year" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :car_color, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Car Color" %>
+  </div>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Submit", class:"btn btn-success btn-block no-border-radius driver-signup-button"%>
   </div>
 <% end %>

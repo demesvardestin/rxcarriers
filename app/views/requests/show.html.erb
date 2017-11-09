@@ -1,0 +1,10 @@
+<div class="all-requests">
+    <div class="col-md-8">
+        <h2 class="show-request-header">Request ID: <%= @request.id %></h2>
+        <h5 class="request-detail">Status: <span class="<%= status_color(@request.status) %>"><%= @request.status %></span></h5>
+        <h5 class="request-detail">Driver: <%= prettify_nil(@request.driver) %></h5>
+        <h5 class="request-detail">Batch ID: <%= @request.batch_id %></h5>
+        <h5 class="request-detail">Message Body: <%= @request.body %></h5>
+        <h5 class="request-detail">Sent: <%= @request.created_at %></h5>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="show-batch">
+    <!-- Patient/Prescription Form -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add a Delivery Package</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <%= render 'patients/form' %>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12"><h3 class="black">Batch ID: <%= @batch.id %></h3></div>
+    <% if @batch.patients.count == 0 %>
+        <div class="col-md-12"><h5 class="black"><em>No prescriptions added yet</em></h5></div>
+    <% else %>
+        <% @batch.patients.reverse.each do |pat| %>
+            <div class="col-md-8 prescription-card-div">
+                <div class="card no-border-radius prescription-card">
+                    <div class="card-header">
+                        <i class="fa fa-phone"></i> <%= pat.phone %>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title"><%= pat.address %></h4>
+                        <p class="card-text"><%= pat.name %></p>
+                        <%= link_to "Delete Prescription", batch_patients_path(pat), class:"btn btn-danger no-border-radius", method: :delete %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        <% end %>
+    <% end %>
+    <div class="col-md-12 text-right">
+        <div class="row">
+            <!--<div class="col-md-6"></div>-->
+            <div class="col-md-3">
+                <button type="button" class="btn btn-primary btn-block cursor-pointer no-border-radius" data-toggle="modal" data-target="#exampleModal">
+                  <i class="fa fa-file-text white"></i> Add Delivery Package
+                </button>
+            </div>
+            <div class="col-md-3">
+                <% if find_request(@batch.id) != 'n/a' %>
+                    <button class="btn btn-success btn-block no-border-radius" disabled:"disabled">
+                        <i class="fa fa-car white"></i> Request Pending...
+                    </button>
+                <% else %>
+                    <%= link_to request_driver_path(:id => @batch.id), class:"btn btn-success btn-block no-border-radius" do %>
+                        <i class="fa fa-car white"></i> Request Driver
+                    <% end %>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>

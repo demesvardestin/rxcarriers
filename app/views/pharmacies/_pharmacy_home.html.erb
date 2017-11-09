@@ -1,0 +1,42 @@
+<style>
+  .main-nav {
+    display: none;
+  }
+</style>
+<body>
+    <div class="col-md-2 vertical-panel">
+      <div class="profile-details">
+        <div class="col-md-12">
+          <!--<img class="rounded pharmacy-avatar" src="https://www.cannarecruiter.com/wp-content/uploads/2016/11/medical-marijuana-delivery-jobs.jpg">-->
+          <h4 class="white pharmacy-name"><%= current_pharmacy.name %></h4>
+          <hr>
+        </div>
+      </div>
+      <div class="nav-links">
+        <ul class="nav flex-column">
+          <li class="nav-item nav-item-pharmacy-view">
+            <a class="nav-link <% if url.include?("/batch")%>active<% end %>" href="/batches">Batches</a>
+          </li>
+          <li class="nav-item nav-item-pharmacy-view">
+            <a class="nav-link <% if url.include?("/requests")%>active<% end %>" href="/requests">Requests</a>
+          </li>
+          <li class="nav-item nav-item-pharmacy-view">
+            <a class="nav-link <% if url.include?("/transactions")%>active<% end %>" href="/transactions">Transactions</a>
+          </li>
+          <li class="nav-item nav-item-pharmacy-view">
+            <a class="nav-link <% if url.include?("/settings")%>active<% end %>" href="/settings">Settings</a>
+          </li>
+          <li class="nav-item nav-item-pharmacy-view">
+            <a class="nav-link <% if url.include?("/support")%>active<% end %>" href="/support">Support</a>
+          </li>
+        </ul>
+      </div>
+      <div class="dashboard-control">
+        <div class="col-md-12 text-left">
+          <%= link_to destroy_pharmacy_session_path, class:"black pharmacy-logout no-underline", method: :delete do %>
+            <i class="fa fa-power-off"></i> Log Out
+          <% end %>
+        </div>
+      </div>
+    </div>
+</body>

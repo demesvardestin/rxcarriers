@@ -1,0 +1,25 @@
+<%= form_for [@patable, @patient], id:"new_comment" do |f| %>
+    <% if @patient.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@patient.errors.count, "error") %> prohibited this patient from being saved:</h2>
+    
+          <ul>
+          <% @patient.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <div class="field">
+        <%= f.text_area :phone, class:"form-control no-border-radius patient-notes-field", autofocus: true, placeholder:"Contact Number" %>
+    </div>
+    <div class="field">
+        <%= f.text_area :address, class:"form-control no-border-radius patient-notes-field", autofocus: true, placeholder:"Delivery Address" %>
+    </div>
+    <div class="field">
+        <%= f.text_area :name, class:"form-control no-border-radius patient-notes-field", autofocus: true, placeholder:"Medication list, separated by a comma" %>
+    </div>
+    <div class="actions">
+        <%= f.submit "Add", class:"btn btn-success btn-block btn-lg no-border-radius new-patient-button cursor-pointer" %>
+    </div>
+<% end %>
