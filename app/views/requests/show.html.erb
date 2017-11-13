@@ -1,10 +1,79 @@
 <div class="all-requests">
-    <div class="col-md-8">
-        <h2 class="show-request-header">Request ID: <%= @request.id %></h2>
-        <h5 class="request-detail">Status: <span class="<%= status_color(@request.status) %>"><%= @request.status %></span></h5>
-        <h5 class="request-detail">Driver: <%= prettify_nil(@request.driver) %></h5>
-        <h5 class="request-detail">Batch ID: <%= @request.batch_id %></h5>
-        <h5 class="request-detail">Message Body: <%= @request.body %></h5>
-        <h5 class="request-detail">Sent: <%= @request.created_at %></h5>
+    <div class="row">
+        <div class="col-md-3">
+            <h3 class="show-request-header">Request ID: <%= @request.id %></h3>
+        </div>
+    </div>
+    <div class="row request-details-row">
+        <div class="col-md-3">
+            <h5 class="request-details">Status:</h5>
+        </div>
+        <div class="col-md-6">
+            <h6 class="request-details"><span class="<%= status_color(@request.status) %>"><%= @request.status %></span></h6>
+        </div>
+        <div class="col-md-9">
+            <hr style="margin-top: 0 !important;">
+        </div>
+    </div>
+    <div class="row request-details-row">
+        <div class="col-md-3">
+            <h5 class="request-details">Driver:</h5>
+        </div>
+        <div class="col-md-6">
+            <% if @request.driver %>
+                <h6 class="request-details">Name: <span class="theme-yellow"><%= driver.full_name %></span></h6>
+                <h6 class="request-details">Phone: <span class="theme-yellow"><%= driver.number %></span></h6>
+                <h6 class="request-details">Car Make: <span class="theme-yellow"><%= driver.car_make %></span></h6>
+                <h6 class="request-details">Car Model: <span class="theme-yellow"><%= driver.car_model %></span></h6>
+                <h6 class="request-details">Car Year: <span class="theme-yellow"><%= driver.car_year %></span></h6>
+                <h6 class="request-details">Car Color: <span class="theme-yellow"><%= driver.car_color %></span></h6>
+            <% else %>
+                <h6 class="request-details"><em>no driver yet</em></h6>
+            <% end %>
+        </div>
+        <div class="col-md-9">
+            <hr style="margin-top: 0 !important;">
+        </div>
+    </div>
+    <div class="row request-details-row">
+        <div class="col-md-3">
+            <h5 class="request-details">Batch ID:</h5>
+        </div>
+        <div class="col-md-6">
+            <h6 class="request-details"><%= @request.batch_id %></h6>
+        </div>
+        <div class="col-md-9">
+            <hr style="margin-top: 0 !important;">
+        </div>
+    </div>
+    <div class="row request-details-row">
+        <div class="col-md-3">
+            <h5 class="request-details">Message:</h5>
+        </div>
+        <div class="col-md-6">
+            <h6 class="request-details"><%= @request.body %></h6>
+        </div>
+        <div class="col-md-9">
+            <hr style="margin-top: 0 !important;">
+        </div>
+    </div>
+    <div class="row request-details-row">
+        <div class="col-md-3">
+            <h5 class="request-details">Sent:</h5>
+        </div>
+        <div class="col-md-6">
+            <h6 class="request-details"><%= @request.created_at %></h6>
+        </div>
+        <div class="col-md-9">
+            <hr style="margin-top: 0 !important;">
+        </div>
+    </div>
+    <div class="row request-details-row">
+        <div class="col-md-4">
+            <h5 class="request-details"><%= link_to 'Back to requests', requests_path, class:"btn btn-primary btn-block btn-lg no-border-radius white" %></h5>
+        </div>
+        <div class="col-md-4">
+            <h6 class="request-details"><%= link_to 'Cancel Request', cancel_request_path, class:"btn btn-danger btn-block btn-lg no-border-radius white" %></h6>
+        </div>
     </div>
 </div>

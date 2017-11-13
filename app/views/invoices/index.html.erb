@@ -1,0 +1,58 @@
+<style>
+    .row {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .transaction-graph-tab {
+        font-size: 18px;
+        padding: 10px;
+        border-radius: 0 !important;
+    }
+    .charges-today-card-body {
+        padding-bottom: 10px;
+        padding-top: 10px;
+        height: 192px;
+    }
+    .charges-today-card-body-2 {
+        margin-top: 10px;
+    }
+    .invoice-sum {
+        font-size: 82px;
+    }
+    .transactions-table {
+        border-left: none;
+        border-right: none;
+    }
+    .transactions-visuals {
+        margin-bottom: 20px;
+    }
+    .transactions-rows {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+</style>
+
+<% if current_pharmacy.stripe_connected %>
+    <%= render 'stripe_connected' %>
+<% else %>
+    <div class="unconnected-stripe-warning">
+        <div class="card text-center no-border-radius">
+          <div class="card-header transactions-div-card-header no-border-radius">
+            <h4 class="white">Note</h4>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Connect Your Stripe Account</h4>
+            <p class="card-text">
+                Darlyne uses the secure <%= link_to "Stripe API", "https://stripe.com", class:"theme-blue background-transparent" %>
+                to handle all transactions and statements. Stripe is also used by the likes of 
+                Uber and Airbnb. Note: Although the below button is prompting you to pay, 
+                your account won't actually be charged.
+            </p>
+            <%= render 'charges/form' %>
+          </div>
+          <div class="card-footer text-muted background-transparent">
+            &copy; Darlyne Logistics
+          </div>
+        </div>
+    </div>
+<% end %>

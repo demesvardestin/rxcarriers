@@ -12,16 +12,21 @@
   <% end %>
   
   <div class="field">
-    <%= f.text_field :name, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Name" %>
+    <%= f.text_field :name, class:"form-control no-border-radius", autofocus: true, placeholder:"Name" %>
   </div>
-
   <div class="field">
     <%= f.text_field :number, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Phone Number" %>
   </div>
   <div class="field">
-    <%= f.text_field :street, class:"form-control no-border-radius", autofocus: true, placeholder:"Street Address" %>
+    <%= f.text_field :supervisor, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Supervising Pharmacist" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :street, class:"form-control no-border-radius", placeholder:"Street Address" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :website, class:"form-control no-border-radius", placeholder:"Pharmacy Website" %>
   </div>
   <div class="actions">
-    <%= f.submit "Update!", class:"btn btn-success btn-block no-border-radius driver-signup-button"%>
+    <%= f.submit "Update!", class:"btn btn-primary btn-block btn-lg no-border-radius cursor-pointer"%>
   </div>
 <% end %>

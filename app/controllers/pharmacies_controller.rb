@@ -1,11 +1,12 @@
 class PharmaciesController < ApplicationController
-  before_action :set_pharmacy, only: [:show, :edit, :update, :destroy]
+  before_action :set_pharmacy, only: [:show, :update, :destroy]
   before_filter :load_patable, only: [:show]
 
   # GET /pharmacies
   # GET /pharmacies.json
   def index
     @pharmacies = Pharmacy.all
+    @queries = Pharmacy.search(params[:search]) if params[:search]
   end
 
   # GET /pharmacies/1
@@ -20,6 +21,11 @@ class PharmaciesController < ApplicationController
 
   # GET /pharmacies/1/edit
   def edit
+    @pharmacy = current_pharmacy
+  end
+  
+  def billing
+    @pharmacy = current_pharmacy
   end
 
   # POST /pharmacies
@@ -43,7 +49,8 @@ class PharmaciesController < ApplicationController
   def update
     respond_to do |format|
       if @pharmacy.update(pharmacy_params)
-        format.html { redirect_to root_path, notice: 'Pharmacy was successfully updated.' }
+        Charge.update_bank_info(@pharmacy) if @pharmacy.bank_account_number.present?
+        format.html { redirect_to root_path, notice: 'Pharmacy info was successfully updated.' }
         format.json { render :show, status: :ok, location: @pharmacy }
       else
         format.html { render :edit }
@@ -76,6 +83,6 @@ class PharmaciesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pharmacy_params
-      params.require(:pharmacy).permit(:name, :street)
+      params.require(:pharmacy).permit(:name, :street, :number, :supervisor, :website, :bank_account_number, :country, :account_holder_name, :account_holder_type, :routing_number)
     end
 end

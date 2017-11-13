@@ -14,14 +14,18 @@ class Driver < ActiveRecord::Base
     end
     
     def full_name
-       [first_name, last_name].join(" ") 
+        [first_name, last_name].join(" ") 
+    end
+    
+    def first_and_initial
+        [self.first_name, self.last_name[0]].join(" ") + '.'
     end
     
     def self.fetch_driver_response(req, pharmacy, text_message, request_message=nil, initial_driver=nil, new_req=true)
         req_type = {true => 'new request', false => 'request resend'}
         @drivers = Driver.omit_driver(initial_driver)
         if @drivers != nil
-            Driver.on_shift.available.filter_by_location(pharmacy.full_address, @drivers).each do |driver|
+            Driver.on_shift.available.filter_by_location(pharmacy.street, @drivers).each do |driver|
                 self.initialize_twilio.api.account.messages.create(
                   from: '+13474640621',
                   to: driver.number,
@@ -71,6 +75,17 @@ class Driver < ActiveRecord::Base
             pharmacy_id: pharmacy.id,
             batch_id: batch,
             request_type: 'cancellation'
+        )
+    end
+    
+    def self.pharmacy_cancelled(phone, pharmacy_id)
+        driver = Driver.find_by(number: phone)
+        pharmacy = Pharmacy.find_by(id: pharmacy_id)
+        request_cancellation = "[Message Type: pharmacy cancellation]\n\n#{driver.first_name}, #{pharmacy.name} has cancelled its pickup request."
+        Driver.initialize_twilio.api.account.messages.create(
+            from: '+13474640621',
+            to: driver.number,
+            body: request_cancellation
         )
     end
     

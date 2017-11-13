@@ -17,6 +17,13 @@ gem 'geocoder'
 gem 'twilio-ruby'
 # add devise for auth
 gem 'devise'
+# stripe for transactions
+gem 'stripe'
+# oauth2 for omniauth
+gem 'oauth2'
+# chartkick for charts and graphs/data visualization
+gem "chartkick"
+gem 'groupdate'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks

@@ -6,11 +6,9 @@
 <body>
     <div class="col-md-2 vertical-panel">
       <div class="profile-details">
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <img class="rounded pharmacy-avatar" src="https://www.cannarecruiter.com/wp-content/uploads/2016/11/medical-marijuana-delivery-jobs.jpg">
-            <h4 class="white pharmacy-name"><%= current_driver.full_name %></h4>
-          </div>
+        <div class="col-md-12">
+          <h4 class="white pharmacy-name"><%= current_driver.first_name %></h4>
+          <hr>
         </div>
       </div>
       <div class="nav-links">
@@ -22,7 +20,7 @@
             <a class="nav-link" href="/my-earnings">My Earnings</a>
           </li>
           <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link" href="/transactions">Transactions</a>
+            <a class="nav-link" href="/my-earnings">Transactions</a>
           </li>
           <li class="nav-item nav-item-pharmacy-view">
             <a class="nav-link" href="/settings">Settings</a>
@@ -33,10 +31,10 @@
         </ul>
       </div>
       <div class="dashboard-control">
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <%= link_to '', destroy_driver_session_path, class:"fa fa-power-off black pharmacy-logout no-underline", method: :delete %>
-          </div>
+        <div class="col-md-12 text-left">
+          <%= link_to destroy_driver_session_path, class:"black pharmacy-logout no-underline", method: :delete do %>
+            <i class="fa fa-power-off"></i> Log Out
+          <% end %>
         </div>
       </div>
     </div>

@@ -1,34 +1,35 @@
 <body>
     <div class="row batch-index-body">
-        <div class="card-columns">
-            <a class="link-to_new-batch background-transparent" href="batch/new">
-                <div class="card new-batch-card" style="width: 20rem;">
-                    <div class="card-body">
-                        <div class="theme-blue">
-                            <i class="fa fa-plus theme-blue add-new-batch"></i> 
-                            <span class="create-new-batch">
-                                Add new batch
-                            </span>
+        <div class="col-md-12">
+            <div class="card-columns">
+                <a class="link-to_new-batch background-transparent" href="batch/new">
+                    <div class="card new-batch-card no-border-radius" style="width: 20rem;">
+                        <div class="card-body">
+                            <div class="theme-blue">
+                                <i class="fa fa-plus theme-blue add-new-batch"></i> 
+                                <span class="create-new-batch">
+                                    Add new batch
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
-            <% @batches.each do |batch| %>
-                <div class="col-md-4">
-                    <div class="card border-theme-blue" style="width: 20rem;">
-                      <div class="card-body">
-                        <h5 class="card-title">Batch ID: <%= batch.id %></h5>
-                        <h6 class="card-title">
-                            <span class="theme-blue"></span> <%= pluralize(batch.patients.count, "package") %> - 
-                            Delivery Status: <span class="theme-blue"><%= find_request(batch.id) %></span>
-                        </h6>
-                        <!--<p class="card-text"><%= batch.notes %></p>-->
-                        <%= link_to 'View Details', batch_path(batch), class:"btn btn-primary card-link white no-underline" %>
-                        <%= link_to 'Delete Batch', batch_path(batch), class:"btn btn-danger card-link white no-underline", method: :delete %>
-                      </div>
-                    </div>
-                </div>
-            <% end %>
+                </a>
+                <% @batches.reverse.each do |batch| %>
+                    <a class="" href="batches/<%= batch.id %>">
+                        <div class="card batch-card-show no-border-radius" style="width: 20rem;">
+                          <div class="card-body">
+                            <h5 class="card-title batch-title-index">Batch ID: <%= batch.id %></h5>
+                            <h6 class="card-title batch-title-index">
+                                <span class="theme-blue"></span> <%= pluralize(batch.patients.count, "package") %> - 
+                                Delivery Status: <span class="<%= status_color(find_request(batch.id)) %>"><strong><%= find_request(batch.id) %></strong></span>
+                            </h6>
+                            <%= link_to 'View Details', batch_path(batch), class:"btn btn-primary card-link white no-underline no-border-radius" %>
+                            <%= link_to 'Delete Batch', batch_path(batch), class:"btn btn-danger card-link white no-underline no-border-radius", method: :delete %>
+                          </div>
+                        </div>
+                    </a>
+                <% end %>
+            </div>
         </div>
     </div>
 </body>

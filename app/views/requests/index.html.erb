@@ -1,18 +1,27 @@
 <div class="all-requests">
-    <div class="col-md-12 all-requests-header"><h2>All Requests</h2></div>
-    <% @requests.each do |req| %>
-        <div class="col-md-8">
-            <a class="background-transparent no-underline" href="/requests/<%= req.id %>">
-                <div class="card request-card">
-                    <div class="card-body">
-                        <div class="col-md-12">
-                            Batch ID: <span class="request-details"><%= req.batch_id %></span> 
-                            Status: <span class="request-details <%= status_color(req.status) %>"><%= prettify_nil(req.status) %></span>
-                            Driver: <span class="request-details"><%= prettify_nil(req.driver) %></span>
+    <div class="row requests-index-header">
+        <div class="col-md-12 all-requests-header"><h2>All Requests</h2></div>
+    </div>
+    <div class="request-card-container">
+        <% @requests.reverse.each do |req| %>
+            <div class="row">
+                <div class="col-md-9 request-card-div">
+                    <a class="background-transparent no-underline" href="/requests/<%= req.id %>">
+                        <div class="card request-card no-border-radius">
+                            <div class="card-body">
+                                <div class="col-md-12">
+                                    Batch ID: <span class="request-details"><strong><%= req.batch_id %></strong></span> 
+                                    Status: <span class="request-details <%= status_color(req.status) %>"><strong><%= prettify_nil(req.status) %></strong></span>
+                                    Driver: <span class="request-details"><strong><%= req.driver.nil? ? 'no driver yet' : find_driver(req.driver).first_and_initial %></strong></span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
-            </a>
-        </div>
-    <% end %>
+                <div class="col-md-1 status-icon-div">
+                    <i class="fa fa-<%= status(req.status) %> <%= status_color(req.status) %> status-icon"></i>
+                </div>
+            </div>
+        <% end %>
+    </div>
 </div>

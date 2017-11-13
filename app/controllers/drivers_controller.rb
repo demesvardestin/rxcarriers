@@ -31,8 +31,10 @@ class DriversController < ApplicationController
     end
   end
   
-  def earnings
-    
+  def transactions
+    @driver = current_driver
+    @account = Stripe::Account.retrieve("#{@driver.stripe_uid.to_s}") if @driver.stripe_uid.present?
+    @balance = Stripe::Balance.retrieve() if @driver.stripe_uid.present?
   end
 
   # GET /drivers/1/edit

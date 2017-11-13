@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light main-nav">
+  <a class="navbar-brand background-transparent" href="/"><h3 class="logo">Darlyne Logistics</h3></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="col-md-2"></div>
+    <div class="col-md-5">
+      <form class="form-inline my-2 my-lg-0">
+        <%= form_tag pharmacy_search_path,  remote: true, method: :get, id: 'stock-lookup-form' do %>
+            <%= text_field_tag :search, params[:search], class:'form-control pharmacy-search no-border-radius', placeholder:"Find your ideal pharmacy" do %>
+              <span class="input-group-addon pharmacy-search-addon no-border-radius" id="basic-addon1"><i class="fa fa-search"></i></span>
+            <% end %>
+        <% end %>
+      </form>
+    </div>
+    <!--<div class="col-md-1"></div>-->
+    <div class="col-md-5 right-nav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item nav-button-1">
+          <%= link_to "FOR PHARMACIES", new_pharmacy_registration_path, class:"btn btn-secondary background-transparent no-border-radius for-pharmacy-button nav-button" %>
+        </li>
+        <li class="nav-item nav-button-2">
+          <%= link_to "BECOME A DRIVER", new_driver_registration_path, class:"btn btn-secondary no-border-radius new-driver-button nav-button" %>
+        </li>
+        <li class="nav-item nav-button-3">
+          <a class="background-transparent nav-button" href="/drivers/sign_in"><h5 class="sign-in-link">SIGN IN</h5></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

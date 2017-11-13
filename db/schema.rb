@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171109001330) do
+ActiveRecord::Schema.define(version: 20171111231502) do
 
   create_table "batches", force: :cascade do |t|
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "notes"
     t.integer  "pharmacy_id"
+    t.string   "pharmacist"
   end
 
   create_table "cancellation_messages", force: :cascade do |t|
@@ -39,6 +40,10 @@ ActiveRecord::Schema.define(version: 20171109001330) do
     t.datetime "updated_at",  null: false
     t.integer  "pharmacy_id"
     t.integer  "batch_id"
+    t.string   "description"
+    t.string   "email"
+    t.string   "card_token"
+    t.string   "amount"
   end
 
   create_table "drivers", force: :cascade do |t|
@@ -72,10 +77,25 @@ ActiveRecord::Schema.define(version: 20171109001330) do
     t.string   "car_color"
     t.boolean  "registration_completed"
     t.boolean  "driver_approved"
+    t.string   "stripe_uid"
   end
 
   add_index "drivers", ["email"], name: "index_drivers_on_email", unique: true
   add_index "drivers", ["reset_password_token"], name: "index_drivers_on_reset_password_token", unique: true
+
+  create_table "invoices", force: :cascade do |t|
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "pharmacy_id"
+    t.string   "description"
+    t.string   "stripe_invoice_id"
+    t.integer  "amount"
+    t.string   "currency"
+    t.boolean  "paid"
+    t.integer  "request_id"
+    t.integer  "batch_id"
+    t.datetime "billing_date"
+  end
 
   create_table "patients", force: :cascade do |t|
     t.datetime "created_at",   null: false
@@ -117,6 +137,18 @@ ActiveRecord::Schema.define(version: 20171109001330) do
     t.string   "last_sign_in_ip"
     t.string   "state"
     t.string   "number"
+    t.string   "uid"
+    t.string   "token"
+    t.string   "provider"
+    t.boolean  "stripe_connected"
+    t.string   "stripe_cus"
+    t.string   "supervisor"
+    t.string   "website"
+    t.string   "bank_account_number"
+    t.string   "country"
+    t.string   "account_holder_name"
+    t.string   "account_holder_type"
+    t.string   "routing_number"
   end
 
   add_index "pharmacies", ["email"], name: "index_pharmacies_on_email", unique: true

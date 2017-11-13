@@ -13,7 +13,10 @@
     <div class="field">
         <%= f.text_area :notes, class:"form-control no-border-radius batch-notes-field", autofocus: true, placeholder:"Add a note to this batch" %>
     </div>
+    <div class="field">
+        <%= f.text_field :pharmacist, class:"form-control no-border-radius", autofocus: true, placeholder:"Pharmacist Signature" %>
+    </div>
     <div class="actions">
-        <%= f.submit "Add", class:"btn btn-success btn-block btn-lg no-border-radius new-batch-button"%>
+        <%= f.submit "Add", class:"btn btn-primary btn-block btn-lg no-border-radius new-batch-button"%>
     </div>
 <% end %>

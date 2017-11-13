@@ -6,15 +6,24 @@
 </style>
 <body>
     <div class="row complete-signup-header">
-        <div class="col-md-3"></div>
-        <div class="col-md-6 text-center">
-            <h2>Update your info<h2>
+        <div class="col-md-3">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <div class="settings-header">
+                    <h6><strong>Account Settings</strong><h6>
+                </div>
+                <a class="nav-link nav-link-edit no-border-radius <% if url.include?("/account-info") || url.end_with?('/settings') %>inverse-active<% end %>" href="/settings/account-info" role="tab" aria-controls="v-pills-home" aria-selected="true">Account</a>
+                <a class="nav-link nav-link-edit no-border-radius <% if url.include?("/billing-info")%>inverse-active<% end %>" href="/settings/billing-info" role="tab" aria-controls="v-pills-profile" aria-selected="false">Billing</a>
+                <a class="nav-link nav-link-edit no-border-radius <% if url.include?("/advanced")%>inverse-active<% end %>" href="/settings/advanced" role="tab" aria-controls="v-pills-settings" aria-selected="false">Advanced</a>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-            <%= render 'form' %>
+        <div class="col-md-8">
+            <div class="tab-content">
+                <div class="card no-border-radius">
+                    <div class="card-body">
+                        <%= render "#{card_content}" %>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>

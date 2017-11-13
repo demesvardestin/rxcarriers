@@ -1,0 +1,81 @@
+<div class="pharmacy-transaction-report">
+    <div class="row">
+        <div class="col-md-12 transaction-page-header"><h3>Transactions</h3></div>
+    </div>
+    <div class="row transactions-visuals">
+        <div class="col-md-4">
+            <div class="card no-border-radius charges-today-card-body" style="width: 20rem;">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Charges Today</h4>
+                    <h1 class="theme-blue text-center invoice-sum">$<%= invoices_sum %></h1>
+                </div>
+            </div>
+            <div class="card no-border-radius charges-today-card-body charges-today-card-body-2" style="width: 20rem;">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Next Billing Date</h4>
+                    <h1 class="theme-blue text-center invoice-sum"><%= prettify_nil(next_payment_attempt) %></h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card text-center no-border-radius">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link transaction-graph-tab <% if url.end_with?("/transactions")%>active<% end %>" href="/transactions">Day</a>
+                        </li>
+                        <li class="nav-item">
+                            <%= link_to 'Week', transactions_path(:period => 'week'), class:"nav-link transaction-graph-tab #{'active' if url.end_with?("/transactions?period=week")}" %>
+                        </li>
+                        <li class="nav-item">
+                            <%= link_to 'Month', transactions_path(:period => 'month'), class:"nav-link transaction-graph-tab #{'active' if url.end_with?("/transactions?period=month")}" %>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <%= column_chart render_class %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card transactions-table">
+                <div class="card-header transactions-table-header">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5>Date Created</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <h5>Description</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <h5>Amount</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <h5>Billing Cycle</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body transactions-rows">
+                    <% @invoices.each do |inv| %>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h6 class="theme-blue"><%= inv.created_at %></h6>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="theme-blue">Batch ID: <%= inv.batch_id %></h6>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="theme-blue"><%= inv.amount %></h6>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="theme-blue"><%= inv.billing_date %></h6>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

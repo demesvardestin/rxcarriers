@@ -8,7 +8,8 @@ class Request < ActiveRecord::Base
   
     def self.send_request(original_request)
         @pharmacy = Pharmacy.find(original_request.pharmacy_id)
-        message = "[Type: new request - ID: #{original_request.batch_id}]\n\nNew delivery request from #{@pharmacy.name} at #{@pharmacy.full_address}. Reply 'yes' to accept this request."
+        @batch = Batch.find(original_request.batch_id)
+        message = "[Type: new request - ID: #{@batch.id}]\n\nNew delivery request from #{@pharmacy.name} at #{@pharmacy.street}. Reply 'yes' to accept this request."
         @request = original_request
         @request.update!(body: 'Sent from your Twilio trial account - ' + message)
         Driver.fetch_driver_response(original_request, @pharmacy, message)
@@ -16,7 +17,7 @@ class Request < ActiveRecord::Base
     
     def self.resend_request(batch_id, pharmacy, req, driver, request_message)
         Driver.request_cancelled(driver, pharmacy, batch_id)
-        text_message = "[Type: request resend - ID: #{batch_id}]\n\nUpdated delivery request from #{pharmacy.name} at #{pharmacy.full_address}. Reply 'yes' to accept this request."
+        text_message = "[Type: request resend - ID: #{batch_id}]\n\nUpdated delivery request from #{pharmacy.name} at #{pharmacy.street}. Reply 'yes' to accept this request."
         Driver.fetch_driver_response(req, pharmacy, text_message, request_message, driver, false)
         Request.find_by(id: req.id).update!(body:'Sent from your Twilio trial account - ' + text_message)
     end

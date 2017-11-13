@@ -21,29 +21,32 @@ body {
     font-family: 'Roboto', sans-serif !important;
 }
 .navbar {
-    background-color: #007bff !important;
+    background-color: #03032b !important;
 }
 .logo {
     color: #fff;
 }
 .theme-blue {
-    color: #007bff !important;
+    color: #03032b !important;
 }
 .theme-red {
     color: #ff3232 !important;
+}
+.location-green {
+    color: #5f9616 !important;
 }
 .pharmacy-search {
     display: block !important;
     width: 80% !important;
     height: 40px;
-    border-left: none !important;
-    border: 0.5px solid #007bff;
+    border: none !important;
+    border: 0.5px solid #03032b;
     box-shadow: none !important;
 }
 .pharmacy-search-addon {
     height: 40px;
-    border-right: none !important;
-    border: 0.5px solid #007bff;
+    border: none !important;
+    border: 0.5px solid #03032b;
     background: #fff !important;
 }
 .background-transparent {
@@ -63,13 +66,13 @@ body {
     padding: 9px;
 }
 .for-pharmacy-button:hover {
-    color: #007bff !important;
+    color: #03032b !important;
     background: #FFF !important;
     border: 1px solid #fff;
     box-shadow: none !important;
 }
 .new-driver-button {
-    color: #007bff !important;
+    color: #03032b !important;
     background: #fff !important;
     border: 1px solid #fff;
     font-size: 14px;
@@ -88,7 +91,7 @@ body {
     margin-top: 10px;
 }
 .sign-in-link:hover {
-    /*color: #007bff !important;*/
+    /*color: #03032b !important;*/
 }
 .vertical-align-center {
     vertical-align: middle !important;
@@ -99,7 +102,7 @@ body {
     padding-bottom: 20px;
 }
 .driver-signup-banner-text{
-    color: #007bff !important;
+    color: #03032b !important;
 }
 .placeholder-div {
     float: right;
@@ -113,7 +116,7 @@ body {
     padding-top: 20px;
 }
 .form-control {
-    border: 1px solid #007bff;
+    border: .5px solid #d9dfc0;
     height: 40px;
 }
 .driver-signup {
@@ -148,10 +151,10 @@ body {
 /* Batches Views */
 .new-batch-card {
     padding: 40px;
-    border: 1px solid #007bff;
+    border: 1px solid #03032b;
 }
 .new-batch-card:hover {
-    background: #007bff !important;
+    background: #03032b !important;
     .add-new-batch {
         color: #fff !important;
     }
@@ -161,10 +164,13 @@ body {
 }
 .add-new-batch {
     font-size: 28px !important;
-    color: #007bff !important;
+    color: #03032b !important;
 }
 .batch-index-body {
-    padding: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 .create-new-batch {
     font-size: 24px;
@@ -172,8 +178,8 @@ body {
 .new-batch-form {
     padding-left: 240px;
     padding-right: 240px;
-    padding-top: 200px;
-    padding-bottom: 200px;
+    padding-top: 100px;
+    padding-bottom: 150px;
 }
 .new-batch-button {
     cursor: pointer;
@@ -185,49 +191,129 @@ body {
     padding: 40px;
 }
 .cursor-pointer {
-    cursor: pointer;
+    cursor: pointer !important;
 }
 .prescription-card-div {
     padding-top: 20px;
     padding-bottom: 20px;
 }
 .prescription-card {
-    border: 0.25px solid #99caff;
+    border: 0.25px solid #d9dfc0;
 }
 .border-theme-blue {
-    border: 1px solid #007bff;
+    border: 1px solid #03032b;
+}
+.no-prescriptions {
+    padding-bottom: 20px;
+}
+.batch-card-show {
+    height: 151px !important;
+    border: 1px solid #e7f1ca;
+    box-shadow: inset 0px 0px 3px #b8c0a1;
+}
+.request-card {
+    border: 1px solid #e7f1ca;
+    box-shadow: inset 0px 0px 3px #b8c0a1;
+}
+.batch-card-show:hover {
+    border: 1px solid #8a9079;
+}
+.request-card:hover {
+    border: 1px solid #8a9079;
+}
+.requests-index-header {
+    position: fixed !important;
+    z-index: 3 !important;
+    margin-bottom: 20px !important;
+    background: #fff !important;
+    width: 100% !important;
+}
+.request-card-container{
+    padding-top: 100px;
+}
+.batch-title-index:hover {
+    color: #000 !important;
+}
+
+/* Invoice Views */
+.transaction-graph-tab {
+    color: #03032b !important;
+}
+.transaction-graph-tab:hover {
+    background: #fff !important;
+}
+.pharmacy-transaction-report {
+    padding-top: 40px;
+}
+.transaction-page-header {
+    padding-bottom: 20px;
+}
+
+/* Charges Views */
+.unconnected-stripe-warning {
+    padding: 150px;
+}
+.transactions-div-card-header {
+    background: #03032b !important;
+    padding-bottom: 0;
+    padding-top: 10px;
+}
+.connected-stripe-div {
+    padding-top: 20px;
 }
 
 /* Request Views */
 .all-requests {
     padding: 40px;
+    padding-top: 0 !important;
 }
 .all-requests-header {
     padding-bottom: 20px;
 }
 .request-card:hover {
-    border: 1px solid #007bff;
+    border: 1px solid #03032b;
     color: #000 !important;
 }
+.request-details-row {
+    padding-bottom: 15px;
+}
+.request-card-div {
+    padding-bottom: 20px;
+}
 .request-details {
-    margin-right: 120px;
+    padding-right: 100px;
 }
 .request-detail {
     padding-bottom: 20px;
 }
 .show-request-header{
     padding-bottom: 40px;
+    padding-top: 40px;
 }
 .theme-green {
-    color: #0ce710 !important;
+    color: #134d13 !important;
+}
+.btn-success {
+    background: #134d13 !important;
+    border: 1px solid #0f3d0f;
+}
+.btn-primary {
+    background: #03032b !important;
+    border: 1px solid #020222 !important;
 }
 .theme-yellow {
-    color: #f4f60f !important;
+    color: #878706 !important;
+}
+.status-icon {
+    font-size: 34px !important;
+}
+.status-icon-div {
+    padding-top: 10px;
 }
 
 /* Driver Views*/
 .complete-signup-header{
-    padding-top: 20px;
+    padding-top: 40px;
 }
 .other-div {
     float: center !important;
@@ -236,7 +322,7 @@ body {
     padding-top: 30px;
 }
 .post-driver-signup-card{
-    border: 1px solid #007bff;
+    border: 1px solid #03032b;
 }
 .account-under-review {
     padding-top: 250px;
@@ -247,15 +333,23 @@ body {
 }
 
 /* Pharmacy View */
+.search-header {
+    padding-bottom: 20px;
+}
+.search-container {
+    padding-left: 100px;
+    padding-right: 100px;
+}
 .no-underline {
     text-decoration: none !important;
 }
 .vertical-panel {
     float: left !important;
-    background: #007bff !important;
+    background: #03032b !important;
     position: fixed !important;
-    border-right: 1px solid #004999;
-    box-shadow: inset 0px 0px 5px #004999;
+    border-right: 1px solid #020222;
+    box-shadow: inset 0px 0px 5px #010115;
+    height: 100vw !important;
 }
 .white {
     color: #fff !important;
@@ -266,19 +360,50 @@ body {
 .nav-item-pharmacy-view {
     padding-top: 20px;
 }
-.nav-link {
+.nav-button-1 {
+    padding-right: 15px;
+}
+.nav-button-2 {
+    padding: 0;
+}
+.nav-button-3 {
+    padding-left: 15px;
+}
+.nav-link-side {
     font-size: 20px;
     padding: 20px;
     font-weight: 100 !important;
+    color: #fff !important;
+    border-radius: 0 !important;
 }
-.nav-link:hover {
+.settings-header {
+    padding-left: 15px;
+}
+.nav-link-side:hover {
     background: #fff !important;
-    color: #007bff;
+    color: #03032b !important;
     border-radius: 5px;
+}
+.nav-link-edit {
+    font-size: 16px !important;
+    padding-right: 120px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    margin-top: 15px;
+}
+.nav-link-edit:hover {
+    background: #03032b !important;
+    color: #fff !important;
 }
 .active {
     background: #fff !important;
-    color: #007bff !important;
+    color: #03032b !important;
+    border-radius: 5px;
+}
+.inverse-active {
+    background: #03032b !important;
+    color: #fff !important;
     border-radius: 5px;
 }
 .flex-column {
@@ -294,16 +419,37 @@ body {
 .pharmacy-name {
     margin-top: 10px;
 }
+.logout-btn-div {
+    padding-left: 0;
+}
 .pharmacy-logout {
-    font-size: 24px !important;
+    font-size: 20px !important;
+    padding-left: 20px;
+    padding-right: 85px;
+    background: transparent !important;
 }
 .pharmacy-logout:hover {
-    background: transparent !important;
-    color: #fff !important;
+    background: #fff !important;
+    color: #03032b !important;
 }
 .dashboard-control {
     padding-top: 20px;
     padding-bottom: 100px;
+}
+.billing-tab {
+    // margin-top: -418px !important;
+    padding-top: 0 !important;
+}
+.hide {
+    display: none;
+}
+.show {
+    display: block !important;
+}
+
+/* IDs */
+#v-pills-profile {
+    padding-top: 0 !important;
 }
 
 /* Mobile Rules */

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  get 'invoice/create'
+
   devise_for :pharmacies, :controllers => {:registrations => "pharmacy/registrations"}
   devise_for :drivers, :controllers => { :registrations => "driver/registrations"}
   get 'cancellation_message/create'
@@ -13,15 +15,26 @@ Rails.application.routes.draw do
   get 'batch/create'
 
   get 'batch/destroy'
+  get 'cancel-request', to: 'requests#cancel'
+  get 'settings', to: 'pharmacies#edit'
+  get 'settings/advanced', to: 'pharmacies#edit'
+  get 'settings/password', to: 'pharmacies#edit'
+  get 'settings/account-info', to: 'pharmacies#edit'
+  get 'settings/billing-info', to: 'pharmacies#edit'
+  get 'pharmacy/search', to: 'pharmacies#index'
+  get 'pharmacy/:id/settings', to: 'pharmacies#edit', as: "account_settings"
+  get 'transactions', to: 'invoices#index'
+  get 'users/auth/stripe_connect/callback', to: 'charges#stripe'
   get 'requests/:id', to: 'requests#show'
   get 'requests', to: 'requests#index'
   get 'request_driver', to: 'batches#request_driver'
   get 'batches', to: 'batches#index'
-  get 'my-earnings', to: 'drivers#earnings'
+  get 'my-earnings', to: 'drivers#transactions'
   get 'home', to: 'drivers#show'
   get 'my-deliveries', to: 'drivers#deliveries'
   get 'pharmacy/view', to: 'pharmacies#index'
   post 'welcome/sms/reply', to: 'batches#driver_response'
+  resources :charges
   resources :drivers
   resources :pharmacies do
     
@@ -37,7 +50,7 @@ Rails.application.routes.draw do
   authenticated :pharmacy do
     root 'batches#index', as: :authenticated_pharmacy_root
   end
-  root 'batches#new'
+  root 'pharmacies#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

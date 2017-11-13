@@ -1,49 +1,55 @@
-<style>
-  .main-nav {
-    display: none;
-  }
-  body {
-    overflow-y: hidden !important;
-  }
-</style>
 <body>
-    <div class="col-md-2 vertical-panel">
-      <div class="profile-details">
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <img class="rounded pharmacy-avatar" src="https://www.cannarecruiter.com/wp-content/uploads/2016/11/medical-marijuana-delivery-jobs.jpg">
-            <h2 class="white pharmacy-name">Medicine C...</h2>
+  <% if params[:search] %>
+    <div class="search-container">
+      <div class="card no-border-radius">
+        <div class="card-body">
+          <div class="col-md-12 search-header">
+            <h4>Search results for: <span class="theme-blue"><%= params[:search] %></span></h4>
+            <p><%= pluralize(@queries.count, "result") %> found</p>
           </div>
-        </div>
-      </div>
-      <div class="nav-links">
-        <ul class="nav flex-column">
-          <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link active" href="/batch/new">New Batch</a>
-          </li>
-          <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link" href="/requests">Requests</a>
-          </li>
-          <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link" href="/transactions">Transactions</a>
-          </li>
-          <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link" href="/settings">Settings</a>
-          </li>
-          <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link" href="/support">Support</a>
-          </li>
-        </ul>
-      </div>
-      <div class="dashboard-control">
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <%= link_to '', new_driver_registration_path, class:"fa fa-power-off black pharmacy-logout no-underline" %>
+          <div class="col-md-12">
+            <hr style="margin-top: 0 !important;">
           </div>
+          <% @queries.each do |ph| %>
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-12">
+                  <h5 class="theme-blue"><%= ph.name %></h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <h5 class="location-green"><%= ph.street %></h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <p class=""><em><i class="fa fa-globe"></i> <a class="background-transparent theme-blue" href="<%= check_website(ph.website) %>"><%= check_website(ph.website) %></a></em></p>
+                </div>
+                <div class="col-md-2">
+                  <p class=""><em><i class="fa fa-phone"></i> <%= ph.number %></em></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <h6 class="">
+                        <i class="fa fa-car"></i> Provides On-demand Delivery
+                      </h6>
+                    </div>
+                    <div class="col-md-4">
+                      <h6 class="">
+                        <i class="fa fa-comments-o"></i> Online Customer Service Available
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
-    <div class="col-md-10 main-page">
-      
-    </div>
+  <% end %>
 </body>
