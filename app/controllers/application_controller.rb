@@ -5,12 +5,13 @@ class ApplicationController < ActionController::Base
   before_action :redirect_from_cross_model
   
   def redirect_from_cross_model
+    url = request.original_url
     if current_pharmacy
-      if request.original_url.include?("drivers/sign_up") || request.original_url.include?("drivers/sign_in")
+      if url.include?("drivers/sign_up") || url.include?("drivers/sign_in")
         redirect_to authenticated_pharmacy_root_path
       end
     elsif current_driver
-      if request.original_url.include?("pharmacies/sign_up") || request.original_url.include?("pharmacies/sign_in")
+      if url.include?("pharmacies/sign_up") || url.include?("pharmacies/sign_in")
         redirect_to authenticated_driver_root_path
       end
     end
