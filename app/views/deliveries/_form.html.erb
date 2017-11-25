@@ -1,0 +1,40 @@
+<%= form_for [@deliverable, @delivery]  do |f| %>
+    <% if @delivery.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@delivery.errors.count, "error") %> prohibited this delivery from being saved:</h2>
+    
+          <ul>
+          <% @delivery.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+    <% end %>
+    
+    <div class="row">
+        <div class="field col-md-6">
+            <h6 class="font-14 patient-name-label"><strong><%= f.label :patient_name %></strong></h6>
+            <%= f.select(:recipient_name, patients(@chosen_patient), multiple: true, class:"form-control", placeholder:"Name of delivery recipient") %>
+        </div>
+        <div class="field col-md-6">
+            <%= f.text_field :recipient_phone_number, class:"form-control", autofocus: true, placeholder:"Recipient phone number" %>
+        </div>
+    </div>
+    <div class="row">
+        <div class="field col-md-10">
+            <%= f.text_field :recipient_address, class:"form-control", autofocus: true, placeholder:"Delivery address" %>
+        </div>
+        <div class="field col-md-2">
+            <%= f.text_field :copay, class:"form-control", autofocus: true, placeholder:"Copay" %>
+        </div>
+    </div>
+    <div class="row">
+        <div class="field col-md-12">
+            <%= f.text_area :medications, class:"form-control batch-notes-field", autofocus: true, placeholder:"Medication list, separated by a comma" %>
+        </div>
+    </div>
+
+    <div class="form-actions text-right">
+        <%= f.submit "Add delivery package", class:"btn btn-light white cursor-pointer" %>
+    </div>
+<% end %>

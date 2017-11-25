@@ -1,7 +1,7 @@
 <div class="show-batch">
     <!-- Patient/Prescription Form -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+    <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Add a Delivery Package</h5>
@@ -10,50 +10,61 @@
             </button>
           </div>
           <div class="modal-body">
-            <%= render 'patients/form' %>
+            <%= render 'deliveries/form' %>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-12"><h3 class="black">Batch ID: <%= @batch.id %></h3></div>
-    <div class="col-md-12"><p class="black">Pharmacist: <span class="theme-blue"><%= @batch.pharmacist %></span></p></div>
-    <% if @batch.patients.count == 0 %>
-        <div class="col-md-12 no-prescriptions"><h5 class="black"><em>No packages added yet</em></h5></div>
+    <div class="row">
+        <div class="col-md-12"><h3 class="black">Batch ID: <%= @id %><span class="badge badge-secondary"><%= request_status(find_request(@batch.id)) %></span></h3></div>
+        <div class="col-md-12"><p class="black">Pharmacist: <span class="theme-blue"><strong><%= @batch.pharmacist %></strong></span></p></div>
+    </div>
+    <% if @batch.deliveries.count == 0 %>
+        <div class="row"><div class="col-md-8 no-prescriptions"><div class="card"><div class="card-body"><h5 class="black"><em>No packages added yet</em></h5></div></div></div></div>
     <% else %>
-        <% @batch.patients.reverse.each do |pat| %>
-            <div class="col-md-8 prescription-card-div">
-                <div class="card no-border-radius prescription-card">
-                    <div class="card-header">
-                        <i class="fa fa-phone"></i> <%= pat.phone %>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title"><%= pat.address %></h4>
-                        <p class="card-text"><%= pat.name %></p>
-                        <%= link_to "Delete Prescription", batch_patients_path(pat), class:"btn btn-danger no-border-radius white", method: :delete %>
+        <% @batch.deliveries.reverse.each do |pac| %>
+            <div class="row">
+                <div class="col-md-8 prescription-card-div">
+                    <div class="card prescription-card">
+                        <div class="card-header">
+                            <h5><i class="fa fa-map-marker"></i> <%= pac.recipient_address %></h5>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-title"><%= pac.recipient_name %>, <%= pac.recipient_phone_number %></h6>
+                            <p class="card-text">
+                                <ul>
+                                    <% medications(pac).each do |med| %>
+                                        <li><%= med %></li>
+                                    <% end %>
+                                </ul>
+                            </p>
+                            <h6 class="package-action-buttons">
+                                <%= link_to batch_delivery_path(:id => pac.id, :batch_id => @batch.id), class:"btn btn-secondary btn-sm white", method: :delete do %>
+                                    <span class="font-14"><i class="fa fa-times"></i> Remove Package</span>
+                                <% end %>
+                            </h6>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4"></div>
         <% end %>
     <% end %>
-    <div class="col-md-12 text-right">
-        <div class="row">
-            <div class="col-md-3">
-                <button type="button" class="btn btn-primary btn-block cursor-pointer no-border-radius" data-toggle="modal" data-target="#exampleModal">
-                  <i class="fa fa-file-text white"></i> Add Prescription Package
+    <div class="row">
+        <div class="col-md-3">
+            <button type="button" class="btn btn-primary cursor-pointer padding-14" data-toggle="modal" data-target=".bd-example-modal-lg">
+              <span class="font-14"><i class="fa fa-file-text"></i> Add Prescription Package</span>
+            </button>
+        </div>
+        <div class="col-md-3">
+            <% if find_request(@batch.id) != 'n/a' %>
+                <button class="btn btn-light white" disabled:"disabled">
+                    <i class="fa fa-car white"></i> <%= request_status(find_request(@batch.id)) %>
                 </button>
-            </div>
-            <div class="col-md-3">
-                <% if find_request(@batch.id) != 'n/a' %>
-                    <button class="btn btn-success btn-block no-border-radius" disabled:"disabled">
-                        <i class="fa fa-car white"></i> <%= request_status(find_request(@batch.id)) %>
-                    </button>
-                <% else %>
-                    <%= link_to request_driver_path(:id => @batch.id), class:"btn btn-success btn-block no-border-radius" do %>
-                        <i class="fa fa-car white"></i> Request Driver
-                    <% end %>
+            <% else %>
+                <%= link_to request_driver_path(:id => @batch.id), class:"btn btn-light white" do %>
+                    <i class="fa fa-car white"></i> Request Driver
                 <% end %>
-            </div>
+            <% end %>
         </div>
     </div>
 </div>

@@ -21,11 +21,11 @@
             <%= devise_error_messages! %>
           
             <div class="field">
-              <%= f.email_field :email, class:"form-control no-border-radius", autofocus: true, placeholder:"Email" %>
+              <%= f.email_field :email, class:"form-control", autofocus: true, placeholder:"Email" %>
             </div>
           
             <div class="field">
-              <%= f.password_field :password, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Password" %>
+              <%= f.password_field :password, class:"form-control", autocomplete: "off", placeholder:"Password" %>
             </div>
           
             <% if devise_mapping.rememberable? -%>
@@ -38,10 +38,10 @@
             <div class="actions">
               <div class="row">
                 <div class="col-md-6">
-                  <%= f.submit "Log in", class:"btn btn-primary no-border-radius btn-block driver-signup-button" %>
+                  <%= f.submit "Log in", class:"btn btn-primary btn-block driver-signup-button" %>
                 </div>
                 <div class="col-md-6">
-                  <%= link_to "Register", new_driver_registration_path, class:"btn btn-success no-border-radius btn-block driver-login-button" %>
+                  <%= link_to "Register", new_driver_registration_path, class:"btn btn-success btn-block driver-login-button" %>
                 </div>
               </div>
             </div>

@@ -1,14 +1,22 @@
 class Driver < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+    # Include default devise modules. Others available are:
+    # :confirmable, :lockable, :timeoutable and :omniauthable
+    devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
     
+    # geocoding
     geocoded_by :full_address
     after_validation :geocode
+    
+    # scopes
     scope :on_shift, -> {where(clocked_in: true)}
     scope :available, -> {where(requested: false)}
     
+    # validations
+    has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }
+    validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
+    
+    # methods
     def full_address
         [street, town, state, zipcode].join(", ")
     end
@@ -19,6 +27,10 @@ class Driver < ActiveRecord::Base
     
     def first_and_initial
         [self.first_name, self.last_name[0]].join(" ") + '.'
+    end
+    
+    def initials
+        self.first_name[0] + self.last_name[0] 
     end
     
     def self.fetch_driver_response(req, pharmacy, text_message, request_message=nil, initial_driver=nil, new_req=true)

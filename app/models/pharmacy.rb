@@ -5,19 +5,23 @@ class Pharmacy < ActiveRecord::Base
     devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
     
+    # associations
     geocoded_by :full_address
     after_validation :geocode
     has_many :requests
     has_many :patients, :as => :patable
     has_one :charge
+    has_many :deliveries
+    has_many :supports
     
+    # methods
     def full_address
         [street]
     end
     
     def name_shortened
-      if self.name.length > 12
-        self.name[0..9] + '...'
+      if self.name.length > 18
+        self.name[0..17] + '...'
       else
         name
       end

@@ -1,27 +1,38 @@
 <div class="all-requests">
-    <div class="row requests-index-header">
-        <div class="col-md-12 all-requests-header"><h2>All Requests</h2></div>
-    </div>
-    <div class="request-card-container">
-        <% @requests.reverse.each do |req| %>
-            <div class="row">
-                <div class="col-md-9 request-card-div">
-                    <a class="background-transparent no-underline" href="/requests/<%= req.id %>">
-                        <div class="card request-card no-border-radius">
-                            <div class="card-body">
-                                <div class="col-md-12">
-                                    Batch ID: <span class="request-details"><strong><%= req.batch_id %></strong></span> 
-                                    Status: <span class="request-details <%= status_color(req.status) %>"><strong><%= prettify_nil(req.status) %></strong></span>
-                                    Driver: <span class="request-details"><strong><%= req.driver.nil? ? 'no driver yet' : find_driver(req.driver).first_and_initial %></strong></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-1 status-icon-div">
-                    <i class="fa fa-<%= status(req.status) %> <%= status_color(req.status) %> status-icon"></i>
+    <header class="col-md-12 request-index-header">
+        <div class="row requests-index-header">
+            <div class="col-md-6">
+                <div class="row requests-actions request-search-border">
+                    <div class="col-md-1 search-icon-div text-center">
+                        <span class="request-search-addon"><i class="fa fa-search req-search-icon"></i></span>
+                    </div>
+                    <div class="col-md-11">
+                        <form class="request-search-form">
+                            <%= form_tag request_search_path,  remote: true, method: :get, id: '' do %>
+                                <%= text_field_tag :search, params[:search], class:'form-control request-search', placeholder: request_placeholder_text do %>
+                                <% end %>
+                            <% end %>
+                        </form>
+                    </div>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-cog white"></i> Filter
+                    </button>
+                    <div class="dropdown-menu">
+                        <%= render 'dropdown' %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="request-card-container">
+        <% if params[:search] %>
+            <%= render 'requests' %>
+        <% else %>
+            <%= render request_sort %>
         <% end %>
     </div>
 </div>

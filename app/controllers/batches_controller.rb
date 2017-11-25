@@ -1,7 +1,7 @@
 class BatchesController < ApplicationController
   skip_before_action :verify_authenticity_token
   # before_action :authenticate_pharmacy!, except: [:new]
-  before_filter :load_patable, only: [:show]
+  before_filter :load_deliverable, only: [:show]
   
   def new
     @batch = Batch.new
@@ -9,12 +9,21 @@ class BatchesController < ApplicationController
   
   def show
     @batch = Batch.find(params[:id])
-    @patient = @patable.patients.new
-    @patients = @patable.patients.all
+    @batches = Batch.where(pharmacy_id: current_pharmacy.id)
+    @id = @batches.index(@batch) + 1
+    @delivery = @deliverable.deliveries.new
+    @deliveries = @deliverable.deliveries.all
   end
   
   def index
-    @batches = Batch.where(pharmacy_id: current_pharmacy.id).all
+    if params[:search]
+      @batches = Batch.where(pharmacy_id: current_pharmacy.id).search(params[:search])
+    else
+      @batches = Batch.where(pharmacy_id: current_pharmacy.id).all
+    end
+    @requests = Request.where(pharmacy_id: current_pharmacy.id).all
+    @patients = Patient.where(pharmacy_id: current_pharmacy.id).all
+    @chosen_patient = nil
   end
   
   # create a new batch
@@ -32,11 +41,11 @@ class BatchesController < ApplicationController
   # initiate a request for a local driver
   def request_driver
     @batch = Batch.find(params[:id])
-    @patients = @batch.patients
+    @packages = @batch.packages
     @pharmacy = current_pharmacy
     @request = Request.create!(pharmacy_id: @pharmacy.id, batch_id: @batch.id, count: 0, status: 'pending')
     Request.send_request(@request)
-    redirect_to batches_path, notice: "Request Sent. Check the requests page for status updates."
+    redirect_to :back, notice: "Request Sent. Check the requests page for status updates."
   end
   
   def driver_response
@@ -56,10 +65,10 @@ class BatchesController < ApplicationController
   
   private
     
-    # Patient load
-    def load_patable
+    # Delivery package load
+    def load_deliverable
       resource, id = request.path.split('/')[1, 2]
-      @patable = resource.singularize.classify.constantize.find(id)
+      @deliverable = resource.singularize.classify.constantize.find(id)
     end
     
     def batch_params

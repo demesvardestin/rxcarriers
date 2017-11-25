@@ -12,21 +12,21 @@
   <% end %>
   
   <div class="field">
-    <%= f.text_field :name, class:"form-control no-border-radius", autofocus: true, placeholder:"Name" %>
+    <%= f.text_field :name, class:"form-control ", autofocus: true, placeholder:"Name" %>
   </div>
   <div class="field">
-    <%= f.text_field :number, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Phone Number" %>
+    <%= f.text_field :number, class:"form-control ", autocomplete: "off", placeholder:"Phone Number" %>
   </div>
   <div class="field">
-    <%= f.text_field :supervisor, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Supervising Pharmacist" %>
+    <%= f.text_field :supervisor, class:"form-control ", autocomplete: "off", placeholder:"Supervising Pharmacist" %>
   </div>
   <div class="field">
-    <%= f.text_field :street, class:"form-control no-border-radius", placeholder:"Street Address" %>
+    <%= f.text_field :street, class:"form-control ", placeholder:"Street Address" %>
   </div>
   <div class="field">
-    <%= f.text_field :website, class:"form-control no-border-radius", placeholder:"Pharmacy Website" %>
+    <%= f.text_field :website, class:"form-control ", placeholder:"Pharmacy Website" %>
   </div>
-  <div class="actions">
-    <%= f.submit "Update!", class:"btn btn-primary btn-block btn-lg no-border-radius cursor-pointer"%>
+  <div class="actions text-right">
+    <%= f.submit "Update!", class:"btn btn-light btn-lg cursor-pointer"%>
   </div>
 <% end %>

@@ -21,32 +21,32 @@
             <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
               <%= devise_error_messages! %>
               <div class="field">
-                <%= f.text_field :name, class:"form-control no-border-radius", autofocus: true, placeholder:"Name" %>
+                <%= f.text_field :name, class:"form-control", autofocus: true, placeholder:"Name" %>
               </div>
               
               <div class="field">
-                <%= f.email_field :email, class:"form-control no-border-radius", autofocus: true, placeholder:"Email" %>
+                <%= f.email_field :email, class:"form-control", autofocus: true, placeholder:"Email" %>
               </div>
               
               <div class="field">
-                <%= f.text_field :street, class:"form-control no-border-radius", autofocus: true, placeholder:"Address" %>
+                <%= f.text_field :street, class:"form-control", autofocus: true, placeholder:"Address" %>
               </div>
             
               <div class="field">
-                <%= f.password_field :password, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Password" %>
+                <%= f.password_field :password, class:"form-control", autocomplete: "off", placeholder:"Password" %>
               </div>
             
               <div class="field">
-                <%= f.password_field :password_confirmation, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Password Confirmation" %>
+                <%= f.password_field :password_confirmation, class:"form-control", autocomplete: "off", placeholder:"Password Confirmation" %>
               </div>
             
               <div class="actions">
                 <div class="row">
                   <div class="col-md-6">
-                    <%= f.submit "Register", class:"btn btn-primary no-border-radius btn-block driver-signup-button" %>
+                    <%= f.submit "Register", class:"btn btn-primary btn-block driver-signup-button" %>
                   </div>
                   <div class="col-md-6">
-                    <%= link_to "Have an account? Log in", new_driver_session_path, class:"btn btn-success no-border-radius btn-block driver-login-button" %>
+                    <%= link_to "Have an account? Log in", new_driver_session_path, class:"btn btn-success btn-block driver-login-button" %>
                   </div>
                 </div>
               </div>
@@ -67,24 +67,24 @@
               <%= devise_error_messages! %>
             
               <div class="field">
-                <%= f.email_field :email, class:"form-control no-border-radius", autofocus: true, placeholder:"Email" %>
+                <%= f.email_field :email, class:"form-control", autofocus: true, placeholder:"Email" %>
               </div>
             
               <div class="field">
-                <%= f.password_field :password, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Password" %>
+                <%= f.password_field :password, class:"form-control", autocomplete: "off", placeholder:"Password" %>
               </div>
             
               <div class="field">
-                <%= f.password_field :password_confirmation, class:"form-control no-border-radius", autocomplete: "off", placeholder:"Password Confirmation" %>
+                <%= f.password_field :password_confirmation, class:"form-control", autocomplete: "off", placeholder:"Password Confirmation" %>
               </div>
             
               <div class="actions">
                 <div class="row">
                   <div class="col-md-6">
-                    <%= f.submit "Register", class:"btn btn-primary no-border-radius btn-block driver-signup-button" %>
+                    <%= f.submit "Register", class:"btn btn-primary btn-block driver-signup-button" %>
                   </div>
                   <div class="col-md-6">
-                    <%= link_to "Have an account? Log in", new_driver_session_path, class:"btn btn-success no-border-radius btn-block driver-login-button" %>
+                    <%= link_to "Have an account? Log in", new_driver_session_path, class:"btn btn-success btn-block driver-login-button" %>
                   </div>
                 </div>
               </div>

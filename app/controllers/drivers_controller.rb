@@ -36,6 +36,10 @@ class DriversController < ApplicationController
     @account = Stripe::Account.retrieve("#{@driver.stripe_uid.to_s}") if @driver.stripe_uid.present?
     @balance = Stripe::Balance.retrieve() if @driver.stripe_uid.present?
   end
+  
+  def requests
+    @requests = Request.where(driver: current_driver.number)
+  end
 
   # GET /drivers/1/edit
   def edit
@@ -100,6 +104,7 @@ class DriversController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def driver_params
-      params.require(:driver).permit(:first_name, :last_name, :number, :street, :town, :state, :zipcode, :license_plate, :car_make, :car_model, :car_year, :car_color, :approved)
+      params.require(:driver).permit(:first_name, :last_name, :number, :street, :town, :state, :zipcode, :license_plate, :car_make, 
+                                      :car_model, :car_year, :car_color, :approved, :avatar)
     end
 end

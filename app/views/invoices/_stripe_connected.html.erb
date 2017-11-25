@@ -1,16 +1,13 @@
 <div class="pharmacy-transaction-report">
-    <div class="row">
-        <div class="col-md-12 transaction-page-header"><h3>Transactions</h3></div>
-    </div>
     <div class="row transactions-visuals">
         <div class="col-md-4">
-            <div class="card no-border-radius charges-today-card-body" style="width: 20rem;">
+            <div class="card charges-today-card-body" style="width: 20rem;">
                 <div class="card-body">
                     <h4 class="card-title text-center">Charges Today</h4>
                     <h1 class="theme-blue text-center invoice-sum">$<%= invoices_sum %></h1>
                 </div>
             </div>
-            <div class="card no-border-radius charges-today-card-body charges-today-card-body-2" style="width: 20rem;">
+            <div class="card charges-today-card-body charges-today-card-body-2" style="width: 20rem;">
                 <div class="card-body">
                     <h4 class="card-title text-center">Next Billing Date</h4>
                     <h1 class="theme-blue text-center invoice-sum"><%= prettify_nil(next_payment_attempt) %></h1>
@@ -18,7 +15,7 @@
             </div>
         </div>
         <div class="col-md-8">
-            <div class="card text-center no-border-radius">
+            <div class="card text-center">
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs">
                         <li class="nav-item">
@@ -40,41 +37,41 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="card transactions-table">
-                <div class="card-header transactions-table-header">
+            <div class="list-group transactions-table">
+                <div class="list-group-item transactions-table-header">
                     <div class="row">
-                        <div class="col-md-3">
-                            <h5>Date Created</h5>
+                        <div class="col-md-4">
+                            <h6>Date Created</h6>
+                        </div>
+                        <div class="col-md-2">
+                            <h6>Description</h6>
+                        </div>
+                        <div class="col-md-1">
+                            <h6>Amount</h6>
                         </div>
                         <div class="col-md-3">
-                            <h5>Description</h5>
-                        </div>
-                        <div class="col-md-3">
-                            <h5>Amount</h5>
-                        </div>
-                        <div class="col-md-3">
-                            <h5>Billing Cycle</h5>
+                            <h6>Billing Date</h6>
                         </div>
                     </div>
                 </div>
-                <div class="card-body transactions-rows">
-                    <% @invoices.each do |inv| %>
+                <% @invoices.each do |inv| %>
+                    <div class="list-group-item list-group-item-action no-border-radius border-gray">
                         <div class="row">
-                            <div class="col-md-3">
-                                <h6 class="theme-blue"><%= inv.created_at %></h6>
+                            <div class="col-md-4">
+                                <h6 class="theme-blue"><%= timestamp(inv) %></h6>
                             </div>
-                            <div class="col-md-3">
-                                <h6 class="theme-blue">Batch ID: <%= inv.batch_id %></h6>
+                            <div class="col-md-2">
+                                <h6 class="theme-blue">Batch <%= inv.batch_id %></h6>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-1">
                                 <h6 class="theme-blue"><%= inv.amount %></h6>
                             </div>
                             <div class="col-md-3">
                                 <h6 class="theme-blue"><%= inv.billing_date %></h6>
                             </div>
                         </div>
-                    <% end %>
-                </div>
+                    </div>
+                <% end %>
             </div>
         </div>
     </div>

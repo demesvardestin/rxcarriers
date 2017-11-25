@@ -7,8 +7,7 @@
     <div class="col-md-2 vertical-panel">
       <div class="profile-details">
         <div class="col-md-12">
-          <!--<img class="rounded pharmacy-avatar" src="https://www.cannarecruiter.com/wp-content/uploads/2016/11/medical-marijuana-delivery-jobs.jpg">-->
-          <h4 class="white pharmacy-name"><%= current_pharmacy.name_shortened %></h4>
+          <p class="white pharmacy-name"><%= current_pharmacy.name_shortened %></p>
           <hr style="border: 1px solid #fff; color: #fff !important; background: #fff !important;">
         </div>
       </div>
@@ -21,19 +20,22 @@
             <a class="nav-link nav-link-side <% if url.include?("/requests")%>active<% end %>" href="/requests">Requests</a>
           </li>
           <li class="nav-item nav-item-pharmacy-view">
+            <a class="nav-link nav-link-side <% if url.include?("/patients")%>active<% end %>" href="/patients">Patients</a>
+          </li>
+          <li class="nav-item nav-item-pharmacy-view">
             <a class="nav-link nav-link-side <% if url.include?("/transactions")%>active<% end %>" href="/transactions">Transactions</a>
           </li>
           <li class="nav-item nav-item-pharmacy-view">
             <a class="nav-link nav-link-side <% if url.include?("/settings")%>active<% end %>" href="/settings">Settings</a>
           </li>
           <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side <% if url.include?("/support")%>active<% end %>" href="/support">Support</a>
+            <a class="nav-link nav-link-side <% if url.include?("/support")%>active<% end %>" href="/help">Support</a>
           </li>
         </ul>
       </div>
       <div class="dashboard-control">
         <div class="col-md-12 text-left logout-btn-div">
-          <%= link_to destroy_pharmacy_session_path, class:"white pharmacy-logout no-underline btn btn-light no-border-radius", method: :delete do %>
+          <%= link_to destroy_pharmacy_session_path, class:"white pharmacy-logout no-underline btn btn-light", method: :delete do %>
             <i class="fa fa-power-off"></i> Log Out
           <% end %>
         </div>

@@ -1,35 +1,44 @@
 <body>
-    <div class="row batch-index-body">
-        <div class="col-md-12">
-            <div class="card-columns">
-                <a class="link-to_new-batch background-transparent" href="batch/new">
-                    <div class="card new-batch-card no-border-radius" style="width: 20rem;">
-                        <div class="card-body">
-                            <div class="theme-blue">
-                                <i class="fa fa-plus theme-blue add-new-batch"></i> 
-                                <span class="create-new-batch">
-                                    Add new batch
-                                </span>
-                            </div>
+    <div class="all-batches">
+        <header class="col-md-12 request-index-header">
+            <div class="row requests-index-header ">
+                <div class="col-md-6">
+                    <div class="row requests-actions request-search-border">
+                        <div class="col-md-1 search-icon-div text-center">
+                            <span class="request-search-addon"><i class="fa fa-search req-search-icon"></i></span>
+                        </div>
+                        <div class="col-md-11">
+                            <form class="request-search-form">
+                                <%= form_tag batch_search_path, method: :get, id: 'batch-lookup-form' do %>
+                                    <%= text_field_tag :search, params[:search], class:'form-control request-search', placeholder: batch_placeholder_text do %>
+                                    <% end %>
+                                <% end %>
+                            </form>
                         </div>
                     </div>
-                </a>
-                <% @batches.reverse.each do |batch| %>
-                    <a class="" href="batches/<%= batch.id %>">
-                        <div class="card batch-card-show no-border-radius" style="width: 20rem;">
-                          <div class="card-body">
-                            <h5 class="card-title batch-title-index">Batch ID: <%= batch.id %></h5>
-                            <h6 class="card-title batch-title-index">
-                                <span class="theme-blue"></span> <%= pluralize(batch.patients.count, "package") %> - 
-                                Delivery Status: <span class="<%= status_color(find_request(batch.id)) %>"><strong><%= find_request(batch.id) %></strong></span>
-                            </h6>
-                            <%= link_to 'View Details', batch_path(batch), class:"btn btn-primary card-link white no-underline no-border-radius" %>
-                            <%= link_to 'Delete Batch', batch_path(batch), class:"btn btn-danger card-link white no-underline no-border-radius", method: :delete %>
-                          </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-cog white"></i> Filter
+                        </button>
+                        <div class="dropdown-menu">
+                            <%= render 'dropdown' %>
                         </div>
-                    </a>
-                <% end %>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <%= link_to new_batch_path, class:"btn btn-primary padding-14" do %>
+                        <span class="font-14"><i class="fa fa-plus"></i> Add new batch</span>
+                    <% end %>
+                </div>
             </div>
+        </header>
+        <div class="batch-card-container" id="batch-card-container">
+            <% if params[:search] %>
+                <%= render 'batches' %>
+            <% else %>
+                <%= render batch_sort %>
+            <% end %>
         </div>
-    </div>
 </body>

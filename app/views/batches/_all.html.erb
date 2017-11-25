@@ -1,0 +1,20 @@
+<% @batches.reverse.each do |batch| %>
+    <% unless batch.nil? %>
+        <div class="row">
+            <div class="col-md-12 request-card-div">
+                <a class="background-transparent no-underline" href="/batches/<%= batch.id %>">
+                    <div class="card request-card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2">Packages: <span class="batches-details"><%= batch.deliveries.count %></span></div>
+                                <div class="col-md-2">Status: <span class="batches-details <%= status_color(find_request(batch.id)) %>"><strong><%= find_request(batch.id) %></strong></span></div>
+                                <div class="col-md-3">Pharmacist: <span class="batches-details theme-blue"><strong><%= batch.pharmacist %></strong></span></div>
+                                <div class="col-md-4">Created: <span class="batches-details theme-blue"><strong><%= timestamp(batch) %></strong></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    <% end %>
+<% end %>

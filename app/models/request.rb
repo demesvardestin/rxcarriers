@@ -1,9 +1,30 @@
 class Request < ActiveRecord::Base
     
     belongs_to :pharmacy
+    scope :pending, -> {where(status: "pending")}
+    scope :accepted, -> {where(status: "accepted")}
+    scope :completed, -> {where(status: "completed")}
+    scope :asc_driver, -> {order("driver ASC")}
+    scope :desc_driver, -> {order("driver DESC")}
+    scope :asc_date, -> {order("updated_at ASC")}
+    scope :desc_date, -> {order("updated_at DESC")}
     
-    def pharmacy_distance(pharmacy)
-        # distance = Geocoder::Calculations.distance_between() 
+    def self.search(param)
+        param.strip!
+        param.downcase!
+        (driver_matches(param) + status_matches(param)).uniq
+    end
+    
+    def self.driver_matches(param)
+        matches('driver', param)
+    end
+    
+    def self.status_matches(param)
+        matches('status', param)
+    end
+    
+    def self.matches(field_name, param)
+        where("lower(#{field_name}) like ?", "%#{param}%")
     end
   
     def self.send_request(original_request)

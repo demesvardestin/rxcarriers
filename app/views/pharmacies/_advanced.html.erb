@@ -1,4 +1,6 @@
 
-<h4>Warning: This is a permanent action! It <strong>CANNOT</strong> be reversed.
+<h5>Warning: This is a permanent action! It <strong>CANNOT</strong> be reversed.</h5>
 <hr>
-<%= link_to 'Delete Account', pharmacy_path(current_pharmacy), class:'btn btn-danger btn-block btn-lg white no-border-radius' %>
+<div class="actions text-right">
+    <%= link_to 'Delete Account', pharmacy_path(current_pharmacy), class:'btn btn-danger btn-lg white btn-delete' %>
+</div>

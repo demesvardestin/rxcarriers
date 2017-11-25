@@ -16,15 +16,46 @@
  */
 
 /* App Layout*/
+/* --scrollbar-- */
+::-webkit-scrollbar {
+    width: 10px;
+    color: #03032b !important;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 15px #02021e; 
+    border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 15px #02021e; 
+}
 body {
     overflow-x: hidden !important;
+    background: #fafbfc;
     font-family: 'Roboto', sans-serif !important;
+}
+a:hover {
+    color: inherit;
 }
 .navbar {
     background-color: #03032b !important;
 }
 .logo {
     color: #fff;
+}
+.font-14 {
+    font-size: 14px;
+}
+.font-82 {
+    font-size: 82px;
+}
+.padding-14 {
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 9px;
+    padding-bottom: 9px;
 }
 .theme-blue {
     color: #03032b !important;
@@ -110,13 +141,13 @@ body {
     height: 100% !important;
 }
 .field {
-    padding-top: 20px;
+        padding-top: 15px;
 }
 .actions {
     padding-top: 20px;
 }
 .form-control {
-    border: .5px solid #d9dfc0;
+    border: 1px solid #ccccd4;
     height: 40px;
 }
 .driver-signup {
@@ -149,6 +180,24 @@ body {
 }
 
 /* Batches Views */
+.badge {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300px;
+    font-size: 12px;
+}
+.item-header:hover {
+    background: transparent;
+}
+.item:hover {
+    background: #03032b;
+    color: #fff;
+}
+.all-batches {
+    padding: 40px;
+}
+.batches-details {
+    padding-right: 80px;
+}
 .new-batch-card {
     padding: 40px;
     border: 1px solid #03032b;
@@ -165,6 +214,9 @@ body {
 .add-new-batch {
     font-size: 28px !important;
     color: #03032b !important;
+}
+.batch-new {
+    padding-right: 10px;
 }
 .batch-index-body {
     padding-top: 15px;
@@ -183,6 +235,16 @@ body {
 }
 .new-batch-button {
     cursor: pointer;
+    font-size: 14px;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    
+}
+.new-batch-button:hover {
+    background: #fff !important;
+    color: #03032b !important;
 }
 .batch-notes-field {
     height: 100px !important;
@@ -198,7 +260,7 @@ body {
     padding-bottom: 20px;
 }
 .prescription-card {
-    border: 0.25px solid #d9dfc0;
+    border: 1px solid #d9dfc0;
 }
 .border-theme-blue {
     border: 1px solid #03032b;
@@ -212,8 +274,7 @@ body {
     box-shadow: inset 0px 0px 3px #b8c0a1;
 }
 .request-card {
-    border: 1px solid #e7f1ca;
-    box-shadow: inset 0px 0px 3px #b8c0a1;
+    border: 1px solid #ccccd4;
 }
 .batch-card-show:hover {
     border: 1px solid #8a9079;
@@ -221,18 +282,44 @@ body {
 .request-card:hover {
     border: 1px solid #8a9079;
 }
-.requests-index-header {
-    position: fixed !important;
-    z-index: 3 !important;
-    margin-bottom: 20px !important;
-    background: #fff !important;
-    width: 100% !important;
-}
-.request-card-container{
-    padding-top: 100px;
-}
 .batch-title-index:hover {
     color: #000 !important;
+}
+.request-show {
+    padding: 40px;
+}
+.request-search {
+    padding-left: 0;
+    border: none;
+    box-shadow: none !important;
+    font-size: 14px;
+    background: transparent;
+}
+.request-search-addon {
+    height: 40px;
+    border: none !important;
+    border: 0.5px solid #03032b;
+    background: #fff !important;
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+}
+.request-search-border {
+    background: #fff;
+    padding: 1px;
+    border: 1px solid #ccccd4;
+    border-radius: 5px;
+}
+.req-search-icon {
+    font-size: 12px !important;
+}
+.search-icon-div {
+    padding-top: 10px !important;
+}
+.requests-index-header {
+    padding-bottom: 20px;
+}
+.dropdown-menu {
+    font-size: 14px;
 }
 
 /* Invoice Views */
@@ -253,6 +340,9 @@ body {
 .unconnected-stripe-warning {
     padding: 150px;
 }
+.transactions-table-header {
+    background: #ccccd4;
+}
 .transactions-div-card-header {
     background: #03032b !important;
     padding-bottom: 0;
@@ -263,22 +353,51 @@ body {
 }
 
 /* Request Views */
+.request-driver-card {
+    padding: 10px;
+}
+.request-driver-avatar {
+    border: 0.5px solid #ccccd4;
+    width: 100px;
+    height: 100px;
+    background-color: transparent;
+    text-align: center;
+    height: 160px;
+    width: 160px;
+    border-radius: 80px !important;
+    box-shadow: 0px 0px 4px #888888;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+}
+.request-driver-avi-div {
+    overflow: hidden !important;
+    padding-top: 5px;
+}
+.initials {
+    position: relative;
+    top: 25px; /* 25% of parent */
+    font-size: 50px; /* 50% of parent */
+    line-height: 50px; /* 50% of parent */
+    color: #fff;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+}
 .all-requests {
-    padding: 40px;
-    padding-top: 0 !important;
+    padding: 40px !important;
+    // padding-top: 0 !important;
 }
 .all-requests-header {
-    padding-bottom: 20px;
+    padding-top: 40px;
 }
 .request-card:hover {
     border: 1px solid #03032b;
     color: #000 !important;
 }
 .request-details-row {
-    padding-bottom: 15px;
+    padding-bottom: 0;
 }
 .request-card-div {
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
 .request-details {
     padding-right: 100px;
@@ -300,6 +419,37 @@ body {
 .btn-primary {
     background: #03032b !important;
     border: 1px solid #020222 !important;
+    color: #fff !important;
+}
+.btn-primary:hover {
+    background: #fff !important;
+    color: #03032b !important;
+}
+.btn-light {
+    background: #01665d;
+    border: 1px solid #01665d;
+    color: white;
+    font-size: 14px;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.btn-light:hover {
+    cursor: pointer;
+    background: #003d37;
+    border: 1px solid #003d37;
+    color: #fff;
+}
+.btn-delete {
+    font-size: 14px;
+}
+.btn-danger {
+    font-size: 14px;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 .theme-yellow {
     color: #878706 !important;
@@ -312,6 +462,9 @@ body {
 }
 
 /* Driver Views*/
+.driver-edit-row {
+    padding: 40px;
+}
 .complete-signup-header{
     padding-top: 40px;
 }
@@ -332,7 +485,17 @@ body {
     color: #fff !important;
 }
 
-/* Pharmacy View */
+/* Package Views */
+
+.package-action-buttons {
+    padding-top: 10px;
+}
+
+/* Pharmacy Views */
+.notice {
+    padding-left: 40px;
+    padding-right: 40px;
+}
 .search-header {
     padding-bottom: 20px;
 }
@@ -370,11 +533,11 @@ body {
     padding-left: 15px;
 }
 .nav-link-side {
-    font-size: 20px;
-    padding: 20px;
-    font-weight: 100 !important;
+    font-size: 14px;
+    padding: 14px;
+    font-weight: 600px;
     color: #fff !important;
-    border-radius: 0 !important;
+    border-radius: 3px !important;
 }
 .settings-header {
     padding-left: 15px;
@@ -385,7 +548,7 @@ body {
     border-radius: 5px;
 }
 .nav-link-edit {
-    font-size: 16px !important;
+    font-size: 14px !important;
     padding-right: 120px;
     padding-top: 15px;
     padding-bottom: 15px;
@@ -393,7 +556,7 @@ body {
     margin-top: 15px;
 }
 .nav-link-edit:hover {
-    background: #03032b !important;
+    background: #01665d !important;
     color: #fff !important;
 }
 .active {
@@ -402,7 +565,7 @@ body {
     border-radius: 5px;
 }
 .inverse-active {
-    background: #03032b !important;
+    background: #01665d !important;
     color: #fff !important;
     border-radius: 5px;
 }
@@ -418,14 +581,16 @@ body {
 }
 .pharmacy-name {
     margin-top: 10px;
+    font-size: 14px;
+    font-weight: 600px;
 }
 .logout-btn-div {
     padding-left: 0;
 }
 .pharmacy-logout {
-    font-size: 20px !important;
-    padding-left: 20px;
-    padding-right: 85px;
+    font-size: 14px !important;
+    padding-left: 14px;
+    padding-right: 14px;
     background: transparent !important;
 }
 .pharmacy-logout:hover {
@@ -437,7 +602,6 @@ body {
     padding-bottom: 100px;
 }
 .billing-tab {
-    // margin-top: -418px !important;
     padding-top: 0 !important;
 }
 .hide {
@@ -446,6 +610,70 @@ body {
 .show {
     display: block !important;
 }
+
+/* Patient Views */
+.patient-name-label {
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+.form-header {
+    padding-top: 5px;
+}
+.border-gray {
+    border: 1px solid #ccccd4;
+}
+.all-patients {
+    padding: 40px;
+}
+.patients-instructions-field {
+    height: 80px !important;
+}
+.patient-table-header {
+    background: #ccccd4;
+    border-bottom-left-radius: 0;
+}
+.new-patient-form {
+    padding-left: 240px;
+    padding-right: 240px;
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+.patient-show {
+    padding: 40px;
+}
+.patient-profile-detail {
+    padding-top: 3px;
+}
+.patient-prescriptions {
+    padding-top: 10px;
+}
+
+/* Delivery Views */
+.delivery-signature {
+    height: 100%;
+    width: 100%;
+}
+.signature_pad {
+  width: 700px;
+  height: 400px;
+  margin: 0 auto;
+}
+
+.signature_pad_body canvas {
+  width: 100%;
+  height: 100%;
+  border: dotted #444;
+  background: #CCCCCC;
+}
+
+/* Support Views */
+.support-body {
+    padding: 40px;
+}
+.faq {
+    padding-bottom: 10px;
+}
+
 
 /* IDs */
 #v-pills-profile {

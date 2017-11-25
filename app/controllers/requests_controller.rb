@@ -3,7 +3,11 @@ class RequestsController < ApplicationController
     before_action :authenticate_pharmacy!
     
     def index
-        @requests = Request.where(pharmacy_id: current_pharmacy.id).all
+        if params[:search]
+          @requests = Request.where(pharmacy_id: current_pharmacy.id).search(params[:search])
+        else
+          @requests = Request.where(pharmacy_id: current_pharmacy.id).all
+        end
     end
     
     def show

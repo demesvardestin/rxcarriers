@@ -37,4 +37,8 @@ module InvoicesHelper
         @invoices.reduce(0) {|sum, invoice| sum += invoice.amount}.to_s
     end
     
+    def timestamp(object)
+        [object.updated_at.strftime("%B %-dth %Y"), "at", object.updated_at.strftime("%I:%M %p")].join(" ")
+    end
+    
 end

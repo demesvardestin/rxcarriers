@@ -1,0 +1,15 @@
+<div class="card">
+    <div class="card-body request-driver-card">
+        <% if @request.driver %>
+            <h6 class="request-details">Name: <span class="theme-yellow"><%= driver.full_name %></span></h6>
+            <h6 class="request-details">Phone: <span class="theme-yellow"><%= driver.number %></span></h6>
+            <h6 class="request-details">Car Make: <span class="theme-yellow"><%= driver.car_make %></span></h6>
+            <h6 class="request-details">Car Model: <span class="theme-yellow"><%= driver.car_model %></span></h6>
+            <h6 class="request-details">Car Year: <span class="theme-yellow"><%= driver.car_year %></span></h6>
+            <h6 class="request-details">Car Color: <span class="theme-yellow"><%= driver.car_color %></span></h6>
+            <h6 class="request-details">License Plate: <span class="theme-yellow"><%= driver.license_plate %></span></h6>
+        <% else %>
+            <h6 class="request-details"><em>no driver yet</em></h6>
+        <% end %>
+    </div>
+</div>

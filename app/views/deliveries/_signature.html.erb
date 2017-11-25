@@ -1,0 +1,11 @@
+<%= simple_form_for [@deliverable, @delivery] do |f| %>
+  <div class="field">
+    <%= f.input_field :signature, as: :hidden, class: 'form-control' %>
+  </div>
+  <div class="signature_pad text-center">
+    <div class="signature_pad_footer">
+      <div class="text-muted">Sign above</div>
+      <%= f.submit "Accept Delivery", class:"btn btn-light white cursor-pointer signature_pad_save" %>
+    </div>
+  </div>
+<% end %>

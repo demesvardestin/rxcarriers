@@ -1,0 +1,33 @@
+<%= form_for @driver, :html => { multipart: true, :class => "form-horizontal image" } do |f| %>
+  <% if @driver.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@driver.errors.count, "error") %> prohibited this driver from being saved:</h2>
+
+      <ul>
+      <% @driver.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.text_field :license_plate, class:"form-control", autocomplete: "off", placeholder:"License Plate Number" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :car_make, class:"form-control", autocomplete: "off", placeholder:"Car Make" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :car_model, class:"form-control", autocomplete: "off", placeholder:"Car Model" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :car_year, class:"form-control", autocomplete: "off", placeholder:"Car Year" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :car_color, class:"form-control", autocomplete: "off", placeholder:"Car Color" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Submit", class:"btn btn-success btn-block driver-signup-button"%>
+  </div>
+<% end %>

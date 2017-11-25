@@ -10,6 +10,37 @@ module RequestHelper
         end
     end
     
+    def request_placeholder_text
+        "Search requests by batch id, date sent, status or driver name"
+    end
+    
+    def request_batch(object)
+        @batches = Batch.where(pharmacy_id: object.pharmacy_id).all
+        begin
+            @batch = Batch.find(object.batch_id)
+        rescue
+            return 'n/a'
+        end
+        id = @batches.index(@batch) + 1 if @batch
+        return id
+    end
+    
+    def request_pharmacy(object)
+        @pharmacy = Pharmacy.find(object.pharmacy_id)
+        return @pharmacy.name
+    end
+    
+    def find_batch_id(req)
+        @batches = Batch.where(pharmacy_id: current_pharmacy.id).all
+        begin
+            @batch = Batch.find(req.batch_id)
+        rescue
+            return 'n/a'
+        end
+        id = @batches.index(@batch) + 1 if @batch
+        return id
+    end
+    
     def status(request_status)
         case request_status
             when 'n/a'
@@ -46,6 +77,45 @@ module RequestHelper
         @request = Request.find(params[:id])
         @driver = Driver.find_by(number: @request.driver)
         return @driver
+    end
+    
+    def timestamp(object)
+        [object.updated_at.strftime("%B %-dth %Y"), "at", object.updated_at.strftime("%I:%M %p")].join(" ")
+    end
+    
+    def am_pm(object)
+        object.updated_at.strftime("%H:%M")[0..1].to_i > 12 ? 'PM' : 'AM'
+    end
+    
+    def request_sort
+        url = request.original_url
+        url_end = url[url.index("/requests")..-1]
+        case url_end
+            when "/requests?status=pending"
+                return "pending"
+            when "/requests?status=accepted"
+                return "accepted"
+            when "/requests?status=completed"
+                return "completed"
+            when "/requests?driver=nameasc"
+                return "az_driver"
+            when "/requests?driver=namedesc"
+                return "za_driver"
+            when "/requests?date=asc"
+                return "asc_date"
+            when "/requests?date=desc"
+                return "desc_date"
+            else
+                return "all"
+        end
+    end
+    
+    def driver_avatar(driver)
+        if driver.avatar
+            return 'driver_avi'
+        else
+            return 'driver_initials'
+        end
     end
     
 end

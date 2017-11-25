@@ -1,0 +1,43 @@
+<body>
+    <div class="patient-show">
+        <section class="patient-profile-header">
+            <div class="card">
+                <div class="card-body">
+                    <h5><%= @patient.name %></h5>
+                    <h6 class="patient-profile-detail"><span class="theme-blue"><strong>Address</strong></span>: <%= @patient.address %></h6 class="patient-profile-detail">
+                    <h6 class="patient-profile-detail"><span class="theme-blue"><strong>Phone</strong></span>: <%= @patient.phone %></h6 class="patient-profile-detail">
+                    <h6 class="patient-profile-detail"><span class="theme-blue"><strong>Date of Birth</strong></span>: <%= @patient.dob %></h6 class="patient-profile-detail">
+                    <h6 class="patient-profile-detail"><span class="theme-blue"><strong>Insured</strong></span>: <%= @patient.insured %></h6 class="patient-profile-detail">
+                    <h6 class="patient-profile-detail"><span class="theme-blue"><strong>Delivery Instructions</strong></span>: <%= @patient.delivery_instructions %></h6 class="patient-profile-detail">
+                </div>
+            </div>
+        </section>
+        <section class="patient-prescriptions">
+            <div class="list-group">
+                <button type="button" class="list-group-item patient-table-header">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <h5 class="font-14">Prescription</h5>
+                        </div>
+                        <div class="col-md-1 text-left">
+                            <h5 class="font-14">Batch</h5>
+                        </div>
+                        <div class="col-md-1 text-left">
+                            <h5 class="font-14">Copay</h5>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <h5 class="font-14">Delivered</h5>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <h5 class="font-14">Courier</h5>
+                        </div>
+                        <div class="col-md-1 text-left">
+                            <h5 class="font-14">Signed</h5>
+                        </div>
+                    </div>
+                </button>
+                <%= render 'prescriptions' %>
+            </div>
+        </section>
+    </div>
+</body>

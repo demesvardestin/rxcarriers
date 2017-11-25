@@ -11,15 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171111231502) do
+ActiveRecord::Schema.define(version: 20171124231343) do
 
-  create_table "batches", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "notes"
-    t.integer  "pharmacy_id"
-    t.string   "pharmacist"
-  end
+# Could not dump table "batches" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
   create_table "cancellation_messages", force: :cascade do |t|
     t.datetime "created_at",    null: false
@@ -45,6 +40,24 @@ ActiveRecord::Schema.define(version: 20171111231502) do
     t.string   "card_token"
     t.string   "amount"
   end
+
+  create_table "deliveries", force: :cascade do |t|
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "deliverable_type"
+    t.integer  "deliverable_id"
+    t.string   "recipient_name"
+    t.string   "recipient_phone_number"
+    t.string   "recipient_address"
+    t.string   "medications"
+    t.integer  "pharmacy_id"
+    t.string   "copay"
+    t.string   "signature"
+    t.datetime "signed_on"
+    t.integer  "patient_id"
+  end
+
+  add_index "deliveries", ["deliverable_type", "deliverable_id"], name: "index_deliveries_on_deliverable_type_and_deliverable_id"
 
   create_table "drivers", force: :cascade do |t|
     t.datetime "created_at",                          null: false
@@ -78,6 +91,10 @@ ActiveRecord::Schema.define(version: 20171111231502) do
     t.boolean  "registration_completed"
     t.boolean  "driver_approved"
     t.string   "stripe_uid"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   add_index "drivers", ["email"], name: "index_drivers_on_email", unique: true
@@ -97,9 +114,28 @@ ActiveRecord::Schema.define(version: 20171111231502) do
     t.datetime "billing_date"
   end
 
+  create_table "packs", force: :cascade do |t|
+    t.string   "controller"
+    t.string   "package"
+    t.string   "create"
+    t.string   "update"
+    t.string   "destroy"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "packageable_type"
+    t.integer  "packageable_id"
+    t.string   "recipient_name"
+    t.string   "recipient_phone_number"
+    t.string   "recipient_address"
+    t.string   "medications"
+    t.integer  "pharmacy_id"
+  end
+
+  add_index "packs", ["packageable_type", "packageable_id"], name: "index_packs_on_packageable_type_and_packageable_id"
+
   create_table "patients", force: :cascade do |t|
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.string   "name"
     t.string   "address"
     t.string   "phone"
@@ -111,6 +147,19 @@ ActiveRecord::Schema.define(version: 20171111231502) do
     t.integer  "batch_id"
     t.string   "patable_type"
     t.integer  "patable_id"
+    t.string   "medications"
+    t.string   "bank_account_number"
+    t.string   "country"
+    t.string   "account_holder_name"
+    t.string   "account_holder_type"
+    t.string   "routing_number"
+    t.string   "card_number"
+    t.integer  "exp_month"
+    t.integer  "exp_year"
+    t.integer  "cvc"
+    t.string   "dob"
+    t.string   "insured"
+    t.string   "delivery_instructions"
   end
 
   add_index "patients", ["patable_type", "patable_id"], name: "index_patients_on_patable_type_and_patable_id"
@@ -181,6 +230,12 @@ ActiveRecord::Schema.define(version: 20171111231502) do
     t.string   "status"
     t.string   "body"
     t.integer  "pharmacy_id"
+  end
+
+  create_table "supports", force: :cascade do |t|
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.string   "question_details"
   end
 
 end

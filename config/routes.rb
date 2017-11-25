@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  
-  get 'invoice/create'
 
   devise_for :pharmacies, :controllers => {:registrations => "pharmacy/registrations"}
   devise_for :drivers, :controllers => { :registrations => "driver/registrations"}
@@ -15,17 +13,33 @@ Rails.application.routes.draw do
   get 'batch/create'
 
   get 'batch/destroy'
+  get 'help', to: 'supports#new'
+  get 'deliveries/:id/signature', to: 'deliveries#signature'
   get 'cancel-request', to: 'requests#cancel'
+  get 'driver/requests', to: 'drivers#requests'
   get 'settings', to: 'pharmacies#edit'
+  get 'driver/:id/settings', to: 'drivers#edit'
+  get 'driver/:id/settings/car-info', to: 'drivers#edit'
+  get 'driver/:id/settings/account-info', to: 'drivers#edit'
+  get 'driver/:id/settings/advanced', to: 'drivers#edit'
   get 'settings/advanced', to: 'pharmacies#edit'
   get 'settings/password', to: 'pharmacies#edit'
   get 'settings/account-info', to: 'pharmacies#edit'
   get 'settings/billing-info', to: 'pharmacies#edit'
+  get 'batches/packages', to: 'batches#index'
+  get 'batches/pharmacist', to: 'batches#index'
+  get 'batches/pending', to: 'batches#index'
+  get 'batches/accepted', to: 'batches#index'
+  get 'batches/completed', to: 'batches#index'
+  get 'batch_search', to: 'batches#index'
+  get 'patient/search', to: 'patients#index'
+  get 'request/search', to: 'requests#index'
   get 'pharmacy/search', to: 'pharmacies#index'
   get 'pharmacy/:id/settings', to: 'pharmacies#edit', as: "account_settings"
   get 'transactions', to: 'invoices#index'
   get 'users/auth/stripe_connect/callback', to: 'charges#stripe'
   get 'requests/:id', to: 'requests#show'
+  get 'patients', to: 'patients#index'
   get 'requests', to: 'requests#index'
   get 'request_driver', to: 'batches#request_driver'
   get 'batches', to: 'batches#index'
@@ -34,18 +48,21 @@ Rails.application.routes.draw do
   get 'my-deliveries', to: 'drivers#deliveries'
   get 'pharmacy/view', to: 'pharmacies#index'
   post 'welcome/sms/reply', to: 'batches#driver_response'
+  resources :patients, only: [:new, :create, :show, :edit, :delete]
+  resources :supports
   resources :charges
   resources :drivers
   resources :pharmacies do
     
   end
+  resources :deliveries
   resources :batches do
-    resources :patients
+    resources :deliveries
   end
   resources :cancellation_messages
   resources :request_messages
   authenticated :driver do
-    root 'drivers#deliveries', as: :authenticated_driver_root
+    root 'drivers#requests', as: :authenticated_driver_root
   end
   authenticated :pharmacy do
     root 'batches#index', as: :authenticated_pharmacy_root

@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
   <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="application.css.scss">
+  <link rel="stylesheet" href="jquery.signaturepad.css">
   <!-- -Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <script src="application.js"></script>
@@ -20,6 +21,9 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <!-- Stripe -->
   <script src="https://js.stripe.com/v3/"></script>
+  <script src="jquery.min.js"></script>
+  <script src="jquery.signaturepad.min.js"></script>
+  <script src="json2.min.js"></script>
 </head>
 <body>
   <% if current_driver %>
@@ -35,16 +39,18 @@
     <%= render 'pharmacies/pharmacy_home' %>
     <div class="col-md-10 main-pages" style="float: right !important;">
       <% if flash[:notice] %>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="alert alert-success no-border-radius alert-dismissible fade show" role="alert">
-              <%= notice %>
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+        <section class="notice">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="alert alert-success no-border-radius alert-dismissible fade show" role="alert">
+                <%= notice %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
       <% end %>
       <%= yield %>
     </div>

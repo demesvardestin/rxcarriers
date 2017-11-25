@@ -1,7 +1,32 @@
 class Batch < ActiveRecord::Base
     
     belongs_to :pharmacy
-    has_many :patients, :as => :patable
+    has_many :deliveries, :as => :deliverable
+    
+    scope :asc_pharm, -> {order("pharmacist ASC")}
+    scope :desc_pharm, -> {order("pharmacist DESC")}
+    scope :asc_date, -> {order("created_at ASC")}
+    scope :desc_date, -> {order("created_at DESC")}
+    
+    def self.search(param)
+        where('pharmacist LIKE ?', "%#{param}%")
+    end
+    
+    def self.includes(batch, string)
+        counter = 0
+        counter += 1 if batch.pharmacist.include?(string)
+        return counter
+    end
+    
+    def self.was_created(batch, time)
+        counter = 0
+        counter += 1 if self.timestamp(batch).include?(time)
+        return counter
+    end
+    
+    def self.timestamp(object)
+        [object.updated_at.strftime("%B %-dth %Y"), "at", object.updated_at.strftime("%I:%M %p")].join(" ")
+    end
     
     def self.parse_response(from, resp)
         @driver = Driver.find_by(number: from)

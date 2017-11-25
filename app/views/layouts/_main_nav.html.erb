@@ -9,8 +9,8 @@
     <div class="col-md-5">
       <form class="form-inline my-2 my-lg-0">
         <%= form_tag pharmacy_search_path,  remote: true, method: :get, id: 'stock-lookup-form' do %>
-            <%= text_field_tag :search, params[:search], class:'form-control pharmacy-search no-border-radius', placeholder:"Find your ideal pharmacy" do %>
-              <span class="input-group-addon pharmacy-search-addon no-border-radius" id="basic-addon1"><i class="fa fa-search"></i></span>
+            <%= text_field_tag :search, params[:search], class:'form-control pharmacy-search', placeholder:"Find your ideal pharmacy" do %>
+              <span class="input-group-addon pharmacy-search-addon" id="basic-addon1"><i class="fa fa-search"></i></span>
             <% end %>
         <% end %>
       </form>
@@ -19,10 +19,10 @@
     <div class="col-md-5 right-nav">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item nav-button-1">
-          <%= link_to "FOR PHARMACIES", new_pharmacy_registration_path, class:"btn btn-secondary background-transparent no-border-radius for-pharmacy-button nav-button" %>
+          <%= link_to "FOR PHARMACIES", new_pharmacy_registration_path, class:"btn btn-secondary background-transparent for-pharmacy-button nav-button" %>
         </li>
         <li class="nav-item nav-button-2">
-          <%= link_to "BECOME A DRIVER", new_driver_registration_path, class:"btn btn-secondary no-border-radius new-driver-button nav-button" %>
+          <%= link_to "BECOME A DRIVER", new_driver_registration_path, class:"btn btn-secondary new-driver-button nav-button" %>
         </li>
         <li class="nav-item nav-button-3">
           <a class="background-transparent nav-button" href="/drivers/sign_in"><h5 class="sign-in-link">SIGN IN</h5></a>
