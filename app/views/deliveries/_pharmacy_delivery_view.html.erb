@@ -1,0 +1,65 @@
+<body>
+    <article class="row">
+        <div class="col-md-8 print-form">
+            <div class="card">
+                <div class="card-body">
+                    <header class="row print-form-header">
+                        <div class="col-md-12">
+                            <h6><strong>From</strong>:</h6>
+                        </div>
+                        <div class="col-md-4">
+                            <h6><%= @pharmacy.name %></h6>
+                        </div>
+                        <div class="col-md-5">
+                            <h6><%= @pharmacy.street %></h6>
+                        </div>
+                        <div class="col-md-3">
+                            <h6><%= @pharmacy.number %></h6>
+                        </div>
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
+                    </header>
+                    <section class="row patient-logistics">
+                        <div class="col-md-12">
+                            <h6><strong>To</strong>:</h6>
+                        </div>
+                        <div class="col-md-12">
+                            <h6><%= @delivery.recipient_address %></h6>
+                            <h6><%= @delivery.recipient_phone_number %></h6>
+                        </div>
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
+                    </section>
+                    <section class="row important-notice">
+                        <div class="col-md-12">
+                            <h6 class="theme-red">
+                                <strong>
+                                    **IMPORTANT: If the seal on your package is broken, torn, ripped, or damaged in any way, please contact your pharmacy 
+                                    right away!
+                                </strong>
+                            </h6>
+                        </div>
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
+                    </section>
+                    <section class="row">
+                        <div class="col-md-3 text-left">
+                            <h6 class="font-14">&copy; Darlyne</h6>
+                        </div>
+                        <div class="col-md-9 text-right">
+                            <%= link_to '#', class: "btn btn-primary cursor-pointer padding-14", onclick: 'window.print();return false;' do %>
+                                <span class="font-14"><i class="fa fa-print"></i> Print</span>
+                            <% end %>
+                            <%= link_to :back, class: "btn btn-light white cursor-pointer padding-14" do %>
+                                <span class="font-14"><i class="fa fa-long-arrow-left"></i> Return To Batch</span>
+                            <% end %>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </article>
+</body>

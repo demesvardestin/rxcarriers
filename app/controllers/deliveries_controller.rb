@@ -1,6 +1,8 @@
 class DeliveriesController < ApplicationController
   
   before_filter :load_deliverable, only: [:create]
+  before_action :check_current_pharmacy, only: [:create, :destroy]
+  before_action :check_current_driver, only: [:show, :edit, :update, :signature]
   
   def create
     @delivery = @deliverable.deliveries.new(delivery_params)
@@ -8,10 +10,20 @@ class DeliveriesController < ApplicationController
     @patient = Patient.find(params[:delivery][:recipient_name])
     respond_to do |format|
       if @delivery.save
-        @delivery.update(patient_id: params[:delivery][:recipient_name].to_i, recipient_name: @patient.name)
+        @delivery.update(
+          patient_id: params[:delivery][:recipient_name].to_i,
+          recipient_name: @patient.name,
+          recipient_phone_number: @patient.phone,
+          recipient_address: @patient.address
+        )
         format.html {redirect_to :back, notice: "Package added!"}
       end
     end
+  end
+  
+  def show
+    @delivery = Delivery.find(params[:id])
+    @pharmacy = Pharmacy.find(@delivery.pharmacy_id)
   end
   
   def edit
@@ -23,9 +35,11 @@ class DeliveriesController < ApplicationController
   end
 
   def update
+    @delivery = Delivery.find(params[:id])
+    @delivery.signed_on = DateTime.now
     respond_to do |format|
-      @delivery = Delivery.find(params[:id])
       if @delivery.update(delivery_params)
+        Batch.delivery_completed(@delivery.deliverable.driver)
         format.html {redirect_to :back, notice: "Package info updated!"}
       end
     end
@@ -45,7 +59,7 @@ class DeliveriesController < ApplicationController
     end
     
     def delivery_params
-      params.require(:delivery).permit(:recipient_name, :recipient_phone_number, :recipient_address, :medications, :copay)
+      params.require(:delivery).permit(:recipient_name, :medications, :copay, :signed_on)
     end
   
 end

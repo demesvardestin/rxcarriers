@@ -13,7 +13,7 @@ module BatchesHelper
         begin
             @request.status
         rescue
-            'n/a'
+            'not found'
         end
     end
     
@@ -42,6 +42,8 @@ module BatchesHelper
                 'Request Accepted!'
             when 'completed'
                 'Delivery Completed!'
+            when 'not found'
+                'no driver requested'
         end
     end
     
@@ -66,7 +68,11 @@ module BatchesHelper
     
     def batch_sort
         url = request.original_url
-        url_end = url[url.index("/batches")..-1]
+        begin
+            url_end = url[url.index("/batches")..-1]
+        rescue
+            'all'
+        end
         case url_end
             when "/batches/pending"
                 return "pending"
@@ -166,6 +172,8 @@ module BatchesHelper
         return @batches
     end
     
-    
+    def request_sent(batch)
+        (batch.deliveries.count > 0 && batch.completed) || batch.request_status != nil
+    end
     
 end

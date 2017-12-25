@@ -7,6 +7,11 @@ class Delivery < ActiveRecord::Base
     # scopes
     scope :reverse_order, -> {order("created_at DESC")}
     
+    # validations
+    validates_presence_of :recipient_name
+    validates_presence_of :medications
+    validates_presence_of :copay
+    
     # methods
     
     def find_driver(id)
@@ -18,7 +23,11 @@ class Delivery < ActiveRecord::Base
     end
     
     def signed?
-       self.signed_on.nil? ? 'No' : 'Yes' 
+        self.signed_on.nil? ? 'No' : 'Yes' 
+    end
+    
+    def signed
+        self.signed_on != nil ? true : false
     end
     
 end

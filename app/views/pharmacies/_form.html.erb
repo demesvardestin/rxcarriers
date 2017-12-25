@@ -26,6 +26,10 @@
   <div class="field">
     <%= f.text_field :website, class:"form-control ", placeholder:"Pharmacy Website" %>
   </div>
+  <div class="field">
+    <%= f.label :pharmacy_logo %>
+    <%= f.file_field :avatar, class:"form-control" %>
+  </div>
   <div class="actions text-right">
     <%= f.submit "Update!", class:"btn btn-light btn-lg cursor-pointer"%>
   </div>

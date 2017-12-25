@@ -1,20 +1,25 @@
 <div class="all-requests">
     <div class="request-card-container">
-        <% @requests.reverse.each do |req| %>
+        <% @all_batches.reverse.each do |bat| %>
             <div class="row">
-                <div class="col-md-12 request-card-div">
-                    <a class="background-transparent no-underline" href="/requests/<%= req.id %>">
-                        <div class="card request-card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-2">Batch ID: <span class="request-details"><strong><%= request_batch(req) %></strong></span></div>
-                                    <div class="col-md-4">Sent: <span class="request-details"><strong><%= timestamp(req) %></strong></span></div>
-                                    <div class="col-md-4">Pharmacy: <span class="request-details"><strong><%= request_pharmacy(req) %></strong></span></div>
-                                    <div class="col-md-2">Driver: <span class="request-details"><strong><%= req.driver.nil? ? 'none yet' : find_driver(req.driver).first_and_initial %></strong></span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                <div class="col-md-7 request-card-div">
+                    <div class="card">
+                      <div class="card-header">
+                        <h6>Batch <%= bat.id %> - <%= pluralize(bat.deliveries.count, 'delivery') %></h6>
+                      </div>
+                      <div class="card-body">
+                        <h4 class="card-title"><%= pharmacy(bat).name %></h4>
+                        <p class="card-text">
+                            <%= pharmacy(bat).street %> 
+                            <strong class="directions">
+                                <a href="https://www.google.com/maps/dir/?api=1&destination=<%= CGI::escape(pharmacy(bat).street) %>" class="background-transparent theme-green" target="_blank"> 
+                                    [View in Maps]
+                                </a>
+                            </strong>
+                        </p>
+                        <%= link_to 'View deliveries', routes_path(:id => bat.id), class:"btn btn-light white" %>
+                      </div>
+                    </div>
                 </div>
             </div>
         <% end %>

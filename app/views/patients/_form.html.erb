@@ -15,14 +15,17 @@
         <div class="field col-md-6">
             <%= f.text_area :name, class:"form-control patient-notes-field", autofocus: true, placeholder:"Patient Name" %>
         </div>
-        <div class="field col-md-6">
-            <%= f.text_area :phone, class:"form-control patient-notes-field", autofocus: true, placeholder:"Patient Contact Number" %>
+        <div class="field col-md-3">
+            <%= f.text_area :phone, class:"form-control patient-notes-field", autofocus: true, placeholder:"Patient Phone" %>
+        </div>
+        <div class="field col-md-3">
+            <%= f.text_area :dob, class:"form-control patient-notes-field", autofocus: true, placeholder:"Date of Birth" %>
         </div>
         <div class="field col-md-12">
-            <%= f.text_area :address, class:"form-control patient-notes-field", autofocus: true, placeholder:"Patient Delivery Address (including apt#)" %>
+            <%= f.text_field:address, class:"form-control patient-notes-field", autofocus: true, placeholder:"Patient Delivery Address (including apt#)" %>
         </div>
         <div class="field col-md-12">
-            <%= f.text_area :delivery_instructions, class:"form-control patient-instructions-field", autofocus: true, placeholder:"Special Delivery Instructions" %>
+            <%= f.text_area :delivery_instructions, class:"form-control batch-notes-field", autofocus: true, placeholder:"Special Delivery Instructions" %>
         </div>
     </div>
     <div class="row">
@@ -43,6 +46,7 @@
         </div>
     </div>
     <div class="actions text-right">
-        <%= f.submit "Register Patient", class:"btn btn-light btn-lg new-patient-button cursor-pointer" %>
+        
+        <%= f.submit submit_text, class:"btn btn-light btn-lg new-patient-button cursor-pointer" %>
     </div>
 <% end %>

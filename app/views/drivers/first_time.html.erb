@@ -1,0 +1,125 @@
+<style>
+    .col-md-6 {
+        padding-bottom: 25px;
+    }
+    .settings-form {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+    .vertical-panel {
+        display: none;
+    }
+    .main-nav {
+        display: auto;
+    }
+    .main-pages {
+        float: none !important;
+    }
+    .footer {
+        background: #e5e5e5;
+    }
+    .form-control {
+        height: 45px;
+        background: #e5e5e5;
+        border-radius: 0;
+    }
+    .card {
+        border-radius: 0;
+    }
+    .btn {
+        border-radius: 0;
+    }
+</style>
+
+<body>
+    <div class="settings-form">
+        <%= form_for @driver, :html => { multipart: true, :class => "form-horizontal image" } do |f| %>
+            <% if @driver.errors.any? %>
+                <div id="error_explanation">
+                    <h2>
+                        <%= pluralize(@driver.errors.count, "error") %> prohibited this driver from being saved:
+                    </h2>
+                    <ul>
+                        <% @driver.errors.full_messages.each do |message| %>
+                            <li><%= message %></li>
+                        <% end %>
+                    </ul>
+                </div>
+            <% end %>
+            
+            <section class="row car-info-card">
+                <div class="col-md-6 offset-md-4">
+                    <h6 class="font-14"><strong>Basic Information</strong></h6>
+                    <div class="card">
+                        <div class='card-body'>
+                            <div class="field">
+                                <%= f.email_field :email, class:"form-control", autofocus: true, placeholder:"Email" %>
+                            </div>
+                            <div class="field">
+                                <%= f.text_field :first_name, class:"form-control", autocomplete: "off", placeholder:"First Name" %>
+                            </div>
+                            <div class="field">
+                                <%= f.text_field :last_name, class:"form-control", autofocus: true, placeholder:"Last Name" %>
+                            </div>
+                            <div class="field">
+                                <%= f.text_field :middle_name, class:"form-control", autocomplete: "off", placeholder:"Middle Name (if applicable)" %>
+                            </div>
+                            <div class="field">
+                                <%= f.text_field :number, class:"form-control", autocomplete: "off", placeholder:"Phone Number" %>
+                            </div>
+                            <div class="field">
+                                <%= f.text_field :street, class:"form-control", autofocus: true, placeholder:"Street Address" %>
+                            </div>
+                            <div class="field">
+                                <%= f.text_field :town, class:"form-control", autocomplete: "off", placeholder:"Town" %>
+                            </div>
+                            <div class="field">
+                                <%= f.text_field :state, class:"form-control", autocomplete: "off", placeholder:"State" %>
+                            </div>
+                            <div class="field">
+                                <%= f.text_field :zipcode, class:"form-control", autocomplete: "off", placeholder:"Zipcode" %>
+                            </div>
+                            <div class="field">
+                                <%= f.label :choose_a_profile_picture %>
+                                <%= f.file_field :avatar, class:"form-control" %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="row car-info-card">
+                <div class="col-md-6 offset-md-4">
+                    <h6 class="font-14"><strong>Car Information</strong></h6>
+                    <div class="card">
+                        <div class='card-body'>
+                            <div class="field">
+                                <%= f.text_field :license_plate, class:"form-control", autocomplete: "off", placeholder:"License Plate Number" %>
+                            </div>
+                            <div class="field">
+                                <%= f.text_field :car_make, class:"form-control", autocomplete: "off", placeholder:"Car Make" %>
+                            </div>
+                            <div class="field">
+                                <%= f.text_field :car_model, class:"form-control", autocomplete: "off", placeholder:"Car Model" %>
+                            </div>
+                            <div class="field">
+                                <%= f.text_field :car_year, class:"form-control", autocomplete: "off", placeholder:"Car Year" %>
+                            </div>
+                            <div class="field">
+                                <%= f.text_field :car_color, class:"form-control", autocomplete: "off", placeholder:"Car Color" %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="row">
+                        <div class="actions text-right col-md-4 offset-md-8">
+                            <%= f.submit 'Continue', class:"btn btn-light btn-block white driver-signup-button" %>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        <% end %>
+    </div>
+</body>

@@ -1,5 +1,7 @@
 class ChargesController < ApplicationController
     
+    before_action :check_current_driver, only: [:stripe]
+    
     def stripe
         unless current_driver.stripe_uid
             options = {

@@ -1,10 +1,10 @@
 <div class="show-batch">
     <!-- Patient/Prescription Form -->
-    <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
+    <div class="modal fade new-patient-delivery" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add a Delivery Package</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Add a Delivery Patient</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -16,11 +16,39 @@
       </div>
     </div>
     <div class="row">
-        <div class="col-md-12"><h3 class="black">Batch ID: <%= @id %><span class="badge badge-secondary"><%= request_status(find_request(@batch.id)) %></span></h3></div>
-        <div class="col-md-12"><p class="black">Pharmacist: <span class="theme-blue"><strong><%= @batch.pharmacist %></strong></span></p></div>
+        <div class="col-md-12">
+            <h3 class="black">
+                Batch ID: <%= @batch.batch_id %>
+                <span class="badge badge-secondary">
+                    <%= request_status(find_request(@batch.batch_id)) %>
+                </span>
+            </h3>
+        </div>
+        <div class="col-md-12">
+            <p class="black">
+                Pharmacist: 
+                <span class="theme-blue">
+                    <strong>
+                        <%= @batch.pharmacist %>
+                    </strong>
+                </span>
+            </p>
+        </div>
     </div>
     <% if @batch.deliveries.count == 0 %>
-        <div class="row"><div class="col-md-8 no-prescriptions"><div class="card"><div class="card-body"><h5 class="black"><em>No packages added yet</em></h5></div></div></div></div>
+        <div class="row">
+            <div class="col-md-8 no-prescriptions">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="black">
+                            <em>
+                                No packages added yet
+                            </em>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
     <% else %>
         <% @batch.deliveries.reverse.each do |pac| %>
             <div class="row">
@@ -39,8 +67,11 @@
                                 </ul>
                             </p>
                             <h6 class="package-action-buttons">
-                                <%= link_to batch_delivery_path(:id => pac.id, :batch_id => @batch.id), class:"btn btn-secondary btn-sm white", method: :delete do %>
+                                <%= link_to batch_delivery_path(:id => pac.id, :batch_id => @batch.id), class:"btn btn-secondary white", method: :delete do %>
                                     <span class="font-14"><i class="fa fa-times"></i> Remove Package</span>
+                                <% end %>
+                                <%= link_to delivery_path(pac), class: "btn btn-primary cursor-pointer padding-14" do %>
+                                    <span class="font-14"><i class="fa fa-print"></i> Print Package Ticket</span>
                                 <% end %>
                             </h6>
                         </div>
@@ -51,16 +82,18 @@
     <% end %>
     <div class="row">
         <div class="col-md-3">
-            <button type="button" class="btn btn-primary cursor-pointer padding-14" data-toggle="modal" data-target=".bd-example-modal-lg">
-              <span class="font-14"><i class="fa fa-file-text"></i> Add Prescription Package</span>
-            </button>
+            <% if request_sent(@batch) %>
+                <%= link_to batches_path, class:"btn btn-primary padding-14" do %>
+                    <i class="fa fa-long-arrow-left"></i> Return To Batch List
+                <% end %>
+            <% else %>
+                <button type="button" class="btn btn-primary btn-block cursor-pointer padding-14" data-toggle="modal" data-target=".new-patient-delivery">
+                  <span class="font-14"><i class="fa fa-plus"></i> Add Patient</span>
+                </button>
+            <% end %>
         </div>
         <div class="col-md-3">
-            <% if find_request(@batch.id) != 'n/a' %>
-                <button class="btn btn-light white" disabled:"disabled">
-                    <i class="fa fa-car white"></i> <%= request_status(find_request(@batch.id)) %>
-                </button>
-            <% else %>
+            <% unless request_sent(@batch) %>
                 <%= link_to request_driver_path(:id => @batch.id), class:"btn btn-light white" do %>
                     <i class="fa fa-car white"></i> Request Driver
                 <% end %>

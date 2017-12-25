@@ -9,14 +9,12 @@
   <div class="driver-signup col-md-5">
     <div class="driver-signup-div">
       <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10 driver-signup-banner">
+        <div class="col-md-10 offset-md-1 driver-signup-banner">
           <h2 class="driver-signup-banner-text text-center">Welcome back!</h2>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10 driver-signup-form">
+        <div class="col-md-10 offset-md-1 driver-signup-form">
           <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
             <%= devise_error_messages! %>
           
@@ -41,7 +39,7 @@
                   <%= f.submit "Log in", class:"btn btn-primary btn-block driver-signup-button" %>
                 </div>
                 <div class="col-md-6">
-                  <%= link_to "Register", new_driver_registration_path, class:"btn btn-success btn-block driver-login-button" %>
+                  <%= link_to "Register", new_driver_registration_path, class:"btn btn-light btn-block driver-login-button" %>
                 </div>
               </div>
             </div>

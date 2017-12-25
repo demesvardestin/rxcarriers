@@ -1,18 +1,29 @@
-<body>
-    <div class="row">
-        <div class="card-columns">
-            <% @deliveries.each do |del| %>
-                <div class="col-md-4">
-                    <div class="card">
-                        <img class="card-img-top" src="..." alt="Card image cap">
-                        <div class="card-body">
-                          <h4 class="card-title"><%= find_pharmacy(del.pharmacy_id).name %></h4>
-                          <p class="card-text"><%= find_batch(del.batch_id).notes %></p>
-                          <p class="card-text"><small class="text-muted">Batch ID: <%= del.batch_id %></small></p>
+<div class="all-requests">
+    <div class="request-card-container">
+        <ol>
+            <% @batch.deliveries.reverse.each do |del| %>
+                <li>
+                    <div class="row">
+                        <div class="col-md-7 request-card-div">
+                            <div class="card" style="">
+                              <div class="card-body">
+                                <h5 class="card-title"><%= del.recipient_address %></h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    <%= del.recipient_phone_number %> 
+                                    <% if del.signed %>
+                                        <span class="badge badge-success">Delivered</span>
+                                    <% end %>
+                                </h6>
+                                <%= link_to 'View details', delivery_path(del), class:"btn btn-primary" %>
+                                <a href="https://www.google.com/maps/dir/?api=1&destination=<%= CGI::escape(del.recipient_address) %>" class="btn btn-light white" target="_blank"> 
+                                    View in Maps
+                                </a>
+                              </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </li>
             <% end %>
-        </div>
+        </ol>
     </div>
-</body>
+</div>

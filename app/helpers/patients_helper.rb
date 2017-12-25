@@ -57,4 +57,17 @@ module PatientsHelper
         end
     end
     
+    def submit_text
+        begin
+            @patient = Patient.find(params[:id])
+        rescue
+            return 'Register Patient'
+        end
+        if @patient
+            'Update Patient Info'
+        else
+            'Register Patient'
+        end
+    end
+    
 end

@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :redirect_from_cross_model
   
+  
   def redirect_from_cross_model
     url = request.original_url
     if current_pharmacy
@@ -16,4 +17,25 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+  
+  def check_current_pharmacy
+    redirect_to unauthorized_path unless current_pharmacy
+  end
+  
+  def check_current_driver
+    redirect_to unauthorized_path unless current_driver
+  end
+  
+  def check_authenticated
+    redirect_to unauthorized_path unless authenticated_user
+  end
+  
+  def authenticated_user
+    current_driver || current_pharmacy
+  end
+  
+  def unauthorized_access
+    redirect_to unauthorized_path
+  end
+  
 end

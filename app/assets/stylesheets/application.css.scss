@@ -39,14 +39,18 @@ body {
 a:hover {
     color: inherit;
 }
-.navbar {
-    background-color: #03032b !important;
+.main-pages {
+    float: right !important;
 }
-.logo {
-    color: #fff;
+.navbar {
+    border-bottom: 1px solid #e5e5e5;
+    // background-color: #03032b !important;
 }
 .font-14 {
     font-size: 14px;
+}
+.font-12 {
+    font-size: 12px;
 }
 .font-82 {
     font-size: 82px;
@@ -57,8 +61,14 @@ a:hover {
     padding-top: 9px;
     padding-bottom: 9px;
 }
+.card {
+    border: 1px solid #e5e5e5 !important;
+}
 .theme-blue {
-    color: #03032b !important;
+    color: #4095e3 !important;
+}
+.theme-gray {
+    color: #e5e5e5;
 }
 .theme-red {
     color: #ff3232 !important;
@@ -180,10 +190,17 @@ a:hover {
 }
 
 /* Batches Views */
+.patient-print {
+    padding-top: 40px;
+    padding-bottom: 30px;
+}
 .badge {
     font-family: "Roboto", sans-serif;
     font-weight: 300px;
     font-size: 12px;
+}
+.item-header {
+    color: #4095e3;
 }
 .item-header:hover {
     background: transparent;
@@ -323,6 +340,9 @@ a:hover {
 }
 
 /* Invoice Views */
+.invoice-list {
+    padding-bottom: 30px;
+}
 .transaction-graph-tab {
     color: #03032b !important;
 }
@@ -344,7 +364,7 @@ a:hover {
     background: #ccccd4;
 }
 .transactions-div-card-header {
-    background: #03032b !important;
+    background: #265988 !important;
     padding-bottom: 0;
     padding-top: 10px;
 }
@@ -412,23 +432,42 @@ a:hover {
 .theme-green {
     color: #134d13 !important;
 }
+.theme-darkblue {
+    color: #265988;
+}
+.green {
+    color: #134d13 !important;
+}
 .btn-success {
     background: #134d13 !important;
     border: 1px solid #0f3d0f;
 }
 .btn-primary {
-    background: #03032b !important;
-    border: 1px solid #020222 !important;
+    background: #265988 !important;
+    border: 1px solid #265988 !important;
     color: #fff !important;
+    font-size: 14px;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 .btn-primary:hover {
     background: #fff !important;
-    color: #03032b !important;
+    color: #265988 !important;
+}
+.btn-secondary {
+    color: #fff;
+    font-size: 14px;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 .btn-light {
     background: #01665d;
     border: 1px solid #01665d;
-    color: white;
+    color: #fff;
     font-size: 14px;
     padding-right: 30px;
     padding-left: 30px;
@@ -462,6 +501,62 @@ a:hover {
 }
 
 /* Driver Views*/
+.onfido-section {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.fa-circle-green {
+    color: #4cff4c;
+}
+.fa-circle-gray {
+    color: #e5e5e5;
+}
+.clock-in-btn {
+    background: transparent !important;
+    color: #000;
+    padding-left: 10px;
+}
+.interval-type {
+    margin-top: 10px;
+}
+.transaction-filtering {
+    padding-bottom: 25px;
+}
+.list-group-item-earnings {
+    border: 3px solid #e5e5e5;
+    margin-bottom: 5px;
+}
+.driver-stripe-balance {
+    margin-bottom: 10px;
+}
+.driver-earnings {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.driver-profile-details {
+    text-align: center !important;
+    padding-left: 35px;
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
+.driver-avatar-div {
+    border-radius: 60px !important;
+    width: 120px;
+    height: 120px;
+    padding: 0;
+    overflow: hidden !important;
+}
+.driver-avatar {
+    border: 1px solid #fff;
+    width: 100%;
+    height: 100%;
+    border-radius: 60px !important;
+    margin-top: 0 !important;
+    margin-left: 0 !important;
+}
+.no-live-routes {
+    padding-top: 240px;
+}
 .driver-edit-row {
     padding: 40px;
 }
@@ -478,8 +573,7 @@ a:hover {
     border: 1px solid #03032b;
 }
 .account-under-review {
-    padding-top: 250px;
-    padding-bottom: 40px;
+    padding-top: 115px;
 }
 .log-out-from-notice {
     color: #fff !important;
@@ -492,6 +586,12 @@ a:hover {
 }
 
 /* Pharmacy Views */
+.pharmacy-bottom-icons {
+    font-size: 30px !important;
+}
+.pharmacy-bottom-icons:hover {
+    color: #4095e3;
+}
 .notice {
     padding-left: 40px;
     padding-right: 40px;
@@ -586,6 +686,7 @@ a:hover {
 }
 .logout-btn-div {
     padding-left: 0;
+    padding-right: 0;
 }
 .pharmacy-logout {
     font-size: 14px !important;
@@ -612,6 +713,9 @@ a:hover {
 }
 
 /* Patient Views */
+.profile-actions-btn {
+    padding-bottom: 5px;
+}
 .patient-name-label {
     padding-top: 1px;
     padding-bottom: 1px;
@@ -649,6 +753,10 @@ a:hover {
 }
 
 /* Delivery Views */
+.print-form {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
 .delivery-signature {
     height: 100%;
     width: 100%;
@@ -667,11 +775,47 @@ a:hover {
 }
 
 /* Support Views */
+.welcomeheader-card {
+    background-image: url("welcomeheader.jpeg");
+}
+.card-0:hover {
+    background: #4095e3;
+}
+.contact {
+    padding-top: 30px;
+}
+.contact-us-header {
+    height: 150px;
+    background: #4095e3;
+    margin-bottom: 30px;
+}
+.middle {
+    padding-top: 55px;
+}
 .support-body {
     padding: 40px;
 }
+.support-nav {
+    float: left;
+    background: #e5e5e5;
+    padding: 0 !important;
+    position: fixed;
+    height: 100%;
+}
+.support-nav-content {
+    float: right;
+    background: transparent;
+}
 .faq {
     padding-bottom: 10px;
+}
+.tab-show{
+    background: transparent !important;
+}
+
+/* Footer */
+.footer {
+    padding: 30px;
 }
 
 
@@ -683,7 +827,25 @@ a:hover {
 /* Mobile Rules */
 
 @media only screen and (max-device-width: 768px) {
+    .main-pages {
+        float: none !important;
+    }
+    .navbar-toggler {
+        color: #fff !important;
+    }
+    .navbar-toggler-icon {
+        color: #fff !important;
+    }
     body {
         overflow: hidden !important;
+    }
+    .vertical-panel {
+        display: none !important;
+    }
+    .placeholder-div {
+        display: none !important;
+    }
+    .driver-signup {
+        float: none !important;
     }
 }

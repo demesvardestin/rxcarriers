@@ -5,25 +5,43 @@
 </style>
 <body>
     <div class="col-md-2 vertical-panel">
-      <div class="profile-details">
-        <div class="col-md-12">
-          <p class="white pharmacy-name"><%= current_driver.first_and_initial %></p>
-          <hr style="border: 1px solid #fff; color: #fff !important; background: #fff !important;">
+      <div class="driver-profile-details" align="center">
+        <div class="col-md-12 driver-avatar-div">
+          <%= image_tag current_driver.avatar.url(:medium), class:"rounded driver-avatar" %>
+        </div>
+      </div>
+      <div class="row driver-profile-name">
+        <div class="col-md-12 text-center">
+          <h6 class="white"><%= current_driver.first_and_initial %></h6>
+        </div>
+        <div class="col-md-12 text-center">
+          <h6 class="white font-12">
+            <i class="fa fa-circle fa-circle-<%= shift_status(current_driver) %>"></i> <%= current_driver.shift_status %> 
+            <a class="white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+            <div class="dropdown-menu">
+                <li><%= link_to 'clock in', clock_in_path, class:"clock-in-btn" %></li>
+                <li class="dropdown-divider"></li>
+                <li><%= link_to 'clock out', clock_out_path, class:"clock-in-btn" %></li>
+            </div>
+          </h6>
         </div>
       </div>
       <div class="nav-links">
         <ul class="nav flex-column">
           <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side <% if url.include?("/driver/requests") || url.end_with?('.io/' || '.com/') %>active<% end %>" href="/driver/requests">Requests</a>
+            <a class="nav-link nav-link-side <% if url.include?("/driver/deliveries") || url.end_with?('.io/' || '.com/') %>active<% end %>" href="/driver/deliveries">Deliveries</a>
           </li>
           <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side <% if url.include?("/my-earnings")%>active<% end %>" href="/transactions">Earnings</a>
+            <a class="nav-link nav-link-side <% if url.include?("/my-earnings")%>active<% end %>" href="/my-earnings">Earnings</a>
+          </li>
+          <li class="nav-item nav-item-pharmacy-view">
+            <a class="nav-link nav-link-side <% if url.include?("/delivery-history")%>active<% end %>" href="/delivery-history">History</a>
           </li>
           <li class="nav-item nav-item-pharmacy-view">
             <a class="nav-link nav-link-side <% if url.include?("/driver/#{current_driver.id}/settings")%>active<% end %>" href="/driver/<%= current_driver.id %>/settings">Settings</a>
           </li>
           <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side <% if url.include?("/support")%>active<% end %>" href="/help">Support</a>
+            <a class="nav-link nav-link-side <% if support %>active<% end %>" href="/help">Support</a>
           </li>
         </ul>
       </div>

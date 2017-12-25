@@ -1,0 +1,57 @@
+<style>
+    .unauthorized-access {
+        padding-top: 8%;
+        padding-left: 30%;
+        padding-right: 30%;
+    }
+    .main-nav {
+        display: none;
+    }
+    .col-md-12 {
+        padding-bottom: 20px;
+        text-align: center;
+    }
+    .error {
+        font-size: 60px;
+    }
+    .card {
+        border: none !important;
+    }
+</style>
+
+<body>
+    <section class="unauthorized-access">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="theme-blue">Darlyne</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="theme-blue"><i class="fa fa-exclamation-triangle error theme-gray"></i></h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h6 class="theme-black">
+                            Sorry, we encountered a snag while trying to serve this page. 
+                            You may not have access to it, or it simply does not exist.
+                        </h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <%= link_to root_path, class:"btn btn-primary" do %>
+                            <i class="fa fa-home"></i> Return Home
+                        <% end %>
+                        <%= link_to url, class:"btn btn-light white" do %>
+                            <i class="fa fa-refresh"></i> Refresh
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>

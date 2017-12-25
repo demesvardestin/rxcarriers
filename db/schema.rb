@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171124231343) do
+ActiveRecord::Schema.define(version: 20171215183039) do
 
 # Could not dump table "batches" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
@@ -95,6 +95,21 @@ ActiveRecord::Schema.define(version: 20171124231343) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.string   "bank_account_number"
+    t.string   "country"
+    t.string   "account_holder_name"
+    t.string   "account_holder_type"
+    t.string   "routing_number"
+    t.string   "soc"
+    t.string   "dob"
+    t.string   "middle_name"
+    t.string   "gender"
+    t.boolean  "onboarded"
+    t.boolean  "onfido_created"
+    t.string   "exp_month"
+    t.string   "exp_year"
+    t.string   "cvc"
+    t.string   "stripe_token"
   end
 
   add_index "drivers", ["email"], name: "index_drivers_on_email", unique: true
@@ -198,6 +213,19 @@ ActiveRecord::Schema.define(version: 20171124231343) do
     t.string   "account_holder_name"
     t.string   "account_holder_type"
     t.string   "routing_number"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.string   "card_number"
+    t.integer  "exp_year"
+    t.integer  "exp_month"
+    t.string   "bill_street"
+    t.string   "bill_city"
+    t.string   "bill_state"
+    t.string   "bill_zip"
+    t.string   "bill_country"
+    t.string   "cvc"
   end
 
   add_index "pharmacies", ["email"], name: "index_pharmacies_on_email", unique: true
@@ -221,8 +249,8 @@ ActiveRecord::Schema.define(version: 20171124231343) do
   end
 
   create_table "requests", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.string   "patients"
     t.integer  "batch_id"
     t.integer  "count"
@@ -230,12 +258,27 @@ ActiveRecord::Schema.define(version: 20171124231343) do
     t.string   "status"
     t.string   "body"
     t.integer  "pharmacy_id"
+    t.string   "driver_number"
+    t.string   "car_make"
+    t.string   "car_model"
+    t.string   "car_year"
+    t.string   "car_color"
+    t.string   "license_plate"
+    t.string   "driver_name"
   end
 
   create_table "supports", force: :cascade do |t|
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.string   "question_details"
+    t.string   "pharmacy_name"
+    t.string   "pharmacy_email"
+    t.string   "pharmacy_number"
+    t.string   "issue_type"
+    t.integer  "pharmacy_id"
+    t.string   "title"
+    t.text     "body"
+    t.string   "tags"
   end
 
 end

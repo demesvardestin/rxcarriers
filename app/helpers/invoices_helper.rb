@@ -33,8 +33,8 @@ module InvoicesHelper
     end
     
     def invoices_sum
-        @invoices = Invoice.where(pharmacy_id: current_pharmacy.id)
-        @invoices.reduce(0) {|sum, invoice| sum += invoice.amount}.to_s
+        @all_invoices = Invoice.where(pharmacy_id: current_pharmacy.id).today
+        @all_invoices.reduce(0) {|sum, invoice| sum += invoice.amount}.to_s
     end
     
     def timestamp(object)

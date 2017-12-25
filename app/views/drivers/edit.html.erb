@@ -13,6 +13,7 @@
                 </div>
                 <a class="nav-link nav-link-edit <% if url.include?("/driver/#{current_driver.id}/settings/account-info") || url.end_with?("/driver/#{current_driver.id}/settings") %>inverse-active<% end %>" href="/driver/<%= current_driver.id %>/settings/account-info" role="tab" aria-controls="v-pills-home" aria-selected="true">Account</a>
                 <a class="nav-link nav-link-edit <% if url.include?("/driver/#{current_driver.id}/settings/car-info")%>inverse-active<% end %>" href="/driver/<%= current_driver.id %>/settings/car-info" role="tab" aria-controls="v-pills-profile" aria-selected="false">Car Info</a>
+                <a class="nav-link nav-link-edit <% if url.include?("/driver/#{current_driver.id}/settings/bank-acct-info")%>inverse-active<% end %>" href="/driver/<%= current_driver.id %>/settings/bank-acct-info" role="tab" aria-controls="v-pills-profile" aria-selected="false">Card Info</a>
                 <a class="nav-link nav-link-edit <% if url.include?("/driver/#{current_driver.id}/settings/advanced")%>inverse-active<% end %>" href="/driver/<%= current_driver.id %>/settings/advanced" role="tab" aria-controls="v-pills-settings" aria-selected="false">Advanced</a>
             </div>
         </div>
@@ -20,7 +21,7 @@
             <div class="tab-content">
                 <div class="card">
                     <div class="card-body">
-                        <%= render "#{card_content}" %>
+                        <%= render "#{driver_card_content}" %>
                     </div>
                 </div>
             </div>

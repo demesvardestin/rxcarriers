@@ -27,4 +27,11 @@ module PharmaciesHelper
         end
     end
     
+    def home
+        url = request.original_url
+        if url.include?("/batches") || url.end_with?('.io') || url.end_with?('.com')
+           return true
+        end
+    end
+    
 end

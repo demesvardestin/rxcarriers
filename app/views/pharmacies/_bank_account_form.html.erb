@@ -11,23 +11,64 @@
         </div>
     <% end %>
     
-    <div class="field">
-        <%= f.text_field :bank_account_number, class:"form-control", autofocus: true, placeholder:"Bank account number" %>
+    <div class="row">
+        <div class="col-md-12">
+            <%= f.label :card_information %>
+        </div>
+        <div class="col-md-6">
+            <div class="field">
+                <%= f.text_field :card_number, class:"form-control", autofocus: true, placeholder:"Credit or Debit card number" %>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="field">
+                <%= f.text_field :exp_month, class:"form-control", autofocus: true, placeholder:"Exp Month" %>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="field">
+                <%= f.text_field :exp_year, class:"form-control", autofocus: true, placeholder:"Exp year" %>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="field">
+                <%= f.text_field :cvc, class:"form-control", autofocus: true, placeholder:"CVC" %>
+            </div>
+        </div>
     </div>
     <div class="field">
-        <%= f.text_field :country, class:"form-control", autofocus: true, placeholder:"Country" %>
+        <%= f.hidden_field :bill_country, class:"form-control", autofocus: true, :value => 'US' %>
     </div>
-    <div class="field">
-        <%= f.text_field :account_holder_name, class:"form-control", autofocus: true, placeholder:"Name of account holder" %>
+    <div class="row">
+        <div class="col-md-12">
+            <%= f.label :billing_address %>
+        </div>
+        <div class="col-md-5">
+            <div class="field">
+                <%= f.text_field :bill_street, class:"form-control", autofocus: true, placeholder:"Street Address" %>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="field">
+                <%= f.text_field :bill_city, class:"form-control", autofocus: true, placeholder:"Town or City" %>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="field">
+                <%= f.text_field :bill_state, class:"form-control", autofocus: true, placeholder:"State" %>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="field">
+                <%= f.text_field :bill_zip, class:"form-control", autofocus: true, placeholder:"Zipcode" %>
+            </div>
+        </div>
     </div>
-    <div class="field">
-        <%= f.text_field :account_holder_type, class:"form-control", autofocus: true, placeholder:"Individual or Corporate?" %>
-    </div>
-    <div class="field">
-        <%= f.text_field :routing_number, class:"form-control", autofocus: true, placeholder:"Routing Number" %>
-    </div>
-
-    <div class="actions text-right">
-        <%= f.submit "Secure Submission", class:"btn btn-light btn-lg" %>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="actions text-right">
+                <%= f.submit "Secure Submission", class:"btn btn-light btn-lg" %>
+            </div>
+        </div>
     </div>
 <% end %>

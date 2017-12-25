@@ -35,16 +35,10 @@ class RequestsController < ApplicationController
         end
     end
     
-    def update
-    end
-    
-    def destroy
-    end
-    
     private
     
-    def request_params
-        params.fetch(:request, {}).require(:patients, :batch_id, :count, :driver, :status, :body)
-    end
+        def request_params
+            params.require(:request).permit(:patients, :batch_id, :count, :driver, :status, :body, :driver_number)
+        end
     
 end

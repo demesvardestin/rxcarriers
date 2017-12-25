@@ -27,7 +27,10 @@
     <%= f.text_field :car_color, class:"form-control", autocomplete: "off", placeholder:"Car Color" %>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Submit", class:"btn btn-success btn-block driver-signup-button"%>
+  <div class="actions text-right">
+    <%= f.submit "Submit", class:"btn btn-light white driver-signup-button" %>
+    <%= link_to :back, class:"btn btn-primary" do %>
+      Cancel
+    <% end %>
   </div>
 <% end %>

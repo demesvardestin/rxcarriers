@@ -13,6 +13,13 @@ class Patient < ActiveRecord::Base
     scope :asc_name, -> {order("name ASC")}
     scope :desc_name, -> {order("name DESC")}
     
+    # validations
+    validates_presence_of :name
+    validates_presence_of :address
+    validates_presence_of :phone, uniqueness: true
+    validates_presence_of :delivery_instructions
+    
+    # methods
     def self.search(param)
         param.strip!
         param.downcase!

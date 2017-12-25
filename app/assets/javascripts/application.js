@@ -14,10 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require chartkick
-//= require signature-pad
-//= require jquery.signaturepad
-//= require flashcanvas
-//= require json2
 //= require_tree .
 
 var init_batch_lookup;

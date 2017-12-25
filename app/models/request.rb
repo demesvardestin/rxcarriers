@@ -1,6 +1,9 @@
 class Request < ActiveRecord::Base
     
+    # associations
     belongs_to :pharmacy
+    
+    # scopes
     scope :pending, -> {where(status: "pending")}
     scope :accepted, -> {where(status: "accepted")}
     scope :completed, -> {where(status: "completed")}
@@ -9,10 +12,15 @@ class Request < ActiveRecord::Base
     scope :asc_date, -> {order("updated_at ASC")}
     scope :desc_date, -> {order("updated_at DESC")}
     
+    # methods
     def self.search(param)
         param.strip!
         param.downcase!
-        (driver_matches(param) + status_matches(param)).uniq
+        (driver_matches(param) + status_matches(param) + batch_matches(param)).uniq
+    end
+    
+    def self.batch_matches(param)
+        matches('batch_id', param)
     end
     
     def self.driver_matches(param)
@@ -32,7 +40,7 @@ class Request < ActiveRecord::Base
         @batch = Batch.find(original_request.batch_id)
         message = "[Type: new request - ID: #{@batch.id}]\n\nNew delivery request from #{@pharmacy.name} at #{@pharmacy.street}. Reply 'yes' to accept this request."
         @request = original_request
-        @request.update!(body: 'Sent from your Twilio trial account - ' + message)
+        @request.update(body: 'Sent from your Twilio trial account - ' + message)
         Driver.fetch_driver_response(original_request, @pharmacy, message)
     end
     
@@ -40,7 +48,7 @@ class Request < ActiveRecord::Base
         Driver.request_cancelled(driver, pharmacy, batch_id)
         text_message = "[Type: request resend - ID: #{batch_id}]\n\nUpdated delivery request from #{pharmacy.name} at #{pharmacy.street}. Reply 'yes' to accept this request."
         Driver.fetch_driver_response(req, pharmacy, text_message, request_message, driver, false)
-        Request.find_by(id: req.id).update!(body:'Sent from your Twilio trial account - ' + text_message)
+        Request.find_by(id: req.id).update(body:'Sent from your Twilio trial account - ' + text_message)
     end
     
     def self.check_delivery_status

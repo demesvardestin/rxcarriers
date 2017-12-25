@@ -1,5 +1,21 @@
 <body>
     <div class="all-batches">
+        <!-- New Batch Form -->
+        <div class="modal fade batch-modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New Batch</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <%= render 'form' %>
+              </div>
+            </div>
+          </div>
+        </div>
         <header class="col-md-12 request-index-header">
             <div class="row requests-index-header ">
                 <div class="col-md-6">
@@ -28,9 +44,9 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <%= link_to new_batch_path, class:"btn btn-primary padding-14" do %>
+                    <button type="button" class="btn btn-primary padding-14 cursor-pointer" data-toggle="modal" data-target=".batch-modal">
                         <span class="font-14"><i class="fa fa-plus"></i> Add new batch</span>
-                    <% end %>
+                    </button>
                 </div>
             </div>
         </header>

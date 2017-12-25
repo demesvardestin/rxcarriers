@@ -1,11 +1,17 @@
 <%= simple_form_for [@deliverable, @delivery] do |f| %>
   <div class="field">
-    <%= f.input_field :signature, as: :hidden, class: 'form-control' %>
+    <%= f.input_field :signature, class: 'form-control', placeholder: "Delivery recipient name" %>
   </div>
-  <div class="signature_pad text-center">
-    <div class="signature_pad_footer">
-      <div class="text-muted">Sign above</div>
+  <div class="signature-group">
+    <div class="signature_footer">
+      <div class="text-muted confirmation">
+        By signing for this package, I confirm that I am 
+        the recipient of all addressed prescriptions, or 
+        have been authorized by the recipient to receive 
+        them and sign on their behalf.
+      </div>
       <%= f.submit "Accept Delivery", class:"btn btn-light white cursor-pointer signature_pad_save" %>
+      <%= link_to 'Go Back', my_deliveries_path, class:"btn btn-primary white" %>
     </div>
   </div>
 <% end %>

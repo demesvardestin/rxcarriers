@@ -4,6 +4,10 @@ module DeliveriesHelper
         [object.updated_at.strftime("%B %-dth %Y"), "at", object.updated_at.strftime("%I:%M %p")].join(" ")
     end
     
+    def signed_on(object)
+        [object.signed_on.strftime("%B %-dth %Y"), "at", object.updated_at.strftime("%I:%M %p")].join(" ") if object.signed_on
+    end
+    
     def find_driver(id)
         @request = Request.where(batch_id: id).last
         @driver = Driver.where(number: @request.driver).last
@@ -13,7 +17,7 @@ module DeliveriesHelper
         s = ''
         Patient.where(pharmacy_id: current_pharmacy.id).each do |patient|
             unless patient.nil?
-                s << "<option value='#{patient.id}' #{'selected' unless patient != chosen_patient}>#{patient.name}</option>"
+                s << "<option value='#{patient.id}' #{'selected' unless patient != chosen_patient}>#{patient.name} - #{patient.dob} - #{patient.address}</option>"
             end
         end
         s.html_safe

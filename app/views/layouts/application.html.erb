@@ -27,36 +27,24 @@
 </head>
 <body>
   <% if current_driver %>
-    <% if current_driver.driver_approved %>
+    <% if current_driver.onboarding_step_three %>
       <%= render 'drivers/driver_home' %>
     <% else %>
       <%= render 'drivers/acct_under_review' %>
     <% end %>
-    <div class="col-md-10 main-pages" style="float: right !important;">
+    <div class="col-md-10 main-pages">
       <%= yield %>
     </div>
   <% elsif current_pharmacy %>
     <%= render 'pharmacies/pharmacy_home' %>
-    <div class="col-md-10 main-pages" style="float: right !important;">
-      <% if flash[:notice] %>
-        <section class="notice">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="alert alert-success no-border-radius alert-dismissible fade show" role="alert">
-                <%= notice %>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-      <% end %>
+    <div class="col-md-10 main-pages">
+      <%= render 'notice' %>
       <%= yield %>
     </div>
   <% else %>
     <%= render 'layouts/main_nav' %>
     <%= yield %>
   <% end %>
+  <%= render footer %>
 </body>
 </html>

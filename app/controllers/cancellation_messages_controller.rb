@@ -1,5 +1,5 @@
 class CancellationMessagesController < ApplicationController
-  # before_action :set_cancellation_message, only: [:show, :edit, :update, :destroy]
+  before_action :unauthorized_access
 
   def create
     @cancellation_message = CancellationMessage.new(cancellation_message_params)

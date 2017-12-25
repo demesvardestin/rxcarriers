@@ -5,16 +5,15 @@
 </style>
 <body>
     <div class="col-md-2 vertical-panel">
-      <div class="profile-details">
-        <div class="col-md-12">
-          <p class="white pharmacy-name"><%= current_pharmacy.name_shortened %></p>
-          <hr style="border: 1px solid #fff; color: #fff !important; background: #fff !important;">
+      <div class="driver-profile-details" align="center">
+        <div class="col-md-12 driver-avatar-div">
+          <%= image_tag current_pharmacy.avatar.url(:medium), class:"rounded driver-avatar" %>
         </div>
       </div>
       <div class="nav-links">
         <ul class="nav flex-column">
           <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side <% if url.include?("/batch") || url.end_with?('.io/' || '.com/') %>active<% end %>" href="/batches">Batches</a>
+            <a class="nav-link nav-link-side <% if home == true %>active<% end %>" href="/batches">Batches</a>
           </li>
           <li class="nav-item nav-item-pharmacy-view">
             <a class="nav-link nav-link-side <% if url.include?("/requests")%>active<% end %>" href="/requests">Requests</a>
@@ -25,19 +24,29 @@
           <li class="nav-item nav-item-pharmacy-view">
             <a class="nav-link nav-link-side <% if url.include?("/transactions")%>active<% end %>" href="/transactions">Transactions</a>
           </li>
-          <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side <% if url.include?("/settings")%>active<% end %>" href="/settings">Settings</a>
-          </li>
-          <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side <% if url.include?("/support")%>active<% end %>" href="/help">Support</a>
-          </li>
         </ul>
       </div>
       <div class="dashboard-control">
-        <div class="col-md-12 text-left logout-btn-div">
-          <%= link_to destroy_pharmacy_session_path, class:"white pharmacy-logout no-underline btn btn-light", method: :delete do %>
-            <i class="fa fa-power-off"></i> Log Out
-          <% end %>
+        <div class="row">
+          <div class="col-md-3 offset-md-1 text-center logout-btn-div" data-toggle="tooltip" data-placement="top" title="Settings">
+            <%= link_to settings_path, class:"white no-underline background-transparent" do %>
+              <% if url.include?("settings") %>
+                <i class="fa fa-cog pharmacy-bottom-icons theme-blue fa-spin fa-3x fa-fw"></i>
+              <% else %>
+                <i class="fa fa-cog pharmacy-bottom-icons"></i>
+              <% end %>
+            <% end %>
+          </div>
+          <div class="col-md-3 text-center logout-btn-div" data-toggle="tooltip" data-placement="top" title="Help">
+            <%= link_to help_path, class:"white no-underline background-transparent" do %>
+              <i class="fa fa-question-circle pharmacy-bottom-icons"></i>
+            <% end %>
+          </div>
+          <div class="col-md-3 text-center logout-btn-div" data-toggle="tooltip" data-placement="top" title="Logout">
+            <%= link_to destroy_pharmacy_session_path, class:"white no-underline background-transparent", method: :delete do %>
+              <i class="fa fa-power-off pharmacy-bottom-icons"></i>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>

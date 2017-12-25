@@ -33,6 +33,8 @@ gem 'simple_form'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
+# will_paginate for pagination
+gem 'will_paginate', '~> 3.1.0'
 # paperclip for file upload
 gem "paperclip", "~> 5.0.0"
 # Use jquery as the JavaScript library

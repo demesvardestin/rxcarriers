@@ -12,7 +12,7 @@ class Driver::RegistrationsController < Devise::RegistrationsController
     end
     
     def after_sign_up_path_for(resource)
-        edit_driver_path(resource)
+        root_path
     end
 
 end

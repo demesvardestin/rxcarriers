@@ -1,11 +1,32 @@
 class Charge < ActiveRecord::Base
     belongs_to :pharmacy
     
-    def self.create_charge(pharmacy, batch, driver, req)
+    def self.charge_pharmacy(pharmacy, batch, driver, req, amount)
+        description = "Payment for the delivery of Batch ##{batch.id}"
+        percentage = (15.0/100.0) * amount
+        total = amount - percentage.to_i
+        customer = Stripe::Customer.retrieve(pharmacy.stripe_cus)
+        charge = Stripe::Charge.create(
+            {
+                :customer => customer,
+                :amount => amount,
+                :description => description,
+                :currency => 'usd',
+                :source => customer.sources.first,
+                :destination => {
+                    :amount => total,
+                    :account => driver.stripe_uid,
+                }
+            }
+        )
+        Invoice.create!(description: "charge ##{charge.id}")
+    end
+    
+    def self.create_charge(pharmacy, batch, driver, req, amount)
         @invoice = Invoice.where(pharmacy_id: pharmacy.id).last
         invoice_item = Stripe::InvoiceItem.create(
             :customer => pharmacy.stripe_cus,
-            :amount => 3500,
+            :amount => amount,
             :currency => 'usd',
             :description => "Request sent for Batch: #{batch.id}"
         )
@@ -33,10 +54,11 @@ class Charge < ActiveRecord::Base
             request_id: req.id,
             batch_id: batch.id,
             description: "Request sent for Batch: #{batch.id}",
-            amount: 35,
+            amount: amount,
             currency: "usd"
         )
-        @invoice.update!(stripe_invoice_id: stripe_invoice.id, billing_date: stripe_invoice.next_payment_attempt.to_s.to_datetime)
+        @invoice.update(stripe_invoice_id: stripe_invoice.id, billing_date: nil)
+        # stripe_invoice.next_payment_attempt.to_s.to_datetime
     end
     
     def self.update_bank_info(pharmacy)
@@ -47,17 +69,20 @@ class Charge < ActiveRecord::Base
                 :description => pharmacy.name,
                 :email => pharmacy.email
             )
-            pharmacy.update!(stripe_cus: customer.id, stripe_connected: true)
+            pharmacy.update(stripe_cus: customer.id, stripe_connected: true)
         end
         customer.sources.create(
             source: {
-                :object => "bank_account",
-                :account_number => pharmacy.bank_account_number,
-                :country => pharmacy.country,
+                :object => "card",
+                :number => pharmacy.card_number,
+                :address_country => pharmacy.bill_country,
                 :currency => 'usd',
-                :account_holder_name => pharmacy.account_holder_name,
-                :account_holder_type => pharmacy.account_holder_type,
-                :routing_number => pharmacy.routing_number
+                :address_city => pharmacy.bill_city,
+                :address_line1 => pharmacy.bill_street,
+                :address_state => pharmacy.bill_state,
+                :address_zip => pharmacy.bill_zip,
+                :exp_year => pharmacy.exp_year,
+                :exp_month => pharmacy.exp_month
             }
         )
     end

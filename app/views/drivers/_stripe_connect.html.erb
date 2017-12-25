@@ -1,0 +1,22 @@
+<div class="unconnected-stripe-warning">
+    <div class="card text-center">
+      <div class="card-header transactions-div-card-header">
+        <h4 class="white">Note</h4>
+      </div>
+      <div class="card-body">
+        <h4 class="card-title">Connect Your Stripe Account</h4>
+        <p class="card-text">
+            Darlyne uses the secure <%= link_to "Stripe API", "https://stripe.com", class:"theme-blue background-transparent" %>
+            to handle all transactions and statements. Stripe is also used by the likes of 
+            Uber and Airbnb.
+        </p>
+        <a class="white btn btn-light white" href="https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_9qAexX6TxwL1tzQhSAxBTAX3FfGiCF8i&scope=read_write">
+            <i class="fa fa-cc-stripe white"></i>
+            Set up my free Stripe account
+        </a>
+      </div>
+      <div class="card-footer text-muted background-transparent">
+        &copy; Darlyne Logistics
+      </div>
+    </div>
+</div>

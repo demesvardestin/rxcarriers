@@ -1,0 +1,50 @@
+
+<div class="card">
+  <div class="card-body">
+    <%= form_for @driver, :html => { multipart: true, :class => "form-horizontal image" } do |f| %>
+      <% if @driver.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@driver.errors.count, "error") %> prohibited this information from being saved:</h2>
+    
+          <ul>
+          <% @driver.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+    
+      <div class="field">
+        <%= f.text_field :first_name, class:"form-control", autofocus: true, placeholder:"First Name" %>
+      </div>
+      <div class="field">
+        <%= f.text_field :last_name, class:"form-control", autofocus: true, placeholder:"Last Name" %>
+      </div>
+      <div class="field">
+        <%= f.text_field :middle_name, class:"form-control", autofocus: true, placeholder:"Middle Name (if applicable)" %>
+      </div>
+      <div class="field">
+        <%= f.text_field :soc, class:"form-control", autocomplete: "off", placeholder:"Social Security" %>
+      </div>
+      <div class="field">
+        <%= f.text_field :dob, class:"form-control", autocomplete: "off", placeholder:"Date of Birth" %>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="field">
+            <%= f.text_field :number, class:"form-control", autocomplete: "off", placeholder:"Phone Number" %>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="field">
+            <%= f.select(:gender, gender(@gender), multiple: true, class:"form-control", placeholder:"Select Gender") %>
+          </div>
+        </div>
+      </div>
+    
+      <div class="actions text-right">
+        <%= f.submit "Continue", class:"btn btn-light white driver-signup-button" %>
+      </div>
+    <% end %>
+  </div>
+</div>

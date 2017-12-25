@@ -1,11 +1,11 @@
 class RequestMessagesController < ApplicationController
-  # before_action :set_request_message, only: [:show, :edit, :update, :destroy]
+  before_action :unauthorized_access
 
   def create
     @request_message = RequestMessage.new(request_message_params)
     respond_to do |format|
       if @request_message.save
-        format.js {render layout: false}
+        format.json { render :show, status: :created, location: @invoice }
       end
     end
   end

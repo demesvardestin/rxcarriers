@@ -68,15 +68,25 @@ module RequestHelper
         end
     end
     
-    def find_driver(phone)
-        @driver = Driver.find_by(number: phone)
-        return @driver
+    def request_driver(phone)
+        begin
+            @driver = Driver.find_by(number: phone)
+            return @driver
+        rescue
+            'None yet'
+        end
     end
     
     def driver
         @request = Request.find(params[:id])
-        @driver = Driver.find_by(number: @request.driver)
-        return @driver
+        if @request.driver.nil?
+            return
+        end
+        begin
+            @driver = Driver.find_by(number: @request.driver_number)
+        rescue
+            'not found'
+        end
     end
     
     def timestamp(object)

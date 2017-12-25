@@ -36,10 +36,13 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 invoice-list">
             <div class="list-group transactions-table">
                 <div class="list-group-item transactions-table-header">
                     <div class="row">
+                        <div class="col-md-1">
+                            <h6>ID</h6>
+                        </div>
                         <div class="col-md-4">
                             <h6>Date Created</h6>
                         </div>
@@ -54,9 +57,12 @@
                         </div>
                     </div>
                 </div>
-                <% @invoices.each do |inv| %>
+                <% @invoices.reverse.each do |inv| %>
                     <div class="list-group-item list-group-item-action no-border-radius border-gray">
                         <div class="row">
+                            <div class="col-md-1">
+                                <h6 class="theme-blue"><%= inv.id %></h6>
+                            </div>
                             <div class="col-md-4">
                                 <h6 class="theme-blue"><%= timestamp(inv) %></h6>
                             </div>
@@ -72,6 +78,7 @@
                         </div>
                     </div>
                 <% end %>
+                <%= will_paginate @invoices %>
             </div>
         </div>
     </div>

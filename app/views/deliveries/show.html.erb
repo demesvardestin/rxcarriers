@@ -1,0 +1,5 @@
+<% if current_pharmacy %>
+    <%= render 'pharmacy_delivery_view' %>
+<% elsif current_driver %>
+    <%= render 'driver_delivery_view' %>
+<% end %>
