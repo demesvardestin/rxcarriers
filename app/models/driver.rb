@@ -16,19 +16,19 @@ class Driver < ActiveRecord::Base
     # validations
     has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }
     validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
-    # validates :car_color, presence: true
-    # validates :car_year, presence: true
-    # validates :car_model, presence: true
-    # validates :car_make, presence: true
-    # validates :license_plate, presence: true
-    # validates :zipcode, presence: true
-    # validates :state, presence: true
-    # validates :town, presence: true
-    # validates :street, presence: true
-    # validates :number, uniqueness: true, presence: true
-    # validates :last_name, presence: true
-    # validates :first_name, presence: true
-    # validates :email, uniqueness: true, presence: true
+    validates :car_color, presence: true
+    validates :car_year, presence: true
+    validates :car_model, presence: true
+    validates :car_make, presence: true
+    validates :license_plate, presence: true
+    validates :zipcode, presence: true
+    validates :state, presence: true
+    validates :town, presence: true
+    validates :street, presence: true
+    validates :number, uniqueness: true, presence: true
+    validates :last_name, presence: true
+    validates :first_name, presence: true
+    validates :email, uniqueness: true, presence: true
     
     # methods
     def onboarding_complete
