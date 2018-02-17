@@ -1,10 +1,16 @@
 Rails.application.routes.draw do
   
+
   # devise controller path
   devise_for :pharmacies, :controllers => {:registrations => "pharmacy/registrations"}
   devise_for :drivers, :controllers => { :registrations => "driver/registrations"}
+  devise_scope :pharmacy do
+    get 'login', to: 'devise/sessions#new'
+    get 'signup', to: 'devise/registrations#new'
+  end
   
   # custom path
+  get 'update_card', to: 'pharmacies#update_card'
   get 'help', to: 'supports#new'
   get 'payment', to: 'drivers#payments'
   get 'first_time_edit', to: 'drivers#first_time', as: 'complete_profile'
@@ -27,7 +33,7 @@ Rails.application.routes.draw do
   get 'settings/advanced', to: 'pharmacies#edit'
   get 'settings/password', to: 'pharmacies#edit'
   get 'settings/account-info', to: 'pharmacies#edit'
-  get 'settings/billing-info', to: 'pharmacies#edit'
+  get 'settings/billing-info', to: 'pharmacies#edit', as: 'pharmacy_billing'
   get 'batches/packages', to: 'batches#index'
   get 'batches/pharmacist', to: 'batches#index'
   get 'batches/pending', to: 'batches#index'
@@ -40,9 +46,7 @@ Rails.application.routes.draw do
   get 'pharmacy/:id/settings', to: 'pharmacies#edit', as: "account_settings"
   get 'transactions', to: 'invoices#index'
   get 'users/auth/stripe_connect/callback', to: 'charges#stripe'
-  get 'requests/:id', to: 'requests#show'
   get 'patients', to: 'patients#index'
-  get 'requests', to: 'requests#index'
   get 'request_driver', to: 'batches#request_driver'
   get 'batches', to: 'batches#index'
   get 'my-earnings', to: 'drivers#transactions'
@@ -51,9 +55,12 @@ Rails.application.routes.draw do
   get 'pharmacy/view', to: 'pharmacies#index'
   post 'welcome/sms/reply', to: 'batches#driver_response'
   get 'not-found', to: 'supports#not_found', as: 'unauthorized'
+  get 'invoices/:id/delete', to: 'invoices#destroy'
+  get 'transactions/:id', to: 'invoices#show'
   
   # resource path
-  resources :patients, only: [:create, :show, :edit, :update]
+  resources :invoices, only: [:create, :show, :index, :destroy]
+  resources :patients, only: [:create, :show, :edit, :update, :index, :new]
   resources :supports, only: [:new, :create, :show, :index]
   resources :charges
   resources :drivers
@@ -62,8 +69,6 @@ Rails.application.routes.draw do
   resources :batches do
     resources :deliveries, only: [:create, :show, :edit, :update, :destroy]
   end
-  resources :cancellation_messages, only: [:create]
-  resources :request_messages, only: [:create, :update]
   
   # authenticated devise models root path
   authenticated :driver do

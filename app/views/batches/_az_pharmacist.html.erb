@@ -1,5 +1,5 @@
-<% if asc_pharm.present? %>
-    <% asc_pharm.each do |batch| %>
+<% if @batches.asc_pharm.present? %>
+    <% @batches.asc_pharm.each do |batch| %>
         <% unless batch.nil? %>
             <div class="row">
                 <div class="col-md-12 request-card-div">
@@ -8,9 +8,9 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-2">Packages: <span class="batches-details"><%= batch.deliveries.count %></span></div>
-                                    <div class="col-md-2">Status: <span class="batches-details <%= status_color(find_request(batch.batch_id)) %>"><strong><%= find_request(batch.batch_id) %></strong></span></div>
-                                    <div class="col-md-4">Pharmacist: <span class="batches-details theme-blue"><strong><%= batch.pharmacist %></strong></span></div>
-                                    <div class="col-md-4">Created: <span class="batches-details theme-blue"><strong><%= timestamp(batch) %></strong></span></div>
+                                    <div class="col-md-2">Status: <span class="batches-details <%= status_color(find_request(batch.batch_id)) %>"><%= find_request(batch.batch_id) %></span></div>
+                                    <div class="col-md-4">Pharmacist: <span class="batches-details theme-blue"><%= batch.pharmacist %></span></div>
+                                    <div class="col-md-4">Created: <span class="batches-details theme-blue"><%= timestamp(batch) %></span></div>
                                 </div>
                             </div>
                         </div>

@@ -1,0 +1,87 @@
+<style>
+    #card-form {
+        display: none;
+    }
+    .cancel-submission-div {
+        padding: none;
+        margin-top: 10px;
+    }
+    .cancel-submission {
+        font-size: 15px;
+        background-color: transparent;
+    }
+    .cancel-submission:hover {
+        background-color: transparent;
+        cursor: pointer;
+    }
+    .payment-vector {
+        width: 50%;
+    }
+    .last-four-div {
+        padding-top: 5px;
+        vertical-align: middle;
+    }
+    .last-four {
+        font-size: 14px;
+    }
+</style>
+
+<section class="row" id="confirmation-form">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 last-four-div">
+                        <span class="last-four"><%= render 'pharmacies/last_four' %></span>
+                    </div>
+                    <div class="col-md-2 offset-md-6">
+                        <img src="/images/<%= current_pharmacy.card_brand %>.png" class="payment-vector">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" id="action-button">
+        <button class="btn btn-primary" onclick="showCardForm()">Edit Card Info</button>
+    </div>
+</section>
+
+<section id="card-form">
+    <form action="/update_card" method="get" id="payment-form">
+        <div class="form-row row">
+            <label for="card-element">
+              <h6>Add a payment method on file</h6>
+            </label>
+            <div id="card-element" class="col-md-12">
+              <!-- a Stripe Element will be inserted here. -->
+            </div>
+            
+            <!-- Used to display form errors -->
+            <div id="card-errors" role="alert" class="col-md-12"></div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-3 submit-card">
+                <button class="btn btn-primary">Submit Card</button>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-md-2 cancel-submission-div">
+            <a class="cancel-submission" onclick="hideCardForm()">Cancel</a>
+        </div>
+    </div>
+    <%= render 'common/spinner' %>
+</section>
+
+<script>
+    function showCardForm() {
+        $('#confirmation-form').hide();
+        $('#card-form').show();
+    };
+    function hideCardForm() {
+        var conf = document.getElementById('confirmation-form');
+        $('#card-form').html();
+        $('#confirmation-form').show();
+    };
+</script>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171215183039) do
+ActiveRecord::Schema.define(version: 20180214234523) do
 
 # Could not dump table "batches" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
@@ -127,6 +127,8 @@ ActiveRecord::Schema.define(version: 20171215183039) do
     t.integer  "request_id"
     t.integer  "batch_id"
     t.datetime "billing_date"
+    t.string   "stripe_status"
+    t.string   "value"
   end
 
   create_table "packs", force: :cascade do |t|
@@ -226,6 +228,7 @@ ActiveRecord::Schema.define(version: 20171215183039) do
     t.string   "bill_zip"
     t.string   "bill_country"
     t.string   "cvc"
+    t.string   "card_token"
   end
 
   add_index "pharmacies", ["email"], name: "index_pharmacies_on_email", unique: true

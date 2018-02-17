@@ -1,0 +1,23 @@
+<style>
+    #main {
+        display: none;
+    }
+</style>
+<!--var charge = document.getElementById('charge');-->
+
+<!--charge.addEventListener('click', function() {-->
+<!--    showCharge(charge.className.slice(-1));-->
+<!--});-->
+
+<!--function showCharge(id) {-->
+    
+<!--}-->
+<!--$('.show-charge').on('click', function() {-->
+<!--    $('#main').hide();-->
+<!--    $('.spinner-row').show();-->
+<!--})-->
+
+<!--$('#main').hide();-->
+$('.spinner-row').hide();
+$("#main").html("<%= escape_javascript(render @invoice) %>");
+$('#main').fadeIn();

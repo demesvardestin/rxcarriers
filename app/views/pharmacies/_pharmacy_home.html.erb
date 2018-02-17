@@ -1,53 +1,49 @@
-<style>
-  .main-nav {
-    display: none;
-  }
-</style>
-<body>
-    <div class="col-md-2 vertical-panel">
-      <div class="driver-profile-details" align="center">
-        <div class="col-md-12 driver-avatar-div">
-          <%= image_tag current_pharmacy.avatar.url(:medium), class:"rounded driver-avatar" %>
-        </div>
-      </div>
-      <div class="nav-links">
-        <ul class="nav flex-column">
+<nav class="navbar navbar-expand-lg main-nav fixed-top">
+  <div class="container">
+    <a class="navbar-brand background-transparent" href="/"><h4 class="logo">Darlyne Logistics</h4></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="col-md-8 offset-md-4 nav-col">
+        <ul class="navbar-nav justify-content-end">
           <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side <% if home == true %>active<% end %>" href="/batches">Batches</a>
+            <a class="nav-link nav-link-side <% if home %>active<% end %>" href="/batches">Batches</a>
           </li>
           <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side <% if url.include?("/requests")%>active<% end %>" href="/requests">Requests</a>
+            <a class="nav-link nav-link-side <% if patients_path %>active<% end %>" href="/patients">Patients</a>
           </li>
           <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side <% if url.include?("/patients")%>active<% end %>" href="/patients">Patients</a>
+            <a class="nav-link nav-link-side <% if transaction_path %>active<% end %>" href="/transactions">Transactions</a>
           </li>
-          <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side <% if url.include?("/transactions")%>active<% end %>" href="/transactions">Transactions</a>
-          </li>
+          <div class="dropdown show">
+            <a class="btn btn-secondary dropdown-toggle account-dropdown" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Account
+            </a>
+          
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li class="dropdown-item" href="/settings">
+                <%= link_to settings_path, class:"no-underline background-transparent" do %>
+                  <i class="fa fa-cog pharmacy-bottom-icons"></i> Settings
+                <% end %>
+              </li>
+              <div class="dropdown-divider"></div>
+              <li class="dropdown-item" href="/help">
+                <%= link_to help_path, class:"no-underline background-transparent" do %>
+                  <i class="fa fa-question-circle pharmacy-bottom-icons"></i> Help
+                <% end %>
+              </li>
+              <div class="dropdown-divider"></div>
+              <li class="dropdown-item" href="#">
+                <%= link_to destroy_pharmacy_session_path, class:"no-underline background-transparent", method: :delete do %>
+                  <i class="fa fa-power-off pharmacy-bottom-icons"></i> Sign out
+                <% end %>
+              </li>
+            </ul>
+          </div>
         </ul>
       </div>
-      <div class="dashboard-control">
-        <div class="row">
-          <div class="col-md-3 offset-md-1 text-center logout-btn-div" data-toggle="tooltip" data-placement="top" title="Settings">
-            <%= link_to settings_path, class:"white no-underline background-transparent" do %>
-              <% if url.include?("settings") %>
-                <i class="fa fa-cog pharmacy-bottom-icons theme-blue fa-spin fa-3x fa-fw"></i>
-              <% else %>
-                <i class="fa fa-cog pharmacy-bottom-icons"></i>
-              <% end %>
-            <% end %>
-          </div>
-          <div class="col-md-3 text-center logout-btn-div" data-toggle="tooltip" data-placement="top" title="Help">
-            <%= link_to help_path, class:"white no-underline background-transparent" do %>
-              <i class="fa fa-question-circle pharmacy-bottom-icons"></i>
-            <% end %>
-          </div>
-          <div class="col-md-3 text-center logout-btn-div" data-toggle="tooltip" data-placement="top" title="Logout">
-            <%= link_to destroy_pharmacy_session_path, class:"white no-underline background-transparent", method: :delete do %>
-              <i class="fa fa-power-off pharmacy-bottom-icons"></i>
-            <% end %>
-          </div>
-        </div>
-      </div>
     </div>
-</body>
+  </div>
+</nav>

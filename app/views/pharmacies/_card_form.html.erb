@@ -1,0 +1,20 @@
+<form action="/update_card" method="get" id="payment-form">
+    <div class="form-row row">
+        <label for="card-element">
+          <h6>Add a payment method on file</h6>
+        </label>
+        <div id="card-element" class="col-md-12">
+          <!-- a Stripe Element will be inserted here. -->
+        </div>
+        
+        <!-- Used to display form errors -->
+        <div id="card-errors" role="alert" class="col-md-12"></div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 submit-card">
+            <button class="btn btn-primary">Submit Card</button>
+        </div>
+    </div>
+</form>
+<%= render 'common/spinner' %>

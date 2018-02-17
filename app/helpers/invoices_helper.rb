@@ -41,4 +41,72 @@ module InvoicesHelper
         [object.updated_at.strftime("%B %-dth %Y"), "at", object.updated_at.strftime("%I:%M %p")].join(" ")
     end
     
+    def to_dollar(item)
+        item.to_s.prepend("$") 
+    end
+    
+    def status(invoice)
+        if invoice.status.nil?
+            return 'failed'
+        end
+        begin
+            case invoice.status
+                when 'succeeded'
+                    'succeeded'
+                else
+                    'failed'
+            end
+        rescue
+            'failed'
+        end
+    end
+    
+    def failed(array)
+        inv = array.select{|a| a.stripe_status == 'failed'}
+        return inv
+    end
+    def succeeded(array)
+        inv = array.select{|a| a.stripe_status == 'succeeded'}
+        return inv
+    end
+    def pending(array)
+        inv = array.select{|a| a.stripe_status == 'pending'}
+        return inv
+    end
+    
+    def recent_invoices
+        @pharmacy = current_pharmacy
+        @invoices = Invoice.where(id: @pharmacy.id).order('updated_at DESC')
+        return @invoices
+    end
+    
+    def old_invoices
+        @pharmacy = current_pharmacy
+        @invoices = Invoice.where(id: @pharmacy.id).order('updated_at ASC')
+        return @invoices
+    end
+    
+    def invoice_sort
+        url = request.original_url
+        url_end = url[url.index("/transactions")..-1]
+        case url_end
+            when "/transactions?status=pending"
+                "pending_payments"
+            when "/transactions?status=succeeded"
+                "succeeded_payments"
+            when "/transactions?status=failed"
+                "failed_payments"
+            when "/transactions?amount=asc"
+                "low_high"
+            when "/transactions?amount=desc"
+                "high_low"
+            when "/transactions?date=asc"
+                "old_new"
+            when "/transactions?date=desc"
+                "new_old"
+            else
+                "all"
+        end
+    end
+    
 end

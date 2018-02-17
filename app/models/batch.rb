@@ -7,8 +7,8 @@ class Batch < ActiveRecord::Base
     # scopes
     scope :asc_pharm, -> {order("pharmacist ASC")}
     scope :desc_pharm, -> {order("pharmacist DESC")}
-    scope :asc_date, -> {order("created_at ASC")}
-    scope :desc_date, -> {order("created_at DESC")}
+    scope :asc_date, -> {order("updated_at ASC")}
+    scope :desc_date, -> {order("updated_at DESC")}
     scope :requested, -> {where(request_status: 'completed')}
     scope :today, -> {where("created_at >= ?", Time.zone.now.beginning_of_day)}
     scope :last_week, -> {where("created_at >= ?", 1.week.ago)}

@@ -13,11 +13,14 @@ module PharmaciesHelper
     end
     
     def card_content
-        url = request.original_url
         if url.include?('settings/account-info')
             'form'
         elsif url.include?('settings/billing-info')
-            'bank_account_form'
+            if current_pharmacy.card_token
+                'pharmacies/card_data'
+            else
+                'pharmacies/card_form'
+            end
         elsif url.include?('settings/password')
             'devise/registrations/edit'
         elsif url.include?('settings/advanced')
@@ -28,10 +31,19 @@ module PharmaciesHelper
     end
     
     def home
-        url = request.original_url
-        if url.include?("/batches") || url.end_with?('.io') || url.end_with?('.com')
-           return true
-        end
+        url.include?("/batches")
+    end
+    
+    def request_path
+        url.include?('/requests') 
+    end
+    
+    def patients_path
+        url.include?('/patients') 
+    end
+    
+    def transaction_path
+        url.include?('/transactions') 
     end
     
 end

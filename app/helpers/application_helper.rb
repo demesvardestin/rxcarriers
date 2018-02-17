@@ -8,6 +8,14 @@ module ApplicationHelper
         end
     end
     
+    def render_navigation
+        if current_pharmacy
+            render 'pharmacies/pharmacy_home'
+        else
+            render 'layouts/main_nav'
+        end
+    end
+    
     def footer
         if current_driver
             if current_driver.onboarding_complete

@@ -11,6 +11,30 @@ class PharmaciesController < ApplicationController
     @pharmacy = current_pharmacy
   end
   
+  def update_card
+    begin
+      token = params['stripeToken']
+      @pharmacy = current_pharmacy
+      if @pharmacy.stripe_cus
+        customer = Stripe::Customer.retrieve(@pharmacy.stripe_cus)
+        customer.source = token
+        customer.save
+      else
+        customer = Stripe::Customer.create(
+          :email => @pharmacy.email,
+          :source => token,
+        )
+      end
+      @pharmacy.update(card_token: token, stripe_cus: customer.id)
+      flash[:notice] = 'Your card has been updated!'
+      redirect_to pharmacy_billing_path
+    rescue InvalidAuthenticityToken => e
+      # Do something
+      flash[:notice] = e
+      redirect_to pharmacy_billing_path
+    end
+  end
+  
   def create
     @pharmacy = Pharmacy.new(pharmacy_params)
     respond_to do |format|

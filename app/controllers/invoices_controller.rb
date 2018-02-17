@@ -6,6 +6,7 @@ class InvoicesController < ApplicationController
   def index
     @invoices = Invoice.where(pharmacy_id: current_pharmacy.id).paginate(:page => params[:page], :per_page => 10)
     @charge = Charge.new
+    @pharmacy = current_pharmacy
   end
   
   def create
@@ -15,6 +16,18 @@ class InvoicesController < ApplicationController
       respond_to do |format|
         format.json { render :show, status: :created, location: @invoice }
       end
+    end
+  end
+  
+  def show
+    @invoice = Invoice.find(params[:id])
+  end
+  
+  def destroy
+    @invoice = Invoice.find(params[:id])
+    @invoice.delete
+    respond_to do |format|
+      format.html {redirect_to transactions_path}
     end
   end
   

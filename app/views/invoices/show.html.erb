@@ -1,0 +1,148 @@
+<style>
+    .status-details, .details {
+        border-top: 1px solid #e1e1e2;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    .amount-details {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    .spinner-row, .deletion-confirmation, .deletion-error {
+        display: none;
+    }
+    main {
+        padding-top: 10px;
+    }
+    .attributes, .attributes-content, h6 {
+        font-size: 14px;
+    }
+    .return-to-transactions {
+        margin-right: 5px;
+    }
+    .return-to-transactions-col {
+        left: 50px;
+    }
+    
+    @media only screen and (max-width: 768px) {
+        .delete-charge, .return-to-transactions {
+            display: block !important;
+            width: 100%;
+        }
+    }
+</style>
+
+<main id="main">
+    <div class="row amount-details">
+        <div class="col-md-12">
+            <span class="semi-bold medium-gray font-24"><%= to_dollar(@invoice.value) %></span> <span class="medium-gray font-20"><%= @invoice.currency %></span>
+        </div>
+    </div>
+    
+    <div class="row status-details">
+        <div class="col-md-1 no-right-padding">
+            <span><%= render "#{@invoice.stripe_status}" %></span>
+        </div>
+        <div class="col-md-2 no-left-padding">
+            <h6 class="font-14 semi-bold medium-gray no-horizontal-padding"><%= 'Payment' + ' ' + @invoice.stripe_status %></h6>
+            <h6 class="font-13 medium-gray no-horizontal-padding"><%= @invoice.updated_at %></h6>
+        </div>
+    </div>
+    
+    <div class="row details">
+        <div class="col-md-12">
+            <h6 class="bold medium-gray">Payment Details</h6>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2 text-right attributes">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <h6 class="charge_id medium-gray">ID:</h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <h6 class="charge_amount medium-gray">Amount:</h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <h6 class="charge_date medium-gray">Date:</h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <h6 class="charge_description medium-gray">Description:</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-left attributes-content">
+                            <div class="row">
+                                <div class="col-md-12 text-left">
+                                    <h6 class="charge_id"><%= @invoice.id %></h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-left">
+                                    <h6 class="charge_amount"><%= @invoice.amount %></h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-left">
+                                    <h6 class="charge_date"><%= @invoice.updated_at %></h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-left">
+                                    <h6 class="charge_description"><%= @invoice.description %></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 offset-md-6 text-right no-right-padding return-to-transactions-col">
+            <a href="/transactions" class="btn btn-primary return-to-transactions" id="return-to-transactions">
+                RETURN TO TRANSACTIONS
+            </a>
+        </div>
+        <div class="col-md-3 text-right no-left-padding">
+            <%= link_to invoice_path(@invoice), class:"btn btn-danger delete-charge",data: 'Do you want to delete this receipt?', method: :delete do %>
+                <i class="fa fa-times"></i> DELETE RECEIPT
+            <% end %>
+        </div>
+    </div>
+</main>
+<section class="row deletion-confirmation">
+    <div class="col-md-12 text-center">
+        <h6 class="theme-green">Receipt deleted</h6>
+    </div>
+</section>
+<section class="row deletion-error">
+    <div class="col-md-12 text-center">
+        <h6 class="theme-red">Could not delete record</h6>
+    </div>
+</section>
+<%= render 'common/spinner' %>
+
+<script>
+    
+    $('#return-to-transactions').on('click', function() {
+        $('#main').hide();
+        $('.spinner-row').show();
+    });
+    
+    
+    var form = document.getElementById('delete-charge');
+    
+    $('.delete-charge').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        $("#main").hide();
+        $('.spinner-row').show();
+    });
+</script>

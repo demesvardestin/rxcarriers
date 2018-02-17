@@ -10,7 +10,8 @@ class Pharmacy < ActiveRecord::Base
     after_validation :geocode
     has_many :requests
     has_many :patients, :as => :patable
-    has_one :charge
+    has_many :charges
+    has_many :invoices
     has_many :deliveries
     has_many :supports
     
@@ -26,6 +27,16 @@ class Pharmacy < ActiveRecord::Base
     # methods
     def full_address
         [street]
+    end
+    
+    def last_four
+      last_four = Stripe::Customer.retrieve(self.stripe_cus).sources.first['last4']
+      return last_four
+    end
+    
+    def card_brand
+      brand = Stripe::Customer.retrieve(self.stripe_cus).sources.first['brand'].downcase
+      return brand
     end
     
     def name_shortened

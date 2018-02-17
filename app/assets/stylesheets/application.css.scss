@@ -34,17 +34,29 @@
 body {
     overflow-x: hidden !important;
     background: #fafbfc;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: 'Open Sans', sans-serif !important;
+}
+.spinner-row {
+    padding-top: 20px;
 }
 a:hover {
     color: inherit;
 }
-.main-pages {
-    float: right !important;
+.main-page {
+    padding-top: 90px;
+    padding-bottom: 60px;
 }
 .navbar {
-    border-bottom: 1px solid #e5e5e5;
-    // background-color: #03032b !important;
+    border-bottom: 1px solid #3484c6;
+    box-shadow: 0px 1px 5px #3484c6;
+    font-family: 'Open Sans', sans-serif !important;
+    background-color: #3484c6;
+}
+.main-nav {
+    background-color: #3484c6;
+}
+.logo {
+    color: #fff;
 }
 .font-14 {
     font-size: 14px;
@@ -55,6 +67,12 @@ a:hover {
 .font-82 {
     font-size: 82px;
 }
+.account-dropdown {
+    background-color: transparent !important;
+    color: #fff !important;
+    border: 2px solid #fff !important;
+    box-shadow: none !important;
+}
 .padding-14 {
     padding-left: 14px;
     padding-right: 14px;
@@ -63,6 +81,22 @@ a:hover {
 }
 .card {
     border: 1px solid #e5e5e5 !important;
+}
+.main-page-card {
+    box-shadow: 0 2px 15px rgba(84,96,103,.25);
+}
+.no-horizontal-padding {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+.no-right-padding {
+    padding-right: 0 !important;
+}
+.no-left-padding {
+    padding-left: 0 !important;
+}
+.main-card {
+    padding-top: 0;
 }
 .theme-blue {
     color: #4095e3 !important;
@@ -214,6 +248,7 @@ a:hover {
 }
 .batches-details {
     padding-right: 80px;
+    color: #707071;
 }
 .new-batch-card {
     padding: 40px;
@@ -332,9 +367,6 @@ a:hover {
 .search-icon-div {
     padding-top: 10px !important;
 }
-.requests-index-header {
-    padding-bottom: 20px;
-}
 .dropdown-menu {
     font-size: 14px;
 }
@@ -430,21 +462,21 @@ a:hover {
     padding-top: 40px;
 }
 .theme-green {
-    color: #134d13 !important;
+    color: #05f005 !important;
 }
 .theme-darkblue {
     color: #265988;
 }
 .green {
-    color: #134d13 !important;
+    color: #05f005 !important;
 }
 .btn-success {
-    background: #134d13 !important;
-    border: 1px solid #0f3d0f;
+    background: #05f005 !important;
+    border: 2px solid #05f005;
 }
 .btn-primary {
-    background: #265988 !important;
-    border: 1px solid #265988 !important;
+    background-color: #678aab !important;
+    border: 2px solid #678aab !important;
     color: #fff !important;
     font-size: 14px;
     padding-right: 30px;
@@ -484,11 +516,18 @@ a:hover {
     font-size: 14px;
 }
 .btn-danger {
+    background-color: #df4957 !important;
+    border: 2px solid #df4957 !important;
     font-size: 14px;
     padding-right: 30px;
     padding-left: 30px;
     padding-top: 10px;
     padding-bottom: 10px;
+    color: #fff !important;
+}
+.btn-danger:hover {
+    background-color: #fff !important;
+    color: #df4957 !important;
 }
 .theme-yellow {
     color: #878706 !important;
@@ -587,7 +626,7 @@ a:hover {
 
 /* Pharmacy Views */
 .pharmacy-bottom-icons {
-    font-size: 30px !important;
+    font-size: 18px !important;
 }
 .pharmacy-bottom-icons:hover {
     color: #4095e3;
@@ -621,7 +660,9 @@ a:hover {
     color: #000 !important;
 }
 .nav-item-pharmacy-view {
-    padding-top: 20px;
+    // line-height: 20px;
+    // text-transform: uppercase;
+    // font-size: 12px;
 }
 .nav-button-1 {
     padding-right: 15px;
@@ -632,20 +673,96 @@ a:hover {
 .nav-button-3 {
     padding-left: 15px;
 }
-.nav-link-side {
-    font-size: 14px;
-    padding: 14px;
-    font-weight: 600px;
+.nav-hr {
+    margin-top: -13px;
+    border-bottom: 0px;
+    width: 0;
+    transition: width 0.25s;
+}
+.nav-item {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.navbar-nav-second {
+    padding-top: 0 !important;
+}
+.main-signup-button {
+    border: 2px solid #fff;
+    border-radius: 5px;
+    padding-top: 0 !important;
+}
+.nav-col {
+    padding-right: 0;
+    padding-left: 0;
+}
+.main-signup-button:hover {
+    background-color: #fff;
+    .nav-link-right {
+        color: #4e4e6a !important;
+    }
+}
+.navbar-toggler {
+    border: 1px solid #fff;
+}
+.toggler-icon {
     color: #fff !important;
-    border-radius: 3px !important;
+    font-size: 25px !important;
+    padding: 0 !important;
+}
+.nav-item-logged-out:hover {
+    .nav-hr {
+        width: 100%;
+    }
+}
+.nav-link-left {
+    font-size: 12px;
+    padding: 13px;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    color: #9bc6e4 !important;
+    border-radius: .25rem !important;
+    line-height: 20px;
+    text-transform: uppercase;
+}
+.nav-link-right {
+    font-size: 12px;
+    margin-right: 5px;
+    margin-left: 5px;
+    color: #fff !important;
+    border-radius: .25rem !important;
+    text-transform: uppercase;
+}
+.signed-out-navbar-nav {
+    padding-top: 0 !important;
+    margin-top: 0;
 }
 .settings-header {
     padding-left: 15px;
 }
+.nav-link-side {
+    font-size: 12px;
+    padding: 13px;
+    margin-right: 5px;
+    margin-left: 5px;
+    color: #fff !important;
+    border-radius: .25rem !important;
+    line-height: 20px;
+    text-transform: uppercase;
+}
 .nav-link-side:hover {
-    background: #fff !important;
-    color: #03032b !important;
+    background: #4e4e6a !important;
+    color: #fff !important;
     border-radius: 5px;
+}
+.nav-link-left:hover {
+    color: #fff !important;
+    background-color: transparent;
+    border: none;
+}
+.nav-link-right:hover {
+    color: #fff !important;
+    background-color: transparent;
+    border: none;
 }
 .nav-link-edit {
     font-size: 14px !important;
@@ -660,8 +777,8 @@ a:hover {
     color: #fff !important;
 }
 .active {
-    background: #fff !important;
-    color: #03032b !important;
+    background: #4e4e6a !important;
+    color: #fff !important;
     border-radius: 5px;
 }
 .inverse-active {
@@ -819,6 +936,40 @@ a:hover {
     padding: 30px;
 }
 
+/* STRIPE */
+.submit-card {
+    padding-top: 10px;
+    padding-left: 10px;
+}
+#card-element {
+    padding-left: 25px;
+}
+.StripeElement {
+    background-color: white;
+    height: 40px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus {
+    box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+    border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+    background-color: #fefde5 !important;
+}
+
+#action-button {
+    margin-top: 10px;
+}
 
 /* IDs */
 #v-pills-profile {
@@ -829,15 +980,6 @@ a:hover {
 /* Mobile Rules */
 
 @media only screen and (max-device-width: 768px) {
-    .main-pages {
-        float: none !important;
-    }
-    .navbar-toggler {
-        color: #fff !important;
-    }
-    .navbar-toggler-icon {
-        color: #fff !important;
-    }
     body {
         overflow: hidden !important;
     }

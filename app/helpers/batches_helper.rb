@@ -5,7 +5,7 @@ module BatchesHelper
     end
     
     def batch_placeholder_text
-        "Search batches by date created or pharmacist name"
+        "Search batches by date or pharmacist"
     end
     
     def find_request(id)

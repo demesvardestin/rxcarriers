@@ -1,60 +1,225 @@
-<body>
-    <div class="all-batches">
-        <!-- New Batch Form -->
-        <div class="modal fade batch-modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New Batch</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <%= render 'form' %>
-              </div>
+<style>
+    .requests-index-header {
+        padding-bottom: 20px !important;
+    }
+    .fa-spinner {
+        display: none;
+    }
+    .batches-buttons {
+        font-size: 12px;
+        padding: 10px;
+    }
+    .batch-search {
+        width: 45%;
+        border-radius: 160px !important;
+        padding-left: 15px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        transform: width 2s;
+    }
+    .search-error {
+        display: none;
+    }
+    .modal, .modal-content {
+        border-color: #e1e1e2;
+    }
+    .modal-header {
+        background-color: #e1e1e2;
+        border-bottom-color: #e1e1e2;
+    }
+    .cancel-create {
+        font-size: 14px;
+        font-weight: 400px;
+        padding: 13px;
+    }
+    #patient-form {
+        display: none;
+        padding-top: 20px;
+    }
+    #patient-search, .spinner-row {
+        display: none;
+    }
+    .add-padding-top {
+        padding-top: 15px;
+    }
+</style>
+<script>
+    $('.item').on('click', function() {
+        $('.fa-spinner').show();
+        $('.main-card').css('opacity', '0.4')
+    });
+</script>
+<div class="all-batches">
+    <!-- New Batch Form -->
+    <div class="modal fade batch-modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title medium-gray" id="exampleModalLabel">New Batch</h5>
+                <a class="btn btn-light cancel-create close" href="#" data-dismiss="modal" aria-label="Close">
+                   Cancel 
+                </a>
             </div>
+            <div class="modal-body">
+                <form class="row" id="batch-create" action="/create_batch" method="post">
+                    <div class="form-group col-md-12">
+                        <textarea class="form-control batch-notes-field" placeholder="Start typing a note.."></textarea>
+                    </div>
+                    <div class="x-delivery-label col-md-12"><h6 class="font-13 theme-blue">Express Delivery?</h6></div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="btn-group btn-group-toggle col-md-4" data-toggle="buttons">
+                                <label class="btn btn-secondary" id="express-yes">
+                                    <input type="radio" name="options" autocomplete="off"> Yes
+                                </label>
+                                <label class="btn btn-secondary active" id="express-no">
+                                    <input type="radio" name="options" autocomplete="off" checked> No
+                                </label>
+                            </div>
+                            <div class="col-md-4 text-right offset-md-4" id="submit-button">
+                                <button class="btn btn-secondary">
+                                   Create Batch 
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="patient-form">
+                        <div class="col-md-12">
+                            <select class="custom-select" onclick="if (typeof(this.selectedIndex) != 'undefined') populate(this.selectedIndex)">
+                              <option selected>
+                                  Open this select menu
+                              </option>
+                              <option value="1" id="option1" name="Marie Guillaume" address="14 Greenlawn Blvd, Valley Stream, NY 11580" phone="516-413-8625" copay="5">One</option>
+                              <option value="2">Two</option>
+                              <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row add-padding-top">
+                                <div class="col-md-7" id="patient-full-name-div">
+                                    <input type="text" class="form-control font-14" id="patient-full-name" placeholder="Patient Name">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control font-14" id="patient-number" placeholder="Patient Number">
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control font-14" id="patient-copay" placeholder="C/P">
+                                </div>
+                            </div>
+                            <div class="row add-padding-top">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control font-14" id="patient-address" placeholder="Patient Address">
+                                </div>
+                            </div>
+                            <div class="row add-padding-top">
+                                <div class="col-md-12">
+                                    <textarea type="text" class="form-control font-14" id="patient-medications" placeholder="Medications for delivery"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right add-padding-top" id="request-driver">
+                            <button class="btn btn-secondary" id="request-driver">
+                               Request Driver
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            <!--<%= render 'form' %>-->
           </div>
         </div>
-        <header class="col-md-12 request-index-header">
-            <div class="row requests-index-header ">
-                <div class="col-md-6">
-                    <div class="row requests-actions request-search-border">
-                        <div class="col-md-1 search-icon-div text-center">
-                            <span class="request-search-addon"><i class="fa fa-search req-search-icon"></i></span>
-                        </div>
-                        <div class="col-md-11">
-                            <form class="request-search-form">
-                                <%= form_tag batch_search_path, method: :get, id: 'batch-lookup-form' do %>
-                                    <%= text_field_tag :search, params[:search], class:'form-control request-search', placeholder: batch_placeholder_text do %>
-                                    <% end %>
-                                <% end %>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-cog white"></i> Filter
-                        </button>
-                        <div class="dropdown-menu">
-                            <%= render 'dropdown' %>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-primary padding-14 cursor-pointer" data-toggle="modal" data-target=".batch-modal">
-                        <span class="font-14"><i class="fa fa-plus"></i> Add new batch</span>
-                    </button>
-                </div>
-            </div>
-        </header>
-        <div class="batch-card-container" id="batch-card-container">
-            <% if params[:search] %>
-                <%= render 'batches' %>
-            <% else %>
-                <%= render batch_sort %>
-            <% end %>
+      </div>
+    </div>
+    <header class="row requests-index-header">
+        <div class="col-md-7">
+            <input type="text" class="form-control font-14 batch-search" id="batch-search-input" placeholder="<%= batch_placeholder_text%>">
         </div>
-</body>
+        <div class="col-md-1 offset-md-2 text-right no-right-padding">
+            <button type="button" class="btn btn-primary dropdown-toggle batches-buttons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-cog"></i> Filter
+            </button>
+            <div class="dropdown-menu">
+                <%= render 'dropdown' %>
+            </div>
+        </div>
+        <div class="col-md-2 text-right no-left-padding">
+            <button type="button" class="btn btn-primary cursor-pointer batches-buttons" data-toggle="modal" data-target=".batch-modal">
+                <i class="fa fa-plus"></i> New batch
+            </button>
+        </div>
+    </header>
+    <%= render 'common/spinner' %>
+    <div class="batch-card-container" id="batch-card-container">
+        <div class="row search-error">
+            <div class="col-md-12 text-center">
+                <h6 class="font-13 theme-red">No results found</h6>
+            </div>
+        </div>
+        <%= render batch_sort %>
+    </div>
+</div>
+
+<script>
+
+    // Perform search using dom manipulation instead of DB Queries
+    
+    window.onkeyup = keyup;
+    
+    var inputTextValue;
+    var batches = document.getElementsByClassName('batches-row');
+    var count = 0;
+    
+    function keyup(e) {
+        inputTextValue = e.target.value.toLowerCase();
+        if (e.keyCode == 13) {
+            count = 0;
+            $('.spinner-row').show();
+            $('.batch-card-container').css('padding-top', '20px');
+            for (i=0;i<batches.length;i++) {
+                var id = batches[i].attributes[3].value
+                $('#' + id.toString()).hide();
+                var value1 = batches[i].attributes[1].value.toLowerCase();
+                var value2 = batches[i].attributes[2].value.toLowerCase();
+                if (value1.includes(inputTextValue) || value2.includes(inputTextValue)) {
+                    $('.search-error').hide();
+                    $('#' + id.toString()).show();
+                } else {
+                    count = count + 1;
+                    console.log(count)
+                }
+            }
+            
+            $('.spinner-row').hide();
+            
+            if (count == batches.length) {
+                $('.search-error').css('padding-top', '20px');
+                $('.search-error').show();
+            }
+        }
+    };
+    
+    $('#batch-search-input').on('click', function() {
+        $('#batch-search-input').animate({width: '80%'});
+    });
+    
+    $('#express-yes').on('click', function() {
+        $('#submit-button').hide();
+        $('#patient-form').fadeIn();
+    });
+    
+    $('#express-no').on('click', function() {
+        $('#submit-button').show();
+        $('#patient-form').fadeOut();
+    });
+    
+    $('#show-patient-search').on('click', function() {
+        $('#patient-search').show();
+    });
+    
+    function populate() {
+        $('#patient-full-name').value = $('#option1').attributes[2].value;
+        $('#patient-number').value = $('.option1').attributes[3].value;
+        $('#patient-address').value = $('.option1').attributes[2].value;
+        $('#patient-copay').value = $('.option1').attributes[4].value;
+        console.log($('.option1').attributes[3].value);
+    };
+</script>
