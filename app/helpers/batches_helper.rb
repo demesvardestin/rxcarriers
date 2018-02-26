@@ -80,10 +80,10 @@ module BatchesHelper
                 return "accepted"
             when "/batches/completed"
                 return "completed"
-            when "/batches/pharmacist?order=az"
-                return "az_pharmacist"
-            when "/batches/pharmacist?order=za"
-                return "za_pharmacist"
+            when "/batches/id?order=asc"
+                return "asc"
+            when "/batches/id?order=desc"
+                return "desc"
             when "/batches/packages?order=asc"
                 return "asc_packages"
             when "/batches/packages?order=desc"
@@ -174,6 +174,11 @@ module BatchesHelper
     
     def request_sent(batch)
         (batch.deliveries.count > 0 && batch.completed) || batch.request_status != nil
+    end
+    
+    def current_batch
+        id = params[:id]
+        return Batch.find(id)
     end
     
 end

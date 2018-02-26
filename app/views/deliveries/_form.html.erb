@@ -1,4 +1,4 @@
-<%= form_for [@deliverable, @delivery]  do |f| %>
+<%= form_for ([@deliverable, @delivery]), :html=>{:id=>"addPatient",:multipart => true,:remote=>true} do |f| %>
     <% if @delivery.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@delivery.errors.count, "error") %> prohibited this delivery from being saved:</h2>
@@ -10,23 +10,39 @@
           </ul>
         </div>
     <% end %>
-    
-    <div class="row">
-        <div class="field col-md-9">
-            <h6 class="font-14 patient-name-label"><strong><%= f.label :select_patient %></strong></h6>
-            <%= f.select(:recipient_name, patients(@chosen_patient), multiple: true, class:"form-control", placeholder:"Select Patient") %>
+    <div class="patient-form" id="">
+        <div class="col-md-12">
+            <div class="row add-padding-top">
+                <div class="col-md-7 field" id="patient-full-name-div">
+                    <%= f.text_field :recipient_name, class:"form-control font-14", autofocus: true, placeholder:" " %>
+                    <label for="patient-full-name">Patient Name</label>
+                </div>
+                <div class="col-md-3 field">
+                    <%= f.text_field :recipient_phone_number, class:"form-control font-14", autofocus: true, placeholder:" " %>
+                    <label for="patient-number">Phone</label>
+                </div>
+                <div class="col-md-2 field">
+                    <%= f.text_field :copay, class:"form-control font-14", autofocus: true, placeholder:" " %>
+                    <label for="patient-copay">C/P</label>
+                </div>
+            </div>
+            <div class="row add-padding-top">
+                <div class="col-md-12 field">
+                    <%= f.text_field :recipient_address, class:"form-control font-14", autofocus: true, placeholder:" " %>
+                    <label for="patient-address">Patient Address</label>
+                </div>
+            </div>
+            <div class="row add-padding-top">
+                <div class="col-md-12 field">
+                    <%= f.text_field :medications, class:"form-control font-14", autofocus: true, placeholder:" " %>
+                    <label for="patient-medications">Medications for delivery (separate by a comma)</label>
+                </div>
+            </div>
         </div>
-        <div class="field col-md-3">
-            <%= f.text_field :copay, class:"form-control", autofocus: true, placeholder:"Copay" %>
-        </div>
-    </div>
-    <div class="row">
-        <div class="field col-md-12">
-            <%= f.text_area :medications, class:"form-control batch-notes-field", autofocus: true, placeholder:"Medication list, separated by a comma" %>
-        </div>
+        <div id="" class="col-md-12 remove-patient"></div>
     </div>
 
-    <div class="form-actions text-right">
-        <%= f.submit "Add delivery package", class:"btn btn-light white cursor-pointer" %>
+    <div class="form-actions text-right col-md-12">
+        <%= f.submit "Add Delivery", class:"btn btn-primary white cursor-pointer" %>
     </div>
 <% end %>

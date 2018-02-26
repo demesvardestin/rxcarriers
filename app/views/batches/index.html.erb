@@ -1,27 +1,34 @@
 <style>
     .requests-index-header {
         padding-bottom: 20px !important;
+        padding-top: 20px !important;
     }
-    .fa-spinner {
-        display: none;
+    .main-card, .main-page-card {
+        padding: none !important;
     }
     .batches-buttons {
         font-size: 12px;
         padding: 10px;
     }
+    .batch-list {
+        box-shadow: 0 2px 15px rgba(84,96,103,.25);
+    }
+    .create-batch {
+        display: block;
+    }
     .batch-search {
-        width: 45%;
-        border-radius: 160px !important;
-        padding-left: 15px;
+        border-radius: 5px !important;
+        border: 1px solid #4095e3 !important;
+        box-shadow: none !important;
+        padding-left: 15px !important;
         padding-top: 10px;
         padding-bottom: 10px;
-        transform: width 2s;
-    }
-    .search-error {
-        display: none;
     }
     .modal, .modal-content {
         border-color: #e1e1e2;
+    }
+    .remove-patient {
+        padding-top: 5px;
     }
     .modal-header {
         background-color: #e1e1e2;
@@ -32,194 +39,234 @@
         font-weight: 400px;
         padding: 13px;
     }
-    #patient-form {
-        display: none;
-        padding-top: 20px;
+    .table-content {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        color: #707071;
+        font-size: 13px;
+        border-bottom: 1px solid #e1e1e2;
     }
-    #patient-search, .spinner-row {
-        display: none;
+    .table-header {
+        border-top: 1px solid #e1e1e2;
+        border-bottom: 1px solid #e1e1e2;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background-color: #e6ebf1;
+        color: #59595a;
+        font-size: 15px;
+    }
+    .d--toggle--info, .create-batch {
+        display: inline !important;
+    }
+    .ellipsis-border {
+        padding: 2px;
+        border: 1px solid #707071;
+    }
+    .d--toggle--info {
+        border: 2px solid #17a2b8;
+        margin-left: 5px;
+    }
+    #placeholder {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    #batchPageHeader {
+        padding-bottom: 20px;
+        border-bottom: 1px solid #e2e2e2;
+    }
+    #markPickedUpSpan {
+        font-weight: 800px !important;
+    }
+    #markPickedUp {
+        box-shadow: none !important;
     }
     .add-padding-top {
         padding-top: 15px;
     }
+    #createButton {
+        padding-top: 10px;
+    }
+    #batchCreation {
+        text-align: center !important;
+    }
+    #batchSearchInput {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+    .hide {
+        padding-top: 30px;
+    }
+    .search-load {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+    .no-match-error {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    #creatingNewBatch, .clear-row, .search-error, .loader-row, .spinner-row,
+    #placeholder, #batchCardContainer, .load-status, .hide, #hiddenBatches{
+        display: none;
+    }
 </style>
-<script>
-    $('.item').on('click', function() {
-        $('.fa-spinner').show();
-        $('.main-card').css('opacity', '0.4')
-    });
-</script>
-<div class="all-batches">
-    <!-- New Batch Form -->
-    <div class="modal fade batch-modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <h5 class="modal-title medium-gray" id="exampleModalLabel">New Batch</h5>
-                <a class="btn btn-light cancel-create close" href="#" data-dismiss="modal" aria-label="Close">
-                   Cancel 
-                </a>
-            </div>
-            <div class="modal-body">
-                <form class="row" id="batch-create" action="/create_batch" method="post">
-                    <div class="form-group col-md-12">
-                        <textarea class="form-control batch-notes-field" placeholder="Start typing a note.."></textarea>
-                    </div>
-                    <div class="x-delivery-label col-md-12"><h6 class="font-13 theme-blue">Express Delivery?</h6></div>
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="btn-group btn-group-toggle col-md-4" data-toggle="buttons">
-                                <label class="btn btn-secondary" id="express-yes">
-                                    <input type="radio" name="options" autocomplete="off"> Yes
-                                </label>
-                                <label class="btn btn-secondary active" id="express-no">
-                                    <input type="radio" name="options" autocomplete="off" checked> No
-                                </label>
-                            </div>
-                            <div class="col-md-4 text-right offset-md-4" id="submit-button">
-                                <button class="btn btn-secondary">
-                                   Create Batch 
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="patient-form">
-                        <div class="col-md-12">
-                            <select class="custom-select" onclick="if (typeof(this.selectedIndex) != 'undefined') populate(this.selectedIndex)">
-                              <option selected>
-                                  Open this select menu
-                              </option>
-                              <option value="1" id="option1" name="Marie Guillaume" address="14 Greenlawn Blvd, Valley Stream, NY 11580" phone="516-413-8625" copay="5">One</option>
-                              <option value="2">Two</option>
-                              <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row add-padding-top">
-                                <div class="col-md-7" id="patient-full-name-div">
-                                    <input type="text" class="form-control font-14" id="patient-full-name" placeholder="Patient Name">
-                                </div>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control font-14" id="patient-number" placeholder="Patient Number">
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text" class="form-control font-14" id="patient-copay" placeholder="C/P">
-                                </div>
-                            </div>
-                            <div class="row add-padding-top">
-                                <div class="col-md-12">
-                                    <input type="text" class="form-control font-14" id="patient-address" placeholder="Patient Address">
-                                </div>
-                            </div>
-                            <div class="row add-padding-top">
-                                <div class="col-md-12">
-                                    <textarea type="text" class="form-control font-14" id="patient-medications" placeholder="Medications for delivery"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 text-right add-padding-top" id="request-driver">
-                            <button class="btn btn-secondary" id="request-driver">
-                               Request Driver
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            <!--<%= render 'form' %>-->
-          </div>
+
+<div class="requests-index-header">
+    <div class="row" id="batchPageHeader">
+        <div class="col-md-12">
+            <span class="medium-gray font-18">Batches</span>
         </div>
-      </div>
     </div>
-    <header class="row requests-index-header">
-        <div class="col-md-7">
-            <input type="text" class="form-control font-14 batch-search" id="batch-search-input" placeholder="<%= batch_placeholder_text%>">
-        </div>
-        <div class="col-md-1 offset-md-2 text-right no-right-padding">
-            <button type="button" class="btn btn-primary dropdown-toggle batches-buttons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-cog"></i> Filter
-            </button>
-            <div class="dropdown-menu">
-                <%= render 'dropdown' %>
+    <div id="main" class="row add-padding-top">
+        <div class="col-md-3">
+            <div>
+                <%= form_tag batch_search_path, remote: true, method: :get, id: 'batchSearchInput' do %>
+                    <%= text_field_tag :search, params[:search], class:'form-control font-12 batch-search', placeholder: "Search batches by date, status or id" do %>
+                    <% end %>
+                <% end %>
+            </div>
+            <div id="createButton">
+                <a class="btn btn-primary transaction-buttons create-batch" href="/create_batch" id="createBatch">
+                    <i class="fa fa-plus"></i>
+                    Start New Batch
+                </a>
+                <button class="btn btn-info dropdown-toggle d--toggle--info transaction-buttons" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Filter Batches By
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <%= render 'dropdown' %>
+                </div>
             </div>
         </div>
-        <div class="col-md-2 text-right no-left-padding">
-            <button type="button" class="btn btn-primary cursor-pointer batches-buttons" data-toggle="modal" data-target=".batch-modal">
-                <i class="fa fa-plus"></i> New batch
-            </button>
-        </div>
-    </header>
-    <%= render 'common/spinner' %>
-    <div class="batch-card-container" id="batch-card-container">
-        <div class="row search-error">
-            <div class="col-md-12 text-center">
-                <h6 class="font-13 theme-red">No results found</h6>
+        <%= render 'common/loader' %>
+        <div class="col-md-9" id="batchCardContainer">
+            <div class="card hide">
+                <div class="card-body">
+                    <section id="placeholder" class="row">
+                        <div class="col-md-12 text-center">
+                            <h6 class="medium-gray">You have not created any batch yet</h6>
+                        </div>
+                    </section>
+                    <section id="creatingNewBatch" class="row">
+                        <div class="col-md-12 text-center" id="batchCreation">
+                            <%= render 'common/spinner' %>
+                            <h6 class="medium-gray font-14 text-center">Creating batch...</h6>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="card batch-list">
+                <div class="table-header container">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <span>Batch ID</span>
+                        </div>
+                        <div class="col-md-4">
+                            <span>Date Created</span>
+                        </div>
+                        <div class="col-md-2">
+                            <span>Status</span>
+                        </div>
+                        <div class="col-md-4">
+                            <span>Action</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="hiddenBatches">
+                    <%= render 'batches' %>
+                </div>
+                <div id="allBatches">
+                    <%= render 'all' %>
+                </div>
             </div>
         </div>
-        <%= render batch_sort %>
     </div>
 </div>
 
 <script>
-
-    // Perform search using dom manipulation instead of DB Queries
     
-    window.onkeyup = keyup;
+    // onLoad //
+    $('.hide').hide();
+    $('#creatingNewBatch').hide();
+    $('#placeholder').hide();
+    $('.loader-row').show();
+    // checkFirebasePharmacy();
     
-    var inputTextValue;
-    var batches = document.getElementsByClassName('batches-row');
-    var count = 0;
+    // fetch rows of batch //
+    var batches = document.getElementsByClassName("batches-row");
     
-    function keyup(e) {
-        inputTextValue = e.target.value.toLowerCase();
-        if (e.keyCode == 13) {
-            count = 0;
-            $('.spinner-row').show();
-            $('.batch-card-container').css('padding-top', '20px');
-            for (i=0;i<batches.length;i++) {
-                var id = batches[i].attributes[3].value
-                $('#' + id.toString()).hide();
-                var value1 = batches[i].attributes[1].value.toLowerCase();
-                var value2 = batches[i].attributes[2].value.toLowerCase();
-                if (value1.includes(inputTextValue) || value2.includes(inputTextValue)) {
-                    $('.search-error').hide();
-                    $('#' + id.toString()).show();
-                } else {
-                    count = count + 1;
-                    console.log(count)
-                }
-            }
+    // if rows present, return list, if not, return placeholder //
+    if (batches.length > 0) {
+        $('.loader-row').hide();
+        $('#batchCardContainer').fadeIn();
+    } else {
+        $('.loader-row').hide();
+        $('#placeholder').fadeIn();
+    };
+    
+    function writeToPharmacy() {
+        checkFirebasePharmace();
+        database.collection('pharmacies').add({
+            pharmacy_name: "<%= current_pharmacy.name %>",
+            pharmacy_address: "<%= current_pharmacy.street %>",
+            pharmacy_phone: <%= current_pharmacy.number %>,
+            pharmacy_email: "<%= current_pharmacy.email %>",
+            pharmacy_id: <%= current_pharmacy.id %>,
+            pharmacy_website: "<%= current_pharmacy.website %>",
+        }).then(function() {
+            // Call function to reset form //
+            // clearInputs();
+        });
+    };
+    
+    function checkFirebasePharmacy() {
+        database.collection('pharmacies').doc('AKPJYgJcTBS6Fu759JQv')
+        .set({
+            pharmacy_name: "<%= current_pharmacy.name %>",
+            pharmacy_address: "<%= current_pharmacy.street %>",
+            pharmacy_phone: <%= current_pharmacy.number %>,
+            pharmacy_email: "<%= current_pharmacy.email %>",
+            pharmacy_id: <%= current_pharmacy.id %>,
+            pharmacy_website: "<%= current_pharmacy.website %>",
+        }).then(function() {
             
-            $('.spinner-row').hide();
-            
-            if (count == batches.length) {
-                $('.search-error').css('padding-top', '20px');
-                $('.search-error').show();
-            }
+        }).catch(function() {
+            return;
+        });
+    };
+    
+    function checkStatus(element) {
+        var req_id = element.getAttribute('id');
+        var id = element.getAttribute('batch');
+        console.log(element);
+        if (!req_id) {
+            $('.check-status'+id).html('request pending');
+            return;
+        }
+        $('#status'+id).hide();
+        $('#loadStatus'+id).show();
+        $('.check-status'+id).append('checking...');
+        database.collection('requests').doc(req_id)
+        .get().then(function(doc) {
+            $('.check-status'+id).html(parseRequest(doc.data().accepted));
+        });
+        console.log(parseRequest(doc.data().accepted));
+    };
+    
+    function parseRequest(value) {
+        if (value == false) {
+            return 'request pending'
+        } else {
+            return 'request accepted'
         }
     };
-    
-    $('#batch-search-input').on('click', function() {
-        $('#batch-search-input').animate({width: '80%'});
+  
+    // Create a batch //
+    var batch = document.getElementById('createBatch');
+    batch.addEventListener('click', function() {
+        $('.batch-list').hide();
+        $('.spinner-row').show()
+        $('#creatingNewBatch').show();
+        $('.hide').fadeIn();
     });
-    
-    $('#express-yes').on('click', function() {
-        $('#submit-button').hide();
-        $('#patient-form').fadeIn();
-    });
-    
-    $('#express-no').on('click', function() {
-        $('#submit-button').show();
-        $('#patient-form').fadeOut();
-    });
-    
-    $('#show-patient-search').on('click', function() {
-        $('#patient-search').show();
-    });
-    
-    function populate() {
-        $('#patient-full-name').value = $('#option1').attributes[2].value;
-        $('#patient-number').value = $('.option1').attributes[3].value;
-        $('#patient-address').value = $('.option1').attributes[2].value;
-        $('#patient-copay').value = $('.option1').attributes[4].value;
-        console.log($('.option1').attributes[3].value);
-    };
+  
 </script>

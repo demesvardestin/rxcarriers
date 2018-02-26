@@ -1,101 +1,527 @@
-<div class="show-batch">
-    <!-- Patient/Prescription Form -->
-    <div class="modal fade new-patient-delivery" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<style>
+    .disabled {
+        color: #e1e1e2 !important;
+    }
+    .top-panel {
+        border-bottom: 1px solid #e1e1e2;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    .ellipsis {
+        background-color: transparent;
+    }
+    .ellipsis:hover {
+        background-color: transparent;
+        border: 1px solid #e1e1e2;
+        border-radius: 2px;
+        padding-right: 4px;
+        padding-left: 4px;
+        cursor: pointer;
+    }
+    .table-header {
+        border-top: 1px solid #e1e1e2;
+        border-bottom: 1px solid #e1e1e2;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background-color: #e6ebf1;
+        color: #59595a;
+        font-size: 15px;
+    }
+    .table-content {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        color: #707071;
+        font-size: 13px;
+        border-bottom: 1px solid #e1e1e2;
+    }
+    #placeholder {
+        padding-top: 50px;
+        padding-bottom: 50px;
+        opacity: 0.5;
+    }
+    .fa-shopping-basket {
+        font-size: 30px;
+    }
+    .show-charge-link {
+        cursor: pointer;
+    }
+    #charge {
+        border-bottom: 1px solid #e1e1e2;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 15px;
+        font-weight: 500;
+        color: #707071;
+    }
+    .removeDelivery {
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+    }
+    .removeDelivery:hover {
+        background-color: transparent;
+    }
+    #driverRequested {
+        padding-top: 15px;
+    }
+    #placeholder, #placeholder-fail, #all-deliveries, .spinner-row,
+    .loader-row, #driverRequested, #requestPending, #requestAccepted, #requestError,
+    #requestLoading, .request-driver {
+        display: none;
+    }
+    #requestCancelled {
+        padding-top: 10px;
+    }
+    .btn-primary:hover {
+        color: #6c757d !important;
+    }
+</style>
+
+<%= render 'common/loader' %>
+<div id="main">
+    <div class="modal fade batch-modal" id="newDelivery" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add a Delivery Patient</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <%= render 'deliveries/form' %>
-          </div>
+            <div class="modal-header text-center">
+                <h5 class="modal-title medium-gray" id="exampleModalLabel">Add Delivery</h5>
+                <a class="background-transparent no-underline close" href="#" data-dismiss="modal" aria-label="Close">
+                   <i class="fa fa-times-circle-o"></i>
+                </a>
+            </div>
+            <div class="modal-body" id="batch_create_modal">
+                <%= render 'batches/alert' %>
+                <%= render 'batches/patient_form' %>
+                <%= render 'common/loader' %>
+            </div>
         </div>
       </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <h3 class="black">
-                Batch ID: <%= @batch.batch_id %>
-                <span class="badge badge-secondary">
-                    <%= request_status(find_request(@batch.batch_id)) %>
-                </span>
-            </h3>
+    <header class="top-panel row">
+        <div class="col-md-4">
+            <span class="font-20 medium-gray">Batch <%= params[:id] %></span>
         </div>
-        <div class="col-md-12">
-            <p class="black">
-                Pharmacist: 
-                <span class="theme-blue">
-                    <%= @batch.pharmacist %>
-                </span>
-            </p>
+        <div class="col-md-3 offset-md-5 text-right">
+            <a class="btn btn-info transaction-buttons white" id="returnToBatchesList" href="/batches">
+                <i class="fa fa-long-arrow-left"></i> Return To Batch List
+            </a>
         </div>
-    </div>
-    <% if @batch.deliveries.count == 0 %>
-        <div class="row">
-            <div class="col-md-8 no-prescriptions">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="black">
-                            <em>
-                                No packages added yet
-                            </em>
-                        </h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <% else %>
-        <% @batch.deliveries.reverse.each do |pac| %>
-            <div class="row">
-                <div class="col-md-8 prescription-card-div">
-                    <div class="card prescription-card">
-                        <div class="card-header">
-                            <h5><i class="fa fa-map-marker"></i> <%= pac.recipient_address %></h5>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title"><%= pac.recipient_name %>, <%= pac.recipient_phone_number %></h6>
-                            <p class="card-text">
-                                <ul>
-                                    <% medications(pac).each do |med| %>
-                                        <li><%= med %></li>
-                                    <% end %>
-                                </ul>
-                            </p>
-                            <h6 class="package-action-buttons">
-                                <%= link_to batch_delivery_path(:id => pac.id, :batch_id => @batch.id), class:"btn btn-secondary white", method: :delete do %>
-                                    <span class="font-14"><i class="fa fa-times"></i> Remove Package</span>
-                                <% end %>
-                                <%= link_to delivery_path(pac), class: "btn btn-primary cursor-pointer padding-14" do %>
-                                    <span class="font-14"><i class="fa fa-print"></i> Print Package Ticket</span>
-                                <% end %>
-                            </h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <% end %>
-    <% end %>
-    <div class="row">
-        <div class="col-md-3">
-            <% if request_sent(@batch) %>
-                <%= link_to batches_path, class:"btn btn-primary padding-14" do %>
-                    <i class="fa fa-long-arrow-left"></i> Return To Batch List
-                <% end %>
-            <% else %>
-                <button type="button" class="btn btn-primary btn-block cursor-pointer padding-14" data-toggle="modal" data-target=".new-patient-delivery">
-                  <span class="font-14"><i class="fa fa-plus"></i> Add Patient Package</span>
+    </header>
+    <% if current_batch.request_id.nil? %>
+        <section class="top-panel row">
+            <div class="col-md-3 top-panel-div">
+                <button class="btn btn-secondary transaction-buttons" id="addDelivery" data-toggle="modal" data-target="#newDelivery">
+                    <i class="fa fa-plus-circle"></i> Add Delivery
                 </button>
-            <% end %>
+            </div>
+            <div class="col-md-2 offset-md-7 text-right top-panel-div">
+                <button class="btn btn-primary transaction-buttons request-driver" onclick="requestDriver()">
+                    <i class="fa fa-car"></i> Request Driver
+                </button>
+            </div>
+        </section>
+    <% end %>
+    
+    <%= render 'common/loader' %>
+    <section id="placeholder" class="row">
+        <div class="col-md-6 offset-md-3 text-center">
+            <i class="fa fa-shopping-basket medium-gray"></i>
+            <h6 class="medium-gray">This batch is empty</h6>
         </div>
-        <div class="col-md-3">
-            <% unless request_sent(@batch) %>
-                <%= link_to request_driver_path(:id => @batch.id), class:"btn btn-light white" do %>
-                    <i class="fa fa-car white"></i> Request Driver
-                <% end %>
-            <% end %>
+    </section>
+    
+    <section id="placeholder-fail" class="row">
+        <div class="col-md-6 offset-md-3 text-center">
+            <i class="fa fa-frown"></i>
+            <h6>This page could not be loaded</h6>
+            <a class="btn btn-primary reload-button" href=""><i class="fa fa-sync"></i> Reload</a>
         </div>
-    </div>
+    </section>
+    
+    
+    <section id="all-deliveries" class="row">
+        <div class="col-md-12 table-header">
+            <div class="row">
+                <div class="col-md-3 no-right-padding">
+                    <span>Name</span>
+                </div>
+                <div class="col-md-4 no-horizontal-padding">
+                    <span>Address</span>
+                </div>
+                <div class="col-md-2 no-horizontal-padding">
+                    <span>Phone</span>
+                </div>
+                <div class="col-md-1 no-horizontal-padding">
+                    <span>Copay</span>
+                </div>
+                <div class="col-md-1 no-horizontal-padding">
+                    <span>D. Time</span>
+                </div>
+                <div class="col-md-1 no-horizontal-padding">
+                    <span></span>
+                </div>
+            </div>
+        </div>
+        <div id="deliveries"></div>
+    </section>
+    
+    <section id="driverRequested" class="row">
+        <div class="col-md-4 offset-md-4 no-horizontal-padding">
+            <div class="card">
+                <div class="card-body" id="requestCardBody">
+                    <div id="requestLoading" class="text-center">
+                        <%= render 'common/spinner' %>
+                        <h6 class="font-13 medium-gray">Sending Request...</h6>
+                    </div>
+                    <div id="requestError" class="text-center">
+                        <h6 class="font-13 theme-red"><i class="fa fa-warning"></i> Error Sending Request. Please try again.</h6>
+                    </div>
+                    <div id="requestSent">
+                        <div id="requestPending">
+                            <%= render 'common/pending' %>
+                            <div id="requestDetails"></div>
+                        </div>
+                        <div id="requestAccepted">
+                            <%= render 'common/pending' %>
+                        </div>
+                        <div id="requestCancelled">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <a class="btn btn-primary white transaction-buttons" id="cancelRequest">
+                                        <i class="fa fa-times-circle fa--cancelRide"></i> Cancel Ride
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
+
+
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzOsjjGRrrGUxVOMjapGMhfLSj3iTp_Pc&callback=calculateMileage">
+</script>
+<script>
+    
+    // Show loader //
+    $('.loader-row').show();
+    
+    // Grab request_id of current batch //
+    var req_id = "<%= current_batch.request_id if current_batch.request_id != nil %>";
+    console.log(req_id);
+    
+    // Hide request card if request not yet sent //
+    if (!req_id) {
+        $('#driverRequested').hide();
+    }
+    
+    // SET SNAPSHOT TO WATCH DELIVERY CHANGES //
+    database.collection("deliveries")
+        .where('pharmacy_id', '==', <%= current_pharmacy.id %>)
+        .where('batch_id', '==', <%= params['id'] %>)
+        .onSnapshot(function(doc) {
+            console.log(doc.docs.length);
+            if (doc.docs.length > 0){
+                $('.loader-row').hide();
+                $('.request-driver').fadeIn()
+                populateDeliveryDiv();
+                $('#all-deliveries').css('padding-bottom', '10px');
+                $('#all-deliveries').fadeIn();
+            } else if (doc.docs.length == 10) {
+                $('#addDelivery').hide();
+            } else {
+                $('.loader-row').hide();
+                $('.request-driver').hide();
+                $('#deliveries').html('');
+                $('#all-deliveries').hide();
+                $('#placeholder').fadeIn();
+            }
+    });
+    
+    // SET SNAPSHOT TO WATCH CURRENT REQUEST CHANGES //
+    if (req_id) {
+        $('.fa-times-circle').css('opacity', '0.3');
+        database.collection("requests").doc(req_id)
+            .onSnapshot(function(doc) {
+                checkRequestStatus();
+        });
+    }
+    
+    // Calculate mileage and duration //
+    function calculateMileage() {
+        var deliveries = ["<%= current_pharmacy.full_address %>"];
+        var mileage = 0;
+        var time = 0;
+        var service = new google.maps.DistanceMatrixService;
+        var i = 0;
+        database.collection("deliveries")
+        .where('pharmacy_id', '==', <%= current_pharmacy.id %>)
+        .where('batch_id', '==', <%= params['id'] %>)
+        .get().then(function(docs) {
+            // For each delivery, calculate mileage and time and update doc //
+            docs.forEach(function(doc) {
+                current_address = doc.data().recipient_address;
+                service.getDistanceMatrix({
+                    origins: [deliveries[i]],
+                    destinations: [current_address],
+                    travelMode: 'DRIVING',
+                    unitSystem: google.maps.UnitSystem.IMPERIAL,
+                    avoidHighways: false,
+                    avoidTolls: false
+                }, function(response, status) {
+                    if (status !== 'OK') {
+                        console.log('error found with status: ' + status);
+                    } else {
+                        console.log(response);
+                        mileage += (parseFloat(response.rows[0].elements[0].distance.text));
+                        time += response.rows[0].elements[0].duration.value;
+                        // Update request doc //
+                        writeToRequest(mileage, time);
+                    }
+                });
+                deliveries.push(current_address);
+                i = i + 1;
+            });
+        });
+    };
+    
+    // Create a delivery and reset form for next delivery //
+    function createDelivery(name, address, phone, copay=null, delivery_time=null) {
+        database.collection('deliveries').add({
+            recipient_name: name,
+            recipient_address: address,
+            recipient_phone: phone,
+            recipient_copay: copay,
+            pharmacy_id: <%= current_pharmacy.id %>,
+            pharmacy_name: "<%= current_pharmacy.name %>",
+            batch_id: <%= params['id'] %>,
+            delivery_time: delivery_time
+        }).then(function() {
+            // Call function to reset form //
+            clearInputs();
+        });
+    };
+    
+    // Remove delivery function. Button will only be functional if request_id is
+    // present.
+    function removeDelivery(elem) {
+        var id = elem.attributes[2].value;
+        var request_id = "<%= current_batch.request_id %>";
+        if (!request_id) {
+            database.collection('deliveries').doc(id).delete().then(function() {
+                console.log("Document successfully deleted!");
+            }).catch(function(error) {
+                console.error("Error removing document: ", error);
+            });
+        } else {
+            console.log('You have already requested a courier for this batch.');
+            return;
+        }
+    };
+    
+    // calculate fare total //
+    function calculateFare(mileage, duration) {
+        var base_fare = 15;
+        var per_mile = 1.00;
+        var per_minute = 0.10;
+        var total = base_fare + (per_mile*mileage) + (per_minute*duration);
+        return total;
+    };
+    
+    // Request driver functionality //
+    function requestDriver() {
+        $('#requestLoading').show();
+        $('#driverRequested').show();
+        database.collection('requests/').add({
+            pharmacy_name: "<%= current_pharmacy.name %>",
+            pharmacy_address: "<%= current_pharmacy.full_address %>",
+            pharmacy_phone: <%= current_pharmacy.number %>,
+            total_milage: 0.0,
+            fare: 0.0,
+            trip_duration: 0.0,
+            deliveries: [],
+            batch_id: <%= params['id'] %>,
+            accepted: false,
+            driver: null
+        }).then(function(data) {
+            console.log(data.id);
+            // submit firebase-generated id to postgres database and calculate
+            // mileage
+            submitToDatabase(data.id);
+            calculateMileage();
+            $('#requestStatus').html('Pending');
+            $('#requestLoading').hide();
+        }).catch(function(error) {
+            console.log(error);
+            $('#requestLoading').hide();
+            $('#requestError').show();
+        });
+    };
+    
+    // Update request...merge to avoid overwriting previous data //
+    function writeToRequest(miles, time_in_seconds) {
+        database.collection('requests')
+            .doc(req_id)
+            .set({
+                total_milage: miles.toFixed(2),
+                trip_duration: time_in_seconds,
+                fare: calculateFare(miles, (time_in_seconds/60)).toFixed(2)
+            }, { merge: true })
+            .then(function() {
+                console.log('Firebase merge successful!');
+            }).catch(function(error) {
+                console.log('Firebase merge unsuccessful due to: ' + error);
+            })
+        console.log(miles, time_in_seconds, calculateFare(miles, (time_in_seconds/60)));
+    };
+    
+    // create hidden form and submit to database //
+    function submitToDatabase(id, batch_id=<%= params[:id] %>) {
+        var form = document.createElement('form');
+        var input = document.createElement('input');
+        var input1 = document.createElement('input');
+        form.setAttribute('action', '/update_batch');
+        form.setAttribute('method', 'get');
+        form.setAttribute('id', 'setRequestId');
+        input.setAttribute('name', 'request_id');
+        input.setAttribute('value', id.toString());
+        input1.setAttribute('name', 'batch_id');
+        input1.setAttribute('value', batch_id.toString());
+        document.body.appendChild(form);
+        form.appendChild(input)
+        .appendChild(input1);
+        form.submit();
+    };
+    
+    // Convert data to minutes //
+    function toMin(time_in_seconds) {
+        return parseFloat(time_in_seconds/60);
+    };
+    
+    // Check request status //
+    function checkRequestStatus() {
+        if (req_id) {
+            database.collection('requests')
+            .doc(req_id)
+            .get()
+            .then(function(query) {
+                console.log(query.data());
+                $('#driverRequested').fadeIn();
+                if (query.data().accepted == false) {
+                    $('#requestPending').show();
+                    $('#requestDetails').html(
+                        '<div class="row">' +
+                        '<div class="col-md-4 offset-md-3">' +
+                        '<span class="font-13 medium-gray">Est. Mileage:</span>' +
+                        '</div>' +
+                        '<div class="col-md-4">' +
+                        '<span class="font-13 theme-blue">' +
+                        query.data().total_milage +
+                        '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-md-4 offset-md-3">' +
+                        '<span class="font-13 medium-gray">Est. Cost:</span>' +
+                        '</div>' +
+                        '<div class="col-md-4">' +
+                        '<span class="font-13 theme-blue">' +
+                        '$' + query.data().fare +
+                        '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-md-4 offset-md-3">' +
+                        '<span class="font-13 medium-gray">Est. Duration:</span>' +
+                        '</div>' +
+                        '<div class="col-md-4">' +
+                        '<span class="font-13 theme-blue">' +
+                        toMin(query.data().trip_duration).toFixed(2) + 'mns' +
+                        '</span>' +
+                        '</div>' +
+                        '</div>'
+                    )
+                } else {
+                    $('#requestAcepted').show();
+                }
+            });
+        }
+    };
+    
+    // Put content in delivery div //
+    function populateDeliveryDiv() {
+        database.collection('deliveries/')
+        .where('pharmacy_id', '==', <%= current_pharmacy.id %>)
+        .where('batch_id', '==', <%= params['id'] %>)
+        .get()
+        .then(function(querySnapshot) {
+            $('#placeholder').hide();
+            $('placeholder-fail').hide();
+            $('#all-deliveries').show();
+            $('#deliveries').html('');
+            querySnapshot.forEach(function(doc) {
+                var id = doc.id.toString();
+                $('#deliveries').append(
+                    '<div id="delivery' + doc.id.toString() +
+                    '" class="col-md-12 table-content" name="' + id + '">'+
+                    '<div class="row">' +
+                    '<div class="col-md-3 no-right-padding" >' +
+                        '<span>'+ doc.data().recipient_name + '</span>' +
+                    '</div>' +
+                    '<div class="col-md-4 no-horizontal-padding">' +
+                        '<span>'+ doc.data().recipient_address + '</span>' +
+                    '</div>' +
+                    '<div class="col-md-2 no-horizontal-padding">' +
+                        '<span>'+ doc.data().recipient_phone + '</span>' +
+                    '</div>' +
+                    '<div class="col-md-1 no-horizontal-padding">' +
+                        doc.data().recipient_copay + 
+                    '</div>' +
+                    '<div class="col-md-1 no-horizontal-padding">' +
+                        doc.data().delivery_time + 
+                    '</div>' +
+                    '<div class="col-md-1 no-horizontal-padding">' +
+                    '<button class="btn btn-warning removeDelivery"' +
+                    'onclick="removeDelivery(this)"'+
+                    'id="' + id + '"' +
+                    '><i class="fa fa-times-circle font-10 theme-blue"></i></button>' + 
+                    '</div>' +
+                    '</div></div>'
+                );
+            });
+        });
+    };
+    
+    // add listener to patient addition form //
+    document.getElementById('addPatient').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var name = document.getElementById('patient-full-name').value;
+        var address = document.getElementById('patient-address').value;
+        var phone = document.getElementById('patient-number').value;
+        var copay = document.getElementById('patient-copay').value;
+        var medications = document.getElementById('patient-medications').value;
+        var delivery = document.getElementById('delivery-time').value;;
+        console.log(name, address, phone, copay, medications);
+        $('.patient-form').hide();
+        $('.loader-row').show();
+        
+        createDelivery(name, address, phone, copay, delivery);
+    });
+    
+    document.getElementById('returnToBatchesList').addEventListener('click', function() {
+        $('#main').fadeOut();
+        $('.loader-row').show();
+    });
+    
+    // clear form //
+    function clearInputs() {
+        document.getElementById('addPatient').reset();
+        $('.loader-row').hide();
+        $('.patient-form').show();
+    };
+    
+    // END FIREBASE //
+</script>

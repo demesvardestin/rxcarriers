@@ -5,8 +5,8 @@ class Batch < ActiveRecord::Base
     has_many :deliveries, :as => :deliverable
     
     # scopes
-    scope :asc_pharm, -> {order("pharmacist ASC")}
-    scope :desc_pharm, -> {order("pharmacist DESC")}
+    scope :asc, -> {order("ID ASC")}
+    scope :desc, -> {order("ID DESC")}
     scope :asc_date, -> {order("updated_at ASC")}
     scope :desc_date, -> {order("updated_at DESC")}
     scope :requested, -> {where(request_status: 'completed')}
@@ -15,8 +15,8 @@ class Batch < ActiveRecord::Base
     scope :last_month, -> {where("created_at >= ?", 1.month.ago)}
     
     # validations
-    validates_presence_of :notes
-    validates_presence_of :pharmacist
+    # validates_presence_of :notes
+    # validates_presence_of :pharmacist
     
     # methods
     def self.today
@@ -49,6 +49,24 @@ class Batch < ActiveRecord::Base
     
     def self.timestamp(object)
         [object.updated_at.strftime("%B %-dth %Y"), "at", object.updated_at.strftime("%I:%M %p")].join(" ")
+    end
+    
+    def self.search(param)
+        param.strip!
+        param.downcase!
+        (id_matches(param) + pharmacist_matches(param)).uniq
+    end
+    
+    def self.id_matches(param)
+        matches('id', param)
+    end
+    
+    def self.pharmacist_matches(param)
+        matches('pharmacist', param)
+    end
+    
+    def self.matches(field_name, param)
+        where("lower(#{field_name}) like ?", "%#{param}%")
     end
     
     def self.parse_response(from, resp)

@@ -16,32 +16,12 @@
 //= require chartkick
 //= require_tree .
 
-var init_batch_lookup;
-
-init_batch_lookup = function(){
-    $('#batch-lookup-form').on('ajax:before', function(event, data, status){
-        show_spinner();
-    });
-    $('#batch-lookup-form').on('ajax:after', function(event, data, status){
-        hide_spinner();
-    });
-    $('#batch-lookup-form').on('ajax:success', function(event, data, status){
-        $('#batch-card-container').hide();
-        $('#spinner').hide();
-        $('#batch-lookup').replaceWith(data);
-        init_batch_lookup();
-    });
-    $('#batch-lookup-form').on('ajax:error', function(event, xhr, status, error){
-        $('#batch-card-container').replaceWith('');
-        $('#batch-not-found').replaceWith('batch was not found.');
-    });
-}
-$(document).ready(function() {
-    init_batch_lookup();
-})
-var hide_spinner = function(){
-    $('#spinner').hide();
-}
-var show_spinner = function(){
-    $('#spinner').show();
-}
+var config = {
+    apiKey: "AIzaSyDQkXb8VqnUK4YhzPoGC7T59sn1Fv4-bLQ",
+    authDomain: "dispenserx-85f34.firebaseapp.com",
+    databaseURL: "https://dispenserx-85f34.firebaseio.com",
+    projectId: "dispenserx-85f34",
+    storageBucket: "dispenserx-85f34.appspot.com",
+    messagingSenderId: "966953661548"
+};
+firebase.initializeApp(config);

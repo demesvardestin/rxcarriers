@@ -110,6 +110,15 @@ a:hover {
 .location-green {
     color: #5f9616 !important;
 }
+.request-sent, .request-failed {
+    display: none;
+}
+.rmPat, .clear-content, .add-patient {
+    cursor: pointer;
+}
+.rmPat, .clear-content, .add-patient:hover {
+    text-decoration: underline;
+}
 .pharmacy-search {
     display: block !important;
     width: 80% !important;
@@ -184,15 +193,16 @@ a:hover {
     padding: 0 !important;
     height: 100% !important;
 }
-.field {
-        padding-top: 15px;
-}
 .actions {
     padding-top: 20px;
 }
 .form-control {
-    border: 1px solid #ccccd4;
+    border: none;
+    border-radius: 0 !important;
+    border-bottom: 1px solid #e1e1e2 !important;
+    box-shadow: none !important;
     height: 40px;
+    padding: 0 !important;
 }
 .driver-signup {
     float: left !important;
@@ -235,24 +245,28 @@ a:hover {
 }
 .item-header {
     color: #4095e3;
+    font-size: 13px;
 }
-.item-header:hover {
-    background: transparent;
+.item {
+    font-size: 13px;
+    color: #707071 !important;
 }
 .item:hover {
-    background: #03032b;
-    color: #fff;
+    background: #707071;
+    color: #fff !important;
 }
 .all-batches {
     padding: 40px;
 }
 .batches-details {
-    padding-right: 80px;
     color: #707071;
 }
 .new-batch-card {
     padding: 40px;
     border: 1px solid #03032b;
+}
+.submission-load {
+    display: none;
 }
 .new-batch-card:hover {
     background: #03032b !important;
@@ -299,7 +313,7 @@ a:hover {
     color: #03032b !important;
 }
 .batch-notes-field {
-    height: 100px !important;
+    height: 75px !important;
 }
 .show-batch {
     padding: 40px;
@@ -369,6 +383,38 @@ a:hover {
 }
 .dropdown-menu {
     font-size: 14px;
+}
+.batches-buttons {
+    font-size: 12px;
+    padding: 10px;
+}
+.modal, .modal-content {
+    border-color: #e1e1e2;
+}
+.remove-patient {
+    padding-top: 5px;
+}
+.modal-header {
+    background-color: #e1e1e2;
+    border-bottom-color: #e1e1e2;
+}
+.cancel-create {
+    font-size: 14px;
+    font-weight: 400px;
+    padding: 13px;
+}
+.patient-form {
+    padding-bottom: 20px;
+}
+.add-padding-top {
+    padding-top: 15px;
+}
+.clear-row, .spinner-row, .search-error, #patient-search, .spinner-row {
+    display: none;
+}
+#batch_create_modal {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
 }
 
 /* Invoice Views */
@@ -470,6 +516,9 @@ a:hover {
 .green {
     color: #05f005 !important;
 }
+.btn-info {
+    border: 2px solid #17a2b8;
+}
 .btn-success {
     background: #05f005 !important;
     border: 2px solid #05f005;
@@ -537,6 +586,9 @@ a:hover {
 }
 .status-icon-div {
     padding-top: 10px;
+}
+.load-status {
+    font-size: 9px !important;
 }
 
 /* Driver Views*/
@@ -739,6 +791,14 @@ a:hover {
 .settings-header {
     padding-left: 15px;
 }
+.transaction-buttons {
+    font-size: 12px;
+    padding: 5px;
+}
+.medium-size-btn {
+    font-size: 11px;
+    padding: 4px;
+}
 .nav-link-side {
     font-size: 12px;
     padding: 13px;
@@ -750,8 +810,8 @@ a:hover {
     text-transform: uppercase;
 }
 .nav-link-side:hover {
-    background: #4e4e6a !important;
-    color: #fff !important;
+    background: #fff !important;
+    color: #3484c6 !important;
     border-radius: 5px;
 }
 .nav-link-left:hover {
@@ -777,8 +837,8 @@ a:hover {
     color: #fff !important;
 }
 .active {
-    background: #4e4e6a !important;
-    color: #fff !important;
+    background: #fff !important;
+    color: #3484c6 !important;
     border-radius: 5px;
 }
 .inverse-active {
@@ -977,19 +1037,94 @@ a:hover {
 }
 
 
+
+form {
+  margin: 2em 0;
+}
+/**
+* Make the field a flex-container, reverse the order so label is on top.
+*/
+ 
+.field {
+  display: flex;
+  flex-flow: column-reverse;
+  margin-bottom: 1em;
+}
+/**
+* Add a transition to the label and input.
+* I'm not even sure that touch-action: manipulation works on
+* inputs, but hey, it's new and cool and could remove the 
+* pesky delay.
+*/
+label, input {
+  transition: all 0.2s;
+  touch-action: manipulation;
+}
+
+input {
+  font-size: 1.5em;
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  font-family: inherit;
+  -webkit-appearance: none;
+  border-radius: 0;
+  padding: 0;
+  cursor: text;
+}
+
+input:focus {
+  outline: 0;
+  border-bottom: 1px solid #666;
+}
+
+label {
+//   text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 7px !important;
+  color: #4095e3 !important;
+}
+/**
+* Translate down and scale the label up to cover the placeholder,
+* when following an input (with placeholder-shown support).
+* Also make sure the label is only on one row, at max 2/3rds of the
+* field—to make sure it scales properly and doesn't wrap.
+*/
+input:placeholder-shown + label {
+  cursor: text;
+  max-width: 66.66%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transform-origin: left bottom;
+  transform: translate(0, 2.125rem) scale(1.5);
+}
+/**
+* By default, the placeholder should be transparent. Also, it should 
+* inherit the transition.
+*/
+::-webkit-input-placeholder {
+  opacity: 0;
+  transition: inherit;
+}
+/**
+* Show the placeholder when the input is focused.
+*/
+input:focus::-webkit-input-placeholder {
+  opacity: 1;
+}
+/**
+* When the element is focused, remove the label transform.
+* Also, do this when the placeholder is _not_ shown, i.e. when 
+* there's something in the input at all.
+*/
+input:not(:placeholder-shown) + label,
+input:focus + label {
+  transform: translate(0, 0) scale(1);
+  cursor: pointer;
+}
+
+
 /* Mobile Rules */
 
 @media only screen and (max-device-width: 768px) {
-    body {
-        overflow: hidden !important;
-    }
-    .vertical-panel {
-        display: none !important;
-    }
-    .placeholder-div {
-        display: none !important;
-    }
-    .driver-signup {
-        float: none !important;
-    }
 }

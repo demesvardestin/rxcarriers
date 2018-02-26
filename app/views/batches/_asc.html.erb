@@ -1,5 +1,5 @@
-<% if @batches.desc_pharm.present? %>
-    <% @batches.desc_pharm.each do |batch| %>
+<% if @batches.asc.present? %>
+    <% @batches.asc.each do |batch| %>
         <% unless batch.nil? %>
             <div class="row">
                 <div class="col-md-12 request-card-div">

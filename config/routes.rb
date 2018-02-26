@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   get 'batches/pending', to: 'batches#index'
   get 'batches/accepted', to: 'batches#index'
   get 'batches/completed', to: 'batches#index'
-  get 'batch_search', to: 'batches#index'
+  get 'batch_search', to: 'batches#batch_search'
   get 'patient/search', to: 'patients#index'
   get 'request/search', to: 'requests#index'
   get 'pharmacy/search', to: 'pharmacies#index'
@@ -57,6 +57,10 @@ Rails.application.routes.draw do
   get 'not-found', to: 'supports#not_found', as: 'unauthorized'
   get 'invoices/:id/delete', to: 'invoices#destroy'
   get 'transactions/:id', to: 'invoices#show'
+  get '/create_batch', to: 'batches#create_batch'
+  get '/update_batch', to: 'batches#update_batch'
+  get 'order_asc', to: 'batches#order_asc'
+  get 'order_desc', to: 'batches#order_desc'
   
   # resource path
   resources :invoices, only: [:create, :show, :index, :destroy]

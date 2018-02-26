@@ -1,15 +1,4 @@
-<li class="dropdown-item item-header"><strong>Status</strong></li>
+<li class="dropdown-item item-header">Date Created</li>
 <li class="dropdown-divider"></li>
-<a class="dropdown-item item" href="/batches/pending">pending</a>
-<a class="dropdown-item item" href="/batches/accepted">accepted</a>
-<a class="dropdown-item item" href="/batches/completed">completed</a>
-<li class="dropdown-divider"></li>
-<li class="dropdown-item item-header"><strong>Pharmacist</strong></li>
-<li class="dropdown-divider"></li>
-<a class="dropdown-item item" href="/batches/pharmacist?order=az">a - z</a>
-<a class="dropdown-item item" href="/batches/pharmacist?order=za">z - a</a>
-<li class="dropdown-divider"></li>
-<li class="dropdown-item item-header"><strong>Date Created</strong></li>
-<li class="dropdown-divider"></li>
-<a class="dropdown-item item" href="/batches?order=timeasc">oldest to newest</a>
-<a class="dropdown-item item" href="/batches?order=timedesc">newest to oldest</a>
+<%= link_to 'Oldest to Newest', order_asc_path, class:"dropdown-item item", remote: :true %>
+<%= link_to 'Newest to Oldest', order_desc_path, class:"dropdown-item item", remote: :true %>

@@ -1,8 +1,150 @@
-<div class="new-batch-form">
-    <div class="card no-border-radius">
-      <div class="card-body">
-        <div class="col-md-12"><h3 class="theme-blue">New Batch</h3></div>
-        <div class="col-md-12"><%= render 'form' %></div>
+<style>
+    .disabled {
+        color: #e1e1e2 !important;
+    }
+    .top-panel {
+        border-bottom: 1px solid #e1e1e2;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    .transaction-buttons {
+        font-size: 12px;
+        padding: 5px;
+    }
+    .ellipsis {
+        background-color: transparent;
+    }
+    .ellipsis:hover {
+        background-color: transparent;
+        border: 1px solid #e1e1e2;
+        border-radius: 2px;
+        padding-right: 4px;
+        padding-left: 4px;
+        cursor: pointer;
+    }
+    .table-header {
+        border-top: 1px solid #e1e1e2;
+        border-bottom: 1px solid #e1e1e2;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background-color: #e6ebf1;
+        color: #707071;
+        font-size: 15px;
+        font-weight: 900;
+    }
+    #placeholder {
+        padding-top: 50px;
+        padding-bottom: 50px;
+        opacity: 0.5;
+    }
+    .fa-shopping-basket {
+        font-size: 30px;
+    }
+    .show-charge-link {
+        cursor: pointer;
+    }
+    #charge {
+        border-bottom: 1px solid #e1e1e2;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 15px;
+        font-weight: 500;
+        color: #707071;
+    }
+    #placeholder, #placeholder-fail, #all-deliveries, .spinner-row {
+        display: none;
+    }
+</style>
+
+<%= render 'common/spinner' %>
+<div id="main">
+    <div class="modal fade batch-modal" id="newDelivery" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title medium-gray" id="exampleModalLabel">Add Delivery</h5>
+                <a class="background-transparent no-underline close" href="#" data-dismiss="modal" aria-label="Close" onclick="clearModal()">
+                   <i class="fa fa-times-circle-o"></i>
+                </a>
+            </div>
+            <div class="modal-body" id="batch_create_modal">
+                <%= render 'batches/patient_form' %>
+                <%= render 'common/submission_load' %>
+                <%= render 'common/request_sent' %>
+                <%= render 'common/request_failed' %>
+                <%= render 'common/clear' %>
+            </div>
+        </div>
       </div>
     </div>
+    <header class="top-panel row">
+        <div class="col-md-3 top-panel-div">
+            <div class="dropdown">
+              <button class="btn btn-secondary transaction-buttons" data-toggle="modal" data-target="#newDelivery">
+                Add Delivery Package
+              </button>
+        </div>
+    </header>
+    
+    <section id="placeholder" class="row">
+        <div class="col-md-6 offset-md-3 text-center">
+            <i class="fa fa-shopping-basket medium-gray"></i>
+            <h6 class="medium-gray">This batch is empty</h6>
+        </div>
+    </section>
+    
+    <section id="placeholder-fail" class="row">
+        <div class="col-md-6 offset-md-3 text-center">
+            <i class="fa fa-frown"></i>
+            <h6>This page could not be loaded</h6>
+            <a class="btn btn-primary reload-button" href=""><i class="fa fa-sync"></i> Reload</a>
+        </div>
+    </section>
+    
+    
+    <section id="all-deliveries" class="row">
+        <div class="col-md-12 table-header">
+            <div class="row">
+                <div class="col-md-1 no-right-padding">
+                    <span></span>
+                </div>
+                <div class="col-md-1 no-horizontal-padding">
+                    <span>Amount</span>
+                </div>
+                <div class="col-md-1 no-horizontal-padding">
+                    <span></span>
+                </div>
+                <div class="col-md-4 no-horizontal-padding">
+                    <span>Description</span>
+                </div>
+                <div class="col-md-3 offset-md-1 no-horizontal-padding">
+                    <span>Date</span>
+                </div>
+                <div class="col-md-1 no-horizontal-padding">
+                    <span></span>
+                </div>
+            </div>
+        </div>
+        <div id="invoices">
+            <%= render 'all_deliveries' %>
+        </div>
+    </section>
 </div>
+
+
+<script>
+  $('.spinner-row').show();
+  var delivery = document.getElementById("delivery");
+  if (delivery) {
+      $('.spinner-row').hide();
+      $('#all-deliveries').css('padding-bottom', '100px');
+      $('#all-deliveries').show();
+  } else {
+      $('.spinner-row').hide();
+      $('#placeholder').show();
+  };
+  $('.show-charge-link').on('click', function() {
+    $('#main').hide();
+    $('.spinner-row').show();
+  });
+</script>

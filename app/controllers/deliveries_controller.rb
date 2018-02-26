@@ -4,6 +4,26 @@ class DeliveriesController < ApplicationController
   before_action :check_current_pharmacy, only: [:create, :destroy]
   before_action :check_current_driver, only: [:show, :edit, :update, :signature]
   
+  def create_delivery
+    name = params["patient_name"]
+    address = params['patient_address']
+    phone = params['patient_phone']
+    copay = params['copay']
+    medications = params["medications"]
+    @delivery = Delivery.create(
+      recipient_name: name,
+      recipient_address: address,
+      recipient_phone_number: phone,
+      medications: medications,
+      copay: copay,
+      deliverable_type: 'Batch',
+      deliverable_id: params['id']
+    )
+    respond_to do |format|
+      format.html {redirect_to @delivery.deliverable}
+    end
+  end
+  
   def create
     @delivery = @deliverable.deliveries.new(delivery_params)
     @delivery.pharmacy = current_pharmacy

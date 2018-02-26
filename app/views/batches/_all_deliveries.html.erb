@@ -1,0 +1,18 @@
+<% @batch.deliveries.reverse.each do |b| %>
+    <div id="invoice" class="col-md-12 table-content charge<%= b.id %>" name="<%= b.id %>" status="<%= b.stripe_status %>">
+        <div class="row">
+            <div class="col-md-3 no-right-padding" >
+                <span><%= b.recipient_name %></span>
+            </div>
+            <div class="col-md-4 no-horizontal-padding">
+                <span><%= b.recipient_address %></span>
+            </div>
+            <div class="col-md-2 no-horizontal-padding">
+                <span><%= b.recipient_phone_number %></span>
+            </div>
+            <div class="col-md-1 no-horizontal-padding">
+                <%= b.copay %>
+            </div>
+        </div>
+    </div>
+<% end %>
