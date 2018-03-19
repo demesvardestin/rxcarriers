@@ -1,0 +1,33 @@
+<div id="patientForm">
+    <div class="col-md-12">
+        <form id="updatePatientDetails" action="/update_patient/<%= params[:id] %>" method="get">
+            <div class="row add-padding-top">
+                <div class="col-md-8 field" id="patient-full-name-div">
+                    <input type="text" class="form-control form--control font-14 pf" id="patient-full-name" name="patient-name" value="<%= name_placeholder%>">
+                    <!--<label for="patient-full-name">Name</label>-->
+                </div>
+                <div class="col-md-4 field">
+                    <input type="text" class="form-control form--control font-14 pf" id="patient-number" name="patient-number" value="<%= phone_placeholder %>">
+                    <!--<label for="patient-number">Phone</label>-->
+                </div>
+            </div>
+            <div class="row add-padding-top">
+                <div class="col-md-12 field">
+                    <input type="text" class="form-control form--control font-14 pf" id="patient-address" name="patient-address" value="<%= address_placeholder %>">
+                    <!--<label for="patient-address">Address</label>-->
+                </div>
+            </div>
+            <div class="row add-padding-top">
+                <div class="col-md-12 field">
+                    <input type="text" class="form-control form--control font-14 pf" id="patient-instructions" name="patient-instructions" value="<%= instructions_placeholder %>">
+                    <!--<label for="patient-address">Delivery Instructions</label>-->
+                </div>
+            </div>
+            <div class="row add-padding-top">
+                <div class="text-right col-md-12">
+                    <button class="btn btn-primary white cursor-pointer">Update Details</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

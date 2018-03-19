@@ -1,0 +1,23 @@
+<%= form_for(@pharmacy) do |f| %>
+    <% if @pharmacy.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(@pharmacy.errors.count, "error") %> prohibited this pharmacy from being saved:</h2>
+            
+            <ul>
+                <% @pharmacy.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+    
+    <div class="col-md-12">
+        <%= f.text_field :supervisor, class:"form-control font-12 no-border-radius supervisorSignature", autofocus: true, placeholder:"Supervising Pharmacist" do %>
+            <span class="input-group-text no-border-radius background-transparent theme-blue" id="onDutyMDAddon"><i class="fa fa-user-md"></i></span>
+        <% end %>
+    </div>
+    
+    <div class="actions text-center col-md-12">
+        <%= f.submit "Submit", class:"btn btn-primary transaction-buttons btn-block text-center no-border-radius cursor-pointer"%>
+    </div>
+<% end %>

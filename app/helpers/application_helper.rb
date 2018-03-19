@@ -16,6 +16,10 @@ module ApplicationHelper
         end
     end
     
+    def timestamp(object)
+        [object.updated_at.strftime("%B %-dth %Y"), "at", object.updated_at.strftime("%I:%M %p")].join(" ")
+    end
+    
     def footer
         if current_driver
             if current_driver.onboarding_complete

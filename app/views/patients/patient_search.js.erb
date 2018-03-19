@@ -1,0 +1,6 @@
+var count = <%= @patients.count %>
+if (count == 0) {
+    $('#patientsList').html('<div class="row" style="padding-top: 20px; padding-bottom: 20px;"><div class="col-md-12 text-center"><i class="fa fa-warning medium-gray font-14"></i></div><div class="col-md-12 text-center medium-gray font-14">No results found for this search</div></div>');
+} else {
+    $('#patientsList').html('<% @patients.each do |patient| %><div class="table-content container batches-row"><div class="row"><div class="col-md-1"><i class="fa fa-user"></i></div><div class="col-md-3"><%= link_to patient.name, customer_path(:id => patient.id), class:"theme-blue no-underline background-transparent" %></div><div class="col-md-5"><%= link_to patient.address, customer_path(:id => patient.id), class:"medium-gray no-underline background-transparent" %></div><div class="col-md-3"><%= link_to patient.phone, customer_path(:id => patient.id), class:"medium-gray no-underline background-transparent" %></div></div></div><% end %>');
+}

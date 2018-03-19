@@ -31,13 +31,73 @@ class PatientsController < ApplicationController
         end
     end
     
+    def all_patients
+        @patient = Patient.new
+        @patients = Patient.where(pharmacy_id: current_pharmacy.id).all
+    end
+    
+    def patient_search
+        @patients = Patient.where(pharmacy_id: current_pharmacy.id).search(params[:search])
+        respond_to do |format|
+            format.js {}
+        end
+    end
+    
+    def live_search
+        @patients = Patient.where(pharmacy_id: current_pharmacy.id).search(params[:search])
+        render :layout => false
+    end
+    
+    def create_patient
+        name = params["patient-name"]
+        address = params["patient-address"]
+        phone = params["patient-number"]
+        instructions = params["patient-instructions"]
+        @patient = Patient.create(name: name, address: address, phone: phone,
+                                delivery_instructions: instructions,
+                                pharmacy_id: current_pharmacy.id)
+        redirect_to customer_path(:id => @patient.id)
+    end
+    
+    def update_patient
+        id = params[:id]
+        @patient = Patient.find(id)
+        if @patient.pharmacy_id != current_pharmacy.id
+            return
+        end
+        name = params["patient-full-name"]
+        address = params["patient-address"]
+        phone = params["patient-number"]
+        instructions = params["patient-instructions"]
+        @patient.update(name: name, address: address, phone: phone,
+                                delivery_instructions: instructions,
+                                pharmacy_id: current_pharmacy.id)
+        redirect_to :back
+    end
+    
+    def update_card
+      token = params['stripeToken']
+      id = params[:id]
+      @patient = Patient.find(id)
+      if @patient.pharmacy_id != current_pharmacy.id
+         return 
+      end
+      if @patient.stripe_cus
+        customer = Stripe::Customer.retrieve(@patient.stripe_cus)
+        customer.source = token
+        customer.save
+      else
+        customer = Stripe::Customer.create(
+          :description => @patient.name,
+          :source => token,
+        )
+      end
+      @patient.update(card_token: token, stripe_cus: customer.id)
+      redirect_to :back
+    end
+    
     def index
         @patient = Patient.new
-        if params[:search]
-          @patients = Patient.where(pharmacy_id: current_pharmacy.id).order("name ASC").search(params[:search])
-        else
-          @patients = Patient.where(pharmacy_id: current_pharmacy.id).order("name ASC").all
-        end
     end
     
     def disable
@@ -57,8 +117,7 @@ class PatientsController < ApplicationController
     private
       
         def patient_params
-            params.require(:patient).permit(:name, :address, :phone, :note, :copay, :batch_id, 
-                                :pharmacy_id, :patable_type, :patable_id, :delivery_instructions)
+            params.require(:patient).permit(:name, :address, :phone, :delivery_instructions)
         end
     
 end

@@ -14,16 +14,16 @@ class Patient < ActiveRecord::Base
     scope :desc_name, -> {order("name DESC")}
     
     # validations
-    validates_presence_of :name
-    validates_presence_of :address
-    validates_presence_of :phone, uniqueness: true
-    validates_presence_of :delivery_instructions
+    # validates_presence_of :name
+    # validates_presence_of :address
+    # validates_presence_of :phone, uniqueness: true
+    # validates_presence_of :delivery_instructions
     
     # methods
     def self.search(param)
         param.strip!
         param.downcase!
-        (name_matches(param) + address_matches(param) + phone_matches(param) + dob_matches(param)).uniq
+        (name_matches(param) + address_matches(param) + phone_matches(param)).uniq
     end
     
     def self.name_matches(param)
@@ -38,11 +38,22 @@ class Patient < ActiveRecord::Base
         matches('phone', param)
     end
     
-    def self.dob_matches(param)
-        matches('dob', param)
-    end
-    
     def self.matches(field_name, param)
         where("lower(#{field_name}) like ?", "%#{param}%")
+    end
+    
+    def deliveries
+        id = self.id
+        return Delivery.where(patient_id: id).all.select {|d| d.deliverable != nil && d.deliverable.request_id != nil}
+    end
+    
+    def last_four
+        last_four = Stripe::Customer.retrieve(self.stripe_cus).sources.first['last4']
+        return last_four
+    end
+    
+    def card_brand
+        brand = Stripe::Customer.retrieve(self.stripe_cus).sources.first['brand'].downcase
+        return brand
     end
 end

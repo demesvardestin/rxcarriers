@@ -13,6 +13,7 @@ gem 'coffee-rails', '~> 4.1.0'
 # gem 'therubyracer', platforms: :ruby
 # add geocoder for mapping
 gem 'geocoder'
+gem 'google_maps_service'
 # add twilio for text communication
 gem 'twilio-ruby'
 # add devise for auth

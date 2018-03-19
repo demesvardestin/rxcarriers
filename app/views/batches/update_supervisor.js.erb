@@ -1,0 +1,3 @@
+$('#sendSupervisorName').html('<i class="fa fa-check"></i>');
+$('#supervisorName').html('<%= @pharmacy.supervisor %>');
+$('#createBatch').attr('href', '/create_batch?pharmacist='+ '<%= @pharmacy_to_param %>');

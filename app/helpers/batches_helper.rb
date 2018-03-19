@@ -181,4 +181,15 @@ module BatchesHelper
         return Batch.find(id)
     end
     
+    def deliveries_today
+        id = current_pharmacy.id
+        @all = Delivery.where(pharmacy_id: id, updated_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc)
+        @deliveries = @all.select {|d| d.deliverable != nil && d.deliverable.request_id != nil }
+        return @deliveries.count
+    end
+    
+    def to_param(string)
+        string.downcase.split(' ').join('_') 
+    end
+    
 end

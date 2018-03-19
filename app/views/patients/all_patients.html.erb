@@ -1,0 +1,174 @@
+<style>
+    .all-patients {
+        padding-bottom: 20px !important;
+    }
+    .patient-buttons {
+        height: 43px;
+        font-size: 14px;
+    }
+    .patient-list {
+        box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
+        position: relative;
+        height: 370px !important;
+    }
+    .table-header-patients {
+        border-top: 1px solid #e1e1e2;
+        border-bottom: 1px solid #e1e1e2;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background-color: #e6ebf1;
+        color: #59595a;
+        font-size: 15px;
+    }
+    #scrollPatientsCard {
+        height: 100%;
+        overflow: hidden;
+        box-sizing: border-box;
+        width: 100%;
+        position: absolute;
+        top: 0;
+    }
+    #scrollPatientsCardChild {
+        position: relative;
+        max-height: 100%;
+        overflow: auto;
+        overflow-x: hidden;
+    }
+    .patient-search {
+        border: 1px solid #e1e1e2 !important;
+        box-shadow: none !important;
+        height: 45px;
+        border-left: none !important;
+    }
+    .patient-header-buttons {
+        padding-top: 30px;
+    }
+    .border-light-gray {
+        border: 1px solid #e1e1e2;
+    }
+    #createPatientLoader {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    #patientUser {
+        font-size: 20px;
+    }
+    #patientLoader {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+    #searchAddon {
+        border-right: none !important;
+        padding-left: 15px;
+        padding-right: 0;
+    }
+    #patientLoader, #allPatients, #placeholder, #createPatientLoader {
+        display: none;
+    }
+</style>
+
+<div class="all-patients">
+    <div class="modal fade batch-modal" id="newPatient" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title medium-gray font-14" id="exampleModalLabel">Add Customer</h5>
+                <a class="background-transparent no-underline close" href="#" data-dismiss="modal" aria-label="Close">
+                   <i class="fa fa-times-circle-o"></i>
+                </a>
+            </div>
+            <div class="modal-body" id="batch_create_modal">
+                <%= render 'patients/patient_form' %>
+                <div id="createPatientLoader" class="text-center">
+                    <i class="fa fa-circle-o-notch theme-blue fa-spin fa-3x fa-fw"></i><br />
+                    <h6 class="font-14 medium-gray text-center">Creating customer...</h6>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <header class="top-panel patients-header row">
+        <div class="col-md-6 top-panel-div">
+            <%= form_tag patient_search_path, remote: true, method: :get, id: 'patientSearchInput' do %>
+                <%= text_field_tag :search, params[:search], class:'form-control font-12 batch-search ', placeholder: "Search for a customer by name, address or phone number" %>
+            <% end %>
+        </div>
+        <div class="col-md-3 offset-md-3 top-panel-div patient-header-buttons">
+            <button class="btn btn-primary transaction-buttons white" id="createCustomer" data-toggle="modal" data-target="#newPatient">
+                <i class="fa fa-user-plus"></i> Add a new customer
+            </button>
+            <button class="btn btn-info dropdown-toggle transaction-buttons" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Export List
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </div>
+    </header>
+    <section id="patientLoader">
+        <div id="loader">
+            <i class="fa fa-circle-o-notch theme-blue fa-spin fa-3x fa-fw"></i>
+        </div>
+    </section>
+    <section id="patientMain">
+        <div class="row" id="allPatients">
+            <div class="col-md-12">
+                <div class="card patient-list">
+                    <div id="scrollPatientsCard">
+                        <div id="scrollPatientsCardChild">
+                            <div class="table-header-patients container">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <span></span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span>Customer</span>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <span>Address</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span>Phone</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="patientsList">
+                                <%= render 'all' %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="placeholder" class="row">
+            <div class="col-md-6 offset-md-3 text-center medium-gray">
+                <i class="fa fa-user" id="patientUser"></i>
+                <h6>You haven't added any customers yet</h6>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    var patients = <%= patients.to_a.count %>;
+    console.log(patients);
+    $('#patientLoader').show();
+    
+    if (patients > 0) {
+        $('#patientLoader').hide();
+        $('#allPatients').fadeIn();
+    } else {
+        $('#patientLoader').hide();
+        $('#placeholder').fadeIn();
+    }
+    
+    document.getElementById('addNewPatient').addEventListener('submit', function(event) {
+        event.preventDefault();
+        $('#patientForm').hide()
+        $('#createPatientLoader').show();
+        
+        $('#addNewPatient').submit();
+    });
+</script>

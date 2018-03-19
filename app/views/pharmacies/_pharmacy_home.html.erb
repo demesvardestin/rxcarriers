@@ -6,16 +6,23 @@
     </button>
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <div class="col-md-8 offset-md-4 nav-col">
+      <div class="col-md-9 offset-md-3 nav-col">
         <ul class="navbar-nav justify-content-end">
-          <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side <% if home %>active<% end %>" href="/batches">Batches</a>
+          <li class="nav-item nav-item-logged-in nav-item-pharmacy-view">
+            <a class="nav-link nav-link-side <% if home %>active<% end %>" href="/batches"><i class="fa fa-archive"></i> Batches</a>
+            
           </li>
-          <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side <% if patients_path %>active<% end %>" href="/patients">Patients</a>
+          <li class="nav-item nav-item-logged-in nav-item-pharmacy-view">
+            <a class="nav-link nav-link-side <% if patients_path %>active<% end %>" href="/customers"><i class="fa fa-users"></i> Customers</a>
+            
           </li>
-          <li class="nav-item nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side <% if transaction_path %>active<% end %>" href="/transactions">Transactions</a>
+          <li class="nav-item nav-item-logged-in nav-item-pharmacy-view">
+            <a class="nav-link nav-link-side cursor-pointer" data-toggle="modal" data-target="#notificationsModal"><i class="fa fa-bell-o"></i> Alerts</a>
+            
+          </li>
+          <li class="nav-item nav-item-logged-in nav-item-pharmacy-view">
+            <a class="nav-link nav-link-side cursor-pointer" data-toggle="modal" data-target="#messagesModal"><i class="fa fa-envelope-o"></i> Messages</a>
+            
           </li>
           <div class="dropdown show">
             <a class="btn btn-secondary dropdown-toggle account-dropdown" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -25,19 +32,25 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <li class="dropdown-item" href="/settings">
                 <%= link_to settings_path, class:"no-underline background-transparent" do %>
-                  <i class="fa fa-cog pharmacy-bottom-icons"></i> Settings
+                  Settings <i class="fa fa-long-arrow-right"></i>
+                <% end %>
+              </li>
+              <div class="dropdown-divider"></div>
+              <li class="dropdown-item" href="/transactions">
+                <%= link_to help_path, class:"no-underline background-transparent" do %>
+                  Payments <i class="fa fa-long-arrow-right"></i>
                 <% end %>
               </li>
               <div class="dropdown-divider"></div>
               <li class="dropdown-item" href="/help">
                 <%= link_to help_path, class:"no-underline background-transparent" do %>
-                  <i class="fa fa-question-circle pharmacy-bottom-icons"></i> Help
+                  Help <i class="fa fa-long-arrow-right"></i>
                 <% end %>
               </li>
               <div class="dropdown-divider"></div>
               <li class="dropdown-item" href="#">
                 <%= link_to destroy_pharmacy_session_path, class:"no-underline background-transparent", method: :delete do %>
-                  <i class="fa fa-power-off pharmacy-bottom-icons"></i> Sign out
+                  Sign out <i class="fa fa-long-arrow-right"></i>
                 <% end %>
               </li>
             </ul>

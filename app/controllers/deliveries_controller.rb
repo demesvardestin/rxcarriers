@@ -17,10 +17,12 @@ class DeliveriesController < ApplicationController
       medications: medications,
       copay: copay,
       deliverable_type: 'Batch',
-      deliverable_id: params['id']
+      deliverable_id: params['id'],
+      pharmacy_id: current_pharmacy.id
     )
+    @deliveries = Delivery.where(pharmacy_id: current_pharmacy.id)
     respond_to do |format|
-      format.html {redirect_to @delivery.deliverable}
+      format.js {}
     end
   end
   

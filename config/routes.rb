@@ -40,13 +40,12 @@ Rails.application.routes.draw do
   get 'batches/accepted', to: 'batches#index'
   get 'batches/completed', to: 'batches#index'
   get 'batch_search', to: 'batches#batch_search'
-  get 'patient/search', to: 'patients#index'
+  get 'patient_search', to: 'patients#patient_search'
   get 'request/search', to: 'requests#index'
   get 'pharmacy/search', to: 'pharmacies#index'
   get 'pharmacy/:id/settings', to: 'pharmacies#edit', as: "account_settings"
   get 'transactions', to: 'invoices#index'
   get 'users/auth/stripe_connect/callback', to: 'charges#stripe'
-  get 'patients', to: 'patients#index'
   get 'request_driver', to: 'batches#request_driver'
   get 'batches', to: 'batches#index'
   get 'my-earnings', to: 'drivers#transactions'
@@ -61,10 +60,22 @@ Rails.application.routes.draw do
   get '/update_batch', to: 'batches#update_batch'
   get 'order_asc', to: 'batches#order_asc'
   get 'order_desc', to: 'batches#order_desc'
+  get 'update_firebase', to: 'pharmacies#update_firebase'
+  get '/customers', to: 'patients#all_patients'
+  get '/customer', to: 'patients#show'
+  get '/create_patient', to: 'patients#create_patient'
+  get '/customer/:id/update_card', to: 'patients#update_card'
+  get '/update_patient/:id', to: 'patients#update_patient'
+  get 'live_search', to: 'patients#live_search'
+  get '/create_deliveries', to: 'batches#create_deliveries'
+  get '/remove_delivery', to: 'batches#delete_delivery'
+  get '/get_delivery_details/:id', to: 'batches#get_delivery_details'
+  get '/deliveries_today', to: 'batches#deliveries_today'
+  get '/update_supervisor', to: 'batches#update_supervisor'
   
   # resource path
   resources :invoices, only: [:create, :show, :index, :destroy]
-  resources :patients, only: [:create, :show, :edit, :update, :index, :new]
+  resources :patients
   resources :supports, only: [:new, :create, :show, :index]
   resources :charges
   resources :drivers

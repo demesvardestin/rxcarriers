@@ -69,6 +69,27 @@ class Batch < ActiveRecord::Base
         where("lower(#{field_name}) like ?", "%#{param}%")
     end
     
+    def to_miles(dist)
+        return (dist * 0.000621371).round(2)
+    end
+    
+    def to_minutes(time)
+        return (time/60)
+    end
+    
+    def to_dollars(amount)
+        return (amount/100).round(2)
+    end
+    
+    def calculate_request_details(batch)
+        mileage, duration = Batch.calculate_route_details(batch)
+        base_fare = 500
+        per_mile = 100
+        per_minute = 20
+        total_fare = base_fare + (to_miles(mileage) * per_mile) + (to_minutes(duration) * per_minute)
+        return to_dollars(total_fare), to_miles(mileage), to_minutes(duration)
+    end
+    
     def self.parse_response(from, resp)
         @driver = Driver.find_by(number: from)
         case resp
@@ -166,28 +187,70 @@ class Batch < ActiveRecord::Base
         return total 
     end
     
-    def optimize_route
-        count = 0
-        count_1 = 0
-        final_list = []
-        indices = []
-        driver = Driver.find_by(number: self.driver)
-        last =  driver.full_address
-        self.deliveries.each do |b|
-           indices << [Geocoder::Calculations.distance_between(last, b.recipient_address), b]
-        end
-        dist = indices.map {|i| i[0]}.sort
-        while count < indices.length
-            while count_1 < dist.length
-                if dist[count_1] == indices[count][0]
-                    final_list << indices[count][1]
-                    break
-                end
-                count_1 += 1
+    def self.calculate_route_details(batch)
+        pharmacy = Pharmacy.find(batch.pharmacy_id)
+        origin = pharmacy.full_address
+        mileage = 0
+        duration = 0
+        if batch.deliveries.count > 1
+            deliveries = optimize_route(batch, pharmacy.full_address)
+            deliveries.each do |d|
+               mileage += d.matrix.to_i
+               duration += d.duration.to_i
             end
-            count += 1
+        else
+            deliveries = batch.deliveries
+            deliveries.each do |d|
+                destination = d.recipient_address
+                total = Batch.matrix(origin, destination)
+                dist = total[:rows][0][:elements][0][:distance][:value]
+                time = total[:rows][0][:elements][0][:duration][:value]
+                mileage += dist
+                duration += time
+                d.update(matrix: dist, duration: time)
+                origin = d.recipient_address
+            end
         end
-        return final_list
+        return mileage, duration
+    end
+    
+    def self.optimize_route(batch, origin=nil, output=[], distances=[], i=0)
+        deliveries = batch.deliveries
+        (deliveries - output).each do |d|
+            destination = d.recipient_address
+            total = Batch.matrix(origin, destination)
+            dist = total[:rows][0][:elements][0][:distance][:value]
+            time = total[:rows][0][:elements][0][:duration][:value]
+            distances << dist
+            d.update(matrix: dist, duration: time)
+        end
+        distances = distances.sort!
+        deliveries.each do |deliv|
+            if deliv.matrix.to_i == distances[0]
+                output << deliv
+            end
+        end
+        origin = output.last
+        i += 1
+        if i == deliveries.count - 1
+            return [output << (deliveries - output)].flatten
+        end
+        self.optimize_route(batch, origin.recipient_address, output, distances=[], i)
+    end
+    
+    def self.matrix(origin, destination)
+        return Batch.gmaps.distance_matrix(origin, destination,
+                            mode: 'driving',
+                            language: 'en-AU',
+                            avoid: 'tolls',
+                            units: 'imperial') 
+    end
+    
+    def self.gmaps
+        GoogleMapsService::Client.new(
+            key: 'AIzaSyBjzZwLgeCXetH1WN6_HkCemsABzINX0UU',
+            client_id: 'dispenserx-196018',
+        )
     end
     
     def self.delete_twilio_messages(driver)

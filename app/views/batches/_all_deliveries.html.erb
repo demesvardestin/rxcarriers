@@ -1,7 +1,7 @@
 <% @batch.deliveries.reverse.each do |b| %>
-    <div id="invoice" class="col-md-12 table-content charge<%= b.id %>" name="<%= b.id %>" status="<%= b.stripe_status %>">
+    <div id="delivery<%= b.id %>" class="table-content delivery-content" address="<%= b.recipient_address %>" phone="<%= b.recipient_phone_number %>" name="<%= b.id %>">
         <div class="row">
-            <div class="col-md-3 no-right-padding" >
+            <div class="col-md-3 no-right-padding">
                 <span><%= b.recipient_name %></span>
             </div>
             <div class="col-md-4 no-horizontal-padding">
@@ -12,6 +12,14 @@
             </div>
             <div class="col-md-1 no-horizontal-padding">
                 <%= b.copay %>
+            </div>
+            <div class="col-md-1 no-horizontal-padding">
+                <%= b.time %>
+            </div>
+            <div class="col-md-1 no-horizontal-padding">
+                <%= link_to remove_delivery_path(:id => b.id), class:"btn btn-warning removeDelivery", remote: true, method: :get do %>
+                    <i class="fa fa-times-circle font-10 theme-blue"></i>
+                <% end %>
             </div>
         </div>
     </div>

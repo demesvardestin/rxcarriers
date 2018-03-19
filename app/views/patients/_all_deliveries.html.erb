@@ -1,0 +1,21 @@
+<% @patient.deliveries.reverse.each do |b| %>
+    <div id="delivery<%= b.id %>" class="table-content delivery-content" address="<%= b.recipient_address %>" phone="<%= b.recipient_phone_number %>" name="<%= b.id %>">
+        <div class="row">
+            <div class="col-md-3">
+                <span><%= b.medications %></span>
+            </div>
+            <div class="col-md-3">
+                <span><%= timestamp(b) %></span>
+            </div>
+            <div class="col-md-3">
+                <span>Pending</span>
+            </div>
+            <div class="col-md-1">
+                <%= b.copay %>
+            </div>
+            <div class="col-md-2">
+                No
+            </div>
+        </div>
+    </div>
+<% end %>

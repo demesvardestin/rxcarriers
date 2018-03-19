@@ -8,9 +8,9 @@ class Delivery < ActiveRecord::Base
     scope :reverse_order, -> {order("created_at DESC")}
     
     # validations
-    validates_presence_of :recipient_name
-    validates_presence_of :medications
-    validates_presence_of :copay
+    # validates_presence_of :recipient_name
+    # validates_presence_of :medications
+    # validates_presence_of :copay
     
     # methods
     

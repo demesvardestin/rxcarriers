@@ -25,6 +25,41 @@ module PatientsHelper
         end
     end
     
+    def current_patient
+        id = params[:id]
+        begin
+            return Patient.find(id)
+        rescue
+            nil
+        end
+    end
+    
+    def name_placeholder
+        current_patient.nil? ? ' ': current_patient.name
+    end
+    
+    def phone_placeholder
+        current_patient.nil? ? ' ': current_patient.phone
+    end
+    
+    def address_placeholder
+        current_patient.nil? ? ' ': current_patient.address
+    end
+    
+    def instructions_placeholder
+        current_patient.nil? ? ' ': current_patient.delivery_instructions
+    end
+    
+    def patient_deliveries
+        @id = params[:id]
+    end
+    
+    def patients
+        @pharma = current_pharmacy
+        @patients = Patient.where(pharmacy_id: @pharma.id).all
+        return @patients
+    end
+    
     def month(patients)
         url = request.original_url
         months = ['placeholder', 'january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']

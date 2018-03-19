@@ -12,7 +12,7 @@
                 </span>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-success medium-size-btn white check-status<%= batch.id%>" id="<%= batch.request_id %>" batch="<%= batch.id %>" onclick="checkStatus(this)">
+                <button class="btn btn-secondary medium-size-btn white check-status<%= batch.id%>" id="<%= batch.request_id %>" batch="<%= batch.id %>" onclick="checkStatus(this)">
                     <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw font-11 load-status" id="loadStatus<%= batch.id %>"></i>
                     <span id="status<%= batch.id %>">
                         <i class="fa fa-info-circle" id="checkStatusIcon<%= batch.id %>"></i> Check Status
@@ -20,14 +20,18 @@
                 </button>
             </div>
             <div class="col-md-4">
-                <span class="batches-details">
-                    <%= link_to batch_path(batch), class:"btn btn-danger white medium-size-btn", remote: true, method: :delete do %>
-                        <i class="fa fa-times-circle"></i> Delete Batch
-                    <% end %>
-                    <%= link_to batch_path(batch), class:"btn btn-info white medium-size-btn d--toggle--info" do %>
-                        <i class="fa fa-search"></i> View Batch
-                    <% end %>
-                </span>
+                <div class="row">
+                    <div class="col-md-6">
+                        <%= link_to batch_path(batch), class:"btn btn-primary white medium-size-btn", remote: true, method: :delete do %>
+                            <i class="fa fa-times-circle"></i> Delete Batch
+                        <% end %>
+                    </div>
+                    <div class="col-md-6">
+                        <%= link_to batch_path(batch), class:"btn btn-info white medium-size-btn d--toggle--info" do %>
+                            <i class="fa fa-search"></i> View Details
+                        <% end %>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

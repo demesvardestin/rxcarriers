@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180222021819) do
+ActiveRecord::Schema.define(version: 20180315203029) do
 
 # Could not dump table "batches" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
@@ -55,6 +55,10 @@ ActiveRecord::Schema.define(version: 20180222021819) do
     t.string   "signature"
     t.datetime "signed_on"
     t.integer  "patient_id"
+    t.string   "time"
+    t.string   "matrix"
+    t.string   "duration"
+    t.boolean  "request_sent"
   end
 
   add_index "deliveries", ["deliverable_type", "deliverable_id"], name: "index_deliveries_on_deliverable_type_and_deliverable_id"
@@ -177,6 +181,8 @@ ActiveRecord::Schema.define(version: 20180222021819) do
     t.string   "dob"
     t.string   "insured"
     t.string   "delivery_instructions"
+    t.string   "stripe_cus"
+    t.string   "card_token"
   end
 
   add_index "patients", ["patable_type", "patable_id"], name: "index_patients_on_patable_type_and_patable_id"
@@ -229,6 +235,7 @@ ActiveRecord::Schema.define(version: 20180222021819) do
     t.string   "bill_country"
     t.string   "cvc"
     t.string   "card_token"
+    t.string   "firebase_id"
   end
 
   add_index "pharmacies", ["email"], name: "index_pharmacies_on_email", unique: true

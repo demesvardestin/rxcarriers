@@ -138,4 +138,101 @@
     };
     
   // END SEARCH FUNCTIONALITY //
+  
+  // Calculate mileage and duration //
+    function calculateMileage() {
+        var deliveries = ["<%= current_pharmacy.full_address %>"];
+        var mileage = 0;
+        var time = 0;
+        var service = new google.maps.DistanceMatrixService;
+        var i = 0;
+        database.collection("deliveries")
+        .where('pharmacy_id', '==', <%= current_pharmacy.id %>)
+        .where('batch_id', '==', <%= params['id'] %>)
+        .get().then(function(docs) {
+            // For each delivery, calculate mileage and time and update doc //
+            docs.forEach(function(doc) {
+                current_address = doc.data().recipient_address;
+                service.getDistanceMatrix({
+                    origins: [deliveries[i]],
+                    destinations: [current_address],
+                    travelMode: 'DRIVING',
+                    unitSystem: google.maps.UnitSystem.IMPERIAL,
+                    avoidHighways: false,
+                    avoidTolls: false
+                }, function(response, status) {
+                    if (status !== 'OK') {
+                        console.log('error found with status: ' + status);
+                    } else {
+                        console.log(response);
+                        mileage += (parseFloat(response.rows[0].elements[0].distance.text));
+                        time += response.rows[0].elements[0].duration.value;
+                        // Update request doc //
+                        writeToRequest(mileage, time);
+                    }
+                });
+                deliveries.push(current_address);
+                i = i + 1;
+            });
+        });
+    };
+    
+    // calculate fare total //
+    function calculateFare(mileage, duration) {
+        var base_fare = 15;
+        var per_mile = 1.00;
+        var per_minute = 0.10;
+        var total = base_fare + (per_mile*mileage) + (per_minute*duration);
+        return total;
+    };
+    
+    // Check request status //
+    function checkRequestStatus() {
+        if (req_id) {
+            database.collection('requests')
+            .doc(req_id)
+            .get()
+            .then(function(query) {
+                console.log(query.data());
+                $('#driverRequested').fadeIn();
+                if (query.data().accepted == false) {
+                    $('#requestPending').show();
+                    $('#requestDetails').html(
+                        '<div class="row">' +
+                        '<div class="col-md-4 offset-md-3">' +
+                        '<span class="font-13 medium-gray">Est. Mileage:</span>' +
+                        '</div>' +
+                        '<div class="col-md-4">' +
+                        '<span class="font-13 theme-blue">' +
+                        query.data().total_milage +
+                        '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-md-4 offset-md-3">' +
+                        '<span class="font-13 medium-gray">Est. Cost:</span>' +
+                        '</div>' +
+                        '<div class="col-md-4">' +
+                        '<span class="font-13 theme-blue">' +
+                        '$' + query.data().fare +
+                        '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-md-4 offset-md-3">' +
+                        '<span class="font-13 medium-gray">Est. Duration:</span>' +
+                        '</div>' +
+                        '<div class="col-md-4">' +
+                        '<span class="font-13 theme-blue">' +
+                        toMin(query.data().trip_duration).toFixed(2) + 'mns' +
+                        '</span>' +
+                        '</div>' +
+                        '</div>'
+                    )
+                } else {
+                    $('#requestAcepted').show();
+                }
+            });
+        }
+    };
 </script>

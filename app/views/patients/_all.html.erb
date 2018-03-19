@@ -1,18 +1,18 @@
-<% @patients.each do |patient| %>
-    <a type="button" class="list-group-item list-group-item-action no-border-radius border-gray" href="patients/<%= patient.id %>">
+<% patients.each do |patient| %>
+    <div class="table-content container batches-row">
         <div class="row">
+            <div class="col-md-1">
+                <i class="fa fa-user"></i>
+            </div>
             <div class="col-md-3">
-                <h5 class="font-14"><%= patient.name %></h5>
+                <%= link_to patient.name, customer_path(:id => patient.id), class:"theme-blue no-underline background-transparent" %>
             </div>
-            <div class="col-md-4">
-                <h5 class="font-14"><%= patient.address %></h5>
+            <div class="col-md-5">
+                <%= link_to patient.address, customer_path(:id => patient.id), class:"medium-gray no-underline background-transparent" %>
             </div>
-            <div class="col-md-2">
-                <h5 class="font-14"><%= patient.dob %></h5>
-            </div>
-            <div class="col-md-2">
-                <h5 class="font-14"><%= patient.phone %></h5>
+            <div class="col-md-3">
+                <%= link_to patient.phone, customer_path(:id => patient.id), class:"medium-gray no-underline background-transparent" %>
             </div>
         </div>
-    </a>
+    </div>
 <% end %>

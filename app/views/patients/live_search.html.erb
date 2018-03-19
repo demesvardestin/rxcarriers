@@ -1,0 +1,8 @@
+<% @patients.each do |pat| %>
+    <button class="font-14 weighted patient text-left background-transparent no-border no-box-shadow cursor-pointer" id="pat-<%= pat.id%>" address="<%= pat.address %>"
+        phone="<%= pat.phone %>" instructions="<%= pat.delivery_instructions%>" name="<%= pat.name %>" pat_id="<%= pat.id %>" onclick="selectCustomer(this)">
+        <i class="fa fa-user theme-blue"></i> <strong><%= pat.name %></strong>
+        - <em class="font-13 medium-gray"><%= pat.phone %></em>
+    </button>
+    <hr style="margin-top: 0;">
+<% end %>

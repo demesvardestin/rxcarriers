@@ -1,0 +1,106 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/ubuntu/.nvm/versions/node/v4.4.5/bin/node',
+1 verbose cli   '/home/ubuntu/.nvm/versions/node/v4.4.5/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'firebase-tools' ]
+2 info using npm@2.15.5
+3 info using node@v4.4.5
+4 verbose install initial load of /home/ubuntu/.nvm/versions/node/v4.4.5/lib/package.json
+5 verbose readDependencies loading dependencies from /home/ubuntu/.nvm/versions/node/v4.4.5/lib/package.json
+6 silly cache add args [ 'firebase-tools', null ]
+7 verbose cache add spec firebase-tools
+8 silly cache add parsed spec Result {
+8 silly cache add   raw: 'firebase-tools',
+8 silly cache add   scope: null,
+8 silly cache add   name: 'firebase-tools',
+8 silly cache add   rawSpec: '',
+8 silly cache add   spec: 'latest',
+8 silly cache add   type: 'tag' }
+9 silly addNamed firebase-tools@latest
+10 verbose addNamed "latest" is being treated as a dist-tag for firebase-tools
+11 info addNameTag [ 'firebase-tools', 'latest' ]
+12 silly mapToRegistry name firebase-tools
+13 silly mapToRegistry using default registry
+14 silly mapToRegistry registry https://registry.npmjs.org/
+15 silly mapToRegistry data Result {
+15 silly mapToRegistry   raw: 'firebase-tools',
+15 silly mapToRegistry   scope: null,
+15 silly mapToRegistry   name: 'firebase-tools',
+15 silly mapToRegistry   rawSpec: '',
+15 silly mapToRegistry   spec: 'latest',
+15 silly mapToRegistry   type: 'tag' }
+16 silly mapToRegistry uri https://registry.npmjs.org/firebase-tools
+17 verbose addNameTag registry:https://registry.npmjs.org/firebase-tools not in flight; fetching
+18 verbose request uri https://registry.npmjs.org/firebase-tools
+19 verbose request no auth needed
+20 info attempt registry request try #1 at 7:22:53 PM
+21 verbose request id f71c7020607a012c
+22 http request GET https://registry.npmjs.org/firebase-tools
+23 http 200 https://registry.npmjs.org/firebase-tools
+24 verbose headers { 'content-type': 'application/json; charset=UTF-8',
+24 verbose headers   server: 'UploadServer',
+24 verbose headers   'cache-control': 'max-age=300',
+24 verbose headers   'last-modified': 'Fri, 9 Mar 2018 19:57:19 GMT',
+24 verbose headers   etag: '"5aa2e71f-2b273"',
+24 verbose headers   'x-npm-region': 'US-Central',
+24 verbose headers   'content-encoding': 'gzip',
+24 verbose headers   'content-length': '13929',
+24 verbose headers   'accept-ranges': 'bytes',
+24 verbose headers   date: 'Mon, 12 Mar 2018 19:22:53 GMT',
+24 verbose headers   via: '1.1 varnish',
+24 verbose headers   age: '1281',
+24 verbose headers   connection: 'keep-alive',
+24 verbose headers   'x-served-by': 'cache-ord1721-ORD',
+24 verbose headers   'x-cache': 'HIT',
+24 verbose headers   'x-cache-hits': '2',
+24 verbose headers   'x-timer': 'S1520882574.853121,VS0,VE0',
+24 verbose headers   vary: 'Accept-Encoding, Accept' }
+25 silly get cb [ 200,
+25 silly get   { 'content-type': 'application/json; charset=UTF-8',
+25 silly get     server: 'UploadServer',
+25 silly get     'cache-control': 'max-age=300',
+25 silly get     'last-modified': 'Fri, 9 Mar 2018 19:57:19 GMT',
+25 silly get     etag: '"5aa2e71f-2b273"',
+25 silly get     'x-npm-region': 'US-Central',
+25 silly get     'content-encoding': 'gzip',
+25 silly get     'content-length': '13929',
+25 silly get     'accept-ranges': 'bytes',
+25 silly get     date: 'Mon, 12 Mar 2018 19:22:53 GMT',
+25 silly get     via: '1.1 varnish',
+25 silly get     age: '1281',
+25 silly get     connection: 'keep-alive',
+25 silly get     'x-served-by': 'cache-ord1721-ORD',
+25 silly get     'x-cache': 'HIT',
+25 silly get     'x-cache-hits': '2',
+25 silly get     'x-timer': 'S1520882574.853121,VS0,VE0',
+25 silly get     vary: 'Accept-Encoding, Accept' } ]
+26 verbose get saving firebase-tools to /home/ubuntu/.npm/registry.npmjs.org/firebase-tools/.cache.json
+27 verbose correctMkdir /home/ubuntu/.npm correctMkdir not in flight; initializing
+28 silly addNameTag next cb for firebase-tools with tag latest
+29 verbose stack Error: No compatible version found: firebase-tools@'latest'
+29 verbose stack Valid install targets:
+29 verbose stack ["0.0.1","0.0.2","0.0.3","0.0.4","0.0.5","0.0.6","0.1.0","0.1.1","0.1.2","0.1.3","0.1.4","0.1.5","0.1.6","0.2.0","0.3.0","0.4.0","0.5.0","1.0.0","1.0.1","1.0.2","1.0.3","1.0.4","1.0.5","1.0.6","1.1.0","1.1.1","1.1.2","1.1.3","1.1.4","1.1.5","1.1.6","1.2.0","2.0.0","2.0.1","2.0.2","2.1.0","2.1.1","2.2.0","2.2.1","3.0.0","3.0.1","3.0.2","3.0.3","3.0.4","3.0.5","3.0.6","3.0.7","3.0.8","3.1.0","3.2.0","3.2.1","3.2.2","3.2.3","3.3.0","3.4.0","3.5.0","3.6.0","3.6.1","3.7.0","3.8.0","3.9.0","3.9.1","3.9.2","3.10.0"]
+29 verbose stack
+29 verbose stack     at installTargetsError (/home/ubuntu/.nvm/versions/node/v4.4.5/lib/node_modules/npm/lib/cache/add-named.js:284:12)
+29 verbose stack     at next (/home/ubuntu/.nvm/versions/node/v4.4.5/lib/node_modules/npm/lib/cache/add-named.js:94:10)
+29 verbose stack     at RES (/home/ubuntu/.nvm/versions/node/v4.4.5/lib/node_modules/npm/node_modules/inflight/inflight.js:23:14)
+29 verbose stack     at f (/home/ubuntu/.nvm/versions/node/v4.4.5/lib/node_modules/npm/node_modules/once/once.js:17:25)
+29 verbose stack     at fixName (/home/ubuntu/.nvm/versions/node/v4.4.5/lib/node_modules/npm/lib/cache/add-named.js:29:5)
+29 verbose stack     at saved (/home/ubuntu/.nvm/versions/node/v4.4.5/lib/node_modules/npm/lib/cache/caching-client.js:173:7)
+29 verbose stack     at /home/ubuntu/.nvm/versions/node/v4.4.5/lib/node_modules/npm/node_modules/graceful-fs/polyfills.js:210:7
+29 verbose stack     at FSReqWrap.oncomplete (fs.js:82:15)
+30 verbose cwd /home/ubuntu/workspace
+31 error Linux 4.9.80-c9
+32 error argv "/home/ubuntu/.nvm/versions/node/v4.4.5/bin/node" "/home/ubuntu/.nvm/versions/node/v4.4.5/bin/npm" "install" "-g" "firebase-tools"
+33 error node v4.4.5
+34 error npm  v2.15.5
+35 error code ETARGET
+36 error notarget No compatible version found: firebase-tools@'latest'
+36 error notarget Valid install targets:
+36 error notarget ["0.0.1","0.0.2","0.0.3","0.0.4","0.0.5","0.0.6","0.1.0","0.1.1","0.1.2","0.1.3","0.1.4","0.1.5","0.1.6","0.2.0","0.3.0","0.4.0","0.5.0","1.0.0","1.0.1","1.0.2","1.0.3","1.0.4","1.0.5","1.0.6","1.1.0","1.1.1","1.1.2","1.1.3","1.1.4","1.1.5","1.1.6","1.2.0","2.0.0","2.0.1","2.0.2","2.1.0","2.1.1","2.2.0","2.2.1","3.0.0","3.0.1","3.0.2","3.0.3","3.0.4","3.0.5","3.0.6","3.0.7","3.0.8","3.1.0","3.2.0","3.2.1","3.2.2","3.2.3","3.3.0","3.4.0","3.5.0","3.6.0","3.6.1","3.7.0","3.8.0","3.9.0","3.9.1","3.9.2","3.10.0"]
+36 error notarget
+36 error notarget This is most likely not a problem with npm itself.
+36 error notarget In most cases you or one of your dependencies are requesting
+36 error notarget a package version that doesn't exist.
+37 verbose exit [ 1, true ]

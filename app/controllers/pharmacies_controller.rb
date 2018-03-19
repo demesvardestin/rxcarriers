@@ -11,6 +11,13 @@ class PharmaciesController < ApplicationController
     @pharmacy = current_pharmacy
   end
   
+  def update_firebase
+    firebase_id = params["firebase_id"]
+    @pharmacy = current_pharmacy
+    @pharmacy.update(firebase_id: firebase_id)
+    redirect_to :back
+  end
+  
   def update_card
     begin
       token = params['stripeToken']

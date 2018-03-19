@@ -16,6 +16,7 @@
 //= require chartkick
 //= require_tree .
 
+
 var config = {
     apiKey: "AIzaSyDQkXb8VqnUK4YhzPoGC7T59sn1Fv4-bLQ",
     authDomain: "dispenserx-85f34.firebaseapp.com",
@@ -25,3 +26,8 @@ var config = {
     messagingSenderId: "966953661548"
 };
 firebase.initializeApp(config);
+var database = firebase.firestore();
+
+// Verify authentication on page load //
+
+// END AUTH VERIFICATION //
