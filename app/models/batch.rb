@@ -1,5 +1,7 @@
 class Batch < ActiveRecord::Base
     
+    require 'notifications'
+    
     # associations
     belongs_to :pharmacy
     has_many :deliveries, :as => :deliverable

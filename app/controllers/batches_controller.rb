@@ -5,6 +5,10 @@ class BatchesController < ApplicationController
   before_action :check_current_pharmacy, only: [:new, :index, :create, :request_driver, :destroy]
   before_action :check_authenticated, only: [:show]
   
+  def home
+    
+  end
+  
   def new
     @batch = Batch.new
   end
@@ -122,11 +126,34 @@ class BatchesController < ApplicationController
     end
   end
   
-  def batch_search
-    @batches = Batch.where(pharmacy_id: current_pharmacy.id).search(params[:search])
+  def notifications
+    batch_id = params['batch_id']
+    Notification.create(batch_id: batch_id, pharmacy_id: current_pharmacy.id,
+                        content: "Your request for batch # #{batch_id} has been accepted", read: false)
+    @notifications = Notification.where(pharmacy_id: current_pharmacy.id, read: false)
+    render :layout => false
+  end
+  
+  def clear_notifications
+    @notifications = Notification.where(pharmacy_id: current_pharmacy.id, read: false)
+    @notifications.each do |n|
+      n.update(read: true)
+    end
+    render :layout => false
+  end
+  
+  def dismiss_notification
+    @notification = Notification.find(params[:id])
+    @notification.update(read: true)
+    @notifications = Notification.where(pharmacy_id: current_pharmacy.id, read: false)
     respond_to do |format|
       format.js {}
     end
+  end
+  
+  def batch_search
+    @batches = Batch.where(pharmacy_id: current_pharmacy.id).search(params[:search])
+    render :layout => false
   end
   
   # initiate a request for a local driver

@@ -34,4 +34,8 @@ module ApplicationHelper
         end
     end
     
+    def notifications
+        return Notification.where(pharmacy_id: current_pharmacy.id, read: false).all
+    end
+    
 end

@@ -2,14 +2,19 @@
 <div class="modal fade" id="notificationsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title background-transparent font-14" id="exampleModalLabel"><i class="fa fa-bell-o"></i> Notifications</h5>
+      <div class="modal-header background-transparent" style="border-bottom-width: 2px;">
+        <h5 class="modal-title font-14 weighted" id="exampleModalLabel"><i class="fa fa-bell-o"></i> Notifications</h5>
+        <a class="font-13 theme-blue cursor-pointer background-transparent" id="dismissAll">Dismiss all</a>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        ...
+      <div class="modal-body" id="notificationsModalBody" style="padding-top: 0;">
+        <% if notifications.count == 0 %>
+          <%= render 'layouts/notification_placeholder' %>
+        <% else %>
+          <%= render 'layouts/all_notifications' %>
+        <% end %>
       </div>
     </div>
   </div>

@@ -1,2 +1,0 @@
-module RequestMessagesHelper
-end

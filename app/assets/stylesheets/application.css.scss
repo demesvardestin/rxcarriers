@@ -204,8 +204,16 @@ a:hover {
     padding: 0 !important;
     height: 100% !important;
 }
-.actions {
-    padding-top: 20px;
+.bordered {
+    border: 1px solid #e1e1e2;
+    padding-bottom: 40px;
+    padding-top: 30px;
+}
+.box-shadow {
+    box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
+}
+#updateProfile {
+    padding: 40px;
 }
 .form--control {
     border: none;
@@ -705,10 +713,6 @@ a:hover {
 .pharmacy-bottom-icons:hover {
     color: #4095e3;
 }
-.notice {
-    padding-left: 40px;
-    padding-right: 40px;
-}
 .search-header {
     padding-bottom: 20px;
 }
@@ -791,11 +795,6 @@ a:hover {
 .nav-item-logged-in {
     color: #fff !important;
 }
-.active {
-    padding-left: 0;
-    padding-right: 0;
-    color: #193b5a !important;
-}
 .nav-link-left {
     font-size: 12px;
     padding: 13px;
@@ -824,6 +823,10 @@ a:hover {
 .transaction-buttons {
     font-size: 12px;
     padding: 5px;
+}
+#dismissAll {
+    padding-top: 2px;
+    padding-left: 10px;
 }
 .medium-size-btn {
     font-size: 11px;
@@ -866,16 +869,6 @@ a:hover {
     background: #01665d !important;
     color: #fff !important;
 }
-.active {
-    background: #fff !important;
-    color: #4095e3 !important;
-    border-radius: 0;
-}
-.inverse-active {
-    background: #01665d !important;
-    color: #fff !important;
-    border-radius: 5px;
-}
 .flex-column {
     padding-bottom: 20px;
 }
@@ -917,6 +910,15 @@ a:hover {
 }
 .show {
     display: block !important;
+}
+.nav-link-settings {
+    margin-bottom: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.nav-link-settings:hover {
+    background-color: #007bff;
+    color: #fff;
 }
 
 /* Patient Views */
@@ -995,6 +997,18 @@ a:hover {
 }
 .patient-prescriptions {
     padding-top: 10px;
+}
+
+/* Notification Views */
+.notification-col {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: #eff6fc;
+    border-bottom: 1px solid #e1e1e2;
+}
+.notification-placeholder {
+    padding-top: 40px;
+    padding-bottom: 40px;
 }
 
 /* Delivery Views */
@@ -1105,12 +1119,7 @@ a:hover {
 
 
 
-form {
-  margin: 2em 0;
-}
-/**
-* Make the field a flex-container, reverse the order so label is on top.
-*/
+
  
 .field {
   display: flex;

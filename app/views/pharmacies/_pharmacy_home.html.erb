@@ -8,6 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <div class="col-md-9 offset-md-3 nav-col">
         <ul class="navbar-nav justify-content-end">
+          <li id="pharmacy_id" style="display: none;"><%= current_pharmacy.id %></li>
           <li class="nav-item nav-item-logged-in nav-item-pharmacy-view">
             <a class="nav-link nav-link-side <% if home %>active<% end %>" href="/batches"><i class="fa fa-archive"></i> Batches</a>
             
@@ -17,8 +18,10 @@
             
           </li>
           <li class="nav-item nav-item-logged-in nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side cursor-pointer" data-toggle="modal" data-target="#notificationsModal"><i class="fa fa-bell-o"></i> Alerts</a>
-            
+            <a class="nav-link nav-link-side cursor-pointer notification-tab" data-toggle="modal" data-target="#notificationsModal">
+              <i class="fa fa-bell-o"></i> Alerts
+              <span id="alertCount"></span>
+            </a>
           </li>
           <li class="nav-item nav-item-logged-in nav-item-pharmacy-view">
             <a class="nav-link nav-link-side cursor-pointer" data-toggle="modal" data-target="#messagesModal"><i class="fa fa-envelope-o"></i> Messages</a>
@@ -37,13 +40,13 @@
               </li>
               <div class="dropdown-divider"></div>
               <li class="dropdown-item" href="/transactions">
-                <%= link_to help_path, class:"no-underline background-transparent" do %>
+                <%= link_to transactions_path, class:"no-underline background-transparent" do %>
                   Payments <i class="fa fa-long-arrow-right"></i>
                 <% end %>
               </li>
               <div class="dropdown-divider"></div>
               <li class="dropdown-item" href="/help">
-                <%= link_to help_path, class:"no-underline background-transparent" do %>
+                <%= link_to batches_path, class:"no-underline background-transparent" do %>
                   Help <i class="fa fa-long-arrow-right"></i>
                 <% end %>
               </li>

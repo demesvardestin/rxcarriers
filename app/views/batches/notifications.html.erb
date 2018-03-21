@@ -1,0 +1,11 @@
+<% @notifications.each do |n| %>
+    <div class="row notification-row" id="notification-<%= n.id %>">
+        <div class="col-md-12 notification-col">
+            <div class="float-left notification-content font-13" style="width: 80%;"><%= n.content %></div>
+            <div class="float-right notification-content font-13" style="width: 20%;">
+                <a class="background-transparent theme-blue cursor-pointer" href="/batches/<%= n.batch_id %>" id="open-notif">Open</a>
+                <a class="background-transparent theme-blue cursor-pointer" id="dismiss-notif">Dismiss</a>
+            </div>
+        </div>
+    </div>
+<% end %>

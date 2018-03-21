@@ -178,12 +178,7 @@
     <div id="main" class="row add-padding-top">
         <div class="col-md-3">
             <div>
-                <%= form_tag batch_search_path, remote: true, method: :get, id: 'batchSearchInput' do %>
-                    <%= text_field_tag :search, params[:search], class:'form-control font-12 batch-search ', placeholder: "Search batches by date, status or id" %>
-                    <%= submit_tag :search, class:"btn btn-primary transaction-buttons text-center btn-block submit-search " do %>
-                        <i class="fa fa-times-circle"></i> Search
-                    <% end %>
-                <% end %>
+                <input type="text" class="form-control font-12 batch-search" placeholder="search batch" id="batchSearch" onkeyup="batchLiveSearch(this)">
             </div>
             <div id="createButton" class="row">
                 <div class="col-md-6 right-padding-3">
@@ -352,5 +347,12 @@
             signatureName.value = '';
         });
     });
+    
+    function batchLiveSearch(elem) {
+        var search = document.getElementById("batchSearch").value;
+        $.get('/batch_search?search='+search, function(html) {
+            $("#allBatches").html(html);
+        });
+    };
   
 </script>

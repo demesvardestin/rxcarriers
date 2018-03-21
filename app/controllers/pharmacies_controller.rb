@@ -55,16 +55,24 @@ class PharmaciesController < ApplicationController
     end
   end
   
-  def update
+  def update_profile
+    name = params["name"]
+    number = params["number"]
+    supervisor = params["supervisor"]
+    address = params["street"]
+    website = params["website"]
+    avatar = params["avatar"]
+    current_pharmacy.update!(name: name, number: number, supervisor: supervisor, street: address, website: website, avatar_file_name: avatar)
+    @pharmacy = current_pharmacy
     respond_to do |format|
-      if @pharmacy.update(pharmacy_params)
-        Charge.update_bank_info(@pharmacy) if @pharmacy.billing_attributes
-        format.html { redirect_to :back, notice: 'Pharmacy info has been updated!' }
-        format.json { render :show, status: :ok, location: @pharmacy }
-      else
-        format.html { render :edit }
-        format.json { render json: @pharmacy.errors, status: :unprocessable_entity }
-      end
+      format.js {}
+    end
+  end
+  
+  def update
+    @pharmacy.update(pharmacy_params)
+    respond_to do |format|
+      format.js { render 'pharmacies/update_profile', notice: 'Profile updated!' }
     end
   end
   

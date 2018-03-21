@@ -40,8 +40,9 @@
         height: 45px;
         border-left: none !important;
     }
-    .patient-header-buttons {
+    .patients-header {
         padding-top: 30px;
+        padding-bottom: 15px;
     }
     .border-light-gray {
         border: 1px solid #e1e1e2;
@@ -89,9 +90,7 @@
     </div>
     <header class="top-panel patients-header row">
         <div class="col-md-6 top-panel-div">
-            <%= form_tag patient_search_path, remote: true, method: :get, id: 'patientSearchInput' do %>
-                <%= text_field_tag :search, params[:search], class:'form-control font-12 batch-search ', placeholder: "Search for a customer by name, address or phone number" %>
-            <% end %>
+            <input type="text" class="form-control font-12 batch-search" id="patientSearch" placeholder="Search for a customer by name, address or phone number" onkeyup="patientLiveSearch(this)">
         </div>
         <div class="col-md-3 offset-md-3 top-panel-div patient-header-buttons">
             <button class="btn btn-primary transaction-buttons white" id="createCustomer" data-toggle="modal" data-target="#newPatient">
@@ -171,4 +170,11 @@
         
         $('#addNewPatient').submit();
     });
+    
+    function patientLiveSearch(elem) {
+        var search = document.getElementById("patientSearch").value;
+        $.get('/patient_search?search='+search, function(html) {
+            $("#patientsList").html(html);
+        });
+    };
 </script>

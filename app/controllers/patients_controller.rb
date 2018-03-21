@@ -38,9 +38,7 @@ class PatientsController < ApplicationController
     
     def patient_search
         @patients = Patient.where(pharmacy_id: current_pharmacy.id).search(params[:search])
-        respond_to do |format|
-            format.js {}
-        end
+        render :layout => false
     end
     
     def live_search

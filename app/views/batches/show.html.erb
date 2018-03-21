@@ -358,6 +358,10 @@
         database.collection("requests").doc(req_id)
             .onSnapshot(function(doc) {
                 if (doc.data().driver != null) {
+                    $.get('/notifications?batch_id=<%= current_batch.id %>', function(data) {
+                        // Something happens here
+                        // $('#notificationsModalBody').html(data);
+                    });
                     database.collection('completed').add({
                         pharmacy_name: doc.data().pharmacy_name,
                         pharmacy_address: doc.data().pharmacy_address,

@@ -11,10 +11,8 @@ Rails.application.routes.draw do
   
   # custom path
   get 'update_card', to: 'pharmacies#update_card'
-  get 'help', to: 'supports#new'
   get 'payment', to: 'drivers#payments'
   get 'first_time_edit', to: 'drivers#first_time', as: 'complete_profile'
-  get 'driver-approved', to: 'supports#settings'
   get 'welcome', to: 'supports#onboarding_home'
   get 'deliveries/:id/signature', to: 'deliveries#signature'
   get 'cancel-request', to: 'requests#cancel'
@@ -72,11 +70,14 @@ Rails.application.routes.draw do
   get '/get_delivery_details/:id', to: 'batches#get_delivery_details'
   get '/deliveries_today', to: 'batches#deliveries_today'
   get '/update_supervisor', to: 'batches#update_supervisor'
+  get '/notifications', to: 'batches#notifications'
+  get '/notifications/mark_as_read', to: 'batches#clear_notifications'
+  get '/dismiss_notification', to: 'batches#dismiss_notification'
+  get 'update_profile', to: 'pharmacies#update_profile'
   
   # resource path
   resources :invoices, only: [:create, :show, :index, :destroy]
   resources :patients
-  resources :supports, only: [:new, :create, :show, :index]
   resources :charges
   resources :drivers
   resources :pharmacies
@@ -94,6 +95,6 @@ Rails.application.routes.draw do
   end
   
   # root path
-  root 'supports#home'
+  root 'batches#home'
   
 end
