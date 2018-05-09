@@ -3,55 +3,40 @@ Rails.application.routes.draw do
 
   # devise controller path
   devise_for :pharmacies, :controllers => {:registrations => "pharmacy/registrations"}
-  devise_for :drivers, :controllers => { :registrations => "driver/registrations"}
+  devise_for :drivers, :controllers => {:registrations => "driver/registrations"}
+  devise_scope :driver do
+    get 'courier/login', to: 'devise/sessions#new'
+    get 'courier/signup', to: 'devise/registrations#new'
+  end
   devise_scope :pharmacy do
-    get 'login', to: 'devise/sessions#new'
-    get 'signup', to: 'devise/registrations#new'
+    get 'pharmacy/login', to: 'devise/sessions#new'
+    get 'pharmacy/signup', to: 'devise/registrations#new'
   end
   
+  
+  get '/courier/profile', to: 'drivers#show'
+  get '/update_courier_bank', to: 'drivers#update_courier_bank'
+  get '/update_courier', to: 'drivers#update_courier'
+  get '/courier/deliveries', to: 'drivers#deliveries'
+  get '/courier/deliveries/:id', to: 'deliveries#show'
+  get '/courier/earnings', to: 'drivers#earnings'
+  get '/unauthorized', to: 'drivers#unauthorized'
+  get '/download_signature', to: 'deliveries#download_signature'
+  get '/onboarding/address', to: 'drivers#onboarding_address'
+  get '/onboarding/agreements', to: 'drivers#onboarding_agreement'
+  get '/fetch_driver/:driver_id/:batch_id', to: 'drivers#fetch_driver'
+  
   # custom path
-  get 'update_card', to: 'pharmacies#update_card'
-  get 'payment', to: 'drivers#payments'
-  get 'first_time_edit', to: 'drivers#first_time', as: 'complete_profile'
-  get 'welcome', to: 'supports#onboarding_home'
+  get 'pharmacy/update_card', to: 'pharmacies#update_card'
   get 'deliveries/:id/signature', to: 'deliveries#signature'
-  get 'cancel-request', to: 'requests#cancel'
-  get 'driver/deliveries', to: 'drivers#requests', as: 'my-deliveries'
-  get 'delivery-history', to: 'drivers#history'
   get 'settings', to: 'pharmacies#edit'
-  get 'clock_in', to: 'drivers#clock_in'
-  get 'clock_out', to: 'drivers#clock_out'
-  get 'routes/:id', to: 'drivers#deliveries', as: 'routes'
-  get 'payout/:id', to: 'drivers#payouts', as:'payout'
-  get 'driver/:id/settings', to: 'drivers#edit'
-  get 'driver/:id/settings/car-info', to: 'drivers#edit'
-  get 'driver/:id/settings/bank-acct-info', to: 'drivers#edit'
-  get 'driver/:id/settings/account-info', to: 'drivers#edit'
-  get 'driver/:id/settings/advanced', to: 'drivers#edit'
-  get 'settings/advanced', to: 'pharmacies#edit'
-  get 'settings/password', to: 'pharmacies#edit'
-  get 'settings/account-info', to: 'pharmacies#edit'
-  get 'settings/billing-info', to: 'pharmacies#edit', as: 'pharmacy_billing'
-  get 'batches/packages', to: 'batches#index'
-  get 'batches/pharmacist', to: 'batches#index'
-  get 'batches/pending', to: 'batches#index'
-  get 'batches/accepted', to: 'batches#index'
-  get 'batches/completed', to: 'batches#index'
   get 'batch_search', to: 'batches#batch_search'
   get 'patient_search', to: 'patients#patient_search'
-  get 'request/search', to: 'requests#index'
   get 'pharmacy/search', to: 'pharmacies#index'
   get 'pharmacy/:id/settings', to: 'pharmacies#edit', as: "account_settings"
   get 'transactions', to: 'invoices#index'
-  get 'users/auth/stripe_connect/callback', to: 'charges#stripe'
-  get 'request_driver', to: 'batches#request_driver'
   get 'batches', to: 'batches#index'
-  get 'my-earnings', to: 'drivers#transactions'
-  get 'home', to: 'drivers#show'
-  get 'my-deliveries', to: 'drivers#deliveries'
-  get 'pharmacy/view', to: 'pharmacies#index'
-  post 'welcome/sms/reply', to: 'batches#driver_response'
-  get 'not-found', to: 'supports#not_found', as: 'unauthorized'
+  get 'not-found', to: 'drivers#not_found'
   get 'invoices/:id/delete', to: 'invoices#destroy'
   get 'transactions/:id', to: 'invoices#show'
   get '/create_batch', to: 'batches#create_batch'
@@ -74,11 +59,19 @@ Rails.application.routes.draw do
   get '/notifications/mark_as_read', to: 'batches#clear_notifications'
   get '/dismiss_notification', to: 'batches#dismiss_notification'
   get 'update_profile', to: 'pharmacies#update_profile'
+  get '/mark_picked', to: 'batches#mark_picked'
+  get '/cancel_request', to: 'batches#cancel_request'
+  get '/store_push_endpoint', to: 'drivers#store_push_endpoint'
+  get '/store_pharma_push_endpoint', to: 'pharmacies#store_push_endpoint'
+  get '/push', to: 'drivers#send_push'
+  get '/unsubscribe', to: 'drivers#unsubscribe'
+  get '/accept_request', to: 'drivers#accept_request'
+  get '/unavailable_request', to: 'drivers#unavailable_request'
+  get '/push_to_pharmacy', to: 'batches#notifications'
   
   # resource path
   resources :invoices, only: [:create, :show, :index, :destroy]
   resources :patients
-  resources :charges
   resources :drivers
   resources :pharmacies
   resources :deliveries, only: [:create, :show, :edit, :update, :destroy]
@@ -88,7 +81,7 @@ Rails.application.routes.draw do
   
   # authenticated devise models root path
   authenticated :driver do
-    root 'drivers#requests', as: :authenticated_driver_root
+    root 'drivers#deliveries', as: :authenticated_driver_root
   end
   authenticated :pharmacy do
     root 'batches#index', as: :authenticated_pharmacy_root

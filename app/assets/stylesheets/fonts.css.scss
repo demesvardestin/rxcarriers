@@ -6,6 +6,10 @@
     font-weight: 700;
 }
 
+.open-sans {
+    font-family: 'Open Sans', sans-serif !important;
+}
+
 .medium-gray {
     color: #707071 !important;
 }
@@ -34,6 +38,10 @@
     font-size: 14px;
 }
 
+.font-12 {
+    font-size: 12px !important;
+}
+
 .font-16 {
     font-size: 16px;
 }
@@ -52,4 +60,20 @@
 
 .font-24 {
     font-size: 24px;
+}
+
+.border-white {
+    border-color: #fff !important;
+}
+
+.thick-border {
+    border-width: 2px !important;
+}
+
+.height-40 {
+    height: 40px !important;
+}
+
+.pale-border {
+    border-color: #e1e1e2 !important;
 }

@@ -1,134 +1,167 @@
 class DriversController < ApplicationController
-  before_action :authenticate_driver!
-  before_action :check_driver
+  before_action :check_verified, except: [:register, :onboarding_address, :onboarding_agreement, :fetch_driver]
+  before_action :set_driver, only: [:edit, :update]
+  before_action :authenticate_driver!, only: [:deliveries, :accept_request]
   
-  def deliveries
-    @deliveries = Request.where(driver: current_driver.number).all
-    @batch = Batch.find(params[:id])
-  end
-  
-  def clock_in
-    @driver = current_driver
-    @driver.update(clocked_in: true)
-    redirect_to :back
-  end
-  
-  def clock_out
-    @driver = current_driver
-    @driver.update(clocked_in: false)
-    redirect_to :back
-  end
-  
-  def transactions
-    @driver = current_driver
-    @batches = Batch.where(driver: @driver.number, request_status: 'completed').order("created_at DESC")
-    @account = Stripe::Account.retrieve("#{@driver.stripe_uid.to_s}") if @driver.stripe_uid.present?
-    @balance = Stripe::Balance.retrieve()
-  end
-  
-  def payouts
-    redirect_to :back
-  end
-  
-  def requests
-    @all_batches = Batch.where(driver: current_driver.number, request_status: 'accepted').all
-    if current_driver.onboarding_complete
-      @all_batches = Batch.where(driver: current_driver.number, request_status: 'accepted').all
-      if @all_batches.empty?
-        render 'not_found'
-      end
-    elsif current_driver.onfido_created.nil?
-      render 'onfido'
-    elsif current_driver.registration_completed.nil?
-      render 'supports/settings'
-    elsif current_driver.onboarded.nil?
-      redirect_to welcome_path
-      # render 'supports/onboarding_home', notice: 'Your profile has been updated!'
-    end
-  end
-  
-  def history
-    @batches = Batch.where(driver: current_driver.number, request_status: 'completed')
-    if @batches.empty?
-      render 'not_found'
-    end
-  end
-  
-  def payments
-    @driver = current_driver
-  end
-  
-  def first_time
-    @driver = current_driver
-    if @driver.onboarding_complete || @driver.onfido_created.nil?
-      redirect_to root_path
-    end
+  def register
+    
   end
   
   def edit
-    @driver = current_driver
-  end
-  
-  def create
-    @driver = Driver.new(driver_params)
-    respond_to do |format|
-      if @driver.save
-        format.html { redirect_to @driver, notice: 'Driver was successfully created.' }
-        format.json { render :show, status: :created, location: @driver }
-      else
-        format.html { render :new }
-        format.json { render json: @driver.errors, status: :unprocessable_entity }
-      end
-    end
+    
   end
   
   def update
-    @driver = current_driver
-    if @driver.onfido_created.nil? && @driver.registration_completed.nil?
-      @driver.update(
-        :onfido_created => true,
-        :first_name => params[:driver][:first_name],
-        :last_name => params[:driver][:last_name],
-        :dob => params[:driver][:dob],
-        :gender => params[:driver][:gender],
-        :number => params[:driver][:number]
-      )
-      redirect_to complete_profile_path, notice: @driver.notice
-      return
-    end
+    @driver.update(driver_params)
     respond_to do |format|
-      if @driver.update(driver_params)
-        @driver.update_onboarding
-        if @driver.onboarding_complete
-          format.html { redirect_to :back, notice: 'Your profile has been updated!' }
-        elsif @driver.stripe_token.nil?
-          format.html { redirect_to payment_path, notice: @driver.notice }
-        elsif @driver.registration_completed == true
-          format.html { redirect_to welcome_path, notice: @driver.notice }
-        else
-          format.html { redirect_to root_path, notice: 'Your profile has been updated!' }
-        end
-        format.json { render :show, status: :ok, location: @driver }
-      else
-        format.html { render :edit }
-        format.json { render json: @driver.errors, status: :unprocessable_entity }
+      format.html {redirect_to :back, notice: 'details saved!'}
+    end
+  end
+  
+  def fetch_driver
+    driver_id = params[:driver_id].to_i
+    batch_id = params[:batch_id]
+    Batch.find(batch_id).update(driver_id: driver_id, request_status: 'accepted')
+    @driver = Driver.find(driver_id)
+    # @request = RequestAlert.new(request_details)
+    # @request.save!
+    respond_to do |format|
+      format.json {}
+    end
+  end
+  
+  def onboarding_address
+    
+  end
+  
+  def onboarding_agreement
+    
+  end
+  
+  def show
+    @driver = current_driver
+  end
+  
+  def earnings
+    @batches = Batch.where(driver_id: current_driver.id).all
+    @batches_week = Batch.week_earnings(current_driver.id)
+  end
+  
+  def deliveries
+    @courier = Courier.find_by(cid: params[:cid])
+    @batch = Batch.find_by(driver_id: current_driver.id, accepted: true, delivered: nil)
+    if @batch
+      @pharmacy = Pharmacy.find(@batch.pharmacy_id)
+    end
+  end
+  
+  def store_push_endpoint
+    @sub = JSON.parse(JSON.dump(params.fetch(:sub, {}))).with_indifferent_access
+    endpoint = @sub["endpoint"]
+    auth = @sub["keys"]["auth"]
+    p256dh = @sub["keys"]["p256dh"]
+    current_driver.update(push_endpoint: endpoint, sub_auth: auth, p256dh: p256dh, subscribed_to_push: true)
+  end
+  
+  def unsubscribe
+    driver = current_driver
+    driver.update(subscribed_to_push: nil, push_endpoint: nil, sub_auth: nil, p256dh: nil)
+    return
+  end
+  
+  def send_push
+    # driver_id = params[:id] || Driver.last.id
+    text = params[:details]
+    batch_id = params[:batch]
+    pharmacy_id = params[:pharmacy]
+    @driver = Driver.last
+    data = params.fetch(:data, {})
+    data["driver"] = @driver.id
+    data = JSON.dump(data)
+    endpoint = @driver.push_endpoint
+    p256dh = @driver.p256dh
+    auth = @driver.sub_auth
+    api_key = "#{Rails.application.secrets.google_api_key}"
+    vapid = {
+      subject: 'mailto:sender@example.com',
+      public_key: "#{Rails.application.secrets.vapid_public}",
+      private_key: "#{Rails.application.secrets.vapid_private}"
+    }
+    Webpush.payload_send(message: "#{data}",
+                    endpoint: endpoint, p256dh: p256dh, auth: auth, vapid: vapid)
+  end
+  
+  def unavailable_request
+    
+  end
+  
+  def accept_request
+    batch = params[:batch_id]
+    @batch = Batch.find_by(id: batch)
+    if batch.nil? || @batch.nil?
+      redirect_to unavailable_request_path
+      return
+    elsif @batch.driver_id != nil
+      redirect_to unavailable_request_path
+    # elsif params[:driver_id] != current_driver.id
+    #   redirect_to unavailable_request_path
+    else
+      if current_driver
+        @batch.update(request_status: 'accepted', driver_id: current_driver.id, accepted: true)
+        redirect_to courier_deliveries_path(:request_id => @batch.request_id, :driver_id => current_driver.id, :batch_id => @batch.id)
       end
     end
   end
   
-  def destroy
-    @driver = Driver.find(params[:id])
-    @driver.destroy
-    respond_to do |format|
-      format.html { redirect_to drivers_url, notice: 'Driver was successfully destroyed.' }
-      format.json { head :no_content }
+  def update_courier
+    @courier = current_driver
+    @courier.update(driver_params)
+    render :layout => false
+  end
+  
+  def update_courier_bank
+    token = params[:bank_token]
+    if current_driver.stripe_uid
+      customer = Stripe::Customer.retrieve(current_driver.stripe_uid)
+      customer.source = token
+      customer.save
+    else
+      customer = Stripe::Customer.create(
+        :email => current_driver.email,
+        :source => token,
+      )
     end
+    current_driver.update(stripe_token: token, stripe_uid: customer.id)
+    render :layout => false
+  end
+  
+  def get_user
+    redirect_to "/courier/profile?cid=#{params[:cid]}"
+  end
+  
+  def profile
+    
+  end
+  
+  def not_found
+    
+  end
+  
+  def unauthorized
+    
   end
 
   private
     
-    def redirect_new_driver
-      redirect_to root_path if current_driver && current_driver.onfido_created.nil?
+    def set_driver
+      @driver = Driver.find(params[:id])
+    end
+    
+    def check_verified
+      @courier = Courier.find_by(cid: params[:cid])
+      if @courier != nil && @courier.verified.nil?
+        # redirect_to "/onboarding/#{@courier.onboarding_step?}"
+      end
     end
     
     # make sure the correct driver is authed
@@ -139,7 +172,6 @@ class DriversController < ApplicationController
     
     # params whitelist
     def driver_params
-      params.require(:driver).permit(:first_name, :last_name, :number, :street, :town, :state, :zipcode, :license_plate, :car_make, 
-                                      :car_model, :car_year, :car_color, :avatar, :dob, :gender, :middle_name)
+      params.require(:driver).permit(:first_name, :avatar, :number, :address, :firebase_uid, :cid, :car_make, :car_model, :car_year, :car_color, :license_plate)
     end
 end

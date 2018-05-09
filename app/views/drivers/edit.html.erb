@@ -4,27 +4,25 @@
         display: none;
     }
 </style>
-<body>
-    <div class="row complete-signup-header">
-        <div class="col-md-3">
-            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <div class="settings-header">
-                    <h6><strong>Account Settings</strong><h6>
-                </div>
-                <a class="nav-link nav-link-edit <% if url.include?("/driver/#{current_driver.id}/settings/account-info") || url.end_with?("/driver/#{current_driver.id}/settings") %>inverse-active<% end %>" href="/driver/<%= current_driver.id %>/settings/account-info" role="tab" aria-controls="v-pills-home" aria-selected="true">Account</a>
-                <a class="nav-link nav-link-edit <% if url.include?("/driver/#{current_driver.id}/settings/car-info")%>inverse-active<% end %>" href="/driver/<%= current_driver.id %>/settings/car-info" role="tab" aria-controls="v-pills-profile" aria-selected="false">Car Info</a>
-                <a class="nav-link nav-link-edit <% if url.include?("/driver/#{current_driver.id}/settings/bank-acct-info")%>inverse-active<% end %>" href="/driver/<%= current_driver.id %>/settings/bank-acct-info" role="tab" aria-controls="v-pills-profile" aria-selected="false">Card Info</a>
-                <a class="nav-link nav-link-edit <% if url.include?("/driver/#{current_driver.id}/settings/advanced")%>inverse-active<% end %>" href="/driver/<%= current_driver.id %>/settings/advanced" role="tab" aria-controls="v-pills-settings" aria-selected="false">Advanced</a>
+<div class="row complete-signup-header">
+    <div class="col-md-3">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <div class="settings-header">
+                <h6><strong>Account Settings</strong><h6>
             </div>
+            <a class="nav-link nav-link-edit <% if url.include?("/driver/#{current_driver.id}/settings/account-info") || url.end_with?("/driver/#{current_driver.id}/settings") %>inverse-active<% end %>" href="/driver/<%= current_driver.id %>/settings/account-info" role="tab" aria-controls="v-pills-home" aria-selected="true">Account</a>
+            <a class="nav-link nav-link-edit <% if url.include?("/driver/#{current_driver.id}/settings/car-info")%>inverse-active<% end %>" href="/driver/<%= current_driver.id %>/settings/car-info" role="tab" aria-controls="v-pills-profile" aria-selected="false">Car Info</a>
+            <a class="nav-link nav-link-edit <% if url.include?("/driver/#{current_driver.id}/settings/bank-acct-info")%>inverse-active<% end %>" href="/driver/<%= current_driver.id %>/settings/bank-acct-info" role="tab" aria-controls="v-pills-profile" aria-selected="false">Card Info</a>
+            <a class="nav-link nav-link-edit <% if url.include?("/driver/#{current_driver.id}/settings/advanced")%>inverse-active<% end %>" href="/driver/<%= current_driver.id %>/settings/advanced" role="tab" aria-controls="v-pills-settings" aria-selected="false">Advanced</a>
         </div>
-        <div class="col-md-8">
-            <div class="tab-content">
-                <div class="card">
-                    <div class="card-body">
-                        <%= render "#{driver_card_content}" %>
-                    </div>
+    </div>
+    <div class="col-md-8">
+        <div class="tab-content">
+            <div class="card">
+                <div class="card-body">
+                    <%= render "form" %>
                 </div>
             </div>
         </div>
     </div>
-</body>
+</div>

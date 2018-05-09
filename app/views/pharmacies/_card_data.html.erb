@@ -42,12 +42,12 @@
         </div>
     </div>
     <div class="col-md-12" id="action-button">
-        <button class="btn btn-primary" onclick="showCardForm()">Edit Card Info</button>
+        <button class="btn btn-info font-14" onclick="showCardForm()">Edit Card Info</button>
     </div>
 </section>
 
 <section id="card-form">
-    <form action="/update_card" method="get" id="payment-form">
+    <form action="/pharmacy/update_card" method="get" id="payment-form">
         <div class="form-row row">
             <label for="card-element">
               <h6>Add a payment method on file</h6>
@@ -62,7 +62,7 @@
         
         <div class="row">
             <div class="col-md-3 submit-card">
-                <button class="btn btn-primary">Submit Card</button>
+                <button class="btn btn-info font-14">Submit Card</button>
             </div>
         </div>
     </form>
@@ -73,15 +73,3 @@
     </div>
     <%= render 'common/spinner' %>
 </section>
-
-<script>
-    function showCardForm() {
-        $('#confirmation-form').hide();
-        $('#card-form').show();
-    };
-    function hideCardForm() {
-        var conf = document.getElementById('confirmation-form');
-        $('#card-form').html();
-        $('#confirmation-form').show();
-    };
-</script>

@@ -19,27 +19,20 @@ class PharmaciesController < ApplicationController
   end
   
   def update_card
-    begin
-      token = params['stripeToken']
-      @pharmacy = current_pharmacy
-      if @pharmacy.stripe_cus
-        customer = Stripe::Customer.retrieve(@pharmacy.stripe_cus)
-        customer.source = token
-        customer.save
-      else
-        customer = Stripe::Customer.create(
-          :email => @pharmacy.email,
-          :source => token,
-        )
-      end
-      @pharmacy.update(card_token: token, stripe_cus: customer.id)
-      flash[:notice] = 'Your card has been updated!'
-      redirect_to pharmacy_billing_path
-    rescue InvalidAuthenticityToken => e
-      # Do something
-      flash[:notice] = e
-      redirect_to pharmacy_billing_path
+    token = params['stripeToken']
+    @pharmacy = current_pharmacy
+    if @pharmacy.stripe_cus
+      customer = Stripe::Customer.retrieve(@pharmacy.stripe_cus)
+      customer.source = token
+      customer.save
+    else
+      customer = Stripe::Customer.create(
+        :email => @pharmacy.email,
+        :source => token,
+      )
     end
+    @pharmacy.update(card_token: token, stripe_cus: customer.id)
+    render :layout => false
   end
   
   def create
@@ -67,6 +60,14 @@ class PharmaciesController < ApplicationController
     respond_to do |format|
       format.js {}
     end
+  end
+  
+  def store_push_endpoint
+    @sub = JSON.parse(JSON.dump(params.fetch(:sub, {}))).with_indifferent_access
+    endpoint = @sub["endpoint"]
+    auth = @sub["keys"]["auth"]
+    p256dh = @sub["keys"]["p256dh"]
+    current_pharmacy.update(push_endpoint: endpoint, sub_auth: auth, p256dh: p256dh, subscribed_to_push: true)
   end
   
   def update

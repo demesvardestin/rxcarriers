@@ -39,6 +39,7 @@
         box-shadow: none !important;
         height: 45px;
         border-left: none !important;
+        font-size: 14px !important;
     }
     .patients-header {
         padding-top: 30px;
@@ -89,21 +90,13 @@
       </div>
     </div>
     <header class="top-panel patients-header row">
-        <div class="col-md-6 top-panel-div">
-            <input type="text" class="form-control font-12 batch-search" id="patientSearch" placeholder="Search for a customer by name, address or phone number" onkeyup="patientLiveSearch(this)">
+        <div class="col-md-6 top-panel-div" style="margin-top: -10px !important;">
+            <input type="text" class="form-control font-14 batch-search" id="patientSearch" placeholder="Search for a customer by name, address or phone number" onkeyup="patientLiveSearch(this)">
         </div>
         <div class="col-md-3 offset-md-3 top-panel-div patient-header-buttons">
-            <button class="btn btn-primary transaction-buttons white" id="createCustomer" data-toggle="modal" data-target="#newPatient">
+            <button class="btn btn-light btn-block white" id="createCustomer" data-toggle="modal" data-target="#newPatient">
                 <i class="fa fa-user-plus"></i> Add a new customer
             </button>
-            <button class="btn btn-info dropdown-toggle transaction-buttons" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Export List
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
         </div>
     </header>
     <section id="patientLoader">

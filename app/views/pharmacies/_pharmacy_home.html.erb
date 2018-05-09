@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg main-nav fixed-top">
   <div class="container">
-    <a class="navbar-brand background-transparent" href="/"><h4 class="logo">Darlyne Logistics</h4></a>
+    <a class="navbar-brand background-transparent" href="/"><h4 class="logo">RxCarriers</h4></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -18,42 +18,40 @@
             
           </li>
           <li class="nav-item nav-item-logged-in nav-item-pharmacy-view">
+            <a class="nav-link nav-link-side <% if payments_path %>active<% end %>" href="/transactions"><i class="fa fa-credit-card"></i> Payments</a>
+            
+          </li>
+          <li class="nav-item nav-item-logged-in nav-item-pharmacy-view">
             <a class="nav-link nav-link-side cursor-pointer notification-tab" data-toggle="modal" data-target="#notificationsModal">
               <i class="fa fa-bell-o"></i> Alerts
               <span id="alertCount"></span>
             </a>
           </li>
-          <li class="nav-item nav-item-logged-in nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side cursor-pointer" data-toggle="modal" data-target="#messagesModal"><i class="fa fa-envelope-o"></i> Messages</a>
+          <!--<li class="nav-item nav-item-logged-in nav-item-pharmacy-view">-->
+          <!--  <a class="nav-link nav-link-side cursor-pointer" data-toggle="modal" data-target="#messagesModal"><i class="fa fa-envelope-o"></i> Messages</a>-->
             
-          </li>
-          <div class="dropdown show">
+          <!--</li>-->
+          <div class="dropdown show" style="padding-bottom: 0 !important;">
             <a class="btn btn-secondary dropdown-toggle account-dropdown" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Account
             </a>
           
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <li class="dropdown-item" href="/settings">
-                <%= link_to settings_path, class:"no-underline background-transparent" do %>
-                  Settings <i class="fa fa-long-arrow-right"></i>
-                <% end %>
-              </li>
-              <div class="dropdown-divider"></div>
-              <li class="dropdown-item" href="/transactions">
-                <%= link_to transactions_path, class:"no-underline background-transparent" do %>
-                  Payments <i class="fa fa-long-arrow-right"></i>
+                <%= link_to settings_path, class:"no-underline background-transparent font-14 theme-blue" do %>
+                  Settings
                 <% end %>
               </li>
               <div class="dropdown-divider"></div>
               <li class="dropdown-item" href="/help">
-                <%= link_to batches_path, class:"no-underline background-transparent" do %>
-                  Help <i class="fa fa-long-arrow-right"></i>
+                <%= link_to batches_path, class:"no-underline background-transparent font-14 theme-blue" do %>
+                  Help
                 <% end %>
               </li>
               <div class="dropdown-divider"></div>
               <li class="dropdown-item" href="#">
-                <%= link_to destroy_pharmacy_session_path, class:"no-underline background-transparent", method: :delete do %>
-                  Sign out <i class="fa fa-long-arrow-right"></i>
+                <%= link_to destroy_pharmacy_session_path, class:"no-underline background-transparent font-14 theme-blue", method: :delete do %>
+                  Sign out
                 <% end %>
               </li>
             </ul>

@@ -23,12 +23,17 @@
         display: block;
     }
     .batch-search {
-        border-radius: .25rem !important;
+        border-left: none !important;
+        border-right: none !important;
         border: 1px solid #c5c5c6 !important;
+        border-radius: 0;
+        border-top-right-radius: .25rem;
+        border-bottom-right-radius: .25rem;
         box-shadow: none !important;
-        padding-left: 15px !important;
+        padding-left: 10px !important;
         padding-top: 10px;
         padding-bottom: 10px;
+        margin-top: auto !important;
     }
     #supervisorSignature {
         border-left: none !important;
@@ -39,6 +44,7 @@
         padding-left: 5px !important;
         padding-top: 10px;
         padding-bottom: 10px;
+        margin-top: auto !important;
     }
     .modal, .modal-content {
         border-color: #e1e1e2;
@@ -139,6 +145,12 @@
         border-bottom-right-radius: 0 !important;
         border-color: #c5c5c6 !important;
     }
+    #searchAddon {
+        border-right: none !important;
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        border-color: #c5c5c6 !important;
+    }
     #supervisingPharmacist, #requestsToday {
         padding-top: 20px;
     }
@@ -157,7 +169,7 @@
         font-size: 14px !important;
     }
     #creatingNewBatch, .clear-row, .search-error, .loader-row, .spinner-row,
-    #placeholder, #batchCardContainer, .load-status, .hide, #hiddenBatches,
+    #placeholder, .load-status, .hide, #hiddenBatches, .batch-list,
     #requestCountLoader {
         display: none;
     }
@@ -166,23 +178,23 @@
 <div class="requests-index-header">
     <div class="row" id="batchPageHeader">
         <div class="col-md-2">
-            <span class="medium-gray font-18">Batches</span>
+            <span class="theme-blue bold font-18">Batches</span>
             <span class="medium-gray font-9 .firebase-id" id="firebaseID" firebase=""></span>
-        </div>
-        <div class="col-md-1 offset-md-9">
-            <button class="btn btn-primary dropdown-toggle transaction-buttons btn-block" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Export
-            </button>
         </div>
     </div>
     <div id="main" class="row add-padding-top">
         <div class="col-md-3">
             <div>
-                <input type="text" class="form-control font-12 batch-search" placeholder="search batch" id="batchSearch" onkeyup="batchLiveSearch(this)">
+                <div class="input-group-prepend">
+                    <span class="input-group-text background-transparent theme-blue" id="searchAddon">
+                        <i class="fa fa-search"></i>
+                    </span>
+                    <input type="text" class="form-control font-12 batch-search" placeholder="search batch" id="batchSearch" onkeyup="batchLiveSearch(this)">
+                </div>
             </div>
             <div id="createButton" class="row">
                 <div class="col-md-6 right-padding-3">
-                    <a class="btn btn-secondary white transaction-buttons create-batch btn-block" href="/create_batch?pharmacist=<%= to_param(current_pharmacy.supervisor) %>" id="createBatch">
+                    <a class="btn btn-light white font-12 create-batch btn-block" href="/create_batch?pharmacist=<%= to_param(current_pharmacy.supervisor) if current_pharmacy.supervisor %>" id="createBatch">
                         <i class="fa fa-plus"></i>
                         New Batch
                     </a>
@@ -217,7 +229,7 @@
                         <i class="fa fa-user-md"></i>
                     </span>
                     <input class="form-control font-12 " id="supervisorSignature" name="pharmacist" placeholder="Change current supervisor">
-                    <button class="btn btn-info  white" id="sendSupervisorName">
+                    <button class="btn btn-success white" id="sendSupervisorName">
                         <i class="fa fa-check"></i>
                     </button>
                 </div>
@@ -251,10 +263,7 @@
                                 <div class="col-md-4">
                                     <span>Date Created</span>
                                 </div>
-                                <div class="col-md-2">
-                                    <span>Status</span>
-                                </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <span>Action</span>
                                 </div>
                             </div>
@@ -279,15 +288,16 @@
     $('.loader-row').show();
     
     // fetch rows of batch //
-    var batches = document.getElementsByClassName("batches-row");
-    
+    var batches = "<%= current_pharmacy.has_batches? %>";
+    console.log(batches);
     // if rows present, return list, if not, return placeholder //
-    if (batches.length > 0) {
+    if (batches == 'true') {
         $('.loader-row').hide();
-        $('#batchCardContainer').fadeIn();
+        $('.batch-list').show();
     } else {
         $('.loader-row').hide();
-        $('#placeholder').fadeIn();
+        $('.hide').show();
+        $('#placeholder').show();
     };
     
     // Add bounds to count so that number is for the current day //
@@ -301,23 +311,14 @@
         });
     };
     
-    function checkStatus(element) {
-        var req_id = element.getAttribute('id');
-        var id = element.getAttribute('batch');
-        console.log(element);
-        if (!req_id) {
-            $('.check-status'+id).html('request pending');
-            return;
-        }
-        $('#status'+id).hide();
-        $('#loadStatus'+id).show();
-        $('.check-status'+id).append('checking...');
-        database.collection('requests').doc(req_id)
-        .get().then(function(doc) {
-            $('.check-status'+id).html(parseRequest(doc.data().accepted));
+    function checkStatus(elem) {
+        var id = elem.getAttribute('batch');
+        console.log(id);
+        $.get('/mark_picked?id='+id, function(data) {
+            $('.mark-picked'+id).html('Batch picked up!');
+            console.log('Batch picked up!');
         });
-        console.log(parseRequest(doc.data().accepted));
-    };
+    }
     
     function parseRequest(value) {
         if (value == false) {

@@ -1,11 +1,28 @@
-<% @notifications.each do |n| %>
-    <div class="row notification-row" id="notification-<%= n.id %>">
-        <div class="col-md-12 notification-col">
-            <div class="float-left notification-content font-13" style="width: 80%;"><%= n.content %></div>
-            <div class="float-right notification-content font-13" style="width: 20%;">
-                <a class="background-transparent theme-blue cursor-pointer" href="/batches/<%= n.batch_id %>" id="open-notif">Open</a>
-                <a class="background-transparent theme-blue cursor-pointer" id="dismiss-notif">Dismiss</a>
-            </div>
-        </div>
-    </div>
-<% end %>
+<!--<div class="row">-->
+<!--    <div class="col-md-12 text-center font-14 weighted">-->
+<!--        Getting your deliveries...-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script>-->
+<!--    function getDeliverySignature(elem) {-->
+<!--        var id = elem.id;-->
+<!--        console.log(id);-->
+<!--        window.location.replace('/courier/deliveries/'+id+'?cid=<%= current_courier.cid %>')-->
+<!--    }-->
+    <!--// check for request id and driver id params. if present, url is most likely-->
+    <!--// the one for accepting a request. if so, proceed to update request doc-->
+    <!--// on firebase, and subsequently send notification to pharmacy-->
+<!--    var request_id = "<%= params[:request_id] %>";-->
+<!--    var driver_id = "<%= params[:driver_id] %>";-->
+<!--    var batch_id = "<%= params[:batch_id] %>";-->
+<!--    console.log(request_id, driver_id, batch_id);-->
+<!--    database.collection('requests').doc(request_id).set({driver: driver_id}, {merge: true})-->
+<!--    .then(e => {-->
+<!--        console.log('request updated, driver added.');-->
+<!--    }).catch(f => {-->
+<!--        console.error('request could not be updated. error: '+f.code);-->
+<!--    });-->
+<!--    $.get('/notifications?batch_id='+<%= params[:batch_id] %>+'&driver_id='+-->
+<!--            <%= params[:driver_id] %>);-->
+<!--    window.location.replace('/courier/deliveries');-->
+<!--</script>-->

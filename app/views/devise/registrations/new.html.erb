@@ -1,100 +1,33 @@
-<link class="stylesheet" href="devise.css">
-
-<style>
-  body {
-    overflow-y: hidden !important;
-  }
-</style>
-<body>
-  <div class="driver-signup col-md-5">
-    <div class="driver-signup-div">
-      <% if request.original_url.include?("pharmacies/sign_up") %>
+<div class="row" id="pharmacy-login">
+  <div class="col-md-4 offset-md-4 pharmacy-login-form">
+    <div class="header"><h4 class="text-center medium-gray">Pharmacy signup</h4></div>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= devise_error_messages! %>
+      
+      <div class="field">
+        <%= f.email_field :email, class:"form-control form--control font-14", autofocus: true, placeholder:" " %>
+        <label for="email">Email</label>
+      </div>
+    
+      <div class="field">
+        <%= f.password_field :password, class:"form-control form--control font-14", autocomplete: "off", placeholder:" " %>
+        <label for="password">Password</label>
+      </div>
+      <div class="field">
+        <%= f.password_field :password_confirmation, class:"form-control form--control font-14", autocomplete: "off", placeholder:" " %>
+        <label for="password confirmation">Password Confirmation</label>
+      </div>
+    
+      <div class="actions" style="padding-top: 30px;">
         <div class="row">
-          <div class="col-md-1"></div>
-          <div class="col-md-10 driver-signup-banner">
-            <h2 class="driver-signup-banner-text text-center">We're here for all your logistical needs.</h2>
+          <div class="col-md-12">
+            <%= f.submit "Create account", class:"btn btn-light btn-block" %>
+          </div>
+          <div class="col-md-12 add-padding-top">
+            <%= link_to "Log into existing account", pharmacy_login_path, class:"btn btn-info btn-block white" %>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-1"></div>
-          <div class="col-md-10 driver-signup-form">
-            <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-              <%= devise_error_messages! %>
-              <div class="field">
-                <%= f.text_field :name, class:"form-control", autofocus: true, placeholder:"Name" %>
-              </div>
-              
-              <div class="field">
-                <%= f.email_field :email, class:"form-control", autofocus: true, placeholder:"Email" %>
-              </div>
-              
-              <div class="field">
-                <%= f.text_field :street, class:"form-control", autofocus: true, placeholder:"Address" %>
-              </div>
-            
-              <div class="field">
-                <%= f.password_field :password, class:"form-control", autocomplete: "off", placeholder:"Password" %>
-              </div>
-            
-              <div class="field">
-                <%= f.password_field :password_confirmation, class:"form-control", autocomplete: "off", placeholder:"Password Confirmation" %>
-              </div>
-            
-              <div class="actions">
-                <div class="row">
-                  <div class="col-md-6">
-                    <%= f.submit "Register", class:"btn btn-primary btn-block driver-signup-button" %>
-                  </div>
-                  <div class="col-md-6">
-                    <%= link_to "Have an account? Log in", new_driver_session_path, class:"btn btn-light btn-block driver-login-button" %>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      <% elsif request.original_url.include?("drivers/sign_up")%>
-        <div class="row">
-          <div class="col-md-1"></div>
-          <div class="col-md-10 driver-signup-banner">
-            <h2 class="driver-signup-banner-text text-center">Set your own hours. Earn money. Help people.</h2>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-1"></div>
-          <div class="col-md-10 driver-signup-form">
-            <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-              <%= devise_error_messages! %>
-            
-              <div class="field">
-                <%= f.email_field :email, class:"form-control", autofocus: true, placeholder:"Email" %>
-              </div>
-            
-              <div class="field">
-                <%= f.password_field :password, class:"form-control", autocomplete: "off", placeholder:"Password" %>
-              </div>
-            
-              <div class="field">
-                <%= f.password_field :password_confirmation, class:"form-control", autocomplete: "off", placeholder:"Password Confirmation" %>
-              </div>
-            
-              <div class="actions">
-                <div class="row">
-                  <div class="col-md-6">
-                    <%= f.submit "Register", class:"btn btn-primary btn-block driver-signup-button" %>
-                  </div>
-                  <div class="col-md-6">
-                    <%= link_to "Have an account? Log in", new_driver_session_path, class:"btn btn-light btn-block driver-login-button" %>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
-  <div class="col-md-7 placeholder-div no-mobile">
-    <img src="https://www.cannarecruiter.com/wp-content/uploads/2016/11/medical-marijuana-delivery-jobs.jpg" class="courier-image">
-  </div>
-</body>
+</div>

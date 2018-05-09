@@ -105,4 +105,16 @@ module PatientsHelper
         end
     end
     
+    def find_courier(cid)
+        if cid.nil?
+            return 'Pending'
+        else
+            return Driver.find_by(id: cid.to_i).first_name
+        end
+    end
+    
+    def added_on_timestamp(patient)
+        [patient.created_at.strftime("%B %-dth %Y"), "at", patient.created_at.strftime("%I:%M %p")].join(" ") 
+    end
+    
 end

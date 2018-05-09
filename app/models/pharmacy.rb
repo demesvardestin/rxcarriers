@@ -8,21 +8,18 @@ class Pharmacy < ActiveRecord::Base
     # associations
     geocoded_by :full_address
     after_validation :geocode
-    has_many :requests
     has_many :patients, :as => :patable
-    has_many :charges
     has_many :invoices
     has_many :deliveries
-    has_many :supports
     
     # validations
-    has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }
+    has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>", placeholder: '/images/user_full.png' }
     validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
-    validates :name, presence: true
-    validates :street, presence: true
-    validates :number, uniqueness: true, presence: true
-    validates :website, presence: true
-    validates :email, {uniqueness: true, presence: true}
+    # validates :name, presence: true
+    # validates :street, presence: true
+    # validates :number, uniqueness: true, presence: true
+    # validates :website, presence: true
+    # validates :email, {uniqueness: true, presence: true}
     
     # methods
     def full_address
@@ -37,6 +34,15 @@ class Pharmacy < ActiveRecord::Base
     def card_brand
       brand = Stripe::Customer.retrieve(self.stripe_cus).sources.first['brand'].downcase
       return brand
+    end
+    
+    def batches
+      @batches = Batch.where(pharmacy_id: self.id).all
+      return @batches
+    end
+    
+    def has_batches?
+      batches.count > 0 ? 'true' : 'false'
     end
     
     def name_shortened

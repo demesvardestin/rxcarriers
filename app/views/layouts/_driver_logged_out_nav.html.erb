@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg driver-nav" style="padding-bottom: 0 !important;">
+    <div class="container">
+        <a class="navbar-brand background-transparent" href="/"><h4 class="driver-nav-logo">RxCarriers</h4></a>
+        <button class="navbar-toggler nav-toggler-driver" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"><i class="fa fa-bars nav-icon-courier"></i></span>
+        </button>
+        
+        <div class="collapse navbar-collapse profile justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav justify-content-end courier-navbar-nav profile-ul open-sans">
+                <% if current_driver.driver_approved != nil %>
+                    <li class="nav-item nav-item-courier-view-1 <%= active_li('live') %>" style="margin-left: 15px;">
+                        <a class=" profile-dropdown background-transparent font-14 no-underline theme-blue" id="batchLink" href="/courier/deliveries">Live Deliveries</a>
+                        <!--<hr style="height: 2px;" class="theme-blue">-->
+                    </li>
+                    <li class="nav-item nav-item-courier-view-1 <%= active_li('earnings') %>" style="margin-left: 15px;">
+                        <a class=" profile-dropdown background-transparent font-14 no-underline theme-blue" id="batchLink" href="/courier/earnings">Earnings</a>
+                    </li>
+                    <li class="nav-item nav-item-courier-view-1 <%= active_li('profile') %>" style="margin-left: 15px;">
+                        <a class=" profile-dropdown background-transparent font-14 no-underline theme-blue" id="profileLink" href="/courier/profile">Profile</a>
+                    </li>
+                    <li class="nav-item nav-item-courier-view-1 <%= active_li('help') %>" style="margin-left: 15px;">
+                        <a class=" profile-dropdown background-transparent font-14 no-underline theme-blue" href="/courier/help">Help</a>
+                    </li>
+                <% end %>
+                <li class="nav-item nav-item-courier-view" style="margin-left: 15px;">
+                    <%= link_to 'Sign out', destroy_driver_session_path, class:"profile-dropdown-item font-14 btn btn-light", method: :delete %>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

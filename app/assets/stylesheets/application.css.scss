@@ -13,6 +13,7 @@
  *= require_tree .
  *= require_self
  *= require font-awesome
+ *= require toastr
  */
 
 /* App Layout*/
@@ -53,11 +54,38 @@ a:hover {
     font-family: Camphor, "Open Sans", "Segoe UI", sans-serif;
     background-color: #3484c6;
 }
+.nav-item-courier-view-1:hover, .active_li {
+    border-bottom: 2px solid #4095e3 !important;
+}
+.nav-item-courier-view-1 {
+    padding-bottom: 15px;
+    border-bottom: 2px solid #fff;
+}
 .main-nav {
     background-color: #3484c6;
+    box-shadow: none;
+}
+.driver-nav {
+    background-color: transparent;
+    box-shadow: none !important;
+    border-bottom: 1px solid #e1e1e2;
+    // height: 60px;
+}
+.float-left {
+    float: left !important;
+}
+.float-right {
+    float: right !important;
 }
 .logo {
     color: #fff;
+}
+.driver-nav-logo {
+    color: #3484c6;
+}
+#profile-page {
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 .font-14 {
     font-size: 14px;
@@ -86,6 +114,13 @@ a:hover {
 }
 .card {
     border: 1px solid #e5e5e5 !important;
+    border-radius: 0 !important;
+}
+.form-control, .input-group-text {
+    border-radius: 0 !important;
+}
+.btn {
+    border-radius: 2px !important;
 }
 .main-page-card {
     box-shadow: 0 2px 15px rgba(84,96,103,.25);
@@ -149,6 +184,15 @@ a:hover {
 }
 .no-border-radius {
     border-radius: 0 !important;
+}
+.no-border-right {
+    border-right: none;
+}
+.no-border-left {
+    border-left: none;
+}
+#authAlert, #authAlert0, #onboardingError {
+    display: none;
 }
 .right-nav{
     padding-left: 35px;
@@ -225,7 +269,7 @@ a:hover {
 .form-control {
     height: 40px;
 }
-.driver-signup {
+.pharmacy-signup {
     float: left !important;
     height: 100% !important;
 }
@@ -233,7 +277,17 @@ a:hover {
     width: 115% !important;
     height: 115% !important;
 }
-.driver-signup-div {
+.courier-license-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.courier-license-image-1 {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+}
+.pharmacy-signup-div {
     vertical-align: middle !important;
     padding-top: 50px;
     padding-bottom: 50px;
@@ -352,6 +406,15 @@ a:hover {
 .border-theme-blue {
     border: 1px solid #03032b;
 }
+.border-blue {
+    border-color: #4095e3 !important;
+}
+.font-50 {
+    font-size: 50px !important;
+}
+.border-green {
+    border-color: #05f005 !important;
+}
 .no-prescriptions {
     padding-bottom: 20px;
 }
@@ -436,8 +499,20 @@ a:hover {
 .add-padding-top {
     padding-top: 15px;
 }
+.add-padding-bottom {
+    padding-bottom: 15px;
+}
+.add-padding-top-10 {
+    padding-top: 10px;
+}
 .add-padding-left {
     padding-left: 5px;
+}
+.add-padding-left-20 {
+    padding-left: 20px;
+}
+.add-padding-left-60 {
+    padding-left: 60px;
 }
 .clear-row, .spinner-row, .search-error, #patient-search, .spinner-row {
     display: none;
@@ -533,6 +608,9 @@ a:hover {
 .request-detail {
     padding-bottom: 20px;
 }
+.badge-notif {
+    border-radius: 50% !important;
+}
 .show-request-header{
     padding-bottom: 40px;
     padding-top: 40px;
@@ -549,6 +627,12 @@ a:hover {
 .btn-info {
     border: 1px solid #128193;
     box-shadow: inset #88c0c9 0 1px;
+    font-size: 14px;
+    color: #fff;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 .btn-success {
     background: #05f005 !important;
@@ -576,19 +660,19 @@ a:hover {
     padding-bottom: 10px;
 }
 .btn-light {
-    background: #01665d;
-    border: 1px solid #01665d;
+    background-color: #4095e3;
+    border-color: #2c689e;
+    box-shadow: inset #79b4eb 0 1px;
     color: #fff;
     font-size: 14px;
-    padding-right: 30px;
-    padding-left: 30px;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 .btn-light:hover {
-    cursor: pointer;
-    background: #003d37;
-    border: 1px solid #003d37;
+    background-color: #3377b5;
+    border-color: #2c689e;
+    box-shadow: inset #79b4eb 0 1px !important;
+    // font-size: 14px;
     color: #fff;
 }
 .btn-delete {
@@ -622,6 +706,9 @@ a:hover {
 }
 
 /* Driver Views*/
+.nav-item-courier-view-1 {
+    padding-top: 13px !important;
+}
 .onfido-section {
     padding-top: 30px;
     padding-bottom: 30px;
@@ -752,8 +839,12 @@ a:hover {
     padding-left: 15px;
 }
 .nav-hr {
+    color: #fff !important;
     margin-top: -13px;
     border-bottom: 0px;
+    background-color: #fff !important;
+    border-color: #fff !important;
+    height: 1.5px !important;
     width: 0;
     transition: width 0.25s;
 }
@@ -790,6 +881,10 @@ a:hover {
 .nav-item-logged-out:hover {
     .nav-hr {
         width: 100%;
+        color: #fff !important;
+        background-color: #fff !important;
+        border-color: #fff !important;
+        height: 1.5px !important;
     }
 }
 .nav-item-logged-in {
@@ -813,10 +908,6 @@ a:hover {
     border-radius: .25rem !important;
     text-transform: uppercase;
 }
-.signed-out-navbar-nav {
-    padding-top: 0 !important;
-    margin-top: 0;
-}
 .settings-header {
     padding-left: 15px;
 }
@@ -833,14 +924,13 @@ a:hover {
     padding: 4px;
 }
 .nav-link-side {
-    font-size: 12px;
+    font-size: 14px;
     padding: 9px;
     margin-right: 5px;
     margin-left: 5px;
     color: #fff !important;
-    border-radius: .25rem !important;
+    border-radius: 2px !important;
     line-height: 20px;
-    text-transform: uppercase;
 }
 .nav-link-side:hover {
     background: #fff !important;
@@ -853,7 +943,7 @@ a:hover {
     border: none;
 }
 .nav-link-right:hover {
-    color: #fff !important;
+    color: #4095e3 !important;
     background-color: transparent;
     border: none;
 }
@@ -920,8 +1010,48 @@ a:hover {
     background-color: #007bff;
     color: #fff;
 }
+.profile-toggle {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+#logged-out-row, #logged-out-row-0, #onboardingAddress{
+    padding: 40px;
+}
+.disclosure-btn-padding {
+    padding: 20px 15px;
+}
+#logged-out-row-0 {
+    display: none;
+}
+#pharmacy-login {
+    padding: 40px 0;
+}
+.pharmacy-login-form {
+    border: 1px solid #e1e1e2;
+    padding-bottom: 70px;
+    padding-top: 30px;
+    box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
+}
+#loginBox, #signupBox {
+    border: 1px solid #e1e1e2;
+    padding-bottom: 100px;
+    padding-top: 30px;
+    box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
+}
+.submit {
+    padding-top: 20px;
+}
+// .profile-ul {
+//     display: none !important;
+// }
 
 /* Patient Views */
+.patient-avi {
+    height: 30px;
+    width: 30px;
+}
 .profile-actions-btn {
     padding-bottom: 5px;
 }
@@ -1000,6 +1130,11 @@ a:hover {
 }
 
 /* Notification Views */
+.notif {
+    padding: 10px;
+    border-top: 1px solid #e1e1e2;
+    font-size: 14px;
+}
 .notification-col {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -1075,6 +1210,17 @@ a:hover {
 /* Footer */
 .footer {
     padding: 30px;
+    background-color: #3986cc;
+}
+.footer-link {
+    color: #9bc6e4;
+    font-size: 12px !important;
+}
+.footer-link:hover {
+    color: #fff;
+}
+.footer-color {
+    color: #9bc6e4;
 }
 
 /* STRIPE */
@@ -1145,6 +1291,7 @@ input {
   -webkit-appearance: none;
   border-radius: 0;
   padding: 0;
+  margin-top: 10px;
   cursor: text;
 }
 
@@ -1203,4 +1350,48 @@ input:focus + label {
 /* Mobile Rules */
 
 @media only screen and (max-device-width: 768px) {
+    .avatar-col {
+        display: block !important;
+    }
+    .profile-details-col {
+        border-left: none !important;
+    }
+    .navbar-toggler {
+        border: none;
+        box-shadow: none !important;
+        padding: 0 !important;
+    }
+    .navbar-toggler-icon {
+        color: #4095e3 !important;
+    }
+    .active_li {
+        border-color: transparent !important;
+    }
+    
+    .nav-item-courier-view, .nav-item-courier-view-1 {
+        padding-bottom: 15px !important;
+        padding-left: 0 !important;
+        margin-left: 0 !important;
+    }
+    .courier-navbar-nav {
+        padding-left: 0 !important;
+        padding-top: 15px;
+    }
+    .nav-icon-courier {
+        font-size: 28px !important;
+    }
+    .profile {
+        padding-left: 0 !important;
+    }
+    
+    #loginBox, #signupBox {
+        border: none !important;
+        padding-bottom: 0;
+        padding-top: 0;
+        box-shadow: none !important;
+    }
+    #logged-out-row, #logged-out-row-0 {
+        padding-left: 0;
+        padding-right: 0;
+    }
 }

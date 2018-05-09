@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180319165200) do
+ActiveRecord::Schema.define(version: 20180504223239) do
 
 # Could not dump table "batches" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
@@ -41,6 +41,26 @@ ActiveRecord::Schema.define(version: 20180319165200) do
     t.string   "amount"
   end
 
+  create_table "couriers", force: :cascade do |t|
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "name"
+    t.string   "email"
+    t.string   "number"
+    t.string   "address"
+    t.string   "firebase_uid"
+    t.string   "bank_token"
+    t.string   "stripe_cus"
+    t.string   "car_color"
+    t.string   "car_make"
+    t.string   "car_year"
+    t.string   "car_model"
+    t.string   "license_plate"
+    t.string   "cid"
+    t.boolean  "verified"
+    t.string   "onboarding_step"
+  end
+
   create_table "deliveries", force: :cascade do |t|
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
@@ -59,6 +79,11 @@ ActiveRecord::Schema.define(version: 20180319165200) do
     t.string   "matrix"
     t.string   "duration"
     t.boolean  "request_sent"
+    t.string   "driver_id"
+    t.text     "signature_image"
+    t.datetime "request_sent_on"
+    t.boolean  "completed"
+    t.boolean  "deleted"
   end
 
   add_index "deliveries", ["deliverable_type", "deliverable_id"], name: "index_deliveries_on_deliverable_type_and_deliverable_id"
@@ -114,6 +139,12 @@ ActiveRecord::Schema.define(version: 20180319165200) do
     t.string   "exp_year"
     t.string   "cvc"
     t.string   "stripe_token"
+    t.string   "firebase_uid"
+    t.string   "address"
+    t.boolean  "subscribed_to_push"
+    t.string   "push_endpoint"
+    t.string   "sub_auth"
+    t.string   "p256dh"
   end
 
   add_index "drivers", ["email"], name: "index_drivers_on_email", unique: true
@@ -245,10 +276,30 @@ ActiveRecord::Schema.define(version: 20180319165200) do
     t.string   "cvc"
     t.string   "card_token"
     t.string   "firebase_id"
+    t.integer  "deliveries_today"
+    t.boolean  "subscribed_to_push"
+    t.string   "push_endpoint"
+    t.string   "sub_auth"
+    t.string   "p256dh"
   end
 
   add_index "pharmacies", ["email"], name: "index_pharmacies_on_email", unique: true
   add_index "pharmacies", ["reset_password_token"], name: "index_pharmacies_on_reset_password_token", unique: true
+
+  create_table "request_alerts", force: :cascade do |t|
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "pharm_location"
+    t.integer  "batch_id"
+    t.integer  "deliveries"
+    t.string   "pharm_name"
+    t.string   "pharm_phone"
+    t.string   "fare"
+    t.string   "mileage"
+    t.string   "duration"
+    t.integer  "driver_id"
+    t.integer  "pharm_id"
+  end
 
   create_table "request_messages", force: :cascade do |t|
     t.datetime "created_at",    null: false

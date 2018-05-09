@@ -1,0 +1,13 @@
+{
+  "name": "RxCarriers",
+  "short_name": "RxCarriers",
+  "icons": [{
+    "src": "javascripts/pharmacy.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  }],
+  "start_url": "/",
+  "display": "standalone",
+  "gcm_sender_id": "966953661548",
+  "gcm_user_visible_only": true
+}

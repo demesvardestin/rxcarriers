@@ -1,104 +1,75 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Darlyne</title>
+    <title>RxCarriers</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="/javascripts/manifest.json">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="application.css.scss">
     <link rel="stylesheet" href="node_modules/material-components-web/dist/material-components-web.css">
     <!-- -Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
     <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase-firestore.js"></script>
+    <script src="//js.pusher.com/3.1/pusher.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <!-- Stripe -->
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script>
-      // Create a Stripe client
-      var stripe = Stripe('pk_test_r46MnQQ9cxjMadPDwXrxHRgm');
-      
-      // Create an instance of Elements
-      var elements = stripe.elements();
-      
-      // Custom styling can be passed to options when creating an Element.
-      // (Note that this demo uses a wider set of styles than the guide below.)
-      var style = {
-        base: {
-          color: '#32325d',
-          lineHeight: '18px',
-          fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-          fontSmoothing: 'antialiased',
-          fontSize: '16px',
-          '::placeholder': {
-            color: '#aab7c4'
-          }
-        },
-        invalid: {
-          color: '#fa755a',
-          iconColor: '#fa755a'
-        }
-      };
-      
-      // Create an instance of the card Element
-      var card = elements.create('card', {style: style});
-      
-      // Add an instance of the card Element into the `card-element` <div>
-      card.mount('#card-element');
-      
-      // Handle real-time validation errors from the card Element.
-      card.addEventListener('change', function(event) {
-        var displayError = document.getElementById('card-errors');
-        if (event.error) {
-          displayError.textContent = event.error.message;
-        } else {
-          displayError.textContent = '';
-        }
-      });
-      
-      // Handle form submission //
-      var form = document.getElementById('payment-form');
-      form.addEventListener('submit', function(event) {
-          event.preventDefault();
-          stripe.createToken(card).then(function(result) {
-              if (result.error) {
-                // Inform the user if there was an error
-                var errorElement = document.getElementById('card-errors');
-                errorElement.textContent = result.error.message;
-              } else {
-                  $('#payment-form').css('opacity', '0.3');
-                  $('.spinner-row').css('margin-top', '-15px');
-                  $('.spinner-row').show();
-                // Send the token to your server
-                stripeTokenHandler(result.token);
-              }
-        });
-      });
-      function stripeTokenHandler(token) {
-        // Insert the token ID into the form so it gets submitted to the server
-        var form = document.getElementById('payment-form');
-        var hiddenInput = document.createElement('input');
-        hiddenInput.setAttribute('type', 'hidden');
-        hiddenInput.setAttribute('name', 'stripeToken');
-        hiddenInput.setAttribute('value', token.id);
-        form.appendChild(hiddenInput);
-      
-        // Submit the form
-        form.submit();
-      };
-    </script>
-    <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzOsjjGRrrGUxVOMjapGMhfLSj3iTp_Pc&callback=calculateMileage">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <script>
+      window.vapidPublicKey = new Uint8Array("<%= decoded_vapid %>");
+      
+      // PUSHER NOTIFICATIONS *pusher.com*
+      // Enable pusher logging - don't include this in production
+      Pusher.logToConsole = true;
+      
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "showDuration": "300000",
+        "hideDuration": "1000",
+        "timeOut": "300000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      };
+  
+      var pusher = new Pusher('6b4730083f66596ec97e', {
+        cluster: 'us2',
+        encrypted: true
+      });
+  
+      var channel = pusher.subscribe('my-channel');
+      channel.bind('my-event', function(data) {
+        var message = data.message;
+        console.log(message);
+        toastr["success"](message);
+        $('.notification-placeholder').hide();
+        $('#notificationsModalBody')
+        .append('<div class="notif">'+message+'</div>');
+        $('#alertCount')
+        .html('<span class="badge badge-warning badge-notif white">1</span>');
+      });
+    </script>
+    <script src="/javascripts/notifications.js"></script>
     <%= csrf_meta_tags %>
   </head>
   <body id="main-body">
@@ -112,6 +83,10 @@
             <%= yield %>
           </div>
         </div>
+      </div>
+    <% elsif current_courier != nil %>
+      <div class="courier-container">
+        <%= yield %>
       </div>
     <% else %>
       <%= yield %>

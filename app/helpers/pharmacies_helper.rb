@@ -42,6 +42,10 @@ module PharmaciesHelper
         url.include?('/patients') 
     end
     
+    def payments_path
+        url.include?('/transactions') 
+    end
+    
     def transaction_path
         url.include?('/transactions') 
     end

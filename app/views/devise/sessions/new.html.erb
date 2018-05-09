@@ -1,55 +1,31 @@
 <link class="stylesheet" href="devise.css">
 
-<style>
-  body {
-    overflow-y: hidden !important;
-  }
-</style>
-<body>
-  <div class="driver-signup col-md-5">
-    <div class="driver-signup-div">
-      <div class="row">
-        <div class="col-md-10 offset-md-1 driver-signup-banner">
-          <h2 class="driver-signup-banner-text text-center">Welcome back!</h2>
+<div class="row" id="pharmacy-login">
+  <div class="col-md-4 offset-md-4 pharmacy-login-form">
+    <div class="header"><h4 class="text-center medium-gray"><%= path %> login</h4></div>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= devise_error_messages! %>
+    
+      <div class="field">
+        <%= f.email_field :email, class:"form-control form--control font-14", autofocus: true, placeholder:" " %>
+        <label for="email">Email</label>
+      </div>
+    
+      <div class="field">
+        <%= f.password_field :password, class:"form-control form--control font-14", autocomplete: "off", placeholder:" " %>
+        <label for="password">Password</label>
+      </div>
+    
+      <div class="actions" style="padding-top: 30px;">
+        <div class="row">
+          <div class="col-md-12">
+            <%= f.submit "Log in", class:"btn btn-light btn-block" %>
+          </div>
+          <div class="col-md-12 add-padding-top">
+            <%= link_to "Register", courier_signup_path, class:"btn btn-info btn-block white" %>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-10 offset-md-1 driver-signup-form">
-          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-            <%= devise_error_messages! %>
-          
-            <div class="field">
-              <%= f.email_field :email, class:"form-control", autofocus: true, placeholder:"Email" %>
-            </div>
-          
-            <div class="field">
-              <%= f.password_field :password, class:"form-control", autocomplete: "off", placeholder:"Password" %>
-            </div>
-          
-            <% if devise_mapping.rememberable? -%>
-              <div class="field">
-                <%= f.check_box :remember_me %>
-                <%= f.label :remember_me %>
-              </div>
-            <% end %>
-          
-            <div class="actions">
-              <div class="row">
-                <div class="col-md-6">
-                  <%= f.submit "Log in", class:"btn btn-primary btn-block driver-signup-button" %>
-                </div>
-                <div class="col-md-6">
-                  <%= link_to "Register", new_driver_registration_path, class:"btn btn-light btn-block driver-login-button" %>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
+    <% end %>
   </div>
-  <div class="col-md-7 placeholder-div no-mobile">
-    <img src="https://www.cannarecruiter.com/wp-content/uploads/2016/11/medical-marijuana-delivery-jobs.jpg" class="courier-image">
-  </div>
-</body>
-
+</div>

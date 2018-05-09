@@ -12,25 +12,30 @@
   <% end %>
   
   <div class="field">
-    <%= f.text_field :name, class:"form-control font-14 ", autofocus: true, placeholder:"Name" %>
+    <%= f.text_field :name, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
+    <label for="name">Name</label>
   </div>
   <div class="field">
-    <%= f.text_field :number, class:"form-control font-14 ", autocomplete: "off", placeholder:"Phone Number" %>
+    <%= f.text_field :number, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
+    <label for="number">Phone Number</label>
   </div>
   <div class="field">
-    <%= f.text_field :supervisor, class:"form-control font-14 ", autocomplete: "off", placeholder:"Supervising Pharmacist" %>
+    <%= f.text_field :supervisor, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
+    <label for="supervisor">Supervisor</label>
   </div>
   <div class="field">
-    <%= f.text_field :street, class:"form-control font-14 ", placeholder:"Street Address" %>
+    <%= f.text_field :street, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
+    <label for="street">Street</label>
   </div>
   <div class="field">
-    <%= f.text_field :website, class:"form-control font-14 ", placeholder:"Pharmacy Website" %>
+    <%= f.text_field :website, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
+    <label for="website">Website</label>
   </div>
   <div class="field">
     <%= f.label :pharmacy_logo %>
     <%= f.file_field :avatar, class:"form-control font-14" %>
   </div>
   <div class="actions text-right">
-    <%= f.submit "Update!", class:"btn btn-primary btn-lg cursor-pointer update-profile"%>
+    <%= f.submit "Update!", class:"btn btn-info font-14 btn-lg cursor-pointer update-profile"%>
   </div>
 <% end %>

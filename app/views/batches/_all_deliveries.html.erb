@@ -16,9 +16,11 @@
             <div class="col-md-1 no-horizontal-padding">
                 <%= b.time %>
             </div>
-            <div class="col-md-1 no-horizontal-padding">
-                <%= link_to remove_delivery_path(:id => b.id), class:"btn btn-warning removeDelivery", remote: true, method: :get do %>
-                    <i class="fa fa-times-circle font-10 theme-blue"></i>
+            <div class="col-md-1 no-horizontal-padding" id="deleteDeliveryItem">
+                <% if @batch.request_id.nil? %>
+                    <%= link_to remove_delivery_path(:id => b.id), class:"btn btn-warning removeDelivery", remote: true, method: :get do %>
+                        <i class="fa fa-times-circle font-10 theme-blue"></i>
+                    <% end %>
                 <% end %>
             </div>
         </div>

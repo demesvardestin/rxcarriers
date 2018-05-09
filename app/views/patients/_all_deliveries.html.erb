@@ -4,17 +4,22 @@
             <div class="col-md-3">
                 <span><%= b.medications %></span>
             </div>
-            <div class="col-md-3">
-                <span><%= timestamp(b) %></span>
+            <div class="col-md-2">
+                <span><%= to_mm_dd_yy(b.request_sent_on) %></span>
             </div>
-            <div class="col-md-3">
-                <span>Pending</span>
+            <div class="col-md-2">
+                <%= find_courier(b.driver_id) %>
             </div>
             <div class="col-md-1">
                 <%= b.copay %>
             </div>
+            <div class="col-md-2" style="padding-top: 0; padding-bottom: 0;">
+                <a class="background-transparent no-underline" href="<%= b.signature_image %>" target="_blank">
+                    <% if b.signature_image %><img src="<%= b.has_signature? %>" style="height: 40px; width: 100%;"><% end %>
+                </a>
+            </div>
             <div class="col-md-2">
-                No
+                <%= to_mm_dd_yy(b.signed_on) %>
             </div>
         </div>
     </div>

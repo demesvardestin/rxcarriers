@@ -1,29 +1,126 @@
-<div class="all-requests">
-    <div class="request-card-container">
-        <ol>
-            <% @batch.deliveries.reverse.each do |del| %>
-                <li>
-                    <div class="row">
-                        <div class="col-md-7 request-card-div">
-                            <div class="card" style="">
-                              <div class="card-body">
-                                <h5 class="card-title"><%= del.recipient_address %></h5>
-                                <h6 class="card-subtitle mb-2 text-muted">
-                                    <%= del.recipient_phone_number %> 
-                                    <% if del.signed %>
-                                        <span class="badge badge-success">Delivered</span>
-                                    <% end %>
-                                </h6>
-                                <%= link_to 'View details', delivery_path(del), class:"btn btn-primary" %>
-                                <a href="https://www.google.com/maps/dir/?api=1&destination=<%= CGI::escape(del.recipient_address) %>" class="btn btn-light white" target="_blank"> 
-                                    View in Maps
-                                </a>
-                              </div>
+
+<div class="container">
+    <div class="row" style="padding-top: 5px; padding-bottom: 40px;">
+        <div class="col-md-12">
+            <div class="card" style="border: none !important;">
+                <% if @batch %>
+                    <div class="card-header text-center background-transparent font-14 weighted">
+                        Batch <%= @batch.id %>
+                    </div>
+                    <div class="card-body" style="padding: 0 !important;">
+                        <div class="row">
+                            <div class="col-md-3" style="padding-bottom: 20px;">
+                                <div class="card border-green">
+                                    <div class="card-header font-14 background-transparent weighted">
+                                        <%= @pharmacy.name %>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="float-left">
+                                            <div class="address-icon">
+                                                <i class="fa fa-map-marker"></i>
+                                            </div>
+                                            <div class="phone-icon add-padding-top">
+                                                <i class="fa fa-phone"></i>
+                                            </div>
+                                        </div>
+                                        <div class="float-right text-right">
+                                            <div class="address-text">
+                                                <%= @pharmacy.street[0..25] + '...' %>
+                                            </div>
+                                            <div class="phone-text add-padding-top">
+                                                <%= @pharmacy.number %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer font-14 background-transparent">
+                                        <div class="float-left">
+                                            <a class="btn btn-primary font-14 white" href="https://www.google.com/maps/dir/?api=1&destination=<%= uri_escape(@pharmacy.street) %>&travelmode=driving" target="_blank">
+                                                <i class="fa fa-location-arrow"></i> Start
+                                            </a>
+                                        </div>
+                                        <div class="float-right text-right">
+                                            <a class="btn btn-info font-14 white" href="">
+                                                <i class="fa fa-mobile"></i> Call
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <% @batch.deliveries.incomplete.each do |d| %>
+                                <div class="col-md-3" style="padding-bottom: 20px;">
+                                    <div class="card border-blue">
+                                        <div class="card-header">
+                                            <div class="float-left">
+                                                Delivery <%= @batch.deliveries.index(d) + 1 %>
+                                            </div>
+                                            <div class="float-right text-right">
+                                                <a class="theme-blue background-transparent cursor-pointer" id="<%= d.id %>" onclick="getDeliverySignature(this)">
+                                                    <i class="fa fa-pencil-square-o"></i> Confirmation
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="float-left">
+                                                <div class="address-icon">
+                                                    <i class="fa fa-map-marker"></i>
+                                                </div>
+                                                <div class="phone-icon add-padding-top">
+                                                    <i class="fa fa-phone"></i>
+                                                </div>
+                                            </div>
+                                            <div class="float-right text-right">
+                                                <div class="address-text">
+                                                    <%= d.recipient_address[0..25] + '...' %>
+                                                </div>
+                                                <div class="phone-text add-padding-top">
+                                                    <%= d.recipient_phone_number %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer font-14 background-transparent">
+                                            <div class="float-left">
+                                                <a class="btn btn-primary font-14 white" href="https://www.google.com/maps/dir/?api=1&destination=<%= uri_escape(d.recipient_address) %>&travelmode=driving" target="_blank">
+                                                    <i class="fa fa-location-arrow"></i> Start
+                                                </a>
+                                            </div>
+                                            <div class="float-right text-right">
+                                                <a class="btn btn-info font-14 white" href="">
+                                                    <i class="fa fa-mobile"></i> Call
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% end %>
                         </div>
                     </div>
-                </li>
-            <% end %>
-        </ol>
+                <% else %>
+                    <h6 class="font-14">
+                        No live deliveries at this time. You have either completed all your deliveries, or have not yet received one.
+                    </h6>
+                <% end %>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+    function getDeliverySignature(elem) {
+        var id = elem.id;
+        console.log(id);
+        window.location.replace('/courier/deliveries/'+id+'?cid=<%= current_courier.cid %>')
+    }
+    // check for request id and driver id params. if present, url is most likely
+    // the one for accepting a request. if so, proceed to update request doc
+    // on firebase, and subsequently send notification to pharmacy
+    var request_id = "<%= params[:request_id] %>";
+    var driver_id = "<%= params[:driver_id] %>";
+    var batch_id = "<%= params[:batch_id] %>";
+    database.collection('requests').doc(request_id).set({driver: driver_id}, {merge: true})
+    .then(e => {
+        console.log('request updated, driver added.');
+    }).catch(f => {
+        console.error('request could not be updated. error: '+f.code);
+    });
+    $.get('/notifications?batch_id='+batch_id+'&driver_id='+driver_id);
+</script>

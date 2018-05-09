@@ -14,7 +14,7 @@
                 <%= c.shorten(c.description) %>
             </div>
             <div class="col-md-3 offset-md-1 no-horizontal-padding">
-                <%= c.updated_at %>
+                <%= to_mm_dd_yy(c.updated_at) %>
             </div>
             <div class="col-md-1 no-horizontal-padding">
                 <a class="dropdown-toggle ellipsis" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

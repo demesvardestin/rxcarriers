@@ -53,8 +53,13 @@
                 </div>
             </div>
             <div class="card-footer text-muted background-transparent">
-                <h6 class="font-13"><i class="fa fa-user"></i> Customer was added</h6>
-                <h6 class="medium-gray font-13"><%= timestamp(@patient) %></h6>
+                <div class="float-left">
+                    <img src="/images/user_full.png">
+                </div>
+                <div class="float-left add-padding-left-20">
+                    <h6 class="font-13">Customer was added</h6>
+                    <h6 class="medium-gray font-13"><%= added_on_timestamp(@patient) %></h6>
+                </div>
             </div>
         </div>
     </section>
@@ -153,17 +158,20 @@
                                     <div class="col-md-3">
                                         Medications
                                     </div>
-                                    <div class="col-md-3">
-                                        Delivery Date
+                                    <div class="col-md-2">
+                                        Delivery Sent
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         Courier
                                     </div>
                                     <div class="col-md-1">
                                         Copay
                                     </div>
                                     <div class="col-md-2">
-                                        Confirmed
+                                        Signature
+                                    </div>
+                                    <div class="col-md-2">
+                                        Signed on
                                     </div>
                                 </div>
                             </div>

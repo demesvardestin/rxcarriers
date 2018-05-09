@@ -96,7 +96,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 text-left">
-                                    <h6 class="charge_date"><%= @invoice.updated_at %></h6>
+                                    <h6 class="charge_date"><%= to_mm_dd_yy(@invoice.updated_at) %></h6>
                                 </div>
                             </div>
                             <div class="row">

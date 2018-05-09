@@ -5,7 +5,6 @@ class InvoicesController < ApplicationController
   
   def index
     @invoices = Invoice.where(pharmacy_id: current_pharmacy.id).paginate(:page => params[:page], :per_page => 10)
-    @charge = Charge.new
     @pharmacy = current_pharmacy
   end
   

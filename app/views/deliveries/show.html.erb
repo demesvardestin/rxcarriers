@@ -1,5 +1,88 @@
-<% if current_pharmacy %>
-    <%= render 'pharmacy_delivery_view' %>
-<% elsif current_driver %>
-    <%= render 'driver_delivery_view' %>
-<% end %>
+<div class="row" style="padding-top: 30px; padding-bottom: 40px;">
+    <div class="col-md-4 offset-md-4" id="deliverySignature">
+        <% if @delivery.signature_image != nil %>
+            <h6 class="font-14 text-center">Delivery signed on <%= to_mm_dd_yy(@delivery.signed_on) %></h6>
+        <% else %>
+            <div class="card">
+                <div class="card-header background-transparent weighted font-14">
+                    Customer Signature (REQUIRED)
+                </div>
+                <canvas></canvas>
+                <div class="card-footer">
+                    <div class="float-left">
+                        <button type="button" class="btn btn-primary font-14" id="submitSignature"><i class="fa fa-check-circle"></i> Submit</button>
+                    </div>
+                    <div class="float-right">
+                        <button type="button" class="btn btn-info font-14 clear" id="clearCanvas" data-action="clear"><i class="fa fa-times-circle"></i> Clear</button>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>
+<script>
+    var canvas = document.querySelector("canvas");
+    console.log(canvas);
+    
+    var signaturePad = new SignaturePad(canvas);
+    console.log(signaturePad);
+    
+    const savePNGButton = document.getElementById('submitSignature');
+    
+    // Clears the canvas
+    $('#clearCanvas').on('click', function() {
+        console.log('cleared!');
+        signaturePad.clear();
+    });
+    
+    function download(dataURL, filename) {
+        var blob = dataURLToBlob(dataURL);
+        var storageRef = storage.ref();
+        var ref = storageRef.child('/signatures/delivery<%= params[:id] %>');
+        var file = blob;
+        ref.put(file).then(function(snapshot) {
+            storageRef.child('/signatures/delivery<%= params[:id] %>').getDownloadURL().then(function(url) {
+                var link = url;
+                $.get('/download_signature?did='+<%= params[:id] %>+'&url='+link);
+                $('#deliverySignature')
+                .html(
+                    '<h6 class="font-14 text-center">Delivery signed</h6>'+
+                    '<h6 class="font-14 text-center">'+
+                    '<a href="/courier/deliveries" class="btn btn-light font-14">'
+                    + 'Go to deliveries</a></h6>'
+                );
+            }).catch(function(error) {
+                // Handle any errors
+                console.log('Image upload failed because: '+error.code);
+            });
+        }).catch(e => {
+            console.log('Upload unsuccessful! Error: '+e.code);
+        });
+    }
+    
+    function dataURLToBlob(dataURL) {
+      // Code taken from https://github.com/ebidel/filer.js
+      var parts = dataURL.split(';base64,');
+      var contentType = parts[0].split(":")[1];
+      var raw = window.atob(parts[1]);
+      var rawLength = raw.length;
+      var uInt8Array = new Uint8Array(rawLength);
+    
+      for (var i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+      }
+    
+      return new Blob([uInt8Array], { type: contentType });
+    }
+    
+    $('#submitSignature').on("click", function() {
+        if (signaturePad.isEmpty()) {
+            alert("Please provide a signature first.");
+        } else {
+            $('#submitSignature').css('opacity', '0.7');
+            $('#submitSignature').html('processing...');
+            var dataURL = signaturePad.toDataURL();
+            download(dataURL, "cust_signature.png");
+        }
+    });
+</script>

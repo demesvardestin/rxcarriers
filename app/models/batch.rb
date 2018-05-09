@@ -71,6 +71,18 @@ class Batch < ActiveRecord::Base
         where("lower(#{field_name}) like ?", "%#{param}%")
     end
     
+    def self.week_earnings(driver_id)
+        driver = Driver.find_by(id: driver_id)
+        batches = Batch.where(driver_id: driver.id, request_sent_on: 1.week.ago..Time.now.utc)
+        total = 0.0
+        batches.each do |b|
+            total += b.request_cost.to_f
+        end
+        fee = total * 0.15
+        fee_round = fee.round(2)
+        return (total - fee_round).round(2)
+    end
+    
     def to_miles(dist)
         return (dist * 0.000621371).round(2)
     end
@@ -90,6 +102,28 @@ class Batch < ActiveRecord::Base
         per_minute = 20
         total_fare = base_fare + (to_miles(mileage) * per_mile) + (to_minutes(duration) * per_minute)
         return to_dollars(total_fare), to_miles(mileage), to_minutes(duration)
+    end
+    
+    def update_status(status)
+        case status
+        when 'pending'
+            self.update(pending: true, request_status: 'pending')
+        when 'accepted'
+            self.update(pending: false, accepted: true, request_status: 'accepted')
+        when 'picked'
+            self.update(pending: false, accepted: true, picked: true, request_status: 'picked up')
+        when 'completed'
+            self.update(pending: false, accepted: true, picked: true, delivered: true, request_status: 'completed')
+        end
+    end
+    
+    def pharmacy
+        id = self.pharmacy_id
+        return Pharmacy.find(id)
+    end
+    
+    def notification_text
+        return "Pharmacy: #{self.pharmacy.name}\nAddress: #{self.pharmacy.street}\nBatch ID: #{self.id}" 
     end
     
     def self.parse_response(from, resp)
@@ -268,6 +302,15 @@ class Batch < ActiveRecord::Base
         ).each do |message|
            message.delete 
         end
+    end
+    
+    def pusher
+        return Pusher::Client.new(
+          app_id: "521090",
+          key: "6b4730083f66596ec97e",
+          secret: "95a0a2107ac2e620e46a",
+          cluster: 'us2'
+        )
     end
     
     def self.initialize_twilio

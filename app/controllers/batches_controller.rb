@@ -1,6 +1,6 @@
 class BatchesController < ApplicationController
   skip_before_action :verify_authenticity_token
-  # before_action :authenticate_pharmacy!, except: [:new]
+  before_action :authenticate_pharmacy!, except: [:home, :notifications]
   before_filter :load_deliverable, only: [:show]
   before_action :check_current_pharmacy, only: [:new, :index, :create, :request_driver, :destroy]
   before_action :check_authenticated, only: [:show]
@@ -16,14 +16,15 @@ class BatchesController < ApplicationController
   def show
     @batch = Batch.find(params[:id])
     @pharmacy = Pharmacy.find(@batch.pharmacy_id)
-    @batches = Batch.where(pharmacy_id: current_pharmacy.id)
+    @batches = Batch.where(pharmacy_id: @pharmacy.id)
+    if @batch.driver_id
+      @courier = Driver.find(@batch.driver_id.to_i)
+    end
     @id = @batches.index(@batch) + 1
-    @delivery = @deliverable.deliveries.new
-    @deliveries = @deliverable.deliveries.all
   end
   
   def index
-    @batches = Batch.where(pharmacy_id: current_pharmacy.id).all
+    @batches = Batch.where(pharmacy_id: current_pharmacy.id, deleted: false).all
     @patients = Patient.where(pharmacy_id: current_pharmacy.id).all
     @pharmacy = current_pharmacy
   end
@@ -32,10 +33,17 @@ class BatchesController < ApplicationController
     pharmacist = params["pharmacist"].split('_').join(' ').titleize
     @batch = Batch.create(pharmacy_id: current_pharmacy.id, request_status: 'pending',
                           pharmacist: pharmacist, request_mileage: 0, request_cost: 0,
-                          delivery_duration: 0)
+                          delivery_duration: 0, deleted: false)
     respond_to do |format|
       format.html {redirect_to @batch}
     end
+  end
+  
+  def cancel_request
+    id = params[:id]
+    @batch = Batch.find(id)
+    @batch.update(cancelled: true, request_status: 'cancelled', request_id: nil)
+    render :layout => false
   end
   
   def update_batch
@@ -45,8 +53,15 @@ class BatchesController < ApplicationController
     if @batch.pharmacy_id != current_pharmacy.id
       return
     end
-    @batch.deliveries.each {|d| d.update(request_sent: true) }
-    @batch.update(request_id: request_id)
+    @batch.deliveries.each {|d| d.update(request_sent: true, request_sent_on: DateTime.now, completed: false) }
+    @batch.update(request_id: request_id, deliveries_completed: 0, request_sent_on: DateTime.now)
+    render :layout => false
+  end
+  
+  def mark_picked
+    id = params["id"].to_i
+    @batch = Batch.find(id)
+    @batch.update_status('picked')
     render :layout => false
   end
   
@@ -60,6 +75,9 @@ class BatchesController < ApplicationController
   def delete_delivery
     deliv_id = params[:id]
     @delivery = Delivery.find(deliv_id)
+    if @delivery.deliverable.request_id != nil
+      return
+    end
     @delivery.destroy
     respond_to do |format|
       format.js {}
@@ -102,7 +120,7 @@ class BatchesController < ApplicationController
     phone = params['patient_phone']
     copay = params['copay']
     medications = params["medications"]
-    batch_id = params['batch_id']
+    batch_id = params['batch_id'].to_i
     time = params['delivery']
     @delivery = Delivery.create(
       recipient_name: name,
@@ -127,11 +145,31 @@ class BatchesController < ApplicationController
   end
   
   def notifications
-    batch_id = params['batch_id']
-    Notification.create(batch_id: batch_id, pharmacy_id: current_pharmacy.id,
-                        content: "Your request for batch # #{batch_id} has been accepted", read: false)
-    @notifications = Notification.where(pharmacy_id: current_pharmacy.id, read: false)
+    batch_id = params['batch_id'].to_i
+    driver_id = params['driver_id'].to_i
+    @courier = Driver.find_by(driver_id)
+    @batch = Batch.find_by(batch_id)
+    if @courier.nil? || @batch.nil?
+      return
+    end
+    @batch.update(driver_id: driver_id)
+    @batch.update_status('accepted')
+    @batch.deliveries.each {|b| b.update(driver_id: driver_id)}
+    
+    # trigger on 'my-channel' an event called 'my-event' with this payload:
+    pusher.trigger('my-channel', 'my-event', {
+        message: "Courier #{@courier.first_name} has accepted your request for batch # #{batch_id}"
+    })
     render :layout => false
+  end
+  
+  def pusher
+    return Pusher::Client.new(
+      app_id: "521090",
+      key: "6b4730083f66596ec97e",
+      secret: "95a0a2107ac2e620e46a",
+      cluster: 'us2'
+    )
   end
   
   def clear_notifications
@@ -152,18 +190,8 @@ class BatchesController < ApplicationController
   end
   
   def batch_search
-    @batches = Batch.where(pharmacy_id: current_pharmacy.id).search(params[:search])
+    @batches = Batch.where(pharmacy_id: current_pharmacy.id, deleted: false).search(params[:search])
     render :layout => false
-  end
-  
-  # initiate a request for a local driver
-  def request_driver
-    @batch = Batch.find(params[:id])
-    @pharmacy = current_pharmacy
-    @request = Request.create!(pharmacy_id: @pharmacy.id, batch_id: @batch.batch_id, count: 0, status: 'pending')
-    Request.send_request(@request)
-    @batch.update(request_status: 'pending')
-    redirect_to :back, notice: "Request Sent. Check the requests page for status updates."
   end
   
   def driver_response
@@ -173,14 +201,14 @@ class BatchesController < ApplicationController
   end
   
   def order_asc
-    @batches = Batch.where(pharmacy_id: current_pharmacy.id).all.order('created_at ASC')
+    @batches = Batch.where(pharmacy_id: current_pharmacy.id, deleted: false).all.order('created_at ASC')
     respond_to do |format|
       format.js {}
     end
   end
   
   def order_desc
-    @batches = Batch.where(pharmacy_id: current_pharmacy.id).all.order('created_at DESC')
+    @batches = Batch.where(pharmacy_id: current_pharmacy.id, deleted: false).all.order('created_at DESC')
     respond_to do |format|
       format.js {}
     end
@@ -196,7 +224,7 @@ class BatchesController < ApplicationController
 
   def destroy
     @batch = Batch.find(params[:id])
-    @batch.destroy
+    @batch.update(deleted: true)
     respond_to do |format|
       format.js {}
     end
