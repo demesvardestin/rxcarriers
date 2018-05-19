@@ -30,12 +30,20 @@ module PharmaciesHelper
         end
     end
     
+    # def home
+    #     url.include?("/batches")
+    # end
+    
     def home
-        url.include?("/batches")
+        url.include?("/dashboard")
     end
     
     def request_path
         url.include?('/requests') 
+    end
+    
+    def rx_list_path
+        url.include?('/rx') 
     end
     
     def patients_path

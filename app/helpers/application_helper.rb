@@ -19,7 +19,7 @@ module ApplicationHelper
     end
     
     def path
-        if url.include?('pharmacy')
+        if url.include?('pharmacy') || url.include?('pharmacies')
             'Pharmacy'
         else
             'Courier'

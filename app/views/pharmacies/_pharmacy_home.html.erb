@@ -10,17 +10,17 @@
         <ul class="navbar-nav justify-content-end">
           <li id="pharmacy_id" style="display: none;"><%= current_pharmacy.id %></li>
           <li class="nav-item nav-item-logged-in nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side <% if home %>active<% end %>" href="/batches"><i class="fa fa-archive"></i> Batches</a>
+            <a class="nav-link nav-link-side <% if home %>active<% end %>" href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a>
             
           </li>
           <li class="nav-item nav-item-logged-in nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side <% if patients_path %>active<% end %>" href="/customers"><i class="fa fa-users"></i> Customers</a>
+            <a class="nav-link nav-link-side <% if rx_list_path %>active<% end %>" href="/rx"><i class="fa fa-files-o"></i> Rx List</a>
             
           </li>
-          <li class="nav-item nav-item-logged-in nav-item-pharmacy-view">
-            <a class="nav-link nav-link-side <% if payments_path %>active<% end %>" href="/transactions"><i class="fa fa-credit-card"></i> Payments</a>
+          <!--<li class="nav-item nav-item-logged-in nav-item-pharmacy-view">-->
+          <!--  <a class="nav-link nav-link-side <% if payments_path %>active<% end %>" href="/transactions"><i class="fa fa-credit-card"></i> Payments</a>-->
             
-          </li>
+          <!--</li>-->
           <li class="nav-item nav-item-logged-in nav-item-pharmacy-view">
             <a class="nav-link nav-link-side cursor-pointer notification-tab" data-toggle="modal" data-target="#notificationsModal">
               <i class="fa fa-bell-o"></i> Alerts

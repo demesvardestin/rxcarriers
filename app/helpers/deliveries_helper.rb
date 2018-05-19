@@ -23,4 +23,46 @@ module DeliveriesHelper
         s.html_safe
     end
     
+    def deliveries_today
+        id = current_pharmacy.id
+        @all = Delivery.where(pharmacy_id: id, request_sent_on: DateTime.now.at_beginning_of_day.utc..Time.now.utc)
+        @deliveries = @all.select {|d| d.deliverable != nil && d.deliverable.request_id != nil }
+        if @deliveries
+            return @deliveries.count
+        end
+    end
+    
+    def requests_today
+        id = current_pharmacy.id
+        @delivery_requests = DeliveryRequest.where(pharmacy_id: id, created_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc)
+        if @delivery_requests
+            return @delivery_requests.count
+        end
+    end
+    
+    def refills_today
+        id = current_pharmacy.id
+        @refills = RequestAlert.where(pharm_id: id, created_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc)
+        if @refills != nil
+            return @refills.count
+        end
+    end
+    
+    def today
+        return DateTime.now.strftime("%B %-dth %Y") 
+    end
+    
+    def get_status_color(status)
+        case status.downcase
+        when 'on hold'
+            'theme-yellow'
+        when 'refilled'
+            'theme-green'
+        when 'inactive'
+            'theme-red'
+        else
+            'theme-blue'
+        end
+    end
+    
 end

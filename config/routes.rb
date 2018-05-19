@@ -68,6 +68,15 @@ Rails.application.routes.draw do
   get '/accept_request', to: 'drivers#accept_request'
   get '/unavailable_request', to: 'drivers#unavailable_request'
   get '/push_to_pharmacy', to: 'batches#notifications'
+  get '/rx', to: 'deliveries#index'
+  get '/status', to: 'deliveries#status'
+  get '/search_my_rx', to: 'deliveries#rx_status'
+  get '/get_pharmacy', to: 'deliveries#get_pharmacy'
+  get '/request_delivery', to: 'deliveries#request_delivery'
+  get '/update_rx_status', to: 'deliveries#update_rx_status'
+  get '/rx_search', to: 'deliveries#rx_search'
+  get '/add_new_rx', to: 'deliveries#add_new_rx'
+  get '/dashboard', to: 'deliveries#dashboard'
   
   # resource path
   resources :invoices, only: [:create, :show, :index, :destroy]

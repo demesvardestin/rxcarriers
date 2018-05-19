@@ -1,8 +1,8 @@
-<% @patients.each do |pat| %>
-    <button class="font-14 weighted patient text-left background-transparent no-border no-box-shadow cursor-pointer" id="pat-<%= pat.id%>" address="<%= pat.address %>"
-        phone="<%= pat.phone %>" instructions="<%= pat.delivery_instructions%>" name="<%= pat.name %>" pat_id="<%= pat.id %>" onclick="selectCustomer(this)">
-        <img src="/images/user_full.png"> <strong><%= pat.name %></strong>
-        - <em class="font-13 medium-gray"><%= pat.phone %></em>
+<% @rx.each do |rx| %>
+    <button class="font-14 weighted patient text-left background-transparent no-border no-box-shadow cursor-pointer" id="rx-<%= rx.id %>" address="<%= rx.address %>"
+        phone="<%= rx.phone_number %>" instructions="<%= rx.delivery_instructions%>" name="<%= rx.rx %>" rx_id="<%= rx.id %>" onclick="selectCustomer(this)">
+        <img src="/javascripts/pharmacy.png"> <strong><%= rx.rx %></strong>
+        - <em class="font-13 medium-gray"><%= rx.phone_number %></em>
     </button>
     <hr style="margin-top: 0;">
 <% end %>

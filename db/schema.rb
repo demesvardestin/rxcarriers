@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180504223239) do
+ActiveRecord::Schema.define(version: 20180518000024) do
 
 # Could not dump table "batches" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
@@ -84,9 +84,20 @@ ActiveRecord::Schema.define(version: 20180504223239) do
     t.datetime "request_sent_on"
     t.boolean  "completed"
     t.boolean  "deleted"
+    t.string   "rx"
   end
 
   add_index "deliveries", ["deliverable_type", "deliverable_id"], name: "index_deliveries_on_deliverable_type_and_deliverable_id"
+
+  create_table "delivery_requests", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "rx"
+    t.boolean  "active"
+    t.integer  "rx_id"
+    t.integer  "pharmacy_id"
+    t.string   "delivery_time"
+  end
 
   create_table "drivers", force: :cascade do |t|
     t.datetime "created_at",                          null: false
@@ -281,6 +292,7 @@ ActiveRecord::Schema.define(version: 20180504223239) do
     t.string   "push_endpoint"
     t.string   "sub_auth"
     t.string   "p256dh"
+    t.string   "npi"
   end
 
   add_index "pharmacies", ["email"], name: "index_pharmacies_on_email", unique: true
@@ -299,6 +311,9 @@ ActiveRecord::Schema.define(version: 20180504223239) do
     t.string   "duration"
     t.integer  "driver_id"
     t.integer  "pharm_id"
+    t.string   "rx"
+    t.string   "ip"
+    t.string   "time"
   end
 
   create_table "request_messages", force: :cascade do |t|
@@ -335,6 +350,24 @@ ActiveRecord::Schema.define(version: 20180504223239) do
     t.string   "car_color"
     t.string   "license_plate"
     t.string   "driver_name"
+  end
+
+  create_table "rxes", force: :cascade do |t|
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "rx"
+    t.datetime "last_filled_on"
+    t.string   "current_status"
+    t.integer  "pharmacy_id"
+    t.integer  "batch_id"
+    t.integer  "patient_id"
+    t.string   "phone_number"
+    t.string   "address"
+    t.string   "delivery_instructions"
+    t.string   "npi"
+    t.boolean  "delivery_requested"
+    t.string   "dob"
+    t.boolean  "refill_requested"
   end
 
   create_table "supports", force: :cascade do |t|

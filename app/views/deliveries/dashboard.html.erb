@@ -13,6 +13,7 @@
     #requestCountCard {
         padding-top: 30px;
         padding-bottom: 30px;
+        margin-bottom: 0;
     }
     .batch-list {
         box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
@@ -168,63 +169,39 @@
     #btnLoad {
         font-size: 14px !important;
     }
-    #creatingNewBatch, .clear-row, .search-error, .loader-row, .spinner-row,
-    #placeholder, .load-status, .hide, #hiddenBatches, .batch-list,
-    #requestCountLoader {
-        display: none;
-    }
 </style>
 
 <div class="requests-index-header">
     <div class="row" id="batchPageHeader">
-        <div class="col-md-2">
-            <span class="theme-blue font-18">Batches</span>
+        <div class="col-md-3">
+            <span class="theme-blue font-18">Dashboard</span>&bull;
+            <span class="font-14"><%= today %></span>
             <span class="medium-gray font-9 .firebase-id" id="firebaseID" firebase=""></span>
         </div>
     </div>
     <div id="main" class="row add-padding-top">
         <div class="col-md-3">
-            <div>
-                <div class="input-group-prepend">
-                    <span class="input-group-text background-transparent theme-blue" id="searchAddon">
-                        <i class="fa fa-search"></i>
-                    </span>
-                    <input type="text" class="form-control font-12 batch-search" placeholder="search batch" id="batchSearch" onkeyup="batchLiveSearch(this)">
-                </div>
-            </div>
-            <div id="createButton" class="row">
-                <div class="col-md-6 right-padding-3">
-                    <a class="btn btn-light white font-12 create-batch btn-block" href="/create_batch?pharmacist=<%= to_param(current_pharmacy.supervisor) if current_pharmacy.supervisor %>" id="createBatch">
-                        <i class="fa fa-plus"></i>
-                        New Batch
-                    </a>
-                </div>
-                <div class="col-md-6 left-padding-3">
-                    <button class="btn btn-info dropdown-toggle d--toggle--info transaction-buttons filter-batch btn-block" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Filter By
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <%= render 'dropdown' %>
-                    </div>
+            <div class="card">
+                <div class="card-body text-center" id="requestCountCard">
+                    <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="requestNumber"><%= refills_today %></span>
+                    <h6 class="font-13 medium-gray">new refill requests</h6></div>
                 </div>
             </div>
             <div id="requestsToday">
                 <div class="float-left" style="width: 49%;">
                     <div class="card">
                         <div class="card-body text-center" id="requestCountCard">
-                            <div><i class="fa fa-circle-o-notch theme-blue fa-spin fa-3x fa-fw" id="requestCountLoader"></i></div>
                             <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="requestNumber"><%= deliveries_today %></span>
-                            <h6 class="font-14 medium-gray">deliveries today</h6></div>
+                            <h6 class="font-13 medium-gray">deliveries sent today</h6></div>
                         </div>
                     </div>
                 </div>
                 <div class="float-right" style="width: 49%;">
-                    <a href="/rx" class="background-transparent no-underline">
+                    <a href="/rx?type=new&request_type=delivery&pharma_id=<%= current_pharmacy.id %>&sort_by=latest" class="background-transparent no-underline">
                         <div class="card">
                             <div class="card-body text-center" id="requestCountCard">
-                                <div><i class="fa fa-circle-o-notch theme-blue fa-spin fa-3x fa-fw" id="requestCountLoader"></i></div>
-                                <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="requestNumber"><%= deliveries_today %></span>
-                                <h6 class="font-14 medium-gray">delivery requests</h6></div>
+                                <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="requestNumber"><%= requests_today %></span>
+                                <h6 class="font-13 medium-gray">new delivery requests</h6></div>
                             </div>
                         </div>
                     </a>
@@ -248,41 +225,22 @@
                 </div>
             </div>
         </div>
-        <%= render 'common/loader' %>
         <div class="col-md-9" id="batchCardContainer">
-            <div class="card hide">
-                <div class="card-body">
-                    <section id="placeholder" class="row">
-                        <div class="col-md-12 text-center">
-                            <h6 class="medium-gray">You have not created any batch yet</h6>
-                        </div>
-                    </section>
-                    <section id="creatingNewBatch" class="row">
-                        <div class="col-md-12 text-center" id="batchCreation">
-                            <%= render 'common/spinner' %>
-                            <h6 class="medium-gray font-14 text-center">Creating batch...</h6>
-                        </div>
-                    </section>
-                </div>
-            </div>
             <div class="card batch-list">
                 <div id="scrollable">
                     <div id="scrollableChild">
                         <div class="table-header-batch container">
                             <div class="row">
-                                <div class="col-md-2">
-                                    <span>Batch ID</span>
+                                <div class="col-md-3">
+                                    <span>Rx Number</span>
                                 </div>
                                 <div class="col-md-4">
-                                    <span>Date Created</span>
+                                    <span>Time of request</span>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <span>Action</span>
                                 </div>
                             </div>
-                        </div>
-                        <div id="allBatches">
-                            <%= render 'all' %>
                         </div>
                     </div>
                 </div>
@@ -292,26 +250,6 @@
 </div>
 
 <script>
-    
-    // onLoad //
-    $('#firebaseID').hide();
-    $('.hide').hide();
-    $('#creatingNewBatch').hide();
-    $('#placeholder').hide();
-    $('.loader-row').show();
-    
-    // fetch rows of batch //
-    var batches = "<%= current_pharmacy.has_batches? %>";
-    console.log(batches);
-    // if rows present, return list, if not, return placeholder //
-    if (batches == 'true') {
-        $('.loader-row').hide();
-        $('.batch-list').show();
-    } else {
-        $('.loader-row').hide();
-        $('.hide').show();
-        $('#placeholder').show();
-    };
     
     // Add bounds to count so that number is for the current day //
     function loadRequestCount() {
@@ -324,32 +262,6 @@
         });
     };
     
-    function checkStatus(elem) {
-        var id = elem.getAttribute('batch');
-        console.log(id);
-        $.get('/mark_picked?id='+id, function(data) {
-            $('.mark-picked'+id).html('Batch picked up!');
-            console.log('Batch picked up!');
-        });
-    }
-    
-    function parseRequest(value) {
-        if (value == false) {
-            return 'request pending'
-        } else {
-            return 'request accepted'
-        }
-    };
-  
-    // Create a batch //
-    var batch = document.getElementById('createBatch');
-    batch.addEventListener('click', function() {
-        $('.batch-list').hide();
-        $('.spinner-row').show()
-        $('#creatingNewBatch').show();
-        $('.hide').fadeIn();
-    });
-    
     
     document.getElementById('sendSupervisorName').addEventListener('click', function() {
         var signatureName = document.getElementById('supervisorSignature');
@@ -361,12 +273,5 @@
             signatureName.value = '';
         });
     });
-    
-    function batchLiveSearch(elem) {
-        var search = document.getElementById("batchSearch").value;
-        $.get('/batch_search?search='+search, function(html) {
-            $("#allBatches").html(html);
-        });
-    };
   
 </script>

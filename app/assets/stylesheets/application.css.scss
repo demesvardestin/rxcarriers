@@ -106,6 +106,12 @@ a:hover {
     padding-left: 15px !important;
     padding-right: 15px !important;
 }
+.rx-dropdown {
+    background-color: transparent !important;
+    color: #4095e3 !important;
+    border-color: #4095e3 !important;
+    box-shadow: none !important;
+}
 .padding-14 {
     padding-left: 14px;
     padding-right: 14px;
@@ -123,7 +129,44 @@ a:hover {
     border-radius: 2px !important;
 }
 .main-page-card {
-    box-shadow: 0 2px 15px rgba(84,96,103,.25);
+    box-shadow: 0 5px 15px rgba(84,96,103,.25);
+}
+.page-logo {
+    padding-bottom: 10px;
+}
+.vertical-center {
+    padding-top: 50%;
+}
+div#rxCol {
+    padding-top: 30px !important;
+    padding-bottom: 30px;
+}
+#rxSearchResults {
+    border: 1px solid #e1e1e2;
+    height: 160px;
+    margin-top: 110px;
+}
+.messageText {
+    height: 100px !important;
+}
+#sendRxRequest {
+    margin-top: 10px;
+}
+.no-display {
+    display: none;
+}
+#searchMyRx {
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+.pharmacy-name-field, .rx-status-field, .rx-status-btn {
+    height: 50px !important;
+}
+.rx-status-btn {
+    margin-top: 15px;
+}
+.rx-status-form-div {
+    padding-top: 30px;
 }
 .no-horizontal-padding {
     padding-left: 0 !important;
@@ -299,15 +342,6 @@ a:hover {
     cursor: pointer;
 }
 
-@media only screen and (max-device-width: 768px) {
-    .no-mobile {
-        display: none;
-    }
-    .driver-signup-form {
-        float: none !important;
-    }
-}
-
 /* Batches Views */
 .patient-print {
     padding-top: 40px;
@@ -334,7 +368,7 @@ a:hover {
     padding: 40px;
 }
 .batches-details {
-    color: #707071;
+    color: #000;
 }
 .new-batch-card {
     padding: 40px;
@@ -499,11 +533,32 @@ a:hover {
 .add-padding-top {
     padding-top: 15px;
 }
+.add-margin-top {
+    margin-top: 10px;
+}
+.verified-alert-badge {
+    background-color: transparent;
+    padding: 7px 15px !important;
+    border: 1px solid #28a745;
+    color: #05f005 !important;
+}
+.unverified-alert-badge {
+    background-color: transparent;
+    border: 1px solid #ffc107;
+    color: #878706 !important;
+    padding: 7px 15px !important;
+}
+.display-block {
+    display: block !important;
+}
 .add-padding-bottom {
     padding-bottom: 15px;
 }
 .add-padding-top-10 {
     padding-top: 10px;
+}
+.add-padding-top-5 {
+    padding-top: 5px;
 }
 .add-padding-left {
     padding-left: 5px;
@@ -810,6 +865,9 @@ a:hover {
 .no-underline {
     text-decoration: none !important;
 }
+.underline {
+    text-decoration: underline !important;
+}
 .vertical-panel {
     float: left !important;
     background: #03032b !important;
@@ -857,7 +915,7 @@ a:hover {
 }
 .main-signup-button {
     border: 2px solid #fff;
-    border-radius: 5px;
+    border-radius: 3px;
     padding-top: 0 !important;
 }
 .nav-col {
@@ -905,7 +963,7 @@ a:hover {
     margin-right: 5px;
     margin-left: 5px;
     color: #fff !important;
-    border-radius: .25rem !important;
+    border-radius: 0 !important;
     text-transform: uppercase;
 }
 .settings-header {
@@ -1393,5 +1451,26 @@ input:focus + label {
     #logged-out-row, #logged-out-row-0 {
         padding-left: 0;
         padding-right: 0;
+    }
+    #rxSearchResults {
+        border: 1px solid #e1e1e2;
+        height: auto;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        margin-top: 10px !important;
+    }
+    div#rxCol {
+        padding-top: 10px !important;
+        padding-bottom: 30px;
+    }
+    .no-mobile {
+        display: none;
+    }
+    .footer {
+        padding: 20px 0 !important;
+    }
+    #rxSearchPlaceholder {
+        padding-top: 45px !important;
+        padding-bottom: 45px !important;
     }
 }

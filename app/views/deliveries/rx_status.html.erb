@@ -1,0 +1,50 @@
+<% if @rx.nil? %>
+    <div style="padding: 10px;" class="text-center col-md-12">
+        <div>
+            <i class="fa fa-exclamation-circle theme-yellow" style="font-size: 40px;"></i>
+        </div>
+        <div class="add-padding-top font-18">
+            Rx Not Found <br /><br />
+            <span class="font-14 theme-blue">
+                Your pharmacy may not be on RxCarriers yet. We recommend
+                contacting your pharmacist.
+            </span>
+        </div>
+    </div>
+<% elsif @rx.filled %>
+    <div style="padding: 10px;" class="text-center col-md-12">
+        <div>
+            <i class="fa fa-check-circle theme-green" style="font-size: 40px;"></i>
+        </div>
+        <div class="add-padding-top-10 font-18">
+            Your prescription is ready!<br /><br />
+            <button class="btn btn-success font-16 white transaction-buttons" id="<%= @rx.id %>" rx="<%= @rx.rx %>" onclick="requestDelivery(this)">
+                <i class="fa fa-car"></i> Request a delivery
+            </button>
+        </div>
+    </div>
+<% elsif @rx.not_ready %>
+    <div style="padding: 10px;" class="text-center col-md-12">
+        <div>
+            <i class="fa fa-clock-o theme-blue" style="font-size: 40px;"></i>
+        </div>
+        <div class="add-padding-top font-18">
+            Your prescription is not ready yet<br />
+            <span class="font-14 theme-blue bold">
+                It may not yet be time for a refill.
+            </span>
+        </div>
+    </div>
+<% elsif @rx.issue_present %>
+    <div style="padding: 10px;" class="text-center col-md-12">
+        <div>
+            <i class="fa fa-times-circle theme-red" style="font-size: 40px;"></i>
+        </div>
+        <div class="add-padding-top font-18">
+            Our records show that there is an issue with your Rx<br /><br />
+            <span class="font-14 theme-yellow bold">
+                Contact your pharmacist right away.
+            </span>
+        </div>
+    </div>
+<% end %>

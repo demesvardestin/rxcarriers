@@ -3,6 +3,99 @@ class DeliveriesController < ApplicationController
   before_filter :load_deliverable, only: [:create]
   before_action :check_current_pharmacy, only: [:create, :destroy]
   before_action :check_current_driver, only: [:edit, :update, :signature]
+  before_action :authenticate_pharmacy!, except: [:show, :download_signature, :pusher, :status, :rx_status, :get_pharmacy,
+                                                  :request_delivery, :update_rx_status, :rx_search, :add_new_rx]
+  
+  def index
+    type = params["request_type"]
+    if type == 'delivery'
+      @rx = Rx.where(pharmacy_id: current_pharmacy.id, delivery_requested: true)
+    elsif type == 'refill'
+      @rx = Rx.where(pharmacy_id: current_pharmacy.id, refill_requested: true)
+    else
+      @rx = Rx.where(pharmacy_id: current_pharmacy.id).all
+    end
+    if @rx.length == 1
+      @rx = @rx.last
+    end
+    @batches = Batch.where(pharmacy_id: current_pharmacy.id, driver_id: nil)
+  end
+  
+  def dashboard
+    
+  end
+  
+  def status
+    # @rx = Rx.search(params[:search])
+  end
+  
+  def rx_status
+    id = params[:id]
+    rx = params[:rx]
+    if id.nil? || rx.nil?
+      return
+    end
+    @rx = Rx.find_by(pharmacy_id: id, rx: rx)
+    render :layout => false
+  end
+  
+  def rx_search
+    @rx = Rx.where(pharmacy_id: current_pharmacy.id).search(params[:search])
+    @search = params[:search]
+    @batches = Batch.where(pharmacy_id: current_pharmacy.id, driver_id: nil)
+    render :layout => false
+  end
+  
+  def get_pharmacy
+    name = params[:name].downcase
+    @pharmacies = Pharmacy.search(name)
+    render :layout => false
+  end
+  
+  def add_new_rx
+    rx = params[:rx]
+    phone = params[:phone]
+    dob = params[:dob]
+    address = params[:address]
+    @rx = Rx.create(rx: rx, phone_number: phone, dob: dob, address: address, pharmacy_id: current_pharmacy.id, current_status: 'On hold', last_filled_on: DateTime.now)
+    @rxes = Rx.where(pharmacy_id: current_pharmacy.id)
+    @batches = Batch.where(pharmacy_id: current_pharmacy.id, driver_id: nil)
+    render :layout => false
+  end
+  
+  def request_delivery
+    id = params[:id]
+    dob = params[:dob]
+    time = params[:time]
+    @rx = Rx.find_by(id: id)
+    if @rx.nil?
+      return
+    elsif @rx.dob != dob
+      @rejected = 'Sorry, this date of birth does not match the one in our records'
+    else
+      @rx.update(delivery_requested: true)
+      @request = DeliveryRequest.create(rx: @rx.rx, rx_id: @rx.id, pharmacy_id: @rx.pharmacy_id, active: true, delivery_time: time)
+      pusher.trigger('new-rx', 'rx-request', {
+        message: "New delivery request for rx ##{@rx.rx}!",
+        id: @rx.id,
+        pharmacy_id: @rx.pharmacy_id,
+        time: @request.delivery_time
+      })
+    end
+    render :layout => false
+  end
+  
+  def update_rx_status
+    id = params[:id]
+    status = params[:status]
+    @batches = Batch.where(pharmacy_id: current_pharmacy.id, driver_id: nil)
+    @rx = Rx.find_by(id: id)
+    if status == 'deliverySent'
+      status = 'sent'
+    end
+    @rx.update(current_status: status, last_filled_on: DateTime.now)
+    render :layout => false
+  end
   
   def create_delivery
     name = params["patient_name"]

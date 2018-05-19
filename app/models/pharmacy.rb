@@ -22,6 +22,29 @@ class Pharmacy < ActiveRecord::Base
     # validates :email, {uniqueness: true, presence: true}
     
     # methods
+    
+    def self.search(param)
+        param.strip!
+        param.downcase!
+        (name_matches(param) + address_matches(param) + phone_matches(param)).uniq
+    end
+    
+    def self.name_matches(param)
+        matches('name', param)
+    end
+    
+    def self.address_matches(param)
+        matches('town', param)
+    end
+    
+    def self.phone_matches(param)
+        matches('state', param)
+    end
+    
+    def self.matches(field_name, param)
+        where("lower(#{field_name}) like ?", "%#{param}%")
+    end
+    
     def full_address
         [street]
     end

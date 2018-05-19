@@ -42,7 +42,7 @@ class PatientsController < ApplicationController
     end
     
     def live_search
-        @patients = Patient.where(pharmacy_id: current_pharmacy.id).search(params[:search])
+        @rx = Rx.where(pharmacy_id: current_pharmacy.id).search(params[:search])
         render :layout => false
     end
     

@@ -115,7 +115,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
-                <h5 class="modal-title medium-gray font-14" id="exampleModalLabel">Add Delivery</h5>
+                <h5 class="modal-title medium-gray font-14" id="exampleModalLabel">Add Prescription</h5>
                 <a class="background-transparent no-underline close" href="#" data-dismiss="modal" aria-label="Close">
                    <i class="fa fa-times-circle-o"></i>
                 </a>
@@ -126,7 +126,7 @@
                         <span class="input-group-text background-transparent theme-blue" id="patientSearchAddon">
                             <i class="fa fa-search"></i>
                         </span>
-                        <input type="email" class="no-box-shadow form-control font-12 batch-search patient-search" id="liveSearch" placeholder="search patient" onkeyup="liveSearch(this)">
+                        <input type="text" class="no-box-shadow form-control font-14 batch-search patient-search" id="liveSearch" placeholder="look up an rx" onkeyup="liveSearch(this)">
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -162,7 +162,7 @@
                         <div class="col-md-3 top-panel-div" id="addDeliveryButton">
                             <% if @batch.request_id.nil? %>
                                 <button class="btn btn-secondary transaction-buttons" id="addDelivery" data-toggle="modal" data-target="#newDelivery">
-                                    <i class="fa fa-plus-circle"></i> Add Delivery
+                                    <i class="fa fa-plus-circle"></i> Add Prescription
                                 </button>
                             <% end %>
                         </div>
@@ -487,7 +487,7 @@
         document.getElementById('patient-full-name').value = elem.getAttribute('name');
         document.getElementById('patient-number').value = elem.getAttribute('phone');
         document.getElementById('patient-address').value = elem.getAttribute('address');
-        document.getElementById('patient-id').value = elem.getAttribute('pat_id');
+        document.getElementById('patient-id').value = elem.getAttribute('rx_id');
         console.log(document.getElementById('patient-id').value);
         $('#liveSearchResults').hide();
     };

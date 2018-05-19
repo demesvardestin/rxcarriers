@@ -1,0 +1,23 @@
+<% if @pharmacies.nil? || @pharmacies.blank? %>
+    <div style="padding: 10px;" class="text-center">
+        <div>
+            <i class="fa fa-exclamation-circle theme-yellow" style="font-size: 40px;"></i>
+        </div>
+        <div class="add-padding-top font-18">
+            Not Found <br />
+            <span class="font-14 theme-blue">
+                No pharmacy was found by that name
+            </span>
+        </div>
+    </div>
+<% else %>
+    <div class="col-md-12 add-padding-top-10"><h6 class="font-14">Select your pharmacy</h6></div>
+    <% @pharmacies.each do |pharma| %>
+        <div class="col-md-12 no-horizontal-padding">
+            <button class="btn btn-link font-14"
+                id="<%= pharma.id %>" onclick="selectPharmacy(this)">
+                <%= pharma.name %> (<%= pharma.town %>, <%= pharma.state %>)
+            </button>
+        </div>
+    <% end %>
+<% end %>
