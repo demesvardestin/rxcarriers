@@ -10,15 +10,15 @@ class ApplicationController < ActionController::Base
   end
   
   
-  def redirect_from_cross_model
-    url = request.original_url
-    current_driver = Driver.find_by(firebase_uid: params[:firebase_uid])
-    if current_pharmacy
-      if url.include?("courier")
-        redirect_to authenticated_pharmacy_root_path
-      end
-    end
-  end
+  # def redirect_from_cross_model
+  #   url = request.original_url
+  #   current_driver = Driver.find_by(firebase_uid: params[:firebase_uid])
+  #   if current_pharmacy
+  #     if url.include?("courier")
+  #       redirect_to authenticated_pharmacy_root_path
+  #     end
+  #   end
+  # end
   
   # def 
   
