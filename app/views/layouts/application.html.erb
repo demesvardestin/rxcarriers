@@ -67,11 +67,20 @@
           var id = data.id;
           var pharmacy_id = data.pharmacy_id
           var time = data.time;
+          var type = data.type;
+          var rx = data.rx;
           if (current_pharma_id == pharmacy_id) {
             toastr["success"](message);
-            $('#newDeliveryRequest'+id).html(
-              '<span class="badge badge-success verified-alert-badge">' +
-              'Delivery request: ' + time + '</span>');
+            if (type == 'delivery') {
+              $('#newDeliveryRequest'+id).html(
+                '<span class="badge badge-success verified-alert-badge">' +
+                'Delivery request: ' + time + '</span>');
+            } else {
+              document.getElementById('rxSearch').value = rx;
+              $('#newRefillRequest'+id).html(
+                '<span class="badge badge-success verified-alert-badge">' +
+                '<i class="fa fa-refresh"></i> Refill</span>');
+            }
           }
         });
         

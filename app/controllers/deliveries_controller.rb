@@ -2,31 +2,67 @@ class DeliveriesController < ApplicationController
   
   before_filter :load_deliverable, only: [:create]
   before_action :check_current_pharmacy, only: [:create, :destroy]
-  before_action :check_current_driver, only: [:edit, :update, :signature]
+  # before_action :check_current_driver, only: [:edit, :update, :signature]
   before_action :authenticate_pharmacy!, except: [:show, :download_signature, :pusher, :status, :rx_status, :get_pharmacy,
-                                                  :request_delivery, :update_rx_status, :rx_search, :add_new_rx]
+                                                  :request_delivery, :update_rx_status, :rx_search, :add_new_rx,
+                                                  :update_rx_phone_number]
   
   def index
-    type = params["request_type"]
-    if type == 'delivery'
-      @rx = Rx.where(pharmacy_id: current_pharmacy.id, delivery_requested: true)
-    elsif type == 'refill'
-      @rx = Rx.where(pharmacy_id: current_pharmacy.id, refill_requested: true)
+    if params["request_rx"]
+      @rx = Rx.find_by(rx: params["request_rx"])
+    elsif params["request_type"]
+      if params["request_type"] == 'delivery'
+        @rxes = Rx.where(pharmacy_id: current_pharmacy.id, delivery_requested: true)
+      elsif params["request_type"] == 'refill'
+        @rxes = Rx.where(pharmacy_id: current_pharmacy.id, refill_requested: true)
+      elsif params["request_type"] == 'delivery + refill'
+        @rxes = Rx.where(pharmacy_id: current_pharmacy.id, delivery_requested: true, refill_requested: true).all
+      end
     else
-      @rx = Rx.where(pharmacy_id: current_pharmacy.id).all
+      @prescriptions = Rx.where(pharmacy_id: current_pharmacy.id)
     end
-    if @rx.length == 1
-      @rx = @rx.last
+    if @rxes
+      if @rxes.count == 1
+        @rx = @rxes.last
+      end
     end
     @batches = Batch.where(pharmacy_id: current_pharmacy.id, driver_id: nil)
   end
   
   def dashboard
-    
+    @refills = RequestAlert.where(pharm_id: current_pharmacy.id, active: true)
+    @deliveries = DeliveryRequest.where(pharmacy_id: current_pharmacy.id, active: true)
+    @both = RefillDelivery.where(pharmacy_id: current_pharmacy.id, active: true)
+    # if @refills.count > 0 && @deliveries.count > 0 && @both.count > 0
+      @requests = @refills + @deliveries + @both
+    # elsif @refills.count == 0
+    #   @requests = @deliveries
+    # elsif @deliveries.count == 0
+    #   @requests = @refills
+    # end
   end
   
   def status
     # @rx = Rx.search(params[:search])
+  end
+  
+  def update_rx_phone_number
+    rx = params[:rx]
+    phone = params[:phone]
+    @rx = Rx.find_by(rx: rx)
+    if @rx.nil?
+      return
+    end
+    @rx.update(phone_number: phone, refill_requested: true)
+    @refill = RequestAlert.create(pharm_id: @rx.pharmacy_id, rx: @rx.rx)
+    pusher.trigger('new-rx', 'rx-request', {
+      message: "New refill request for rx ##{@rx.rx}!",
+      id: @rx.id,
+      type: 'refill',
+      rx: @rx.rx,
+      pharmacy_id: @rx.pharmacy_id
+    })
+    render :layout => false
   end
   
   def rx_status
@@ -36,6 +72,9 @@ class DeliveriesController < ApplicationController
       return
     end
     @rx = Rx.find_by(pharmacy_id: id, rx: rx)
+    if @rx.nil?
+      @rx = Rx.create(rx: rx, pharmacy_id: id)
+    end
     render :layout => false
   end
   
@@ -48,7 +87,24 @@ class DeliveriesController < ApplicationController
   
   def get_pharmacy
     name = params[:name].downcase
-    @pharmacies = Pharmacy.search(name)
+    npi = params[:npi]
+    if npi && name.length == 0
+      @pharmacy = Pharmacy.find_by(npi: npi)
+    elsif npi.length == 0 && name
+      @pharmacies = Pharmacy.search(name)
+    elsif name && npi
+      @pharma = Pharmacy.find_by(npi: npi)
+      @pharmas = Pharmacy.search(name)
+      if @pharma.nil?
+        @pharmacies = @pharmas
+      elsif @pharmas.length == 0
+        @pharmacy = @pharma
+      elsif !@pharma.nil? && @pharmas.length > 0
+        @pharmacy = @pharmas.select { |pharma|
+          pharma.id == @pharma.id
+        }.last
+      end
+    end
     render :layout => false
   end
   
@@ -67,17 +123,24 @@ class DeliveriesController < ApplicationController
     id = params[:id]
     dob = params[:dob]
     time = params[:time]
+    address = params[:address]
     @rx = Rx.find_by(id: id)
     if @rx.nil?
       return
-    elsif @rx.dob != dob
+    elsif @rx.dob != dob && @rx.address != nil
       @rejected = 'Sorry, this date of birth does not match the one in our records'
     else
-      @rx.update(delivery_requested: true)
+      if @rx.address.nil?
+        @rx.update(delivery_requested: true, address: address)
+      else
+        @rx.update(delivery_requested: true)
+      end
       @request = DeliveryRequest.create(rx: @rx.rx, rx_id: @rx.id, pharmacy_id: @rx.pharmacy_id, active: true, delivery_time: time)
       pusher.trigger('new-rx', 'rx-request', {
         message: "New delivery request for rx ##{@rx.rx}!",
         id: @rx.id,
+        type: 'delivery',
+        rx: @rx.rx,
         pharmacy_id: @rx.pharmacy_id,
         time: @request.delivery_time
       })
@@ -92,8 +155,20 @@ class DeliveriesController < ApplicationController
     @rx = Rx.find_by(id: id)
     if status == 'deliverySent'
       status = 'sent'
+      @rx.update(current_status: status, last_filled_on: DateTime.now, delivery_requested: false)
+      @delivery = DeliveryRequest.find_by(rx: @rx.rx)
+      if !@delivery.nil?
+        @delivery.delete
+      end
+    elsif status == 'refilled'
+      @rx.update(current_status: status, last_filled_on: DateTime.now, refill_requested: false)
+      @refill = RequestAlert.find_by(rx: @rx.rx)
+      if !@refill.nil?
+        @refill.delete
+      end
+    else
+      @rx.update(current_status: status, last_filled_on: DateTime.now)
     end
-    @rx.update(current_status: status, last_filled_on: DateTime.now)
     render :layout => false
   end
   

@@ -77,6 +77,7 @@ Rails.application.routes.draw do
   get '/rx_search', to: 'deliveries#rx_search'
   get '/add_new_rx', to: 'deliveries#add_new_rx'
   get '/dashboard', to: 'deliveries#dashboard'
+  get '/update_rx_phone_number', to: 'deliveries#update_rx_phone_number'
   
   # resource path
   resources :invoices, only: [:create, :show, :index, :destroy]

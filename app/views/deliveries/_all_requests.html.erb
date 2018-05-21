@@ -1,0 +1,33 @@
+<% @requests.each do |r| %>
+    <div class="row" id="requestRow">
+        <div class="col-md-2">
+            <%= r.rx %>
+        </div>
+        <div class="col-md-3">
+            <%= to_mm_dd_yy(r.created_at) %>
+        </div>
+        <div class="col-md-2">
+            <span class="<%= get_type_color(r.type) %> bold"><%= r.type %></span>
+        </div>
+        <div class="col-md-2">
+            <a class="btn btn-light transaction-buttons" href="/rx?type=new&request_type=<%= r.type %>&request_rx=<%= r.rx %>">
+               <i class="fa fa-search"></i> view request
+            </a>
+        </div>
+        <div class="col-md-2">
+            <div class="dropdown show" style="padding-bottom: 0 !important;">
+                <a class="btn btn-secondary btn-block dropdown-toggle rx-dropdown transaction-buttons" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Mark as
+                </a>
+              
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li class="dropdown-item">
+                        <button class="btn btn-link font-12 no-padding-left" id="<%= r.id %>-invalid" status="picked" onclick="updateRxStatus(this)">
+                            Invalid (rx does not exist)
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<% end %>

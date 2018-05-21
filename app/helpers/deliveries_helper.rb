@@ -53,6 +53,9 @@ module DeliveriesHelper
     end
     
     def get_status_color(status)
+        if status.nil?
+            status = 'on hold'
+        end
         case status.downcase
         when 'on hold'
             'theme-yellow'
@@ -62,6 +65,17 @@ module DeliveriesHelper
             'theme-red'
         else
             'theme-blue'
+        end
+    end
+    
+    def get_type_color(type)
+        case type.downcase
+        when 'refill'
+            'theme-green'
+        when 'delivery'
+            'theme-blue'
+        else
+            'theme-yellow'
         end
     end
     

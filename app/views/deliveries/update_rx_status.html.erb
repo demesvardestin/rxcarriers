@@ -20,7 +20,7 @@
                 <div class="col-md-12">
                     <textarea type="text" class="form-control font-14 messageText" id="messageText-<%= @rx.rx %>" onkeyup="showPreview(this)" placeholder="Type text message"></textarea>
                 </div>
-                <div class="col-md-12 add-padding-top font-14">
+                <div class="col-md-12 add-padding-top font-13">
                     <b>IMPORTANT:</b> Always be sure that you are texting the correct number,
                     and avoid using specific identifiers such as names or other Hipaa-protected
                     personally identifiable information.
@@ -49,7 +49,7 @@
             <b id="rxStatus<%= @rx.id %>"><span class="background-transparent no-underline <%= get_status_color(@rx.current_status) %>"><%= @rx.current_status %></span></b>
         </span>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div class="row">
             <div class="col-md-4">
                 <button class="btn btn-info btn-block white transaction-buttons" id="sendPatientUpdate" data-toggle="modal" data-target="#exampleModal<%= @rx.rx %>">
@@ -59,7 +59,7 @@
             <div class="col-md-5">
                 <div class="dropdown show" style="padding-bottom: 0 !important;">
                     <a class="btn btn-secondary btn-block dropdown-toggle rx-dropdown transaction-buttons disabled" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Request Driver (coming soon)
+                      Request Driver
                     </a>
                   
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -109,9 +109,45 @@
             </div>
         </div>
     </div>
-    <div class="col-md-2" id="newDeliveryRequest<%= @rx.id %>">
-        <span class="badge badge-success verified-alert-badge">
-            patient notified!
-        </span>
-    </div>
+    <% if @rx.delivery_requested == false && @rx.refill_requested == false && @rx.delivery_sent %>
+        <div class="col-md-2" id="newDeliveryRequest<%= @rx.id %>">
+            <span class="badge badge-success verified-alert-badge">
+                <i class="fa fa-car"></i> Delivery sent
+            </span>
+        </div>
+        <div class="col-md-1" id="newRefillRequest<%= @rx.id %>"></div>
+    <% elsif @rx.refill_requested == false && @rx.delivery_requested == true %>
+        <div class="col-md-2" id="newDeliveryRequest<%= @rx.id %>">
+            <span class="badge badge-success verified-alert-badge">
+                Delivery request: <%= @rx.get_delivery_details.delivery_time %>
+            </span>
+        </div>
+        <div class="col-md-1" id="newRefillRequest<%= @rx.id %>">
+            <span class="badge badge-warning verified-alert-badge">
+                Refilled
+            </span>
+        </div>
+    <% elsif @rx.not_refill? || @rx.not_delivery? || @rx.not_refill_or_delivery? %>
+        <div class="col-md-2" id="newDeliveryRequest<%= @rx.id %>">
+            <span class="badge badge-success verified-alert-badge">
+                <i class="fa fa-envelope-o"></i> Patient notified
+            </span>
+        </div>
+    <% end %>
+    <% if @rx.delivery_requested && @rx.refill_requested %>
+        <div class="col-md-2" id="newDeliveryRequest<%= rx.id %>">
+            <% if rx.delivery_requested %>
+                <span class="badge badge-success verified-alert-badge">
+                    Delivery request: <%= @rx.get_delivery_details.delivery_time %>
+                </span>
+            <% end %>
+        </div>
+        <div class="col-md-1" id="newRefillRequest<%= @rx.id %>">
+            <% if @rx.refill_requested %>
+                <span class="badge badge-warning verified-alert-badge">
+                    Refill
+                </span>
+            <% end %>
+        </div>
+    <% end %>
 </div>

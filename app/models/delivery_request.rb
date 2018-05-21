@@ -1,3 +1,8 @@
 class DeliveryRequest < ActiveRecord::Base
-    # belongs_to :rx
+    require 'color'
+    
+    def type
+        'delivery'
+    end
+    
 end

@@ -51,12 +51,12 @@
     </div>
 </div>
 <div id="allRxes">
-    <% if @rx.object? %>
+    <% if @rx %>
         <div class="table-content container batches-row" id="<%= @rx.id %>">
             <%= render 'single_rx' %>
         </div>
     <% else %>
-        <% @rx.reverse.each do |rx| %>
+        <% @prescriptions.reverse.each do |rx| %>
             <!-- Modal -->
             <div class="modal fade" id="exampleModal<%= rx.rx %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
@@ -79,7 +79,7 @@
                             <div class="col-md-12">
                                 <textarea type="text" class="form-control font-14 messageText" id="messageText-<%= rx.rx %>" onkeyup="showPreview(this)" placeholder="Type text message"></textarea>
                             </div>
-                            <div class="col-md-12 add-padding-top font-14">
+                            <div class="col-md-12 add-padding-top font-13">
                                 <b>IMPORTANT:</b> Always be sure that you are texting the correct number,
                                 and avoid using specific identifiers such as names or other Hipaa-protected
                                 personally identifiable information.
@@ -109,7 +109,7 @@
                             <b id="rxStatus<%= rx.id %>"><span class="background-transparent no-underline <%= get_status_color(rx.current_status) %>"><%= rx.current_status %></span></b>
                         </span>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="row">
                             <div class="col-md-4">
                                 <button class="btn btn-info btn-block white transaction-buttons" id="sendPatientUpdate" data-toggle="modal" data-target="#exampleModal<%= rx.rx %>">
@@ -119,7 +119,7 @@
                             <div class="col-md-5">
                                 <div class="dropdown show" style="padding-bottom: 0 !important;">
                                     <a class="btn btn-secondary btn-block dropdown-toggle rx-dropdown transaction-buttons disabled" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      Request Driver (coming soon)
+                                      Request Driver
                                     </a>
                                   
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -173,6 +173,13 @@
                         <% if rx.delivery_requested %>
                             <span class="badge badge-success verified-alert-badge">
                                 Delivery request: <%= rx.get_delivery_details.delivery_time %>
+                            </span>
+                        <% end %>
+                    </div>
+                    <div class="col-md-1" id="newRefillRequest<%= rx.id %>">
+                        <% if rx.refill_requested %>
+                            <span class="badge badge-warning verified-alert-badge">
+                                Refill
                             </span>
                         <% end %>
                     </div>

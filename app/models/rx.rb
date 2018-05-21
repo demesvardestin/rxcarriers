@@ -28,21 +28,36 @@ class Rx < ActiveRecord::Base
         return self.current_status == 'refilled' 
     end
     
+    def delivery_sent
+        return self.current_status == 'sent' 
+    end
+    
     def not_ready
-        return self.current_status == 'delivered' || self.current_status == 'picked' 
+        return self.current_status == 'delivered' || self.current_status == 'picked' || self.current_status.nil?
+    end
+    
+    def not_refill?
+        return self.refill_requested == false && self.delivery_requested.nil? 
+    end
+    
+    def not_delivery?
+        return self.refill_requested.nil? && self.delivery_requested == false
+    end
+    
+    def not_refill_or_delivery?
+        return (self.refill_requested.nil? && self.delivery_requested.nil?) || (self.refill_requested == false && self.delivery_requested == false)
     end
     
     def issue_present
         return self.current_status == 'inactive' 
     end
     
-    def delivery_requested
+    def delivery_requested?
         return self.delivery_requested == true 
     end
     
     def get_delivery_details
-        rx = self.rx
-        return DeliveryRequest.find_by(rx: rx)
+        return DeliveryRequest.find_by(rx: self.rx)
     end
     
     def object?

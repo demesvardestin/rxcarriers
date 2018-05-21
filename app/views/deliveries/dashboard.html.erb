@@ -152,8 +152,9 @@
         border-bottom-right-radius: 0 !important;
         border-color: #c5c5c6 !important;
     }
-    #supervisingPharmacist, #requestsToday {
-        padding-top: 20px;
+    #requestsToday {
+        padding-top: 5px;
+        margin-bottom: 10px;
     }
     .submit-search {
         margin-top: 5px;
@@ -189,7 +190,7 @@
             </div>
             <div id="requestsToday">
                 <div class="float-left" style="width: 49%;">
-                    <div class="card">
+                    <div class="card" style="margin-bottom: 15px;">
                         <div class="card-body text-center" id="requestCountCard">
                             <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="requestNumber"><%= deliveries_today %></span>
                             <h6 class="font-13 medium-gray">deliveries sent today</h6></div>
@@ -198,7 +199,7 @@
                 </div>
                 <div class="float-right" style="width: 49%;">
                     <a href="/rx?type=new&request_type=delivery&pharma_id=<%= current_pharmacy.id %>&sort_by=latest" class="background-transparent no-underline">
-                        <div class="card">
+                        <div class="card" style="margin-bottom: 15px;">
                             <div class="card-body text-center" id="requestCountCard">
                                 <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="requestNumber"><%= requests_today %></span>
                                 <h6 class="font-13 medium-gray">new delivery requests</h6></div>
@@ -208,11 +209,13 @@
                 </div>
             </div>
             <div id="supervisingPharmacist">
-                <div><h6 class="font-14 medium-gray">
-                    Name of current supervisor 
-                    <i class="fa fa-question-circle cursor-pointer" data-toggle="tooltip" data-placement="top"
-                        title="Supervising PharmD on duty"></i>
-                </div>
+                <!--<div>-->
+                <!--    <h6 class="font-14 medium-gray">-->
+                <!--        Name of current supervisor-->
+                <!--        <i class="fa fa-question-circle cursor-pointer" data-toggle="tooltip" data-placement="top"-->
+                <!--            title="Supervising PharmD on duty"></i>-->
+                <!--    </h6>-->
+                <!--</div>-->
                 <div><h6 class="font-14 theme-blue" id="supervisorName"><%= current_pharmacy.supervisor %></h6></div>
                 <div class="input-group-prepend" id="supervisorDetails">
                     <span class="input-group-text background-transparent theme-blue" id="onDutyMDAddon">
@@ -231,16 +234,19 @@
                     <div id="scrollableChild">
                         <div class="table-header-batch container">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <span>Rx Number</span>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <span>Time of request</span>
                                 </div>
-                                <div class="col-md-5">
-                                    <span>Action</span>
+                                <div class="col-md-2">
+                                    <span>Request Type</span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="table-body container">
+                            <%= render 'all_requests' %>
                         </div>
                     </div>
                 </div>

@@ -125,8 +125,12 @@ a:hover {
 .form-control, .input-group-text {
     border-radius: 0 !important;
 }
-.btn {
+.btn, .card {
     border-radius: 2px !important;
+}
+#requestRow {
+    padding: 5px 0;
+    border-bottom: 1px solid #e1e1e2;
 }
 .main-page-card {
     box-shadow: 0 5px 15px rgba(84,96,103,.25);
@@ -143,7 +147,7 @@ div#rxCol {
 }
 #rxSearchResults {
     border: 1px solid #e1e1e2;
-    height: 160px;
+    height: 180px;
     margin-top: 110px;
 }
 .messageText {
@@ -159,8 +163,8 @@ div#rxCol {
     padding-top: 10px;
     padding-bottom: 5px;
 }
-.pharmacy-name-field, .rx-status-field, .rx-status-btn {
-    height: 50px !important;
+.pharmacy-name-field, .pharmacy-npi-field, .rx-status-field, .rx-status-btn {
+    height: 45px !important;
 }
 .rx-status-btn {
     margin-top: 15px;

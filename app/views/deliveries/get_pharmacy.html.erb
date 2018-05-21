@@ -1,4 +1,4 @@
-<% if @pharmacies.nil? || @pharmacies.blank? %>
+<% if (@pharmacies.nil? && @pharmacy.nil?) || (@pharmacies.blank? && @pharmacy.blank?) %>
     <div style="padding: 10px;" class="text-center">
         <div>
             <i class="fa fa-exclamation-circle theme-yellow" style="font-size: 40px;"></i>
@@ -10,7 +10,7 @@
             </span>
         </div>
     </div>
-<% else %>
+<% elsif @pharmacies %>
     <div class="col-md-12 add-padding-top-10"><h6 class="font-14">Select your pharmacy</h6></div>
     <% @pharmacies.each do |pharma| %>
         <div class="col-md-12 no-horizontal-padding">
@@ -20,4 +20,12 @@
             </button>
         </div>
     <% end %>
+<% elsif @pharmacy %>
+    <div class="col-md-12 add-padding-top-10"><h6 class="font-14">We've found the following pharmacy:</h6></div>
+    <div class="col-md-12 no-horizontal-padding">
+        <button class="btn btn-link font-14"
+            id="<%= @pharmacy.id %>" onclick="selectPharmacy(this)">
+            <%= @pharmacy.name %> (<%= @pharmacy.town %>, <%= @pharmacy.state %>)
+        </button>
+    </div>
 <% end %>
