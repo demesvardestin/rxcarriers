@@ -19,7 +19,7 @@ class DeliveriesController < ApplicationController
         @rxes = Rx.where(pharmacy_id: current_pharmacy.id, delivery_requested: true, refill_requested: true).all
       end
     else
-      @prescriptions = Rx.where(pharmacy_id: current_pharmacy.id)
+      @rxes = Rx.where(pharmacy_id: current_pharmacy.id)
     end
     if @rxes
       if @rxes.count == 1

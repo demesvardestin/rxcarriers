@@ -56,7 +56,7 @@
             <%= render 'single_rx' %>
         </div>
     <% else %>
-        <% @prescriptions.reverse.each do |rx| %>
+        <% @rxes.reverse.each do |rx| %>
             <!-- Modal -->
             <div class="modal fade" id="exampleModal<%= rx.rx %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">

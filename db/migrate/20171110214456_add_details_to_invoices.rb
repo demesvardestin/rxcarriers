@@ -6,6 +6,6 @@ class AddDetailsToInvoices < ActiveRecord::Migration
     add_column :invoices, :amount, :integer
     add_column :invoices, :currency, :string
     add_column :invoices, :paid, :boolean
-    add_column :drivers, :stripe_uid, :string
+    # add_column :drivers, :stripe_uid, :string
   end
 end
