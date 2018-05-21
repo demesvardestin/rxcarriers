@@ -30,7 +30,70 @@
     <script>
       
       
-      
+      <% if current_pharmacy %>
+        var current_pharma_id = <%= current_pharmacy.id %>;
+        // PUSHER NOTIFICATIONS *pusher.com*
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+        
+        toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": true,
+          "progressBar": true,
+          "positionClass": "toast-top-right",
+          "preventDuplicates": false,
+          "showDuration": "300000",
+          "hideDuration": "1000",
+          "timeOut": "300000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        };
+    
+        var pusher = new Pusher('6b4730083f66596ec97e', {
+          cluster: 'us2',
+          encrypted: true
+        });
+        
+        var my_channel = pusher.subscribe('my-channel');
+        var rx_channel = pusher.subscribe('new-rx');
+        
+        rx_channel.bind('rx-request', function(data) {
+          var message = data.message;
+          var id = data.id;
+          var pharmacy_id = data.pharmacy_id
+          var time = data.time;
+          var type = data.type;
+          var rx = data.rx;
+          if (current_pharma_id == pharmacy_id) {
+            toastr["success"](message);
+            if (type == 'delivery') {
+              $('#newDeliveryRequest'+id).html(
+                '<span class="badge badge-success verified-alert-badge">' +
+                'Delivery request: ' + time + '</span>');
+            } else {
+              document.getElementById('rxSearch').value = rx;
+              $('#newRefillRequest'+id).html(
+                '<span class="badge badge-success verified-alert-badge">' +
+                '<i class="fa fa-refresh"></i> Refill</span>');
+            }
+          }
+        });
+        
+        my_channel.bind('my-event', function(data) {
+          var message = data.message;
+          console.log(message);
+          toastr["success"](message);
+          $('.notification-placeholder').hide();
+          $('#notificationsModalBody')
+          .append('<div class="notif">'+message+'</div>');
+          $('#alertCount')
+          .html('<span class="badge badge-warning badge-notif white">1</span>');
+        });
+      <% end %>
     </script>
     <script src="/javascripts/notifications.js"></script>
     <%= csrf_meta_tags %>
