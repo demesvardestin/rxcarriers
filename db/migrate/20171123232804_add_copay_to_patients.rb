@@ -1,2 +1,2 @@
-class AddCopayToPatients < ActiveRecord::Migration
-end
+# class AddCopayToPatients < ActiveRecord::Migration
+# end

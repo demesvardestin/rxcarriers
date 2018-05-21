@@ -1,5 +1,5 @@
-class RemoveDeliveriesFromBatches < ActiveRecord::Migration
-  # def change
-  #   add_column :batches, :destinations, :string
-  # end
-end
+# class RemoveDeliveriesFromBatches < ActiveRecord::Migration
+#   # def change
+#   #   add_column :batches, :destinations, :string
+#   # end
+# end

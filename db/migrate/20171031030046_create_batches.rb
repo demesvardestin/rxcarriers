@@ -1,8 +1,8 @@
-class CreateBatches < ActiveRecord::Migration
-  def change
-    create_table :batches do |t|
+# class CreateBatches < ActiveRecord::Migration
+#   def change
+#     create_table :batches do |t|
 
-      t.timestamps null: false
-    end
-  end
-end
+#       t.timestamps null: false
+#     end
+#   end
+# end

@@ -1,4 +1,4 @@
-class AddQuestionDetails < ActiveRecord::Migration
-  def change
-  end
-end
+# class AddQuestionDetails < ActiveRecord::Migration
+#   def change
+#   end
+# end
