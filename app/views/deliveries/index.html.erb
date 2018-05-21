@@ -56,135 +56,141 @@
             <%= render 'single_rx' %>
         </div>
     <% else %>
-        <% @rxes.reverse.each do |rx| %>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal<%= rx.rx %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-mobile"></i> Send a text message</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-12" style="padding-bottom: 30px;">
-                                <h6 class="font-14 theme-blue">Message preview (how your text will show up)</h6>
-                                <div class="font-14">
-                                    <span style="color: #878787 !important;">From <%= current_pharmacy.name %>:</span> 
-                                    <span id="messagePreview-<%= rx.rx %>" style="color: #b4b4b4 !important;"></span>
+        <% if @rxes.empty? %>
+            <div class="col-md-12 text-center" style="padding-top: 20px; padding-bottom: 20px;">
+                <h6 class="font-16">No rx found for these parameters</h6>
+            </div>
+        <% else %>
+            <% @rxes.reverse.each do |rx| %>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal<%= rx.rx %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-mobile"></i> Send a text message</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12" style="padding-bottom: 30px;">
+                                    <h6 class="font-14 theme-blue">Message preview (how your text will show up)</h6>
+                                    <div class="font-14">
+                                        <span style="color: #878787 !important;">From <%= current_pharmacy.name %>:</span> 
+                                        <span id="messagePreview-<%= rx.rx %>" style="color: #b4b4b4 !important;"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <textarea type="text" class="form-control font-14 messageText" id="messageText-<%= rx.rx %>" onkeyup="showPreview(this)" placeholder="Type text message"></textarea>
+                                </div>
+                                <div class="col-md-12 add-padding-top font-13">
+                                    <b>IMPORTANT:</b> Always be sure that you are texting the correct number,
+                                    and avoid using specific identifiers such as names or other Hipaa-protected
+                                    personally identifiable information.
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <textarea type="text" class="form-control font-14 messageText" id="messageText-<%= rx.rx %>" onkeyup="showPreview(this)" placeholder="Type text message"></textarea>
-                            </div>
-                            <div class="col-md-12 add-padding-top font-13">
-                                <b>IMPORTANT:</b> Always be sure that you are texting the correct number,
-                                and avoid using specific identifiers such as names or other Hipaa-protected
-                                personally identifiable information.
-                            </div>
-                        </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-light" id="sendTextMessage"><i class="fa fa-paper-plane-o"></i> Send message</button>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-light" id="sendTextMessage"><i class="fa fa-paper-plane-o"></i> Send message</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="table-content container batches-row" id="<%= rx.id %>">
-                <div class="row">
-                    <div class="col-md-1">
-                        <span class="batches-details">
-                            <span class="theme-blue background-transparent no-underline"><%= rx.rx %></span>
-                        </span>
-                    </div>
-                    <div class="col-md-2">
-                        <span class="batches-details weighted">
-                            <span class="background-transparent no-underline"><%= to_mm_dd_yy(rx.last_filled_on) %></span>
-                        </span>
-                    </div>
-                    <div class="col-md-1">
-                        <span class="batches-details green">
-                            <b id="rxStatus<%= rx.id %>"><span class="background-transparent no-underline <%= get_status_color(rx.current_status) %>"><%= rx.current_status %></span></b>
-                        </span>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <button class="btn btn-info btn-block white transaction-buttons" id="sendPatientUpdate" data-toggle="modal" data-target="#exampleModal<%= rx.rx %>">
-                                    <i class="fa fa-mobile"></i> Message Patient
-                                </button>
-                            </div>
-                            <div class="col-md-5">
-                                <div class="dropdown show" style="padding-bottom: 0 !important;">
-                                    <a class="btn btn-secondary btn-block dropdown-toggle rx-dropdown transaction-buttons disabled" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      Request Driver
-                                    </a>
-                                  
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <% @batches.each do |b| %>
-                                            <li class="dropdown-item" href="/settings">
-                                                <%= link_to settings_path, class:"no-underline background-transparent font-12 theme-blue" do %>
-                                                  <%= b.id %>
-                                                <% end %>
+                <div class="table-content container batches-row" id="<%= rx.id %>">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <span class="batches-details">
+                                <span class="theme-blue background-transparent no-underline"><%= rx.rx %></span>
+                            </span>
+                        </div>
+                        <div class="col-md-2">
+                            <span class="batches-details weighted">
+                                <span class="background-transparent no-underline"><%= to_mm_dd_yy(rx.last_filled_on) %></span>
+                            </span>
+                        </div>
+                        <div class="col-md-1">
+                            <span class="batches-details green">
+                                <b id="rxStatus<%= rx.id %>"><span class="background-transparent no-underline <%= get_status_color(rx.current_status) %>"><%= rx.current_status %></span></b>
+                            </span>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button class="btn btn-info btn-block white transaction-buttons" id="sendPatientUpdate" data-toggle="modal" data-target="#exampleModal<%= rx.rx %>">
+                                        <i class="fa fa-mobile"></i> Message Patient
+                                    </button>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="dropdown show" style="padding-bottom: 0 !important;">
+                                        <a class="btn btn-secondary btn-block dropdown-toggle rx-dropdown transaction-buttons disabled" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          Request Driver
+                                        </a>
+                                      
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <% @batches.each do |b| %>
+                                                <li class="dropdown-item" href="/settings">
+                                                    <%= link_to settings_path, class:"no-underline background-transparent font-12 theme-blue" do %>
+                                                      <%= b.id %>
+                                                    <% end %>
+                                                </li>
+                                                <div class="dropdown-divider"></div>
+                                            <% end %>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="dropdown show" style="padding-bottom: 0 !important;">
+                                        <a class="btn btn-secondary btn-block dropdown-toggle rx-dropdown transaction-buttons" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          Mark as
+                                        </a>
+                                      
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <li class="dropdown-item">
+                                                <button class="btn btn-link font-12 no-padding-left" id="<%= rx.id %>-picked" status="picked" onclick="updateRxStatus(this)">
+                                                    Picked up
+                                                </button>
                                             </li>
                                             <div class="dropdown-divider"></div>
-                                        <% end %>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="dropdown show" style="padding-bottom: 0 !important;">
-                                    <a class="btn btn-secondary btn-block dropdown-toggle rx-dropdown transaction-buttons" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      Mark as
-                                    </a>
-                                  
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <li class="dropdown-item">
-                                            <button class="btn btn-link font-12 no-padding-left" id="<%= rx.id %>-picked" status="picked" onclick="updateRxStatus(this)">
-                                                Picked up
-                                            </button>
-                                        </li>
-                                        <div class="dropdown-divider"></div>
-                                        <li class="dropdown-item">
-                                            <button class="btn btn-link font-12 no-padding-left" id="<%= rx.id %>-refilled" status="refilled" onclick="updateRxStatus(this)">
-                                                Refilled
-                                            </button>
-                                        </li>
-                                        <div class="dropdown-divider"></div>
-                                        <li class="dropdown-item">
-                                            <button class="btn btn-link font-12 no-padding-left" id="<%= rx.id %>-inactive" status="inactive" onclick="updateRxStatus(this)">
-                                                Inactive
-                                            </button>
-                                        </li>
-                                        <div class="dropdown-divider"></div>
-                                        <li class="dropdown-item">
-                                            <button class="btn btn-link font-12 no-padding-left" id="<%= rx.id %>-sent" status="deliverySent" onclick="updateRxStatus(this)">
-                                                Sent for delivery
-                                            </button>
-                                        </li>
-                                    </ul>
+                                            <li class="dropdown-item">
+                                                <button class="btn btn-link font-12 no-padding-left" id="<%= rx.id %>-refilled" status="refilled" onclick="updateRxStatus(this)">
+                                                    Refilled
+                                                </button>
+                                            </li>
+                                            <div class="dropdown-divider"></div>
+                                            <li class="dropdown-item">
+                                                <button class="btn btn-link font-12 no-padding-left" id="<%= rx.id %>-inactive" status="inactive" onclick="updateRxStatus(this)">
+                                                    Inactive
+                                                </button>
+                                            </li>
+                                            <div class="dropdown-divider"></div>
+                                            <li class="dropdown-item">
+                                                <button class="btn btn-link font-12 no-padding-left" id="<%= rx.id %>-sent" status="deliverySent" onclick="updateRxStatus(this)">
+                                                    Sent for delivery
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-2" id="newDeliveryRequest<%= rx.id %>">
-                        <% if rx.delivery_requested %>
-                            <span class="badge badge-success verified-alert-badge">
-                                Delivery request: <%= rx.get_delivery_details.delivery_time %>
-                            </span>
-                        <% end %>
-                    </div>
-                    <div class="col-md-1" id="newRefillRequest<%= rx.id %>">
-                        <% if rx.refill_requested %>
-                            <span class="badge badge-warning verified-alert-badge">
-                                Refill
-                            </span>
-                        <% end %>
+                        <div class="col-md-2" id="newDeliveryRequest<%= rx.id %>">
+                            <% if rx.delivery_requested %>
+                                <span class="badge badge-success verified-alert-badge">
+                                    Delivery request: <%= rx.get_delivery_details.delivery_time %>
+                                </span>
+                            <% end %>
+                        </div>
+                        <div class="col-md-1" id="newRefillRequest<%= rx.id %>">
+                            <% if rx.refill_requested %>
+                                <span class="badge badge-warning verified-alert-badge">
+                                    Refill
+                                </span>
+                            <% end %>
+                        </div>
                     </div>
                 </div>
-            </div>
+            <% end %>
         <% end %>
     <% end %>
 </div>
