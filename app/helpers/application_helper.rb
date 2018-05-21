@@ -11,8 +11,6 @@ module ApplicationHelper
     def render_navigation
         if current_pharmacy
             render 'pharmacies/pharmacy_home'
-        elsif current_driver
-            render 'layouts/driver_logged_out_nav'
         else
             render 'layouts/main_nav'
         end

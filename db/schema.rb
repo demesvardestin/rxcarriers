@@ -13,54 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20180520002721) do
 
-# Could not dump table "batches" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
-
-  create_table "cancellation_messages", force: :cascade do |t|
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "pharmacy_id"
-    t.integer  "batch_id"
-    t.string   "driver_number"
-    t.string   "from_number"
-    t.string   "message_sid"
-    t.string   "date_created"
-    t.string   "message_body"
-    t.string   "type"
-    t.string   "request_type"
-  end
-
-  create_table "charges", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "pharmacy_id"
-    t.integer  "batch_id"
-    t.string   "description"
-    t.string   "email"
-    t.string   "card_token"
-    t.string   "amount"
-  end
-
-  create_table "couriers", force: :cascade do |t|
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.string   "name"
-    t.string   "email"
-    t.string   "number"
-    t.string   "address"
-    t.string   "firebase_uid"
-    t.string   "bank_token"
-    t.string   "stripe_cus"
-    t.string   "car_color"
-    t.string   "car_make"
-    t.string   "car_year"
-    t.string   "car_model"
-    t.string   "license_plate"
-    t.string   "cid"
-    t.boolean  "verified"
-    t.string   "onboarding_step"
-  end
-
   create_table "deliveries", force: :cascade do |t|
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
@@ -79,7 +31,6 @@ ActiveRecord::Schema.define(version: 20180520002721) do
     t.string   "matrix"
     t.string   "duration"
     t.boolean  "request_sent"
-    t.string   "driver_id"
     t.text     "signature_image"
     t.datetime "request_sent_on"
     t.boolean  "completed"
@@ -98,68 +49,6 @@ ActiveRecord::Schema.define(version: 20180520002721) do
     t.integer  "pharmacy_id"
     t.string   "delivery_time"
   end
-
-  create_table "drivers", force: :cascade do |t|
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "number"
-    t.string   "street"
-    t.string   "town"
-    t.string   "zipcode"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.boolean  "requested"
-    t.boolean  "clocked_in"
-    t.string   "state"
-    t.string   "license_plate"
-    t.string   "car_make"
-    t.string   "car_model"
-    t.string   "car_year"
-    t.string   "car_color"
-    t.boolean  "registration_completed"
-    t.boolean  "driver_approved"
-    t.string   "stripe_uid"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
-    t.string   "bank_account_number"
-    t.string   "country"
-    t.string   "account_holder_name"
-    t.string   "account_holder_type"
-    t.string   "routing_number"
-    t.string   "soc"
-    t.string   "dob"
-    t.string   "middle_name"
-    t.string   "gender"
-    t.boolean  "onboarded"
-    t.boolean  "onfido_created"
-    t.string   "exp_month"
-    t.string   "exp_year"
-    t.string   "cvc"
-    t.string   "stripe_token"
-    t.string   "firebase_uid"
-    t.string   "address"
-    t.boolean  "subscribed_to_push"
-    t.string   "push_endpoint"
-    t.string   "sub_auth"
-    t.string   "p256dh"
-  end
-
-  add_index "drivers", ["email"], name: "index_drivers_on_email", unique: true
-  add_index "drivers", ["reset_password_token"], name: "index_drivers_on_reset_password_token", unique: true
 
   create_table "invoices", force: :cascade do |t|
     t.datetime "created_at",        null: false
@@ -186,68 +75,9 @@ ActiveRecord::Schema.define(version: 20180520002721) do
     t.boolean  "read"
   end
 
-  create_table "packs", force: :cascade do |t|
-    t.string   "controller"
-    t.string   "package"
-    t.string   "create"
-    t.string   "update"
-    t.string   "destroy"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.string   "packageable_type"
-    t.integer  "packageable_id"
-    t.string   "recipient_name"
-    t.string   "recipient_phone_number"
-    t.string   "recipient_address"
-    t.string   "medications"
-    t.integer  "pharmacy_id"
-  end
-
-  add_index "packs", ["packageable_type", "packageable_id"], name: "index_packs_on_packageable_type_and_packageable_id"
-
-  create_table "patients", force: :cascade do |t|
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-    t.string   "name"
-    t.string   "address"
-    t.string   "phone"
-    t.string   "note"
-    t.string   "copay"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.integer  "pharmacy_id"
-    t.integer  "batch_id"
-    t.string   "patable_type"
-    t.integer  "patable_id"
-    t.string   "medications"
-    t.string   "bank_account_number"
-    t.string   "country"
-    t.string   "account_holder_name"
-    t.string   "account_holder_type"
-    t.string   "routing_number"
-    t.string   "card_number"
-    t.integer  "exp_month"
-    t.integer  "exp_year"
-    t.integer  "cvc"
-    t.string   "dob"
-    t.string   "insured"
-    t.string   "delivery_instructions"
-    t.string   "stripe_cus"
-    t.string   "card_token"
-  end
-
-  add_index "patients", ["patable_type", "patable_id"], name: "index_patients_on_patable_type_and_patable_id"
-
   create_table "pharmacies", force: :cascade do |t|
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.string   "name"
-    t.string   "street"
-    t.string   "town"
-    t.string   "zipcode"
-    t.integer  "identifier"
-    t.float    "latitude"
-    t.float    "longitude"
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -295,7 +125,7 @@ ActiveRecord::Schema.define(version: 20180520002721) do
     t.string   "npi"
   end
 
-  add_index "pharmacies", ["email"], name: "index_pharmacies_on_email", unique: true
+  add_index "pharmacies", ["email"], name: "index_pharmacies_on_email"
   add_index "pharmacies", ["reset_password_token"], name: "index_pharmacies_on_reset_password_token", unique: true
 
   create_table "refill_deliveries", force: :cascade do |t|
@@ -326,42 +156,6 @@ ActiveRecord::Schema.define(version: 20180520002721) do
     t.boolean  "active"
   end
 
-  create_table "request_messages", force: :cascade do |t|
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "pharmacy_id"
-    t.integer  "batch_id"
-    t.string   "driver_number"
-    t.string   "from_number"
-    t.string   "message_sid"
-    t.string   "date_created"
-    t.string   "message_body"
-    t.string   "type"
-    t.string   "date_sent"
-    t.string   "request_type"
-    t.string   "driver"
-    t.string   "status"
-  end
-
-  create_table "requests", force: :cascade do |t|
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.string   "patients"
-    t.integer  "batch_id"
-    t.integer  "count"
-    t.string   "driver"
-    t.string   "status"
-    t.string   "body"
-    t.integer  "pharmacy_id"
-    t.string   "driver_number"
-    t.string   "car_make"
-    t.string   "car_model"
-    t.string   "car_year"
-    t.string   "car_color"
-    t.string   "license_plate"
-    t.string   "driver_name"
-  end
-
   create_table "rxes", force: :cascade do |t|
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
@@ -378,20 +172,6 @@ ActiveRecord::Schema.define(version: 20180520002721) do
     t.boolean  "delivery_requested"
     t.string   "dob"
     t.boolean  "refill_requested"
-  end
-
-  create_table "supports", force: :cascade do |t|
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.string   "question_details"
-    t.string   "pharmacy_name"
-    t.string   "pharmacy_email"
-    t.string   "pharmacy_number"
-    t.string   "issue_type"
-    t.integer  "pharmacy_id"
-    t.string   "title"
-    t.text     "body"
-    t.string   "tags"
   end
 
 end
