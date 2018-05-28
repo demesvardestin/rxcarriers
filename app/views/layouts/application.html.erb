@@ -28,8 +28,6 @@
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <script>
-      
-      
       <% if current_pharmacy %>
         var current_pharma_id = <%= current_pharmacy.id %>;
         // PUSHER NOTIFICATIONS *pusher.com*
@@ -58,8 +56,20 @@
           encrypted: true
         });
         
-        var my_channel = pusher.subscribe('my-channel');
         var rx_channel = pusher.subscribe('new-rx');
+        var alert_channel = pusher.subscribe('rx-alert');
+        
+        alert_channel.bind('new-rx-alert', function(data) {
+          var message = data.message;
+          var id = data.id;
+          var pharmacy_id = data.pharmacy_id;
+          var type = data.type;
+          var rx = data.rx;
+          if (current_pharma_id == pharmacy_id) {
+            toastr["success"](message);
+            console.log(type);
+          }
+        });
         
         rx_channel.bind('rx-request', function(data) {
           var message = data.message;
@@ -70,28 +80,40 @@
           var rx = data.rx;
           if (current_pharma_id == pharmacy_id) {
             toastr["success"](message);
+            console.log(type);
+            $.get('/live_requests_dashboard', function(data) {
+              $('#liveRequestsUpdate').html(data);
+            });
             if (type == 'delivery') {
+              var deliveriesToday = $('#deliveryRequestsToday').text();
+              $.get('/create_notification?type=delivery&id='+current_pharma_id+'&rx='+rx+'&time='+time, function(data) {
+                $('.notification-placeholder').hide();
+                $('#notificationsModalBody').html(data);
+              });
+              $('#deliveryRequestsToday').text(parseInt(deliveriesToday) + 1);
               $('#newDeliveryRequest'+id).html(
                 '<span class="badge badge-success verified-alert-badge">' +
                 'Delivery request: ' + time + '</span>');
-            } else {
-              document.getElementById('rxSearch').value = rx;
+            } else if (type == 'refill') {
+              var refillsToday = $('#refillsToday').text();
+              $.get('/create_notification?type=refill&id='+current_pharma_id+'&rx='+rx+'&time=none', function(data) {
+                $('.notification-placeholder').hide();
+                $('#notificationsModalBody').html(data);
+              });
+              $('#refillsToday').text(parseInt(refillsToday) + 1);
               $('#newRefillRequest'+id).html(
                 '<span class="badge badge-success verified-alert-badge">' +
                 '<i class="fa fa-refresh"></i> Refill</span>');
             }
+            var count = $('.badge-notif').text();
+            if (count.length > 0) {
+              var new_count = parseInt(count) + 1;
+            } else {
+              var new_count = 1;
+            }
+            $('#alertCount')
+            .html('<span class="badge badge-warning badge-notif white">'+new_count+'</span>');
           }
-        });
-        
-        my_channel.bind('my-event', function(data) {
-          var message = data.message;
-          console.log(message);
-          toastr["success"](message);
-          $('.notification-placeholder').hide();
-          $('#notificationsModalBody')
-          .append('<div class="notif">'+message+'</div>');
-          $('#alertCount')
-          .html('<span class="badge badge-warning badge-notif white">1</span>');
         });
       <% end %>
     </script>

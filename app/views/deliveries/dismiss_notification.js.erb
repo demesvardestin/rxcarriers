@@ -1,0 +1,9 @@
+$('#notification-<%= @notification.id %>').fadeOut();
+
+var count = <%= @notifications.count %>;
+if (count == 0) {
+    $('#notificationsModalBody').html(
+        '<div class="notification-placeholder">' +
+        '<h6 class="medium-gray font-14 text-center">No new notifications</h6>' +
+        '</div>');
+}

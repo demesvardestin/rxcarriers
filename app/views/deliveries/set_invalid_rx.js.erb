@@ -1,0 +1,9 @@
+$('#requestRow<%= @request.id %>').fadeOut();
+var count = <%= @requests.count %>;
+if (count == 0) {
+    $('#liveRequestsUpdate').html(`
+        <div class="col-md-12 text-center medium-gray font-14" style="padding-top: 40px;">
+            No live requests
+        </div>
+    `);
+}

@@ -46,7 +46,7 @@ class Pharmacy < ActiveRecord::Base
     end
     
     def full_address
-        [street]
+        [street, town, state, zipcode].join(', ')
     end
     
     def last_four

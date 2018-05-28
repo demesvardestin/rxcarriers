@@ -179,52 +179,67 @@
             <span class="font-14"><%= today %></span>
             <span class="medium-gray font-9 .firebase-id" id="firebaseID" firebase=""></span>
         </div>
+        <div class="col-md-1 offset-md-8" style="padding: 0;">
+            <a class="btn btn-light transaction-buttons white" href="/dashboard">
+                <i class="fa fa-refresh"></i> Refresh 
+            </a>
+        </div>
     </div>
-    <div id="main" class="row add-padding-top">
+    <div id="main" class="row add-padding-top" style="padding: 40px 0;">
         <div class="col-md-3">
-            <div class="card">
-                <div class="card-body text-center" id="requestCountCard">
-                    <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="requestNumber"><%= refills_today %></span>
-                    <h6 class="font-13 medium-gray">new refill requests</h6></div>
-                </div>
-            </div>
-            <div id="requestsToday">
-                <div class="float-left" style="width: 49%;">
+            <div class="row">
+                <div class="col-md-12">
                     <div class="card" style="margin-bottom: 15px;">
                         <div class="card-body text-center" id="requestCountCard">
-                            <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="requestNumber"><%= deliveries_today %></span>
+                            <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="deliveriesSentToday"><%= deliveries_today %></span>
                             <h6 class="font-13 medium-gray">deliveries sent today</h6></div>
                         </div>
                     </div>
                 </div>
-                <div class="float-right" style="width: 49%;">
-                    <a href="/rx?type=new&request_type=delivery&pharma_id=<%= current_pharmacy.id %>&sort_by=latest" class="background-transparent no-underline">
-                        <div class="card" style="margin-bottom: 15px;">
-                            <div class="card-body text-center" id="requestCountCard">
-                                <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="requestNumber"><%= requests_today %></span>
-                                <h6 class="font-13 medium-gray">new delivery requests</h6></div>
-                            </div>
+                <div class="col-md-12">
+                    <div id="requestsToday">
+                        <div class="float-left" style="width: 49%;">
+                            <a href="/rx?type=new&request_type=refill&pharma_id=<%= current_pharmacy.id %>&sort_by=latest" class="background-transparent no-underline">
+                                <div class="card">
+                                    <div class="card-body text-center" id="requestCountCard">
+                                        <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="refillsToday"><%= refills_today %></span>
+                                        <h6 class="font-13 medium-gray">new refill requests</h6></div>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                    </a>
+                        <div class="float-right" style="width: 49%;">
+                            <a href="/rx?type=new&request_type=delivery&pharma_id=<%= current_pharmacy.id %>&sort_by=latest" class="background-transparent no-underline">
+                                <div class="card" style="margin-bottom: 15px;">
+                                    <div class="card-body text-center" id="requestCountCard">
+                                        <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="deliveryRequestsToday"><%= requests_today %></span>
+                                        <h6 class="font-13 medium-gray">new delivery requests</h6></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div id="supervisingPharmacist">
-                <!--<div>-->
-                <!--    <h6 class="font-14 medium-gray">-->
-                <!--        Name of current supervisor-->
-                <!--        <i class="fa fa-question-circle cursor-pointer" data-toggle="tooltip" data-placement="top"-->
-                <!--            title="Supervising PharmD on duty"></i>-->
-                <!--    </h6>-->
-                <!--</div>-->
-                <div><h6 class="font-14 theme-blue" id="supervisorName"><%= current_pharmacy.supervisor %></h6></div>
-                <div class="input-group-prepend" id="supervisorDetails">
-                    <span class="input-group-text background-transparent theme-blue" id="onDutyMDAddon">
-                        <i class="fa fa-user-md"></i>
-                    </span>
-                    <input class="form-control font-12 " id="supervisorSignature" name="pharmacist" placeholder="Change current supervisor">
-                    <button class="btn btn-success white" id="sendSupervisorName">
-                        <i class="fa fa-check"></i>
-                    </button>
+                <div class="col-md-12">
+                    <div id="supervisingPharmacist">
+                        <!--<div>-->
+                        <!--    <h6 class="font-14 medium-gray">-->
+                        <!--        Name of current supervisor-->
+                        <!--        <i class="fa fa-question-circle cursor-pointer" data-toggle="tooltip" data-placement="top"-->
+                        <!--            title="Supervising PharmD on duty"></i>-->
+                        <!--    </h6>-->
+                        <!--</div>-->
+                        <div><h6 class="font-14 theme-blue" id="supervisorName"><%= current_pharmacy.supervisor || 'No pharmacy manager name provided' %></h6></div>
+                        <div class="input-group-prepend" id="supervisorDetails">
+                            <span class="input-group-text background-transparent theme-blue" id="onDutyMDAddon">
+                                <i class="fa fa-user-md"></i>
+                            </span>
+                            <input class="form-control font-12 " id="supervisorSignature" name="pharmacist" placeholder="Pharmacy manager">
+                            <button class="btn btn-success white" id="sendSupervisorName">
+                                <i class="fa fa-check"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -245,8 +260,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="table-body container">
-                            <%= render 'all_requests' %>
+                        <div class="table-body container" id="liveRequestsUpdate">
+                            <% if @requests.present? %>
+                                <%= render 'all_requests' %>
+                            <% else %>
+                                <%= render 'no_requests' %>
+                            <% end %>
                         </div>
                     </div>
                 </div>
@@ -258,6 +277,80 @@
 <script>
     
     // Add bounds to count so that number is for the current day //
+    
+    function setRequestInvalid(elem) {
+        var id = elem.id;
+        var status = document.getElementById(id).getAttribute('status');
+        var type = document.getElementById(id).getAttribute('type');
+        var id_ = id.split('-')[0];
+        console.log(id_);
+        $.get('/set_invalid_rx?status='+status+'&id='+id_+'&type='+type, e => {
+            if (type == 'refill') {
+                var refills = $('#refillsToday').text();
+                $('#refillsToday').text(parseInt(refills) - 1);
+            } else if (type == 'delivery') {
+                var deliveries = $('#deliveryRequestsToday').text();
+                $('#deliveryRequestsToday').text(parseInt(deliveries) - 1);
+            }
+        });
+    };
+    
+    function updateRxDob(elem) {
+        var rx = elem.id;
+        var dob = document.getElementById('editRxField-'+rx).value;
+        if (document.getElementById('editRxDeliveryInstructions-'+rx) != null) {
+            var instructions = document.getElementById('editRxDeliveryInstructions-'+rx).value;
+        }
+        $('.updateRxBtn-'+rx).css('opacity', '0.6');
+        $('.updateRxBtn-'+rx).html('Updating...');
+        $('#updateRxDobModalBody-'+rx).html(`
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
+                </div>
+                <div class="col-md-12 text-center">
+                    <h6 class="font-14">Updating rx</h6>
+                </div>
+            </div>
+        `);
+        $.get('/update_rx_dob?dob='+dob+'&instructions='+instructions+'&rx='+rx, function(data) {
+            $('#updateRxDobModalBody-'+rx).html(`
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <i class="fa fa-check-circle theme-green font-40"></i>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <h6 class="font-14">Rx details added!</h6>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <button class="btn btn-info transaction-buttons" id="`+rx+`"
+                        onclick="clearRxUpdate(this)"><i class="fa fa-times-circle"></i> Clear</button>
+                    </div>
+                </div>
+            `);
+            $('.updateRxBtn-'+rx).css('opacity', '1');
+            $('.updateRxBtn-'+rx).html('<i class="fa fa-check-circle"></i> Update');
+        });
+    };
+    
+    function clearRxUpdate(elem) {
+        var rx = elem.id;
+        $('#updateRxDobModalBody-'+rx).html(`
+            <div class="row">
+                <div class="col-md-12" style="padding-bottom: 10px;">
+                    <h6 class="font-14 theme-blue">If the following rx exists, confirm the date of birth (from your records)</h6>
+                    <h6 class="font-14 theme-yellow text-center add-padding-top bold">Rx #<span id="rxSpan">`+rx+`</span></h6>
+                </div>
+                <div class="col-md-8 offset-md-2">
+                    <input type="text" class="form-control font-14" id="editRxField-`+rx+`" placeholder="date of birth (mm/dd/yyyy)">
+                    <div class="add-padding-top"></div>
+                    <textarea type="text" class="form-control border-radius font-14 height-40 no-box-shadow" style="height: 80px !important;" 
+                        id="editRxDeliveryInstructions-`+rx+`" placeholder="Delivery instructions"></textarea>
+                </div>
+            </div>
+        `);
+    };
+    
     function loadRequestCount() {
         $('#requestCountDetails').hide();
         $('#requestCountLoader').show();

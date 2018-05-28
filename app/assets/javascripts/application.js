@@ -65,6 +65,7 @@ $( document ).on('turbolinks:load', function() {
             '<h6 class="medium-gray font-14 text-center">No new notifications</h6>' +
             '</div>'
         );
+        $.get('/dismiss_all_notifications');
     });
     
     // dismiss notification on click
@@ -94,5 +95,55 @@ $( document ).on('turbolinks:load', function() {
     $('#updateProfile').on('submit', e => {
         $('#v-pills-home').html('<i class="fa fa-circle-o-notch theme-blue fa-spin fa-3x fa-fw"></i>')
     });
+    
+    function updateRxDob(elem) {
+        var rx = elem.id;
+        var dob = document.getElementById('editRxField-'+rx).value;
+        $('.updateRxBtn-'+rx).css('opacity', '0.6');
+        $('.updateRxBtn-'+rx).html('Updating...');
+        $('#updateRxDobModalBody-'+rx).html(`
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
+                </div>
+                <div class="col-md-12 text-center">
+                    <h6 class="font-14">Updating rx</h6>
+                </div>
+            </div>
+        `);
+        $.get('/update_rx_dob?dob='+dob+'&rx='+rx, function(data) {
+            $('#updateRxDobModalBody-'+rx).html(`
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <i class="fa fa-check-circle theme-green font-40"></i>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <h6 class="font-14">Date of birth added!</h6>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <button class="btn btn-info transaction-buttons" id="`+rx+`"
+                        onclick="clearRxUpdate(this)"><i class="fa fa-times-circle"></i> Clear</button>
+                    </div>
+                </div>
+            `);
+            $('.updateRxBtn-'+rx).css('opacity', '1');
+            $('.updateRxBtn-'+rx).html('<i class="fa fa-check-circle"></i> Update');
+        });
+    }
+    
+    function clearRxUpdate(elem) {
+        var rx = elem.id;
+        $('#updateRxDobModalBody-'+rx).html(`
+            <div class="row">
+                <div class="col-md-12" style="padding-bottom: 10px;">
+                    <h6 class="font-14 theme-blue">If the following rx exists, confirm the date of birth (from your records)</h6>
+                    <h6 class="font-14 theme-yellow text-center add-padding-top bold">Rx #<span id="rxSpan">`+rx+`</span></h6>
+                </div>
+                <div class="col-md-6 offset-md-3">
+                    <input type="text" class="form-control font-14" id="editRxField-`+rx+`" placeholder="date of birth (mm/dd/yyyy)">
+                </div>
+            </div>
+        `);
+    }
     
 });

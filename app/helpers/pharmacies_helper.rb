@@ -42,6 +42,10 @@ module PharmaciesHelper
         url.include?('/requests') 
     end
     
+    def account_path
+        url.include?('/settings') 
+    end
+    
     def rx_list_path
         url.include?('/rx') 
     end

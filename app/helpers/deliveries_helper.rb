@@ -25,8 +25,7 @@ module DeliveriesHelper
     
     def deliveries_today
         id = current_pharmacy.id
-        @all = Delivery.where(pharmacy_id: id, request_sent_on: DateTime.now.at_beginning_of_day.utc..Time.now.utc)
-        @deliveries = @all.select {|d| d.deliverable != nil && d.deliverable.request_id != nil }
+        @deliveries = DeliveryRequest.where(pharmacy_id: id, created_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc, active: false, is_valid: true)
         if @deliveries
             return @deliveries.count
         end
@@ -34,7 +33,7 @@ module DeliveriesHelper
     
     def requests_today
         id = current_pharmacy.id
-        @delivery_requests = DeliveryRequest.where(pharmacy_id: id, created_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc)
+        @delivery_requests = DeliveryRequest.where(pharmacy_id: id, created_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc, active: true)
         if @delivery_requests
             return @delivery_requests.count
         end
@@ -42,7 +41,7 @@ module DeliveriesHelper
     
     def refills_today
         id = current_pharmacy.id
-        @refills = RequestAlert.where(pharm_id: id, created_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc)
+        @refills = RequestAlert.where(pharm_id: id, created_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc, active: true)
         if @refills != nil
             return @refills.count
         end
@@ -77,6 +76,10 @@ module DeliveriesHelper
         else
             'theme-yellow'
         end
+    end
+    
+    def notifications
+        return Notification.where(pharmacy_id: current_pharmacy.id, read: false).all
     end
     
 end

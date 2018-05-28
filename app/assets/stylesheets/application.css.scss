@@ -49,10 +49,24 @@ a:hover {
     padding-bottom: 60px;
 }
 .navbar {
-    border-bottom: 1px solid #3484c6;
+    border-top: 3px solid #04c004;
     box-shadow: 0px 1px 5px #3484c6;
     font-family: Camphor, "Open Sans", "Segoe UI", sans-serif;
     background-color: #3484c6;
+    padding: 0 !important;
+}
+.background-blue {
+    background-color: #3484c6 !important;
+}
+.background-gray {
+    background-color: #707071 !important;
+}
+.background-dark {
+    background-color: #454d5e !important;
+}
+.di-nav {
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 .nav-item-courier-view-1:hover, .active_li {
     border-bottom: 2px solid #4095e3 !important;
@@ -128,6 +142,9 @@ a:hover {
 .btn, .card {
     border-radius: 2px !important;
 }
+.border-radius {
+    border-radius: 2px !important;
+}
 #requestRow {
     padding: 5px 0;
     border-bottom: 1px solid #e1e1e2;
@@ -150,11 +167,18 @@ div#rxCol {
     height: 180px;
     margin-top: 110px;
 }
+#supervisingPharmacist {
+    //
+}
 .messageText {
     height: 100px !important;
 }
 #sendRxRequest {
     margin-top: 10px;
+}
+.request-row {
+    padding: 5px 0;
+    border-bottom: 1px solid #e1e1e2;
 }
 .no-display {
     display: none;
@@ -669,6 +693,7 @@ div#rxCol {
 }
 .badge-notif {
     border-radius: 50% !important;
+    font-size: 9px !important;
 }
 .show-request-header{
     padding-bottom: 40px;
@@ -886,11 +911,6 @@ div#rxCol {
 .black {
     color: #000 !important;
 }
-.nav-item-pharmacy-view {
-    // line-height: 20px;
-    // text-transform: uppercase;
-    // font-size: 12px;
-}
 .nav-button-1 {
     padding-right: 15px;
 }
@@ -909,10 +929,6 @@ div#rxCol {
     height: 1.5px !important;
     width: 0;
     transition: width 0.25s;
-}
-.nav-item {
-    margin-right: 10px;
-    margin-left: 10px;
 }
 .navbar-nav-second {
     padding-top: 0 !important;
@@ -951,6 +967,38 @@ div#rxCol {
 }
 .nav-item-logged-in {
     color: #fff !important;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border-bottom: 3px solid #3484c6;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.nav-item-logged-in:hover, .activated {
+    color: #fff !important;
+    border-bottom: 3px solid #fff;
+    background-color: #2e76b2 !important;
+}
+
+.edit-delete-inline {
+    display: inline !important;
+}
+
+.bulkMessages {
+  color: white;
+  padding: 15px 20px !important;
+  border-radius: 50% !important;
+}
+
+.addAnRx {
+  color: white;
+  padding: 15px 20px !important;
+  border-radius: 50% !important;
+}
+
+#mybutton {
+  position: fixed;
+  bottom: 40px;
+  right: 30px;
 }
 .nav-link-left {
     font-size: 12px;
@@ -987,17 +1035,7 @@ div#rxCol {
 }
 .nav-link-side {
     font-size: 14px;
-    padding: 9px;
-    margin-right: 5px;
-    margin-left: 5px;
     color: #fff !important;
-    border-radius: 2px !important;
-    line-height: 20px;
-}
-.nav-link-side:hover {
-    background: #fff !important;
-    color: #4095e3 !important;
-    border-radius: 0;
 }
 .nav-link-left:hover {
     color: #fff !important;
@@ -1192,6 +1230,9 @@ div#rxCol {
 }
 
 /* Notification Views */
+.inline-col {
+    display: inline !important;
+}
 .notif {
     padding: 10px;
     border-top: 1px solid #e1e1e2;
@@ -1200,12 +1241,15 @@ div#rxCol {
 .notification-col {
     padding-top: 15px;
     padding-bottom: 15px;
-    background-color: #eff6fc;
+    background-color: #f8fbfd;
     border-bottom: 1px solid #e1e1e2;
 }
 .notification-placeholder {
     padding-top: 40px;
     padding-bottom: 40px;
+}
+.circle-btn {
+    border-radius: 50% !important;
 }
 
 /* Delivery Views */

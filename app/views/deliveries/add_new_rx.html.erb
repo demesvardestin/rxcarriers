@@ -37,6 +37,35 @@
             </div>
           </div>
         </div>
+        <div class="modal fade" id="editRx<%= rx.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title font-16" id="exampleModalLabel"><i class="fa fa-exclamation-circle"></i> Confirm date of birth of rx recipient</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="updateRxDobModalBody-<%= rx.rx %>">
+                    <div class="row">
+                        <div class="col-md-12" style="padding-bottom: 10px;">
+                            <h6 class="font-14 theme-blue">If the following rx exists, confirm the date of birth (from your records)</h6>
+                            <h6 class="font-14 theme-yellow text-center add-padding-top bold">Rx #<span id="rxSpan"><%= rx.rx %></span></h6>
+                        </div>
+                        <div class="col-md-8 offset-md-2">
+                            <input type="text" class="form-control font-14 no-box-shadow" id="editRxField-<%= rx.rx %>" placeholder="date of birth (mm/dd/yyyy)" value="<%= rx.dob if !rx.dob.nil? %>">
+                            <div class="add-padding-top"></div>
+                            <textarea type="text" class="form-control border-radius font-14 height-40 no-box-shadow" style="height: 80px !important;" 
+                                id="editRxDeliveryInstructions-<%= rx.rx %>" placeholder="Delivery instructions" value="<%= rx.delivery_instructions if !rx.delivery_instructions.nil? %>"></textarea>
+                        </div>
+                    </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-light transaction-buttons white updateRxBtn-<%= rx.rx %>" id="<%= rx.rx %>" onclick="updateRxDob(this)"><i class="fa fa-check-circle"></i> Update</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="table-content container batches-row rx-row-<%= rx.rx %>" id="<%= rx.id %>">
             <div class="row">
                 <div class="col-md-1">
@@ -61,23 +90,10 @@
                                 <i class="fa fa-mobile"></i> Message Patient
                             </button>
                         </div>
-                        <div class="col-md-5">
-                            <div class="dropdown show" style="padding-bottom: 0 !important;">
-                                <a class="btn btn-secondary btn-block dropdown-toggle rx-dropdown transaction-buttons disabled" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Request Driver
-                                </a>
-                              
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <% @batches.each do |b| %>
-                                        <li class="dropdown-item" href="/settings">
-                                            <%= link_to settings_path, class:"no-underline background-transparent font-12 theme-blue" do %>
-                                              <%= b.id %>
-                                            <% end %>
-                                        </li>
-                                        <div class="dropdown-divider"></div>
-                                    <% end %>
-                                </ul>
-                            </div>
+                        <div class="col-md-3">
+                            <a class="btn btn-secondary btn-block rx-dropdown transaction-buttons disabled" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Get Driver
+                            </a>
                         </div>
                         <div class="col-md-3">
                             <div class="dropdown show" style="padding-bottom: 0 !important;">
@@ -109,12 +125,32 @@
                                             Sent for delivery
                                         </button>
                                     </li>
+                                    <div class="dropdown-divider"></div>
+                                    <li class="dropdown-item">
+                                        <button class="btn btn-link font-12 no-padding-left" id="<%= rx.id %>-hold" status="on hold" onclick="updateRxStatus(this)">
+                                            On hold
+                                        </button>
+                                    </li>
                                 </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-5 no-horizontal-padding">
+                                    <button class="btn btn-secondary btn-block white transaction-buttons" id="editRx" data-toggle="modal" data-target="#editRx<%= rx.id %>">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+                                </div>
+                                <div class="col-md-5 offset-md-1 no-horizontal-padding">
+                                    <button class="btn btn-warning btn-block transaction-buttons white deleteRxBtn-<%= rx.rx %>" id="<%= rx.rx %>" onclick="deleteRx(this)">
+                                        <i class="fa fa-times-circle"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2" id="newDeliveryRequest<%= rx.id %>">
+                <div class="col-md-2 new-delivery-request<%= rx.rx %>" id="newDeliveryRequest<%= rx.id %>">
                     <% if rx.delivery_requested %>
                         <span class="badge badge-success verified-alert-badge">
                             Delivery request: <%= rx.get_delivery_details.delivery_time %> 12:45PM

@@ -2,13 +2,43 @@
     .spinner-row {
         display: none;
     }
+    
+    #card-form {
+        display: none;
+    }
+    .cancel-submission-div {
+        padding: none;
+        margin-top: 10px;
+    }
+    .cancel-submission {
+        font-size: 15px;
+        background-color: transparent;
+    }
+    .cancel-submission:hover {
+        background-color: transparent;
+        cursor: pointer;
+    }
+    .payment-vector {
+        width: 50%;
+    }
+    .last-four-div {
+        padding-top: 5px;
+        vertical-align: middle;
+    }
+    .last-four {
+        font-size: 14px;
+    }
 </style>
 
 <div class="row" id="updateProfile">
+    <div class="col-md-12">
+        <h5 class="weighted bold">Settings</h5>
+        <hr>
+    </div>
     <div class="col-md-3">
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-          <a class="nav-link active nav-link-settings font-14" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Account Settings</a>
-          <a class="nav-link nav-link-settings font-14" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Payment Settings</a>
+          <a class="nav-link active nav-link-settings font-14" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Account</a>
+          <a class="nav-link nav-link-settings font-14" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Billing</a>
         </div>
         <section class="notice" style="display: none;">
             <div class="alert alert-success no-border-radius alert-dismissible fade show notice-alert" role="alert">
@@ -20,20 +50,85 @@
             </div>
         </section>
     </div>
-    <div class="col-md-8 offset-md-1 box-shadow bordered">
+    <div class="col-md-8 offset-md-1">
         <div class="tab-content" id="v-pills-tabContent">
-          <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-              <%= render 'form' %>
-          </div>
-          <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" id="">
-              <div id="pharmacyCard">
-                  <% if current_pharmacy.card_token %>
-                      <%= render 'card_data' %>
-                  <% else %>
-                      <%= render 'card_form' %>
-                  <% end %>
-              </div>
-          </div>
+            <div class="tab-pane fade show active box-shadow bordered" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" style="padding: 10px 15px;">
+                <%= render 'form' %>
+            </div>
+            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" id="">
+                <div id="currentPlan" class="row">
+                    <div class="col-md-12" style="padding-bottom: 20px;">
+                        <h6 class="font-16 bold">Plan</h6>
+                        <hr>
+                        <div class="float-left" style="width: 47.5%;">
+                            <div class="card">
+                                <div class="card-header background-blue white font-16 text-center">
+                                    Beginner
+                                </div>
+                                <div class="card-body background-dark font-24 white text-center" style="padding: 40px;">
+                                    <b>$49.99</b> </span class="font-14">/month</span><br /><br />
+                                    <span class="font-16 text-center">
+                                        + <b>$0.05</b> per text message
+                                    </span>
+                                </div>
+                                <div class="card-footer font-14 text-center" style="padding-bottom: 20px;">
+                                    <div>
+                                        <h5 class="weighted font-14">Visibility on our search page</h5>
+                                        <h5 class="weighted font-14">Unlimited notifications</h5>
+                                        <h5 class="weighted font-14"><strike>Unlimited text messages</strike></h5>
+                                    </div>
+                                    <div class="add-padding-top">
+                                        <button class="btn btn-secondary disabled btn-block">
+                                            Current Plan
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="float-left" style="width: 5%;"></div>
+                        <div class="float-right" style="width: 47.5%;">
+                            <div class="card">
+                                <div class="card-header background-blue white font-16 text-center">
+                                    Pro
+                                </div>
+                                <div class="card-body background-dark font-24 white text-center" style="padding: 40px;">
+                                    <b>$69.99</b> </span class="font-14">/month</span><br /><br />
+                                    <span class="font-16 text-center">
+                                        + <b>free</b> unlimited text messages
+                                    </span>
+                                </div>
+                                <div class="card-footer font-14 text-center" style="padding-bottom: 20px;">
+                                    <div>
+                                        <h5 class="weighted font-14">Visibility on our search page</h5>
+                                        <h5 class="weighted font-14">Unlimited notifications</h5>
+                                        <h5 class="weighted font-14">Unlimited text messages</h5>
+                                    </div>
+                                    <div class="add-padding-top">
+                                        <button class="btn btn-light btn-block" id="upgradeToPro">
+                                            Upgrade
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h6 class="font-16 bold">Debit/Credit Card</h6>
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <div id="pharmacyCard" class="box-shadow bordered" style="padding: 10px 15px;">
+                            <% if current_pharmacy.card_token %>
+                                <%= render 'card_data' %>
+                            <% else %>
+                                <%= render 'card_form' %>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -49,5 +144,78 @@
         var conf = document.getElementById('confirmation-form');
         $('#card-form').hide();
         $('#confirmation-form').show();
+    };
+    
+    // Create a Stripe client
+    var stripe = Stripe('pk_test_r46MnQQ9cxjMadPDwXrxHRgm');
+    
+    // Create an instance of Elements
+    var elements = stripe.elements();
+    
+    // Custom styling can be passed to options when creating an Element.
+    // (Note that this demo uses a wider set of styles than the guide below.)
+    var style = {
+      base: {
+        color: '#32325d',
+        lineHeight: '18px',
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
+        '::placeholder': {
+          color: '#aab7c4'
+        }
+      },
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a'
+      }
+    };
+    
+    // Create an instance of the card Element
+    var card = elements.create('card', {style: style});
+    
+    // Add an instance of the card Element into the `card-element` <div>
+    card.mount('#card-element');
+    
+    // Handle real-time validation errors from the card Element.
+    card.addEventListener('change', function(event) {
+      var displayError = document.getElementById('card-errors');
+      if (event.error) {
+        displayError.textContent = event.error.message;
+      } else {
+        displayError.textContent = '';
+      }
+    });
+    
+    // Handle form submission //
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        stripe.createToken(card).then(function(result) {
+            if (result.error) {
+              // Inform the user if there was an error
+              var errorElement = document.getElementById('card-errors');
+              errorElement.textContent = result.error.message;
+            } else {
+                $('#pharmacyCard').html(`
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            Saving...
+                        </div>
+                    </div>
+                `);
+              // Send the token to your server
+              stripeTokenHandler(result.token);
+            }
+      });
+    });
+    function stripeTokenHandler(token) {
+      // Insert the token ID into the form so it gets submitted to the server
+        $.get( "/pharmacy/update_card?stripeToken="+token.id, function( data ) {
+            // $('#pharmacyCard').html(data);
+        });
     };
 </script>

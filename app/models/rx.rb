@@ -33,7 +33,7 @@ class Rx < ActiveRecord::Base
     end
     
     def not_ready
-        return self.current_status == 'delivered' || self.current_status == 'picked' || self.current_status.nil?
+        return self.current_status == 'delivered' || self.current_status == 'picked' || self.current_status == 'on hold' || self.current_status.nil?
     end
     
     def not_refill?

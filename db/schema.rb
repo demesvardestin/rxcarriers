@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180520002721) do
+ActiveRecord::Schema.define(version: 20180525234117) do
 
   create_table "deliveries", force: :cascade do |t|
     t.datetime "created_at",             null: false
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(version: 20180520002721) do
     t.integer  "rx_id"
     t.integer  "pharmacy_id"
     t.string   "delivery_time"
+    t.boolean  "is_valid"
+    t.string   "request_ip"
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -67,12 +69,15 @@ ActiveRecord::Schema.define(version: 20180520002721) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.integer  "pharmacy_id"
     t.integer  "batch_id"
     t.string   "content"
     t.boolean  "read"
+    t.string   "notification_type"
+    t.string   "rx"
+    t.boolean  "active"
   end
 
   create_table "pharmacies", force: :cascade do |t|
@@ -123,6 +128,12 @@ ActiveRecord::Schema.define(version: 20180520002721) do
     t.string   "sub_auth"
     t.string   "p256dh"
     t.string   "npi"
+    t.string   "name"
+    t.string   "town"
+    t.string   "street"
+    t.string   "zipcode"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "pharmacies", ["email"], name: "index_pharmacies_on_email"
@@ -154,6 +165,8 @@ ActiveRecord::Schema.define(version: 20180520002721) do
     t.string   "ip"
     t.string   "time"
     t.boolean  "active"
+    t.boolean  "is_valid"
+    t.string   "request_ip"
   end
 
   create_table "rxes", force: :cascade do |t|

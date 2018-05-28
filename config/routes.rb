@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   get '/fetch_driver/:driver_id/:batch_id', to: 'drivers#fetch_driver'
   
   # custom path
-  get 'pharmacy/update_card', to: 'pharmacies#update_card'
+  get '/pharmacy/update_card', to: 'pharmacies#update_card'
   get 'deliveries/:id/signature', to: 'deliveries#signature'
   get 'settings', to: 'pharmacies#edit'
   get 'batch_search', to: 'batches#batch_search'
@@ -57,7 +57,8 @@ Rails.application.routes.draw do
   get '/update_supervisor', to: 'batches#update_supervisor'
   get '/notifications', to: 'batches#notifications'
   get '/notifications/mark_as_read', to: 'batches#clear_notifications'
-  get '/dismiss_notification', to: 'batches#dismiss_notification'
+  get '/dismiss_notification', to: 'deliveries#dismiss_notification'
+  get '/dismiss_all_notifications', to: 'deliveries#dismiss_all_notifications'
   get 'update_profile', to: 'pharmacies#update_profile'
   get '/mark_picked', to: 'batches#mark_picked'
   get '/cancel_request', to: 'batches#cancel_request'
@@ -78,6 +79,11 @@ Rails.application.routes.draw do
   get '/add_new_rx', to: 'deliveries#add_new_rx'
   get '/dashboard', to: 'deliveries#dashboard'
   get '/update_rx_phone_number', to: 'deliveries#update_rx_phone_number'
+  get '/live_requests_dashboard', to: 'deliveries#live_requests_dashboard'
+  get '/set_invalid_rx', to: 'deliveries#set_invalid_rx'
+  get '/update_rx_dob', to: 'deliveries#update_rx_dob'
+  get '/delete_rx', to: 'deliveries#delete_rx'
+  get '/create_notification', to: 'deliveries#create_notification'
   
   # resource path
   resources :invoices, only: [:create, :show, :index, :destroy]
@@ -94,7 +100,7 @@ Rails.application.routes.draw do
     root 'drivers#deliveries', as: :authenticated_driver_root
   end
   authenticated :pharmacy do
-    root 'batches#index', as: :authenticated_pharmacy_root
+    root 'deliveries#dashboard', as: :authenticated_pharmacy_root
   end
   
   # root path
