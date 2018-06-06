@@ -43,7 +43,7 @@ module PharmaciesHelper
     end
     
     def account_path
-        url.include?('/settings') 
+        url.include?('/settings') || url.include?('/choose_subscription') 
     end
     
     def rx_list_path

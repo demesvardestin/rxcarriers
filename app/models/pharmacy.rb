@@ -49,6 +49,10 @@ class Pharmacy < ActiveRecord::Base
         [street, town, state, zipcode].join(', ')
     end
     
+    def not_subscribed
+        return self.on_trial.nil? || self.on_trial == false || self.delinquent == true || self.is_subscribed == false || self.is_subscribed.nil?
+    end
+    
     def last_four
       last_four = Stripe::Customer.retrieve(self.stripe_cus).sources.first['last4']
       return last_four

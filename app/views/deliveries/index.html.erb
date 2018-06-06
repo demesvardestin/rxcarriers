@@ -11,6 +11,98 @@
     }
     
 </style>
+<div class="modal fade" id="couriersComingSoon" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title font-16" id="exampleModalLabel">Coming soon to RxCarriers</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="padding-top: 30px; padding-bottom: 25px;">
+            <div class="row">
+                <div class="col-md-12 font-14 weighted" style="padding-bottom: 10px;">
+                    The delivery driver request feature is not supported in this version,
+                    but will be available with our next update in the coming weeks. In the meantime,
+                    we will keep you updated on our development via email.
+                </div>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="bulkMessages" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title font-14" id="exampleModalLabel"><i class="fa fa-comments-o"></i> Send a bulk message</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body text-center" style="padding-top: 30px; padding-bottom: 25px;">
+            <div class="row">
+                <div class="col-md-12 font-14 theme-blue bold" style="padding-bottom: 15px;">
+                    Select a communication method
+                </div>
+                <div class="col-md-4 offset-md-4 font-14 weighted" style="padding-bottom: 20px;">
+                    <div class="btn-group-toggle" data-toggle="buttons">
+                      <label class="btn btn-secondary btn-block white" id="firstRadio" style="font-size: 12px !important;" onclick="showCheck(this)">
+                        <input type="radio" name="options" id="text" autocomplete="off" checked> <i class="fa fa-comments-o"></i> <span class="method">Text</span>
+                        <span style="display: none;" class="first"><i class="fa fa-check theme-green"></i></span>
+                        <span style="display: none;" class="second"></span>
+                      </label>
+                      <label class="btn btn-secondary btn-block white" id="secondRadio" style="font-size: 12px !important;" onclick="showCheck(this)">
+                        <input type="radio" name="options" id="call" autocomplete="off"> <i class="fa fa-mobile"></i> <span class="method">Call</span>
+                        <span style="display: none;" class="first"><i class="fa fa-check theme-green"></i></span>
+                        <span style="display: none;" class="second"></span>
+                      </label>
+                    </div>
+                </div>
+                <div class="col-md-12 font-14 weighted" style="padding-bottom: 15px;">
+                    <span id="method" class="theme-blue bold">Message</span> all patients who:
+                </div>
+                <div class="col-md-10 offset-md-1 font-14 weighted" style="padding-bottom: 10px;">
+                    <div class="btn-group-toggle" data-toggle="buttons">
+                      <label class="btn btn-secondary btn-block white" id="firstCheck" style="font-size: 12px !important;" onclick="showCheck(this)">
+                        <input type="checkbox" name="options" id="unpickedMeds" autocomplete="off" checked> <i class="fa fa-hourglass-half"></i> Have prescriptions that have not been picked up 
+                        <span style="display: none;" class="first"><i class="fa fa-check theme-green"></i></span>
+                        <span style="display: none;" class="second">unpicked</span>
+                      </label>
+                      <label class="btn btn-secondary btn-block white" id="secondCheck" style="font-size: 12px !important;" onclick="showCheck(this)">
+                        <input type="checkbox" name="options" id="rxIssue" autocomplete="off"> <i class="fa fa-exclamation-circle"></i> Have an rx issue (insurance, expiry, updates, etc) 
+                        <span style="display: none;" class="first"><i class="fa fa-check theme-green"></i></span>
+                        <span style="display: none;" class="second">issue</span>
+                      </label>
+                    </div>
+                    <div id="patientChoice" style="display: none;"></div>
+                </div>
+            </div>
+            <div id="loadingBulkMessages" class="add-padding-top" style="display: none;">
+                <%= render 'common/bullet_spinner' %>
+                <div class="row">
+                    <div class="col-md-12 font-14">
+                        Processing...this may take a while.<br/>
+                        (Note: a voicemail will be left for patients who don't pick up)
+                    </div>
+                </div>
+            </div>
+            <div id="bulkMessagesSent" style="display: none;" class="row add-padding-top">
+                <div class="col-md-12">
+                    <i class="fa fa-check-circle theme-green" style="font-size: 40px;"></i>
+                </div>
+                <div class="col-md-12 font-14 add-padding-top">
+                    All patients successfully contacted!
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary send-bulk" onclick="sendBulkMessages(this)"><i class="fa fa-paper-plane-o"></i> Submit</button>
+        </div>
+    </div>
+  </div>
+</div>
 <div class="modal fade" id="addNewRxModal0" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -32,16 +124,16 @@
                     </div>
                     <div class="col-md-6 field">
                         <input type="text" class="form-control form--control font-14 pf" id="rx-phone" name="rx-phone" placeholder=" ">
-                        <label for="rx-phone">Phone number</label>
+                        <label for="rx-phone">Associated phone number</label>
                     </div>
                     <div class="col-md-3 field">
                         <input type="text" class="form-control form--control font-14 pf" id="rx-dob" name="rx-dob" placeholder=" ">
                         <label for="rx-dob">Date of birth</label>
                     </div>
-                    <div class="col-md-12 field">
-                        <input type="text" class="form-control form--control font-14 pf" id="rx-address" name="rx-address" placeholder=" ">
-                        <label for="rx-address">Address of rx recipient</label>
-                    </div>
+                    <!--<div class="col-md-12 field">-->
+                    <!--    <textarea type="text" class="form-control form--control font-14 pf" id="rx-instructions" name="rx-instructions" placeholder=""></textarea>-->
+                    <!--    <label for="rx-instructions">Delivery instructions</label>-->
+                    <!--</div>-->
                     <!--<div class="col-md-12 field">-->
                     <!--    <textarea type="text" class="form-control form--control font-14 pf" id="patient-copay" name="patient-copay" placeholder=" "></textarea>-->
                     <!--    <label for="rx-instructions">Delivery instructions</label>-->
@@ -54,7 +146,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light add-rx" onclick="addNewRx(this)"><i class="fa fa-check-circle"></i> Add rx</button>
+                <button type="button" class="btn btn-primary add-rx" onclick="addNewRx(this)"><i class="fa fa-check-circle"></i> Add rx</button>
             </div>
         </div>
     </div>
@@ -76,24 +168,26 @@
                 Status
             </span>
         </div>
-        <div class="col-md-1 pd">
-            <span class="batches-details font-16 ">
-                Actions
-            </span>
+        <div class="col-md-5 pd">
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="batches-details font-16 ">
+                        Actions
+                    </span>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary btn-block white transaction-buttons" data-toggle="modal" data-target="#couriersComingSoon">
+                        <i class="fa fa-exclamation-circle"></i> Drivers
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="col-md-2 pd offset-md-1">
-            <!--<span class="batches-details font-16 ">-->
-            <!--    <button class='btn btn-secondary btn-block transaction-buttons' id="addRx" style="margin-top: -9px !important; height: 38px !important;">-->
-            <!--        <i class="fa fa-comments-o"></i> Bulk messaging-->
-            <!--    </button>-->
-            <!--</span>-->
-        </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="input-group-prepend">
                 <span class="input-group-text background-transparent theme-blue" id="rxSearchAddon">
                     <i class="fa fa-search"></i>
                 </span>
-                <input type="text" class="form-control font-12" placeholder="search rx" id="rxSearch" onkeyup="rxLiveSearch(this)">
+                <input type="text" class="form-control font-14" placeholder="search rx" id="rxSearch" onkeyup="rxLiveSearch(this)">
             </div>
         </div>
     </div>
@@ -123,6 +217,7 @@
                       <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12" style="padding-bottom: 30px;">
+                                    <% if rx.phone_number.nil? %><h6 class="font-14 theme-red">No phone number provided for this rx</h6><% end %>
                                     <h6 class="font-14 theme-blue">Message preview (how your text will show up)</h6>
                                     <div class="font-14">
                                         <span style="color: #878787 !important;">From <%= current_pharmacy.name %>:</span> 
@@ -140,7 +235,8 @@
                             </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-light" id="sendTextMessage"><i class="fa fa-paper-plane-o"></i> Send message</button>
+                        <span class="badge badge-success" id="onMessageSent-<%= rx.rx %>" style="display: none;"></span>
+                        <button type="button" class="btn btn-primary send-patient-message" id="<%= rx.rx %>" onclick="sendPatientMessage(this)"><i class="fa fa-paper-plane-o"></i> Send message</button>
                       </div>
                     </div>
                   </div>
@@ -149,7 +245,7 @@
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title font-16" id="exampleModalLabel"><i class="fa fa-exclamation-circle"></i> Confirm date of birth of rx recipient</h5>
+                        <h5 class="modal-title font-14" id="exampleModalLabel"><i class="fa fa-pencil"></i> Edit rx Details</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
@@ -157,19 +253,20 @@
                       <div class="modal-body" id="updateRxDobModalBody-<%= rx.rx %>">
                             <div class="row">
                                 <div class="col-md-12" style="padding-bottom: 10px;">
-                                    <h6 class="font-14 theme-blue">If the following rx exists, confirm the date of birth (from your records)</h6>
                                     <h6 class="font-14 theme-yellow text-center add-padding-top bold">Rx #<span id="rxSpan"><%= rx.rx %></span></h6>
                                 </div>
                                 <div class="col-md-8 offset-md-2">
                                     <input type="text" class="form-control font-14 no-box-shadow" id="editRxField-<%= rx.rx %>" placeholder="date of birth (mm/dd/yyyy)" value="<%= rx.dob if !rx.dob.nil? %>">
-                                    <div class="add-padding-top"></div>
-                                    <textarea type="text" class="form-control border-radius font-14 height-40 no-box-shadow" style="height: 80px !important;" 
-                                        id="editRxDeliveryInstructions-<%= rx.rx %>" placeholder="Delivery instructions" value="<%= rx.delivery_instructions if !rx.delivery_instructions.nil? %>"></textarea>
+                                    <input type="text" class="form-control font-14 no-box-shadow" id="editRxPhone-<%= rx.rx %>" placeholder="phone number" value="<%= rx.phone_number if !rx.phone_number.nil? %>">
+                                    <!--<input type="text" class="form-control font-14 no-box-shadow" id="editRxAddress-<%= rx.rx %>" placeholder="address" value="<%= rx.address if !rx.address.nil? %>">-->
+                                    <!--<div class="add-padding-top"></div>-->
+                                    <!--<textarea type="text" class="form-control border-radius font-14 height-40 no-box-shadow" style="height: 80px !important;" -->
+                                    <!--    id="editRxDeliveryInstructions-<%= rx.rx %>" placeholder="Delivery instructions"><%= rx.delivery_instructions if !rx.delivery_instructions.nil? %></textarea>-->
                                 </div>
                             </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-light transaction-buttons white updateRxBtn-<%= rx.rx %>" id="<%= rx.rx %>" onclick="updateRxDob(this)"><i class="fa fa-check-circle"></i> Update</button>
+                        <button type="button" class="btn btn-primary transaction-buttons white updateRxBtn-<%= rx.rx %>" id="<%= rx.rx %>" onclick="updateRxDob(this)"><i class="fa fa-check-circle"></i> Update</button>
                       </div>
                     </div>
                   </div>
@@ -199,7 +296,7 @@
                                     </button>
                                 </div>
                                 <div class="col-md-3">
-                                    <a class="btn btn-secondary btn-block rx-dropdown transaction-buttons disabled" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="btn btn-secondary btn-block rx-dropdown transaction-buttons disabled" href="#" role="button" id="dropdownMenuLink">
                                       Get Driver
                                     </a>
                                 </div>
@@ -263,12 +360,16 @@
                                 <span class="badge badge-success verified-alert-badge">
                                     Delivery request: <%= rx.get_delivery_details.delivery_time %>
                                 </span>
+                            <% elsif rx.details_missing %>
+                                <span class="badge badge-warning badge-warning-<%= rx.rx %>">
+                                    Details missing
+                                </span>
                             <% end %>
                         </div>
                         <div class="col-md-1" id="newRefillRequest<%= rx.id %>">
                             <% if rx.refill_requested %>
                                 <span class="badge badge-warning verified-alert-badge">
-                                    Refill
+                                    <i class="fa fa-refresh"></i> Refill
                                 </span>
                             <% end %>
                         </div>
@@ -279,7 +380,11 @@
     <% end %>
 </div>
 <div id="mybutton">
-    <div><button class="btn btn-light bulkMessages"><i class="fa fa-comments-o font-20"></i></button></div>
+    <div>
+        <button class="btn btn-primary bulkMessages" data-toggle="modal" data-target="#bulkMessages">
+            <i class="fa fa-comments-o font-20"></i>
+        </button>
+    </div>
     <div class="add-padding-top"><button class="btn btn-secondary addAnRx" data-toggle="modal" data-target="#addNewRxModal0"><i class="fa fa-plus font-20"></i></button></div>
 </div>
 
@@ -380,10 +485,31 @@
         });
     };
     
-    // $('.table-content').mouseover(function() {
-    //     $('.badge-warning').fadeOut();
-    //     $(this).css('background-color', '#fff');
-    // });
+    function sendPatientMessage(elem) {
+        var rx = elem.id;
+        var message = document.getElementById('messageText-'+rx).value;
+        elem.classList.add('disabled');
+        $('.send-patient-message').html(`
+            <div class="row">
+                <div class="col-md-12 text-center font-14">
+                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw white" style="font-size: 14px !important;"></i> Sending message...
+                </div>
+            </div>
+        `);
+        $.get('/send_patient_message?rx='+rx+'&message='+message, e => {
+            document.getElementById('messageText-'+rx).value = '';
+            $('#messagePreview-'+rx).html('');
+            $('.send-patient-message').html('<i class="fa fa-paper-plane-o"></i> Send message');
+            elem.classList.remove('disabled');
+            $('#onMessageSent-'+rx).html('Message successfully sent!')
+            .fadeIn(1000, function() {
+                $(this).fadeOut(5000);
+            });
+        })
+        .catch(function(err) {
+            $('#onMessageSent-'+rx).html('Message could not be sent')
+        });
+    };
     
     function clearNew(elem) {
         var rx = elem.id;
@@ -394,6 +520,96 @@
     function deleteRx(elem) {
         var rx = elem.id;
         $.get('/delete_rx?rx='+rx);
+    };
+    
+    function showCheck(elem) {
+        var id = elem.id;
+        var element = document.getElementById(id);
+        var count_1 = 0;
+        var count_2 = 0;
+        
+        if (id.includes('Radio')) {
+            var method = $('#'+id).children("span.method").text();
+            $('#method').html(method);
+        }
+        
+        if (id == 'firstRadio') {
+            document.getElementById('secondRadio').classList.remove('active');
+            $('#secondRadio').children("span.first").hide();
+        } else if (id == 'secondRadio') {
+            document.getElementById('firstRadio').classList.remove('active');
+            $('#firstRadio').children("span.first").hide();
+        }
+        
+        if (!element.classList.contains('active')) {
+            $('#'+id).children("span.first").show();
+            var choice = $('#'+id).children("span.second").text();
+            $('#patientChoice').append(choice);
+        } else {
+            $('#'+id).children("span.first").hide();
+        }
+        
+        if (id == 'firstCheck') {
+            count_1 += 1;
+            
+            if (count_1 % 2 == 0) {
+                document.getElementById('firstCheck').classList.remove('active');
+            }
+        } else if (id == 'secondCheck') {
+            count_2 += 1;
+            
+            if (count_2 % 2 == 0) {
+                document.getElementById('secondCheck').classList.remove('active');
+            }
+        }
+    };
+    
+    function sendBulkMessages(elem) {
+        var route;
+        elem.classList.add('disabled');
+        $('.send-bulk').html('Processing...');
+        var choice = $('#patientChoice').text();
+        $('#loadingBulkMessages').show();
+        var method = $('#method').text();
+        method = method.toLowerCase();
+        if (method == 'call') {
+            route = '/bulk_calling'
+        } else {
+            route = '/bulk_texting'
+        }
+        if (choice.includes('unpicked') && choice.includes('issue')) {
+            $.get(route+'?choice1=unpicked&choice2=issue', function() {
+                elem.classList.remove('disabled');
+                $('.send-bulk').html('<i class="fa fa-plane-o"></i> Submit');
+                $('#loadingBulkMessages').hide();
+                $('#bulkMessagesSent').fadeIn(1000, function() {
+                    $(this).fadeOut(4000);
+                });
+                $('#patientChoice').text('');
+            });
+        } else {
+            if (choice.includes('unpicked')) {
+                $.get(route+'?choice1=unpicked&choice2=', function() {
+                    elem.classList.remove('disabled');
+                    $('.send-bulk').html('<i class="fa fa-paper-plane-o"></i> Submit');
+                    $('#loadingBulkMessages').hide();
+                    $('#bulkMessagesSent').fadeIn(1000, function() {
+                        $(this).fadeOut(4000);
+                    });
+                    $('#patientChoice').text('');
+                });
+            } else {
+                $.get(route+'?choice1=&choice2=issue', function() {
+                    elem.classList.remove('disabled');
+                    $('.send-bulk').html('<i class="fa fa-paper-plane-o"></i> Submit');
+                    $('#loadingBulkMessages').hide();
+                    $('#bulkMessagesSent').fadeIn(1000, function() {
+                        $(this).fadeOut(4000);
+                    });
+                    $('#patientChoice').text('');
+                });
+            }
+        }
     };
     
     function clearForm() {
@@ -408,6 +624,8 @@
     function updateRxDob(elem) {
         var rx = elem.id;
         var dob = document.getElementById('editRxField-'+rx).value;
+        var phone = document.getElementById('editRxPhone-'+rx).value;
+        var address = document.getElementById('editRxAddress-'+rx).value;
         var instructions = document.getElementById('editRxDeliveryInstructions-'+rx).value;
         $('.updateRxBtn-'+rx).css('opacity', '0.6');
         $('.updateRxBtn-'+rx).html('Updating...');
@@ -421,7 +639,7 @@
                 </div>
             </div>
         `);
-        $.get('/update_rx_dob?dob='+dob+'&instructions='+instructions+'&rx='+rx, function(data) {
+        $.get('/update_rx_dob?dob='+dob+'&instructions='+instructions+'&rx='+rx+'&phone='+phone+'&address='+address, function(data) {
             $('#updateRxDobModalBody-'+rx).html(`
                 <div class="row">
                     <div class="col-md-12 text-center">
@@ -438,6 +656,7 @@
             `);
             $('.updateRxBtn-'+rx).css('opacity', '1');
             $('.updateRxBtn-'+rx).html('<i class="fa fa-check-circle"></i> Update');
+            $('span.badge-warning-'+rx).fadeOut();
         });
     };
     
@@ -446,11 +665,12 @@
         $('#updateRxDobModalBody-'+rx).html(`
             <div class="row">
                 <div class="col-md-12" style="padding-bottom: 10px;">
-                    <h6 class="font-14 theme-blue">If the following rx exists, confirm the date of birth (from your records)</h6>
                     <h6 class="font-14 theme-yellow text-center add-padding-top bold">Rx #<span id="rxSpan">`+rx+`</span></h6>
                 </div>
                 <div class="col-md-8 offset-md-2">
                     <input type="text" class="form-control font-14" id="editRxField-`+rx+`" placeholder="date of birth (mm/dd/yyyy)">
+                    <input type="text" class="form-control font-14" id="editRxPhone-`+rx+`" placeholder="phone number">
+                    <input type="text" class="form-control font-14" id="editRxAddress-`+rx+`" placeholder="address">
                     <div class="add-padding-top"></div>
                     <textarea type="text" class="form-control border-radius font-14 height-40 no-box-shadow" style="height: 80px !important;" 
                         id="editRxDeliveryInstructions-`+rx+`" placeholder="Delivery instructions"></textarea>

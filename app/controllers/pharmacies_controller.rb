@@ -18,6 +18,33 @@ class PharmaciesController < ApplicationController
     redirect_to :back
   end
   
+  def add_card
+    token = params['stripeToken']
+    @pharmacy = current_pharmacy
+    if @pharmacy.stripe_cus
+      customer = Stripe::Customer.retrieve(@pharmacy.stripe_cus)
+      customer.source = token
+      customer.save
+      subscription = Stripe::Subscription.create({
+        customer: customer.id,
+        items: [{plan: 'plan_CxDYkhNDCSlUgs'}],
+        trial_period_days: 7,
+      })
+    else
+      customer = Stripe::Customer.create(
+        :email => @pharmacy.email,
+        :source => token,
+      )
+      subscription = Stripe::Subscription.create({
+        customer: customer.id,
+        items: [{plan: 'plan_CxDYkhNDCSlUgs'}],
+        trial_period_days: 7,
+      })
+    end
+    @pharmacy.update(card_token: token, stripe_cus: customer.id, sub_auth: subscription.id)
+    render :layout => false
+  end
+  
   def update_card
     token = params['stripeToken']
     @pharmacy = current_pharmacy
@@ -31,7 +58,19 @@ class PharmaciesController < ApplicationController
         :source => token,
       )
     end
+    if customer.nil?
+      redirect_to choose_subscription_path
+    end
     @pharmacy.update(card_token: token, stripe_cus: customer.id)
+    render :layout => false
+  end
+  
+  def submit_agreement
+    @terms_profile = TermsAndAgreement.find_by(pharmacy_id: params[:id])
+    if @terms_profile.nil?
+      @terms_profile = TermsAndAgreement.create(pharmacy_id: params[:id], signed: true, signed_on: Time.now)
+    end
+    current_pharmacy.update(is_subscribed: true, on_trial: true)
     render :layout => false
   end
   
@@ -52,11 +91,14 @@ class PharmaciesController < ApplicationController
     name = params["name"]
     number = params["number"]
     supervisor = params["supervisor"]
-    address = params["street"]
+    street = params["street"]
+    town = params["town"]
+    zipcode = params["zipcode"]
+    state = params["state"]
     website = params["website"]
     avatar = params["avatar"]
-    current_pharmacy.update!(name: name, number: number, supervisor: supervisor, street: address, website: website, avatar_file_name: avatar)
     @pharmacy = current_pharmacy
+    @pharmacy.update(pharmacy_params)
     respond_to do |format|
       format.js {}
     end
@@ -100,6 +142,6 @@ class PharmaciesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def pharmacy_params
       params.require(:pharmacy).permit(:name, :street, :number, :supervisor, :website, :card_number, 
-      :bill_country, :exp_month, :exp_year, :bill_street, :bill_city, :bill_state, :bill_zip, :cvc, :avatar)
+      :town, :state, :zipcode, :avatar)
     end
 end

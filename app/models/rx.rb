@@ -5,7 +5,7 @@ class Rx < ActiveRecord::Base
     def self.search(param)
         param.strip!
         param.downcase!
-        (rx_matches(param) + address_matches(param) + phone_matches(param)).uniq
+        (rx_matches(param) + address_matches(param) + phone_matches(param) + dob_matches(param)).uniq
     end
     
     def self.rx_matches(param)
@@ -20,6 +20,10 @@ class Rx < ActiveRecord::Base
         matches('phone_number', param)
     end
     
+    def self.dob_matches(param)
+        matches('dob', param)
+    end
+    
     def self.matches(field_name, param)
         where("lower(#{field_name}) like ?", "%#{param}%")
     end
@@ -32,8 +36,24 @@ class Rx < ActiveRecord::Base
         return self.current_status == 'sent' 
     end
     
+    def picked
+        return self.current_status == 'picked' 
+    end
+    
     def not_ready
-        return self.current_status == 'delivered' || self.current_status == 'picked' || self.current_status == 'on hold' || self.current_status.nil?
+        return self.current_status == 'delivered' || self.current_status == 'on hold' || self.current_status.nil?
+    end
+    
+    def on_hold
+        return self.current_status == 'on hold' 
+    end
+    
+    def delivery_sent_already
+        return (self.current_status == 'sent' && ((DateTime.now - self.last_filled_on.to_datetime)*24).to_i > 5) 
+    end
+    
+    def details_missing
+        return self.dob.nil? || self.phone_number.nil? || self.dob.blank? || self.phone_number.nil?
     end
     
     def not_refill?
@@ -57,7 +77,7 @@ class Rx < ActiveRecord::Base
     end
     
     def get_delivery_details
-        return DeliveryRequest.find_by(rx: self.rx)
+        return DeliveryRequest.find_by(rx: self.rx, active: true)
     end
     
     def object?

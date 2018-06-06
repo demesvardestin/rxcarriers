@@ -1,5 +1,5 @@
 <% if (@pharmacies.nil? && @pharmacy.nil?) || (@pharmacies.blank? && @pharmacy.blank?) %>
-    <div style="padding: 10px;" class="text-center">
+    <div class="text-center">
         <div>
             <i class="fa fa-exclamation-circle theme-yellow" style="font-size: 40px;"></i>
         </div>
@@ -11,21 +11,17 @@
         </div>
     </div>
 <% elsif @pharmacies %>
-    <div class="col-md-12 add-padding-top-10"><h6 class="font-14">Select your pharmacy</h6></div>
+    <h6 class="font-16">Select your pharmacy</h6>
     <% @pharmacies.each do |pharma| %>
-        <div class="col-md-12 no-horizontal-padding">
-            <button class="btn btn-link font-14"
-                id="<%= pharma.id %>" onclick="selectPharmacy(this)">
-                <%= pharma.name %> (<%= pharma.town %>, <%= pharma.state %>)
-            </button>
-        </div>
+        <button class="btn btn-link font-16"
+            id="<%= pharma.id %>" onclick="selectPharmacy(this)" style="padding: 5px 0px;">
+            <%= pharma.name %> (<%= pharma.town %>, <%= pharma.state %>)
+        </button>
     <% end %>
 <% elsif @pharmacy %>
     <div class="col-md-12 add-padding-top-10"><h6 class="font-14">We've found the following pharmacy:</h6></div>
-    <div class="col-md-12 no-horizontal-padding">
-        <button class="btn btn-link font-14"
-            id="<%= @pharmacy.id %>" onclick="selectPharmacy(this)">
-            <%= @pharmacy.name %> (<%= @pharmacy.town %>, <%= @pharmacy.state %>)
-        </button>
-    </div>
+    <button class="btn btn-link font-14"
+        id="<%= @pharmacy.id %>" onclick="selectPharmacy(this)">
+        <%= @pharmacy.name %> (<%= @pharmacy.town %>, <%= @pharmacy.state %>)
+    </button>
 <% end %>

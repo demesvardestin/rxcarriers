@@ -3,11 +3,18 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   # before_action :redirect_from_cross_model
-  # before_action :check_driver_path
+  # before_action :check_payment_settings
   
   def check_driver_path
     
   end
+  
+  # def check_payment_settings
+  #   @pharmacy = current_pharmacy
+  #   if @pharmacy.on_trial.nil? || @pharmacy.on_trial == false || @pharmacy.delinquent == true || @pharmacy.is_subscribed == false || @pharmacy.is_subscribed.nil?
+  #     redirect_to choose_subscription_path
+  #   end
+  # end
   
   
   # def redirect_from_cross_model

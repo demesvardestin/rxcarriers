@@ -7,7 +7,8 @@ class RequestAlert < ActiveRecord::Base
     
     def get_rx
         rx = self.rx
-        return Rx.find_by(rx: rx)
+        pharmacy_id = self.pharmacy_id
+        return Rx.find_by(rx: rx, pharmacy_id: pharmacy_id)
     end
     
 end

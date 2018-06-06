@@ -92,7 +92,7 @@
         </div>
         <div class="col-md-3">
             <% unless request_sent(@batch) %>
-                <%= link_to request_driver_path(:id => @batch.id), class:"btn btn-light white" do %>
+                <%= link_to request_driver_path(:id => @batch.id), class:"btn btn-primary white" do %>
                     <i class="fa fa-car white"></i> Request Driver
                 <% end %>
             <% end %>

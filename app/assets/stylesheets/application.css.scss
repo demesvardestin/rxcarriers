@@ -34,7 +34,7 @@
 }
 body {
     overflow-x: hidden !important;
-    background: #fff;
+    background: #f4f8fb;
     font-family: 'Open Sans', sans-serif !important;
     color: #525f7f;
 }
@@ -55,6 +55,9 @@ a:hover {
     background-color: #3484c6;
     padding: 0 !important;
 }
+// #main-body {
+//     background-color: #f4f8fb;
+// }
 .background-blue {
     background-color: #3484c6 !important;
 }
@@ -163,9 +166,8 @@ div#rxCol {
     padding-bottom: 30px;
 }
 #rxSearchResults {
-    border: 1px solid #e1e1e2;
-    height: 180px;
-    margin-top: 110px;
+    // height: 180px;
+    // margin-top: 110px;
 }
 #supervisingPharmacist {
     //
@@ -401,6 +403,11 @@ div#rxCol {
 .new-batch-card {
     padding: 40px;
     border: 1px solid #03032b;
+}
+.batch-list {
+    box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
+    position: relative;
+    height: 100%;
 }
 .submission-load {
     display: none;
@@ -694,6 +701,8 @@ div#rxCol {
 .badge-notif {
     border-radius: 50% !important;
     font-size: 9px !important;
+    padding: 5px;
+    border: 1px solid #fff;
 }
 .show-request-header{
     padding-bottom: 40px;
@@ -709,8 +718,8 @@ div#rxCol {
     color: #05f005 !important;
 }
 .btn-info {
-    border: 1px solid #128193;
-    box-shadow: inset #88c0c9 0 1px;
+    // border: 1px solid #128193;
+    // box-shadow: inset #88c0c9 0 1px;
     font-size: 14px;
     color: #fff;
     padding-right: 30px;
@@ -719,14 +728,14 @@ div#rxCol {
     padding-bottom: 10px;
 }
 .btn-success {
-    background: #05f005 !important;
-    border: 1px solid #04c004;
-    box-shadow: inset #82f782 0 1px;
+    // background: #05f005 !important;
+    // border: 1px solid #04c004;
+    // box-shadow: inset #82f782 0 1px;
 }
 .btn-primary {
-    background-color: #678aab !important;
-    border: 1px solid #526e88 !important;
-    box-shadow: inset #b3c4d5 0 1px;
+    // background-color: #678aab !important;
+    // border: 1px solid #526e88 !important;
+    // box-shadow: inset #b3c4d5 0 1px;
     color: #fff !important;
     font-size: 14px;
     padding-right: 30px;
@@ -735,29 +744,13 @@ div#rxCol {
     padding-bottom: 10px;
 }
 .btn-secondary {
-    box-shadow: inset #a3a3a3 0 1px;
+    // box-shadow: inset #a3a3a3 0 1px;
     color: #fff;
     font-size: 14px;
     padding-right: 30px;
     padding-left: 30px;
     padding-top: 10px;
     padding-bottom: 10px;
-}
-.btn-light {
-    background-color: #4095e3;
-    border-color: #2c689e;
-    box-shadow: inset #79b4eb 0 1px;
-    color: #fff;
-    font-size: 14px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-.btn-light:hover {
-    background-color: #3377b5;
-    border-color: #2c689e;
-    box-shadow: inset #79b4eb 0 1px !important;
-    // font-size: 14px;
-    color: #fff;
 }
 .btn-delete {
     font-size: 14px;
@@ -1174,6 +1167,19 @@ div#rxCol {
     font-size: 13px;
     border-bottom: 1px solid #e1e1e2;
 }
+#scrollable {
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+#scrollableChild {
+    position: relative;
+    max-height: 100%;
+    overflow: auto;
+}
 #scrollPatientsCard {
     height: 100%;
     overflow: hidden;
@@ -1501,15 +1507,15 @@ input:focus + label {
         padding-right: 0;
     }
     #rxSearchResults {
-        border: 1px solid #e1e1e2;
+        // border: 1px solid #e1e1e2;
         height: auto;
-        padding-top: 30px;
-        padding-bottom: 30px;
-        margin-top: 10px !important;
+        // padding-top: 30px;
+        // padding-bottom: 30px;
+        // margin-top: 10px !important;
     }
     div#rxCol {
-        padding-top: 10px !important;
-        padding-bottom: 30px;
+        padding-top: 0 !important;
+        padding-bottom: 20px;
     }
     .no-mobile {
         display: none;
@@ -1517,8 +1523,8 @@ input:focus + label {
     .footer {
         padding: 20px 0 !important;
     }
-    #rxSearchPlaceholder {
-        padding-top: 45px !important;
-        padding-bottom: 45px !important;
+    .nav-col {
+        padding-right: 15px !important;
+        padding-left: 15px !important;
     }
 }

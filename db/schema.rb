@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180525234117) do
+ActiveRecord::Schema.define(version: 20180606025739) do
 
   create_table "deliveries", force: :cascade do |t|
     t.datetime "created_at",             null: false
@@ -134,6 +134,12 @@ ActiveRecord::Schema.define(version: 20180525234117) do
     t.string   "zipcode"
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "sub_plan"
+    t.date     "sub_end_date"
+    t.boolean  "is_subscribed"
+    t.boolean  "delinquent"
+    t.integer  "strikes"
+    t.boolean  "on_trial"
   end
 
   add_index "pharmacies", ["email"], name: "index_pharmacies_on_email"
@@ -167,6 +173,7 @@ ActiveRecord::Schema.define(version: 20180525234117) do
     t.boolean  "active"
     t.boolean  "is_valid"
     t.string   "request_ip"
+    t.integer  "pharmacy_id"
   end
 
   create_table "rxes", force: :cascade do |t|
@@ -185,6 +192,34 @@ ActiveRecord::Schema.define(version: 20180525234117) do
     t.boolean  "delivery_requested"
     t.string   "dob"
     t.boolean  "refill_requested"
+  end
+
+  create_table "sendgrid_emails", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "stripe_plans", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "pharmacy_id"
+    t.datetime "next_billing_date"
+    t.boolean  "active"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.string   "price"
+  end
+
+  create_table "terms_and_agreements", force: :cascade do |t|
+    t.integer  "pharmacy_id"
+    t.boolean  "signed"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.time     "signed_on"
+  end
+
+  create_table "twilio_patients", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

@@ -180,7 +180,7 @@
             <span class="medium-gray font-9 .firebase-id" id="firebaseID" firebase=""></span>
         </div>
         <div class="col-md-1 offset-md-8" style="padding: 0;">
-            <a class="btn btn-light transaction-buttons white" href="/dashboard">
+            <a class="btn btn-primary transaction-buttons white" href="/dashboard">
                 <i class="fa fa-refresh"></i> Refresh 
             </a>
         </div>
@@ -295,7 +295,7 @@
         });
     };
     
-    function updateRxDob(elem) {
+    function updateRxDob0(elem) {
         var rx = elem.id;
         var dob = document.getElementById('editRxField-'+rx).value;
         if (document.getElementById('editRxDeliveryInstructions-'+rx) != null) {
@@ -313,7 +313,7 @@
                 </div>
             </div>
         `);
-        $.get('/update_rx_dob?dob='+dob+'&instructions='+instructions+'&rx='+rx, function(data) {
+        $.get('/update_rx_dob_pharmacy?dob='+dob+'&instructions='+instructions+'&rx='+rx, function(data) {
             $('#updateRxDobModalBody-'+rx).html(`
                 <div class="row">
                     <div class="col-md-12 text-center">
@@ -344,8 +344,6 @@
                 <div class="col-md-8 offset-md-2">
                     <input type="text" class="form-control font-14" id="editRxField-`+rx+`" placeholder="date of birth (mm/dd/yyyy)">
                     <div class="add-padding-top"></div>
-                    <textarea type="text" class="form-control border-radius font-14 height-40 no-box-shadow" style="height: 80px !important;" 
-                        id="editRxDeliveryInstructions-`+rx+`" placeholder="Delivery instructions"></textarea>
                 </div>
             </div>
         `);

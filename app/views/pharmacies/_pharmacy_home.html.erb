@@ -10,23 +10,29 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <div class="col-md-9 offset-md-3 nav-col">
         <ul class="navbar-nav justify-content-end">
-          <li id="pharmacy_id" style="display: none;"><%= current_pharmacy.id %></li>
-          <a class="nav-item nav-item-logged-in nav-item-pharmacy-view no-underline background-transparent <% if home %>activated<% end %>" href="/dashboard">
-            <li class="nav-link nav-link-side">
-              <i class="fa fa-dashboard"></i> Dashboard
-            </li>
-          </a>
-          <a class="nav-item nav-item-logged-in nav-item-pharmacy-view no-underline background-transparent <% if rx_list_path %>activated<% end %>" href="/rx">
-            <li class="nav-link nav-link-side">
-              <i class="fa fa-files-o"></i> Rx List
-            </li>
-          </a>
-          <a class="nav-item nav-item-logged-in cursor-pointer no-underline background-transparent notification-tab" data-toggle="modal" data-target="#notificationsModal">
-            <li class="nav-link nav-link-side" style="margin-right: 5px !important;">
-              <i class="fa fa-bell-o" style="font-size: 18px !important; margin-right: -10px !important;"></i>
-              <span id="alertCount"></span>
-            </li>
-          </a>
+          <% if !current_pharmacy.not_subscribed %>
+            <li id="pharmacy_id" style="display: none;"><%= current_pharmacy.id %></li>
+            <a class="nav-item nav-item-logged-in nav-item-pharmacy-view no-underline background-transparent <% if home %>activated<% end %>" href="/dashboard">
+              <li class="nav-link nav-link-side">
+                <i class="fa fa-dashboard"></i> Dashboard
+              </li>
+            </a>
+            <a class="nav-item nav-item-logged-in nav-item-pharmacy-view no-underline background-transparent <% if rx_list_path %>activated<% end %>" href="/rx">
+              <li class="nav-link nav-link-side">
+                <i class="fa fa-files-o"></i> Rx List
+              </li>
+            </a>
+            <a class="nav-item nav-item-logged-in cursor-pointer no-underline background-transparent notification-tab" data-toggle="modal" data-target="#notificationsModal">
+              <li class="nav-link nav-link-side notification-tab" style="margin-right: 5px !important;">
+                <i class="fa fa-bell-o" style="font-size: 18px !important; margin-right: -13px !important; margin-bottom: -2px;"></i>
+                <span id="alertCount">
+                  <% if notifications_are_present %>
+                    <span class="badge badge-danger badge-notif white"> </span>
+                  <% end %>
+                </span>
+              </li>
+            </a>
+          <% end %>
           <div class="nav-item nav-item-logged-in nav-item-pharmacy-view no-underline background-transparent dropdown <% if account_path %>activated<% end %> show" style="">
             <a class="nav-link nav-link-side background-transparent no-underline" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-user-md"></i> Account

@@ -11,6 +11,7 @@
       <div class="modal-body">
             <div class="row">
                 <div class="col-md-12" style="padding-bottom: 30px;">
+                    <% if @rx.phone_number.nil? %><h6 class="font-14 theme-red">No phone number provided for this rx</h6><% end %>
                     <h6 class="font-14 theme-blue">Message preview (how your text will show up)</h6>
                     <div class="font-14">
                         <span style="color: #878787 !important;">From <%= current_pharmacy.name %>:</span> 
@@ -28,7 +29,8 @@
             </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-light" id="sendTextMessage"><i class="fa fa-paper-plane-o"></i> Send message</button>
+        <span class="badge badge-success" id="onMessageSent-<%= @rx.rx %>" style="display: none;"></span>
+        <button type="button" class="btn btn-primary send-patient-message" id="<%= @rx.rx %>" onclick="sendPatientMessage(this)"><i class="fa fa-paper-plane-o"></i> Send message</button>
       </div>
     </div>
   </div>
@@ -37,7 +39,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title font-16" id="exampleModalLabel"><i class="fa fa-exclamation-circle"></i> Confirm date of birth of rx recipient</h5>
+        <h5 class="modal-title font-14" id="exampleModalLabel"><i class="fa fa-pencil"></i> Edit rx details</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -45,19 +47,20 @@
       <div class="modal-body" id="updateRxDobModalBody-<%= @rx.rx %>">
             <div class="row">
                 <div class="col-md-12" style="padding-bottom: 10px;">
-                    <h6 class="font-14 theme-blue">If the following rx exists, confirm the date of birth (from your records)</h6>
                     <h6 class="font-14 theme-yellow text-center add-padding-top bold">Rx #<span id="rxSpan"><%= @rx.rx %></span></h6>
                 </div>
                 <div class="col-md-8 offset-md-2">
                     <input type="text" class="form-control font-14 no-box-shadow" id="editRxField-<%= @rx.rx %>" placeholder="date of birth (mm/dd/yyyy)" value="<%= @rx.dob if !@rx.dob.nil? %>">
-                    <div class="add-padding-top"></div>
-                    <textarea type="text" class="form-control border-radius font-14 height-40 no-box-shadow" style="height: 80px !important;" 
-                        id="editRxDeliveryInstructions-<%= @rx.rx %>" placeholder="Delivery instructions" value="<%= @rx.delivery_instructions if !@rx.delivery_instructions.nil? %>"></textarea>
+                    <input type="text" class="form-control font-14 no-box-shadow" id="editRxPhone-<%= @rx.rx %>" placeholder="phone number" value="<%= @rx.phone_number if !@rx.phone_number.nil? %>">
+                    <!--<input type="text" class="form-control font-14 no-box-shadow" id="editRxAddress-<%= @rx.rx %>" placeholder="address" value="<%= @rx.address if !@rx.address.nil? %>">-->
+                    <!--<div class="add-padding-top"></div>-->
+                    <!--<textarea type="text" class="form-control border-radius font-14 height-40 no-box-shadow" style="height: 80px !important;" -->
+                    <!--    id="editRxDeliveryInstructions-<%= @rx.rx %>" placeholder="Delivery instructions"><%= @rx.delivery_instructions if !@rx.delivery_instructions.nil? %></textarea>-->
                 </div>
             </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-light transaction-buttons white updateRxBtn-<%= @rx.rx %>" id="<%= @rx.rx %>" onclick="updateRxDob(this)"><i class="fa fa-check-circle"></i> Update</button>
+        <button type="button" class="btn btn-primary transaction-buttons white updateRxBtn-<%= @rx.rx %>" id="<%= @rx.rx %>" onclick="updateRxDob(this)"><i class="fa fa-check-circle"></i> Update</button>
       </div>
     </div>
   </div>
@@ -86,7 +89,7 @@
                 </button>
             </div>
             <div class="col-md-3">
-                <a class="btn btn-secondary btn-block dropdown-toggle rx-dropdown transaction-buttons disabled" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="btn btn-secondary btn-block rx-dropdown transaction-buttons disabled" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Get Driver
                 </a>
             </div>
@@ -149,12 +152,16 @@
             <span class="badge badge-success verified-alert-badge">
                 Delivery request: <%= @rx.get_delivery_details.delivery_time if !@rx.get_delivery_details.nil? %>
             </span>
+        <% elsif @rx.details_missing %>
+            <span class="badge badge-warning badge-warning-<%= @rx.rx %>">
+                Details missing
+            </span>
         <% end %>
     </div>
     <div class="col-md-1" id="newRefillRequest<%= @rx.id %>">
         <% if @rx.refill_requested %>
             <span class="badge badge-warning verified-alert-badge">
-                Refill
+                <i class="fa fa-refresh"></i> Refill
             </span>
         <% end %>
     </div>

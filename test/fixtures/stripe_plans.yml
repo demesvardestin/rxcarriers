@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  pharmacy_id: 1
+  next_billing_date: 
+  active: false
+
+two:
+  name: MyString
+  pharmacy_id: 1
+  next_billing_date: 
+  active: false

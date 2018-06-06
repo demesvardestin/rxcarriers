@@ -66,20 +66,21 @@
                                     Beginner
                                 </div>
                                 <div class="card-body background-dark font-24 white text-center" style="padding: 40px;">
-                                    <b>$49.99</b> </span class="font-14">/month</span><br /><br />
-                                    <span class="font-16 text-center">
-                                        + <b>$0.05</b> per text message
-                                    </span>
+                                    <b>$99.99</b> </span class="font-14">/month</span>
+                                    <!--<span class="font-16 text-center">-->
+                                    <!--    + <b>$0.05</b> per text message-->
+                                    <!--</span>-->
                                 </div>
                                 <div class="card-footer font-14 text-center" style="padding-bottom: 20px;">
                                     <div>
-                                        <h5 class="weighted font-14">Visibility on our search page</h5>
-                                        <h5 class="weighted font-14">Unlimited notifications</h5>
-                                        <h5 class="weighted font-14"><strike>Unlimited text messages</strike></h5>
+                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Search page visibility</h5>
+                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Unlimited notifications</h5>
+                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> 1000 message limit</h5>
+                                        <h5 class="weighted font-14"><i class="fa fa-times theme-red"></i> Unlimited notifications</h5>
                                     </div>
                                     <div class="add-padding-top">
-                                        <button class="btn btn-secondary disabled btn-block">
-                                            Current Plan
+                                        <button class="btn btn-secondary disabled btn-block no-box-shadow">
+                                            This is your current Plan
                                         </button>
                                     </div>
                                 </div>
@@ -92,19 +93,20 @@
                                     Pro
                                 </div>
                                 <div class="card-body background-dark font-24 white text-center" style="padding: 40px;">
-                                    <b>$69.99</b> </span class="font-14">/month</span><br /><br />
-                                    <span class="font-16 text-center">
-                                        + <b>free</b> unlimited text messages
-                                    </span>
+                                    <b>$129.99</b> </span class="font-14">/month</span>
+                                    <!--<span class="font-16 text-center">-->
+                                    <!--    + <b>free</b> unlimited text messages-->
+                                    <!--</span>-->
                                 </div>
                                 <div class="card-footer font-14 text-center" style="padding-bottom: 20px;">
                                     <div>
-                                        <h5 class="weighted font-14">Visibility on our search page</h5>
-                                        <h5 class="weighted font-14">Unlimited notifications</h5>
-                                        <h5 class="weighted font-14">Unlimited text messages</h5>
+                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Sponsored search page visibility</h5>
+                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Unlimited notifications</h5>
+                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Unlimited text messages</h5>
+                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Weekly stats report</h5>
                                     </div>
                                     <div class="add-padding-top">
-                                        <button class="btn btn-light btn-block" id="upgradeToPro">
+                                        <button class="btn btn-primary btn-block" id="upgradeToPro">
                                             Upgrade
                                         </button>
                                     </div>
@@ -147,7 +149,7 @@
     };
     
     // Create a Stripe client
-    var stripe = Stripe('pk_test_r46MnQQ9cxjMadPDwXrxHRgm');
+    var stripe = Stripe('pk_test_hX4NI6giYh5tnHPaDXWxIUoM');
     
     // Create an instance of Elements
     var elements = stripe.elements();

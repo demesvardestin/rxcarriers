@@ -4,44 +4,56 @@
         margin-top: 35px;
     }
 </style>
-<div class="col-md-12" id="rxCol">
-    <div class="row">
-        <div class="col-md-4 offset-md-1 rx-status-form-div">
-            <div class="page-logo text-center green"><img src="/javascripts/pharmacy.png"></div>
-            <h5 class="text-center theme-blue font-18">
-                Request a refill or delivery in seconds!
-            </h5>
-            <div class="search-params-box">
-                <div id="searchMyRx">
-                    <input type="text" class="form-control pharmacy-name-field" id="name" placeholder="Pharmacy Name">
-                    <div style="padding-top: 5px;">
-                        OR
+<div class="container">
+    <div class="row" id="rxCol">
+        <div class="col-md-12 rx-status-form-div">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="text-center theme-blue font-18 bold">
+                        <span class="text-center green"><img src="/javascripts/pharmacy.png"></span> Order your refill or request a delivery
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2">
+                            <div class="search-params-box">
+                                <div class="add-padding-top add-padding-bottom font-18 bold">
+                                    <span class="badge badge-primary" style="border-radius: 50%; font-size: 18px !important;">1</span> 
+                                    <span style="margin-left: 10px;">Pharmacy information</span>
+                                </div>
+                                <div id="searchMyRx">
+                                    <input type="text" class="form-control pharmacy-name-field js-input" id="name" placeholder="Pharmacy Name">
+                                    <div style="padding-top: 5px;" class="text-center">
+                                        OR
+                                    </div>
+                                    <input type="text" class="form-control pharmacy-npi-field js-input" id="npi" placeholder="Pharmacy NPI">
+                                    <button class="btn btn-primary btn-block rx-status-btn white js-submit" id="submitPharmacySearch">
+                                        <i class="fa fa-search"></i> Search Pharmacy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <input type="text" class="form-control pharmacy-npi-field" id="npi" placeholder="Pharmacy NPI">
-                    <button class="btn btn-light btn-block rx-status-btn white" id="submitPharmacySearch">
-                        <i class="fa fa-search"></i> Search Pharmacy
-                    </button>
+                </div>
+                <div class="card-footer" style="padding-top: 30px; padding-bottom: 30px;">
+                    <div class="row" id="rxResultsDiv">
+                        <div class="col-md-8 offset-md-2" id="rxSearchResults">
+                            <div id="rxLoader" style="display: none;"><%= render 'common/bullet_spinner' %></div>
+                            <div id="rxSearchPlaceholder" class="theme-blue font-16">
+                                No search provided
+                            </div>
+                        </div>
+                        <!--<div id="searchAgreement text-justify">-->
+                        <!--    <h5 class="font-14">-->
+                        <!--        By performing a search, you certify that you fully agree to-->
+                        <!--        the <a href="/terms" target="_blank"-->
+                        <!--        class="background-transparent theme-blue">terms of use on rx-->
+                        <!--        lookups.</a>-->
+                        <!--    </h5>-->
+                        <!--</div>-->
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-1 no-mobile" style="padding-top: 90px !important;">
-            <hr style="width: 1px !important; height: 180px !important; color: #707071; background: #707071 !important;">
-        </div>
-        <div class="col-md-4" id="rxResultsDiv">
-            <div class="col-md-12 no-horizontal-padding" id="rxSearchResults">
-                <div id="rxLoader" style="display: none;"><%= render 'common/bullet_spinner' %></div>
-                <div id="rxSearchPlaceholder" class="theme-blue font-16 text-center" style="padding-top: 70px;">
-                    No search provided
-                </div>
-            </div>
-            <!--<div id="searchAgreement text-justify">-->
-            <!--    <h5 class="font-14">-->
-            <!--        By performing a search, you certify that you fully agree to-->
-            <!--        the <a href="/terms" target="_blank"-->
-            <!--        class="background-transparent theme-blue">terms of use on rx-->
-            <!--        lookups.</a>-->
-            <!--    </h5>-->
-            <!--</div>-->
         </div>
     </div>
 </div>
@@ -63,9 +75,15 @@
     
     function submitRxSearch(elem) {
         $("#rxSearchPlaceholder").hide();
-        $('#rxSearchResults')
-        .html('<div id="rxLoader" style="display: none;">' +
-            `<%= render 'common/bullet_spinner' %></div>`
+        $('#rxSearchResults').html(
+            '<div id="rxLoader">' +
+            `
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
+                    </div>
+                </div></div>
+            `
         );
         var id = elem.id;
         var rx = document.getElementById('rxNumber').value;
@@ -73,6 +91,8 @@
             $.get('/search_my_rx?id='+id+'&rx='+rx, function(data) {
                 $('#rxSearchResults').html(data);
             });
+        } else {
+            $('#rxSearchResults').html('<h6 class="font-16 bold">Please provide an rx number!</h6>');
         }
     };
     
@@ -80,14 +100,20 @@
         var id = elem.id;
         console.log(id);
         $('.search-params-box').html(
+            `
+                <div class="add-padding-top add-padding-bottom font-18 bold">
+                    <span class="badge badge-primary" style="border-radius: 50%; font-size: 18px !important;">2</span> 
+                    <span style="margin-left: 10px;">What's your rx number?</span>
+                </div>
+            ` +
             '<div id="searchMyRx">' +
-            '<input type="text" class="form-control rx-status-field" id="rxNumber" placeholder="Rx Number">' +
-            '<button class="btn btn-light btn-block rx-status-btn white" id="' + id + '" onclick="submitRxSearch(this)">' +
+            '<input type="text" class="form-control rx-status-field js-input" id="rxNumber" placeholder="Rx Number">' +
+            '<button class="btn btn-primary btn-block rx-status-btn white js-submit" id="' + id + '" onclick="submitRxSearch(this)">' +
             '<i class="fa fa-search"></i> Check my rx status</button></div>'
         );
         $('#rxSearchResults').html(
-            '<div id="rxSearchPlaceholder" class="theme-blue font-18 text-center" ' +
-            'style="padding-top: 70px;">Enter your rx number</div>'
+            '<div id="rxSearchPlaceholder" class="theme-blue font-16" ' +
+            '>Please provide your rx number</div>'
         );
         // $('#rxResultsDiv').append(
         //     '<button class="btn btn-link btn-block rx-status-btn" onclick="newSearch()">' +
@@ -98,37 +124,68 @@
     function requestDelivery(elem) {
         var id = elem.id;
         $('#rxSearchResults').html(
-            '<div class="text-center col-md-8 offset-md-2">'+
+            '<div class="text-center">'+
             '<h5 class="font-16 theme-blue">Date of birth and delivery details</h5>' +
             '<div class="float-left" style="width: 70%; margin-bottom: 5px;">' +
             '<input type="text" class="form-control" id="rxDob" placeholder="mm/dd/yyyy"></div>'+
             '<div class="float-left" style="width: 30%; margin-bottom: 5px;">' +
             '<input type="text" class="form-control" id="rxTime" placeholder="3PM"></div>'+
-            '<div><input type="text" class="form-control" id="rxDelivAddress" placeholder="Home address"></div>' +
+            // '<div><input type="text" class="form-control" id="rxDelivAddress" placeholder="Home address"></div>' +
             '<div class="add-margin-top">' +
-            '<button class="btn btn-light btn-block transaction-buttons white" id="' + id + '" onclick="sendRxRequest(this)"' +
-            ' style="height: 40px;"><i class="fa fa-paper-plane-o"></i> Send Delivery Request</button></div></div>'
+            '<button class="btn btn-primary btn-block transaction-buttons white" id="' + id + '" onclick="sendRxRequest(this)"' +
+            ' style="height: 40px;"><i class="fa fa-paper-plane-o"></i> Send Delivery Request</button></div>' +
+            `<div class="add-margin-top"><b>Note</b>: If you have more than one prescription and they're all refilled, you only need to
+            send a delivery request for one of them, and they will be automatically grouped for delivery.</div>` +
+            '</div>'
         );
     };
+    
+    $('.js-input').keyup(event, f => {
+        console.log(event.keyCode);
+        var code = (event.keyCode ? event.keyCode : event.which);
+        if(code == 13) { //Enter keycode
+            $('.js-submit').click();
+        }
+    });
     
     function sendRxRequest(elem) {
         var id = elem.id;
         var dob = document.getElementById('rxDob').value;
         var time = document.getElementById('rxTime').value;
-        var address = document.getElementById('rxDelivAddress').value;
+        // var address = document.getElementById('rxDelivAddress').value;
         $('#rxSearchResults').html(
-            '<div id="rxLoader" style="display: none;">' +
-            `<%= render 'common/bullet_spinner' %>` + '</div>');
-        $.get('/request_delivery?id='+id+'&dob='+dob+'&time='+time+'&address='+address, function(data) {
+            '<div id="rxLoader">' +
+            `
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
+                    </div>
+                </div></div>
+            `);
+        $.get('/request_delivery?id='+id+'&dob='+dob+'&time='+time, function(data) {
             $('#rxSearchResults').html(data);
         });
         console.log('lookup complete!');
     };
     
     function updatePhoneNumber(elem) {
-        var rx = elem.id;
-        var phone = document.getElementById('rx-phone').value;
-        $.get('/update_rx_phone_number?rx='+rx+'&phone='+phone, function(data) {
+        var data_ = elem.id;
+        var rx, pharma_id;
+        if (data_.includes(',')) {
+            pharma_id = data_.split(',')[0];
+            rx = data_.split(',')[1]
+        } else {
+            rx = data_;
+        }
+        console.log(document.getElementById('rx-phone'));
+        if (document.getElementById('rx-phone') != null) {
+            if (!document.getElementById('rx-phone').value.length == 0) {
+                var phone = document.getElementById('rx-phone').value;
+            } else {
+                var phone = '';
+            }
+        }
+        $.get('/update_rx_phone_number?rx='+rx+'&phone='+phone+'&pharma_id='+pharma_id, function(data) {
             $('#rxSearchResults').html(data);
         });
     };

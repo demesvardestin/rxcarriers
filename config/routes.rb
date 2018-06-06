@@ -3,11 +3,6 @@ Rails.application.routes.draw do
 
   # devise controller path
   devise_for :pharmacies, :controllers => {:registrations => "pharmacy/registrations"}
-  devise_for :drivers, :controllers => {:registrations => "driver/registrations"}
-  devise_scope :driver do
-    get 'courier/login', to: 'devise/sessions#new'
-    get 'courier/signup', to: 'devise/registrations#new'
-  end
   devise_scope :pharmacy do
     get 'pharmacy/login', to: 'devise/sessions#new'
     get 'pharmacy/signup', to: 'devise/registrations#new'
@@ -28,6 +23,8 @@ Rails.application.routes.draw do
   
   # custom path
   get '/pharmacy/update_card', to: 'pharmacies#update_card'
+  get '/pharmacy/add_card', to: 'pharmacies#add_card'
+  get '/submit_agreement', to: 'pharmacies#submit_agreement'
   get 'deliveries/:id/signature', to: 'deliveries#signature'
   get 'settings', to: 'pharmacies#edit'
   get 'batch_search', to: 'batches#batch_search'
@@ -82,13 +79,19 @@ Rails.application.routes.draw do
   get '/live_requests_dashboard', to: 'deliveries#live_requests_dashboard'
   get '/set_invalid_rx', to: 'deliveries#set_invalid_rx'
   get '/update_rx_dob', to: 'deliveries#update_rx_dob'
+  get '/update_rx_dob_pharmacy', to: 'deliveries#update_rx_dob_pharmacy'
   get '/delete_rx', to: 'deliveries#delete_rx'
-  get '/create_notification', to: 'deliveries#create_notification'
+  get '/get_all_notifications', to: 'deliveries#get_all_notifications'
+  get '/send_patient_message', to: 'deliveries#send_patient_message'
+  get '/bulk_calling', to: 'deliveries#bulk_calling'
+  get '/bulk_texting', to: 'deliveries#bulk_texting'
+  post '/call/:text', to: 'deliveries#call'
+  get '/choose_subscription', to: 'deliveries#choose_subscription'
+  get '/add_plan', to: 'deliveries#add_plan'
+  post '/stripe_notification', to: 'deliveries#stripe_notification'
   
   # resource path
   resources :invoices, only: [:create, :show, :index, :destroy]
-  resources :patients
-  resources :drivers
   resources :pharmacies
   resources :deliveries, only: [:create, :show, :edit, :update, :destroy]
   resources :batches do
@@ -96,9 +99,6 @@ Rails.application.routes.draw do
   end
   
   # authenticated devise models root path
-  authenticated :driver do
-    root 'drivers#deliveries', as: :authenticated_driver_root
-  end
   authenticated :pharmacy do
     root 'deliveries#dashboard', as: :authenticated_pharmacy_root
   end

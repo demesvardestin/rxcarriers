@@ -44,9 +44,10 @@ function urlB64ToUint8Array(base64String) {
   }
   return outputArray;
 }
-
+$('.main-page-card').fadeIn();
 $( document ).on('turbolinks:load', function() {
     // if current_pharmacy, get pharmacy id
+    document.getElementById("sound").innerHTML='';
     const pharmacy_id = $('#pharmacy_id').text();
     
     // set variables for firebase requests collections reference
@@ -66,6 +67,10 @@ $( document ).on('turbolinks:load', function() {
             '</div>'
         );
         $.get('/dismiss_all_notifications');
+    });
+    
+    $('.nav-item').on('click', e => {
+        $('SOURCE#pingMP3').remove();
     });
     
     // dismiss notification on click
@@ -93,7 +98,13 @@ $( document ).on('turbolinks:load', function() {
     });
     
     $('#updateProfile').on('submit', e => {
-        $('#v-pills-home').html('<i class="fa fa-circle-o-notch theme-blue fa-spin fa-3x fa-fw"></i>')
+        $('#v-pills-home').html(`
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
+                </div>
+            </div>
+        `);
     });
     
     function updateRxDob(elem) {

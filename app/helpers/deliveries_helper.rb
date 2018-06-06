@@ -41,7 +41,7 @@ module DeliveriesHelper
     
     def refills_today
         id = current_pharmacy.id
-        @refills = RequestAlert.where(pharm_id: id, created_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc, active: true)
+        @refills = RequestAlert.where(pharmacy_id: id, created_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc, active: true)
         if @refills != nil
             return @refills.count
         end

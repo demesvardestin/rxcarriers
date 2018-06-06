@@ -2,8 +2,13 @@ $('#requestRow<%= @request.id %>').fadeOut();
 var count = <%= @requests.count %>;
 if (count == 0) {
     $('#liveRequestsUpdate').html(`
-        <div class="col-md-12 text-center medium-gray font-14" style="padding-top: 40px;">
-            No live requests
+        <div class="row">
+            <div class="col-md-12 text-center" style="padding-top: 40px;">
+                <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
+            </div>
+            <div class="col-md-12 text-center medium-gray font-14" style="padding-top: 20px;">
+                Waiting for requests...
+            </div>
         </div>
     `);
 }

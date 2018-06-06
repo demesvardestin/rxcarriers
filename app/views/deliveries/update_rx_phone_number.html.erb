@@ -1,9 +1,19 @@
-<div class="text-center col-md-12">
-    <div>
-        <i class="fa fa-check-circle theme-blue" style="font-size: 40px;"></i>
-    </div>
-    <div class="font-14">
-        Thank you!<br />
-        Be on the lookout for a text message regarding the status of your prescription.
-    </div>
+<div class="text-center">
+    <% if @invalid %>
+        <div>
+            <i class="fa fa-exclamation-circle theme-yellow" style="font-size: 40px;"></i>
+        </div>
+        <div class="font-16 add-padding-top">
+            <%= @invalid %>
+        </div>
+    <% else %>
+        <div>
+            <i class="fa fa-check-circle theme-blue" style="font-size: 40px;"></i>
+        </div>
+        <div class="font-16 add-padding-top">
+            Your refill request has been received. You will receive text updates from
+            the pharmacist regarding the status
+            of your prescription.
+        </div>
+    <% end %>
 </div>

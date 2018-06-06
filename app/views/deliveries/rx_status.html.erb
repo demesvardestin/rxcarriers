@@ -1,18 +1,45 @@
-<% if @rx.nil? %>
-    <div style="padding: 10px;" class="text-center col-md-12">
+<% if @invalid %>
+    <div class="text-center">
         <div>
-            <i class="fa fa-exclamation-circle theme-yellow" style="font-size: 40px;"></i>
+            <i class="fa fa-clock-o theme-blue" style="font-size: 40px;"></i>
         </div>
-        <div class="add-padding-top font-18">
-            Rx Not Found <br /><br />
-            <span class="font-14 theme-blue">
-                We were unable to find your rx number. We recommend contacting your
-                pharmacy.
-            </span>
+        <div class="font-16 add-padding-top">
+            <%= @invalid %>
+        </div>
+    </div>
+<% elsif @no_rx %>
+    <div class="text-center">
+        <div>
+            <i class="fa fa-clock-o theme-blue" style="font-size: 40px;"></i>
+        </div>
+        <div class="font-16 add-padding-top">
+            Your prescription has not been refilled yet. Please provide your phone number to request a refill<br />
+            <input type="text" class="form-control delivery-phone" id="rx-phone" placeholder="Phone number">
+            <button class="btn btn-primary font-16 white add-margin-top" id="<%= @data %>" onclick="updatePhoneNumber(this)">
+                <i class="fa fa-refresh"></i> Request refill
+            </button>
+        </div>
+    </div>
+<% elsif @rx.refill_requested == true %>
+    <div class="text-center">
+        <div>
+            <i class="fa fa-hourglass-half theme-yellow" style="font-size: 40px;"></i>
+        </div>
+        <div class="add-padding-top-10 font-18">
+            Your refill is currently being processed, you will receive a text alert once it's ready!
+        </div>
+    </div>
+<% elsif @rx.delivery_requested == true %>
+    <div class="text-center">
+        <div>
+            <i class="fa fa-hourglass-half theme-yellow" style="font-size: 40px;"></i>
+        </div>
+        <div class="add-padding-top-10 font-18">
+            Your delivery request is currently being processed, you will receive a text alert once it's on the way!
         </div>
     </div>
 <% elsif @rx.filled %>
-    <div style="padding: 10px;" class="text-center col-md-12">
+    <div class="text-center">
         <div>
             <i class="fa fa-check-circle theme-green" style="font-size: 40px;"></i>
         </div>
@@ -23,22 +50,69 @@
             </button>
         </div>
     </div>
-<% elsif @rx.not_ready %>
-    <div class="text-center col-md-12">
+<% elsif @rx.picked %>
+    <div class="text-center">
         <div>
             <i class="fa fa-clock-o theme-blue" style="font-size: 40px;"></i>
         </div>
-        <div class="font-14">
-            Your prescription is not ready yet. Please provide your phone number and we will alert you when it is<br />
-            <!--<input type="text" class="form-control delivery-address" id="rx-address" placeholder="Delivery address">-->
-            <input type="text" class="form-control delivery-phone" id="rx-phone" placeholder="Phone number">
-            <button class="btn btn-light btn-block font-16 white transaction-buttons add-margin-top" id="<%= @rx.rx %>" onclick="updatePhoneNumber(this)">
-                <i class="fa fa-refresh"></i> Request refill
+        <div class="font-16 add-padding-top">
+            Your prescription has not been refilled yet.<br />
+            <button class="btn btn-primary font-16 white add-margin-top" id="<%= @data %>" onclick="updatePhoneNumber(this)">
+                <i class="fa fa-refresh"></i> Request a refill
             </button>
         </div>
     </div>
+<% elsif @rx.not_ready %>
+    <% if @rx.on_hold %>
+        <div class="text-center">
+            <div>
+                <i class="fa fa-clock-o theme-blue" style="font-size: 40px;"></i>
+            </div>
+            <div class="font-16 add-padding-top">
+                Your prescription has not been refilled yet.<br />
+                <button class="btn btn-primary font-16 white add-margin-top" id="<%= @data %>" onclick="updatePhoneNumber(this)">
+                <i class="fa fa-refresh"></i> Request a refill
+            </button>
+            </div>
+        </div>
+    <% else %>
+        <div class="text-center">
+            <div>
+                <i class="fa fa-clock-o theme-blue" style="font-size: 40px;"></i>
+            </div>
+            <div class="font-16 add-padding-top">
+                Your prescription has not been refilled yet. Please provide your phone number to request a refill<br />
+                <input type="text" class="form-control delivery-phone" id="rx-phone" placeholder="Phone number">
+                <button class="btn btn-primary font-16 white add-margin-top" id="<%= @data %>" onclick="updatePhoneNumber(this)">
+                    <i class="fa fa-refresh"></i> Request a refill
+                </button>
+            </div>
+        </div>
+    <% end %>
+<% elsif @rx.delivery_sent_already %>
+    <div class="text-center">
+        <div>
+            <i class="fa fa-clock-o theme-blue" style="font-size: 40px;"></i>
+        </div>
+        <div class="font-16 add-padding-top">
+            Your prescription has not been refilled yet.<br />
+            <button class="btn btn-primary font-16 white add-margin-top" id="<%= @data %>" onclick="updatePhoneNumber(this)">
+                <i class="fa fa-refresh"></i> Request a refill
+            </button>
+        </div>
+    </div>
+<% elsif @rx.delivery_sent %>
+    <div class="text-center">
+        <div>
+            <i class="fa fa-car theme-blue" style="font-size: 40px;"></i>
+        </div>
+        <div class="add-padding-top font-18">
+            Good news! Your prescription is on its way and should arrive within the next hour. Please make sure
+            that someone is available to sign for it.
+        </div>
+    </div>
 <% elsif @rx.issue_present %>
-    <div style="padding: 10px;" class="text-center col-md-12">
+    <div class="text-center">
         <div>
             <i class="fa fa-times-circle theme-red" style="font-size: 40px;"></i>
         </div>
@@ -46,19 +120,6 @@
             Our records show that there is an issue with your Rx<br /><br />
             <span class="font-14 theme-yellow bold">
                 Contact your pharmacist right away.
-            </span>
-        </div>
-    </div>
-<% elsif @rx.delivery_sent %>
-    <div style="padding: 10px;" class="text-center col-md-12">
-        <div>
-            <i class="fa fa-car theme-blue" style="font-size: 40px;"></i>
-        </div>
-        <div class="add-padding-top font-18">
-            Your prescription is on its way!<br /><br />
-            <span class="font-14 theme-yellow bold">
-                A courier should arrive within the next hour. Please make sure
-                that someone is available to sign the delivery.
             </span>
         </div>
     </div>

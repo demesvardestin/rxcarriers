@@ -1,0 +1,213 @@
+<div class="row text-center" id="subscriptionPage">
+    <div class="col-md-8 offset-md-2 add-padding-top add-padding-bottom">
+        <div class="col-md-12 text-center add-padding-bottom add-padding-top">
+            <h6 class="font-16 bold text-center plan-guide">
+                <span class="badge badge-primary" style="border-radius: 50%; font-size: 14px !important;">1</span> Tell us more about this pharmacy
+            </h6>
+        </div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%"></div>
+        </div>
+    </div>
+    <div class="col-md-8 offset-md-2 font-16 text-left add-padding-top" id="profileCard">
+        <div class="card no-box-shadow"><div class="card-body"><%= render 'pharmacies/form' %></div></div>
+    </div>
+    <div class="col-md-8 offset-md-2 add-padding-top subscription-info" style="padding-bottom: 20px; display: none;">
+        <div class="float-left" style="width: 47.5%;">
+            <div class="card">
+                <div class="card-header background-blue white font-16 text-center">
+                    Beginner**
+                </div>
+                <div class="card-body background-dark font-24 white text-center" style="padding: 40px;">
+                    <b>$99.99</b> </span class="font-14">/month</span>
+                    <!--<span class="font-16 text-center">-->
+                    <!--    + <b>$0.05</b> per text message-->
+                    <!--</span>-->
+                </div>
+                <div class="card-footer font-14 text-center" style="padding-bottom: 20px;">
+                    <div>
+                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Search page visibility</h5>
+                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Unlimited notifications</h5>
+                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> 1000 message limit</h5>
+                        <h5 class="weighted font-14"><i class="fa fa-times theme-red"></i> Weekly stats report</h5>
+                    </div>
+                    <div class="add-padding-top">
+                        <button class="btn btn-primary btn-block" id="beginner" onclick="goToPayment(this)">
+                            Select
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="float-left" style="width: 5%;"></div>
+        <div class="float-right" style="width: 47.5%;">
+            <div class="card">
+                <div class="card-header background-blue white font-16 text-center">
+                    Pro**
+                </div>
+                <div class="card-body background-dark font-24 white text-center" style="padding: 40px;">
+                    <b>$129.99</b> </span class="font-14">/month</span>
+                    <!--<span class="font-16 text-center">-->
+                    <!--    + <b>free</b> unlimited text messages-->
+                    <!--</span>-->
+                </div>
+                <div class="card-footer font-14 text-center" style="padding-bottom: 20px;">
+                    <div>
+                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Sponsored search page visibility</h5>
+                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Unlimited notifications</h5>
+                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Unlimited text messages</h5>
+                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Weekly stats report</h5>
+                    </div>
+                    <div class="add-padding-top">
+                        <button class="btn btn-primary btn-block" id="pro" onclick="goToPayment(this)">
+                            Select
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 offset-md-2 font-16 text-center card-form" id="pharmacyCard" style="display: none; padding-top: 80px; padding-bottom: 50px;">
+        <%= render 'pharmacies/card_form' %>
+    </div>
+    <div class="col-md-8 offset-md-2 font-16 text-center" id="termsCard" style="display: none; padding-top: 40px; padding-bottom: 50px;">
+        <%= render 'legal/terms' %>
+        <div class="add-padding-top">
+            <button class="btn btn-primary submit-agreement" id="<%= current_pharmacy.id %>" onclick="submitAgreement(this)">
+                I agree with the terms and agreements
+            </button>
+        </div>
+    </div>
+    <div class="col-md-12 text-center font-16 add-padding-bottom trial-memo" style="display: none;">
+        **Both plans include a 7-day <b>Free Trial</b>
+    </div>
+</div>
+
+<script>
+    $('.update-profile').on('click', e => {
+        $('#profileCard').hide();
+        $('.progress-bar').attr('aria-valuenow', '50');
+        document.getElementsByClassName('progress-bar')[0].style.width = '50%';
+        $('H6.plan-guide').html(
+            '<span class="badge badge-primary" style="border-radius: 50%;' +
+            'font-size: 14px !important;">2</span> Choose a subscription plan'
+        )
+        $('.subscription-info').show();
+        $('.trial-memo').show();
+    });
+    
+    function goToPayment(elem) {
+        var id = elem.id;
+        $('.subscription-info').hide();
+        $('#subscriptionPage').append(`
+            <div class="col-md-8 offset-md-2 text-center" id="subscriptionSpinner" style="padding-top: 40px;">
+                <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
+            </div>
+            <div class="col-md-12 add-padding-top add-padding-bottom text-center font-14 loading-text">
+                One moment please...
+            </div>
+        `);
+        $.get('/add_plan?plan='+id, function() {
+            $('#subscriptionSpinner').hide();
+            $('.loading-text').hide();
+            $('.trial-memo').html('<b>You will not be billed until your trial period ends</b>');
+            $('.progress-bar').attr('aria-valuenow', '75');
+            document.getElementsByClassName('progress-bar')[0].style.width = '75%';
+            $('H6.plan-guide').html(
+                '<span class="badge badge-primary" style="border-radius: 50%;' +
+                'font-size: 14px !important;">3</span> Payment method'
+            )
+            $('.card-form').show();
+        });
+        
+    }
+    
+    // Create a Stripe client
+    var stripe = Stripe('pk_test_hX4NI6giYh5tnHPaDXWxIUoM');
+    
+    // Create an instance of Elements
+    var elements = stripe.elements();
+    
+    // Custom styling can be passed to options when creating an Element.
+    // (Note that this demo uses a wider set of styles than the guide below.)
+    var style = {
+      base: {
+        color: '#768089',
+        lineHeight: '18px',
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
+        '::placeholder': {
+          color: '#768089'
+        }
+      },
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a'
+      }
+    };
+    
+    // Create an instance of the card Element
+    var card = elements.create('card', {style: style});
+    
+    // Add an instance of the card Element into the `card-element` <div>
+    card.mount('#card-element');
+    
+    // Handle real-time validation errors from the card Element.
+    card.addEventListener('change', function(event) {
+      var displayError = document.getElementById('card-errors');
+      if (event.error) {
+        displayError.textContent = event.error.message;
+      } else {
+        displayError.textContent = '';
+      }
+    });
+    
+    // Handle form submission //
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        stripe.createToken(card).then(function(result) {
+            if (result.error) {
+              // Inform the user if there was an error
+              var errorElement = document.getElementById('card-errors');
+              errorElement.textContent = result.error.message;
+            } else {
+                $('#pharmacyCard').html(`
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            Saving...
+                        </div>
+                    </div>
+                `);
+              // Send the token to your server
+              stripeTokenHandler(result.token);
+            }
+      });
+    });
+    function stripeTokenHandler(token) {
+    //   Insert the token ID into the form so it gets submitted to the server
+        $.get( "/pharmacy/add_card?stripeToken="+token.id, function( data ) {
+            $('#pharmacyCard').hide();
+            $('.trial-memo').hide();
+            $('H6.plan-guide').html(
+                '<span class="badge badge-primary" style="border-radius: 50%;' +
+                'font-size: 14px !important;">4</span> Terms and Disclosures'
+            );
+            $('.progress-bar').attr('aria-valuenow', '100');
+            document.getElementsByClassName('progress-bar')[0].style.width = '100%';
+            $('#termsCard').show();
+        });
+    };
+    
+    function submitAgreement(elem) {
+        elem.classList.add('disabled');
+        $('.submit-agreement').html('Preparing your profile...');
+        $.get('/submit_agreement?id='+elem.id, e => {
+            window.location.replace('/dashboard');
+        });
+    }
+</script>

@@ -26,12 +26,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+    <script src='https://cdn.rawgit.com/admsev/jquery-play-sound/master/jquery.playSound.js'></script>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <script>
       <% if current_pharmacy %>
         var current_pharma_id = <%= current_pharmacy.id %>;
         // PUSHER NOTIFICATIONS *pusher.com*
         // Enable pusher logging - don't include this in production
+        function playSound(filename){   
+            document.getElementById("sound").innerHTML='<audio autoplay="autoplay"><source src="/sounds/' + filename + '.mp3" id="pingMP3" type="audio/mpeg" /><source src="/sounds/' + filename + '.ogg" type="audio/ogg" /><embed hidden="true" autostart="true" loop="false" src="/sounds/' + filename +'.mp3" /></audio>';
+        }
+
         Pusher.logToConsole = true;
         
         toastr.options = {
@@ -60,33 +65,34 @@
         var alert_channel = pusher.subscribe('rx-alert');
         
         alert_channel.bind('new-rx-alert', function(data) {
-          var message = data.message;
-          var id = data.id;
-          var pharmacy_id = data.pharmacy_id;
-          var type = data.type;
-          var rx = data.rx;
+          var pharmacy_id = data.pharmacy_i
           if (current_pharma_id == pharmacy_id) {
+            var message = data.message;
+            var id = data.id;d;
+            var type = data.type;
+            var rx = data.rx;
             toastr["success"](message);
             console.log(type);
           }
         });
         
         rx_channel.bind('rx-request', function(data) {
-          var message = data.message;
-          var id = data.id;
           var pharmacy_id = data.pharmacy_id
-          var time = data.time;
-          var type = data.type;
-          var rx = data.rx;
           if (current_pharma_id == pharmacy_id) {
+            var message = data.message;
+            var id = data.id;
+            var time = data.time;
+            var type = data.type;
+            var rx = data.rx;
             toastr["success"](message);
+            playSound('ping');
             console.log(type);
             $.get('/live_requests_dashboard', function(data) {
               $('#liveRequestsUpdate').html(data);
             });
             if (type == 'delivery') {
               var deliveriesToday = $('#deliveryRequestsToday').text();
-              $.get('/create_notification?type=delivery&id='+current_pharma_id+'&rx='+rx+'&time='+time, function(data) {
+              $.get('/get_all_notifications', function(data) {
                 $('.notification-placeholder').hide();
                 $('#notificationsModalBody').html(data);
               });
@@ -96,7 +102,7 @@
                 'Delivery request: ' + time + '</span>');
             } else if (type == 'refill') {
               var refillsToday = $('#refillsToday').text();
-              $.get('/create_notification?type=refill&id='+current_pharma_id+'&rx='+rx+'&time=none', function(data) {
+              $.get('/get_all_notifications', function(data) {
                 $('.notification-placeholder').hide();
                 $('#notificationsModalBody').html(data);
               });
@@ -112,18 +118,18 @@
               var new_count = 1;
             }
             $('#alertCount')
-            .html('<span class="badge badge-warning badge-notif white">'+new_count+'</span>');
+            .html('<span class="badge badge-danger badge-notif white"> </span>');
           }
         });
       <% end %>
     </script>
-    <script src="/javascripts/notifications.js"></script>
     <%= csrf_meta_tags %>
   </head>
   <body id="main-body">
     <%= render_navigation %>
     <% if current_pharmacy %>
       <div class="container main-page">
+        <div id="sound"></div>
         <div class="card main-page-card">
           <div class="card-body main-card">
             <%= render 'layouts/notifications_modal' %>

@@ -16,6 +16,10 @@ gem 'geocoder'
 gem 'google_maps_service'
 # add twilio for text communication
 gem 'twilio-ruby'
+# add sendgrid for emails
+gem 'sendgrid-ruby'
+gem 'sendgrid'
+gem 'mail'
 # add devise for auth
 gem 'devise'
 # stripe for transactions
