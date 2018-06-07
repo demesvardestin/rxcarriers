@@ -21,26 +21,23 @@ class PharmaciesController < ApplicationController
   def add_card
     token = params['stripeToken']
     @pharmacy = current_pharmacy
+    @plan = StripePlan.find_by(pharmacy_id: @pharmacy.id)
+    @plan.name == 'beginner' ? plan = 'plan_D0YgQfwIKRVkjx' : plan = 'plan_D0Ygdw4uY8YinB'
     if @pharmacy.stripe_cus
       customer = Stripe::Customer.retrieve(@pharmacy.stripe_cus)
       customer.source = token
       customer.save
-      subscription = Stripe::Subscription.create({
-        customer: customer.id,
-        items: [{plan: 'plan_CxDYkhNDCSlUgs'}],
-        trial_period_days: 7,
-      })
     else
       customer = Stripe::Customer.create(
         :email => @pharmacy.email,
         :source => token,
       )
-      subscription = Stripe::Subscription.create({
-        customer: customer.id,
-        items: [{plan: 'plan_CxDYkhNDCSlUgs'}],
-        trial_period_days: 7,
-      })
     end
+    subscription = Stripe::Subscription.create({
+      customer: customer.id,
+      items: [{plan: plan}],
+      trial_period_days: 7,
+    })
     @pharmacy.update(card_token: token, stripe_cus: customer.id, sub_auth: subscription.id)
     render :layout => false
   end
