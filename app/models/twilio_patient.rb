@@ -150,17 +150,17 @@ class TwilioPatient < ActiveRecord::Base
     def self.twilio(type=nil, pharmacy=nil)
         message = self.get_message(type, pharmacy)
         twilio = self.initialize_twilio
-        twilio_phone = '12018491397'
+        twilio_phone = ENV["TWILIO_PHONE"]
         return message, twilio, twilio_phone
     end
     
     def self.twilio_token
-        "#{Rails.application.secrets.twilio_token}"
+        ENV["TWILIO_TOKEN"]
     end
     
     def self.initialize_twilio
-        account_sid = "#{Rails.application.secrets.twilio_sid}"
-        auth_token = "#{Rails.application.secrets.twilio_token}"
+        account_sid = ENV["TWILIO_SID"]
+        auth_token = ENV["TWILIO_TOKEN"]
         return Twilio::REST::Client.new account_sid, auth_token
     end
     

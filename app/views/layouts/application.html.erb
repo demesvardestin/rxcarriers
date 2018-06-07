@@ -31,13 +31,11 @@
     <script>
       <% if current_pharmacy %>
         var current_pharma_id = <%= current_pharmacy.id %>;
-        // PUSHER NOTIFICATIONS *pusher.com*
-        // Enable pusher logging - don't include this in production
         function playSound(filename){   
             document.getElementById("sound").innerHTML='<audio autoplay="autoplay"><source src="/sounds/' + filename + '.mp3" id="pingMP3" type="audio/mpeg" /><source src="/sounds/' + filename + '.ogg" type="audio/ogg" /><embed hidden="true" autostart="true" loop="false" src="/sounds/' + filename +'.mp3" /></audio>';
         }
 
-        Pusher.logToConsole = true;
+        // Pusher.logToConsole = true;
         
         toastr.options = {
           "closeButton": true,

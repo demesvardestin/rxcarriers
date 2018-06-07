@@ -6,6 +6,6 @@ class PharmacyMailer < ApplicationMailer
         @pharmacy = pharmacy
         @plan = StripePlan.find_by(pharmacy_id: @pharmacy.id)
         # @url  = 'http://example.com/login'
-        mail(to: @pharmacy.email, subject: 'Welcome to My Awesome Site')
+        mail(to: @pharmacy.email, subject: 'Your RxCarriers Subscription')
     end
 end

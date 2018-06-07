@@ -11,11 +11,11 @@ ActionMailer::Base.smtp_settings = {
     
     :authentication => :plain,
     
-    :user_name => "rxcarriers",
+    :user_name => ENV["SENDGRID_USERNAME"],
     
-    :password => "Knowledge1!",
+    :password => ENV["SENDGRID_PASSWORD"],
     
-    :domain => 'https://udemy-class-demo07.c9users.io',
+    :domain => 'heroku.com',
     
     :enable_starttls_auto => true
 
