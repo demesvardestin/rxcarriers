@@ -1,0 +1,145 @@
+<style>
+    #main-body {
+        background-color: #3484c6 !important;
+    }
+    .home-banner-text {
+        letter-spacing: 2px;
+    }
+    .card {
+        display: none;
+    }
+    #home-banner-2 {
+        background-color: #fff !important;
+    }
+    h6.font-16 {
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="container">
+    <section id="landing-full-screen-content text-center" class="open-sans" style="padding-top: 30px;">
+        <div class="text-center col-md-10 offset-md-1 no-horizontal-padding add-padding-bottom">
+            <div class="add-padding-bottom" style="height: 70px;"><i class="fa fa-envelope-o white" id="icon-message" style="font-size: 55px !important; display: none;"></i></div>
+            <h3 class="white text-center open-sans home-banner-text">Pharmacy-to-Customer Communication Made Easy</h3>
+            <div class="add-padding-top">
+                <a class="btn btn-secondary background-transparent white border-white no-box-shadow thick-border radius-5" href="/pharmacy/signup">
+                   Get Started Now
+                </a>
+            </div>
+        </div>
+        <div class="add-padding-top row no-horizontal-padding" style="height: auto; margin-bottom: -20px;">
+            <div class="col-md-3">
+                <div class="card thick-border no-border box-shadow radius-5" id="home-offer-1">
+                    <div class="card-header background-cyan font-18 text-center white">
+                        <i class="fa fa-file-text-o"></i> Hipaa-Compliant
+                    </div>
+                    <div class="card-body" style="height: auto !important;">
+                        <h6 class="font-16">
+                            <i class="fa fa-check theme-green"></i> No health info shared 
+                        </h6>
+                        <h6 class="font-16">
+                            <i class="fa fa-check theme-green"></i> No insurance info shared 
+                        </h6>
+                        <h6 class="font-16">
+                            <i class="fa fa-check theme-green"></i> No personal info shared 
+                        </h6>
+                        <h6 class="font-16">
+                            <i class="fa fa-check theme-green"></i> No contract required
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card thick-border no-border box-shadow radius-5" id="home-offer-2">
+                    <div class="card-header background-yellow font-18 text-center white">
+                        <i class="fa fa-dollar"></i> Economic
+                    </div>
+                    <div class="card-body" style="height: auto !important;">
+                        <h6 class="font-16">
+                            <i class="fa fa-check theme-green"></i> Affordable price plans 
+                        </h6>
+                        <h6 class="font-16">
+                            <i class="fa fa-check theme-green"></i> Billed monthly
+                        </h6>
+                        <h6 class="font-16">
+                            <i class="fa fa-check theme-green"></i> No contract required
+                        </h6>
+                        <h6 class="font-16">
+                            <i class="fa fa-check theme-green"></i> Free trial period included
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card thick-border no-border box-shadow radius-5" id="home-offer-3">
+                    <div class="card-header background-green font-18 text-center white">
+                        <i class="fa fa-dashboard"></i> Effective
+                    </div>
+                    <div class="card-body" style="height: auto !important;">
+                        <h6 class="font-16">
+                            <i class="fa fa-check theme-green"></i> Automated texts updates
+                        </h6>
+                        <h6 class="font-16">
+                            <i class="fa fa-check theme-green"></i> Automated calls
+                        </h6>
+                        <h6 class="font-16">
+                            <i class="fa fa-check theme-green"></i> Customizable texts or calls
+                        </h6>
+                        <h6 class="font-16">
+                            <i class="fa fa-check theme-green"></i> Bulk messages or calls
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card thick-border no-border box-shadow radius-5" id="home-offer-4">
+                    <div class="card-header background-purple font-18 text-center white">
+                        <i class="fa fa-check-square-o"></i> Convenient
+                    </div>
+                    <div class="card-body" style="height: auto !important;">
+                        <h6 class="font-16">
+                            <i class="fa fa-check theme-green"></i> Real-time refill requests
+                        </h6>
+                        <h6 class="font-16">
+                            <i class="fa fa-check theme-green"></i> Real-time delivery requests
+                        </h6>
+                        <h6 class="font-16">
+                            <i class="fa fa-check theme-green"></i> Analytics tracking
+                        </h6>
+                        <h6 class="font-16">
+                            <i class="fa fa-check theme-green"></i> Easy-to-use
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<section id="home-banner-2" style="padding-top: 60px;">
+    <div class="col-md-12 text-center no-horizontal-padding">
+        <h6 class="font-30">
+            <b>Automate Your Business</b>
+        </h6>
+        <div class="col-md-2 offset-md-5 text-center">
+            <div class="add-padding-bottom" style="border-bottom: 5px solid #4095e3; width: 50%; margin-left: 25%;"></div>
+        </div>
+    </div>
+</section>
+
+<script>
+        $('#icon-message').fadeIn(400, function() {
+            $('#home-offer-1').fadeIn(300, function() {
+                $('#home-offer-2').fadeIn(300, function() {
+                    $('#home-offer-3').fadeIn(300, function() {
+                        $('#home-offer-4').fadeIn(300);
+                    });
+                });
+            });
+        });
+        
+        $('div.card.thick-border').hover(function() {
+            $(this).css('margin-top', '-10px');
+        }, function() {
+            $(this).css('margin-top', '0');
+        });
+</script>

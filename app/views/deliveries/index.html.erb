@@ -424,14 +424,14 @@
         var modal = document.getElementById('addNewRxModal0');
         var dob = document.getElementById('rx-dob').value;
         var phone = document.getElementById('rx-phone').value;
-        var address = document.getElementById('rx-address').value;
+        // var address = document.getElementById('rx-address').value;
         var body = document.getElementsByTagName("BODY")[0];
         var nav = document.getElementsByTagName("NAV")[0];
         $('#newRxForm').hide();
         $('#addRxLoader').show();
         $('.add-rx').html('Creating rx...');
         console.log('stuff');
-        $.get('/add_new_rx?rx='+rx+'&dob='+dob+'&phone='+phone+'&address='+address, function(data) {
+        $.get('/add_new_rx?rx='+rx+'&dob='+dob+'&phone='+phone, function(data) {
             // window.location.replace('/rx');
             body.removeAttribute('data-gr-c-s-loaded');
             body.removeAttribute('modal-open');
@@ -457,14 +457,14 @@
         var modal = document.getElementById('addNewRxModal');
         var dob = document.getElementById('rx-dob0').value;
         var phone = document.getElementById('rx-phone0').value;
-        var address = document.getElementById('rx-address0').value;
+        // var address = document.getElementById('rx-address0').value;
         var body = document.getElementsByTagName("BODY")[0];
         var nav = document.getElementsByTagName("NAV")[0];
         $('#newRxForm0').hide();
         $('#addRxLoader0').show();
         $('.add-rx0').html('Creating rx...');
         console.log('stuff');
-        $.get('/add_new_rx?rx='+rx+'&dob='+dob+'&phone='+phone+'&address='+address, function(data) {
+        $.get('/add_new_rx?rx='+rx+'&dob='+dob+'&phone='+phone, function(data) {
             // window.location.replace('/rx');
             body.removeAttribute('data-gr-c-s-loaded');
             body.removeAttribute('modal-open');

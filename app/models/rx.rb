@@ -2,6 +2,9 @@ class Rx < ActiveRecord::Base
     
     has_many :delivery_requests
     
+    # validates_presence_of :rx
+    # validates
+    
     def self.search(param)
         param.strip!
         param.downcase!

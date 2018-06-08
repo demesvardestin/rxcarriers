@@ -82,9 +82,11 @@
                     <div class="col-md-12 text-center">
                         <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
                     </div>
+                    <div class="col-md-12 text-center">
+                        Submitting...This may take a minute
+                    </div>
                 </div></div>
-            `
-        );
+        `);
         var id = elem.id;
         var rx = document.getElementById('rxNumber').value;
         if (rx.length > 0) {
@@ -160,8 +162,11 @@
                     <div class="col-md-12 text-center">
                         <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
                     </div>
+                    <div class="col-md-12 text-center">
+                        Submitting...This may take a minute
+                    </div>
                 </div></div>
-            `);
+        `);
         $.get('/request_delivery?id='+id+'&dob='+dob+'&time='+time, function(data) {
             $('#rxSearchResults').html(data);
         });
@@ -185,6 +190,18 @@
                 var phone = '';
             }
         }
+        $('#rxSearchResults').html(
+            '<div id="rxLoader">' +
+            `
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        Submitting...This may take a minute
+                    </div>
+                </div></div>
+        `);
         $.get('/update_rx_phone_number?rx='+rx+'&phone='+phone+'&pharma_id='+pharma_id, function(data) {
             $('#rxSearchResults').html(data);
         });

@@ -1,7 +1,7 @@
 class PharmaciesController < ApplicationController
   before_action :set_pharmacy, only: [:update, :destroy]
   before_filter :load_patable, only: [:show]
-  before_action :check_current_pharmacy
+  before_action :check_current_pharmacy, except: [:home]
   
   def edit
     @pharmacy = current_pharmacy
@@ -16,6 +16,10 @@ class PharmaciesController < ApplicationController
     @pharmacy = current_pharmacy
     @pharmacy.update(firebase_id: firebase_id)
     redirect_to :back
+  end
+  
+  def home
+    
   end
   
   def add_card

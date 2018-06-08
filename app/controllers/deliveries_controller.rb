@@ -198,8 +198,8 @@ class DeliveriesController < ApplicationController
     rx = params[:rx]
     phone = params[:phone]
     dob = params[:dob]
-    address = params[:address]
-    @rx = Rx.create(rx: rx, phone_number: phone, dob: dob, address: address, pharmacy_id: current_pharmacy.id, current_status: 'On hold', last_filled_on: DateTime.now)
+    # address = params[:address]
+    @rx = Rx.create(rx: rx, phone_number: phone, dob: dob, pharmacy_id: current_pharmacy.id, current_status: 'On hold', last_filled_on: DateTime.now)
     @rxes = Rx.where(pharmacy_id: current_pharmacy.id)
     render :layout => false
   end

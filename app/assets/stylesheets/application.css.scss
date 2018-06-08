@@ -57,9 +57,27 @@ a:hover {
 }
 // #main-body {
 //     background-color: #f4f8fb;
-// }
+// }\
+.border-white {
+    border-color: #fff !important;
+}
+.radius-5 {
+    border-radius: 5px !important;
+}
 .background-blue {
     background-color: #3484c6 !important;
+}
+.background-yellow {
+    background-color: #878706 !important;
+}
+.background-purple {
+    background-color: #7264a5 !important;
+}
+.background-cyan {
+    background-color: #1cc7c7 !important;
+}
+.background-green {
+    background-color: #56c681 !important;
 }
 .background-gray {
     background-color: #707071 !important;
@@ -67,6 +85,7 @@ a:hover {
 .background-dark {
     background-color: #454d5e !important;
 }
+// .border-yellow
 .di-nav {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -96,6 +115,7 @@ a:hover {
 }
 .logo {
     color: #fff;
+    letter-spacing: 3px;
 }
 .driver-nav-logo {
     color: #3484c6;
@@ -137,13 +157,13 @@ a:hover {
 }
 .card {
     border: 1px solid #e5e5e5 !important;
-    border-radius: 0 !important;
+    border-radius: 0;
 }
 .form-control, .input-group-text {
     border-radius: 0 !important;
 }
 .btn, .card {
-    border-radius: 2px !important;
+    border-radius: 2px;
 }
 .border-radius {
     border-radius: 2px !important;
@@ -183,7 +203,7 @@ div#rxCol {
     border-bottom: 1px solid #e1e1e2;
 }
 .no-display {
-    display: none;
+    display: none !important;
 }
 #searchMyRx {
     padding-top: 10px;
@@ -385,6 +405,9 @@ div#rxCol {
 .item-header {
     color: #4095e3;
     font-size: 13px;
+}
+.ubuntu {
+    font-family: 'Ubuntu', sans-serif !important;
 }
 .item {
     font-size: 13px;
@@ -958,6 +981,10 @@ div#rxCol {
         height: 1.5px !important;
     }
 }
+.nav-item-logged-out {
+    margin-left: 10px;
+    margin-right: 10px;
+}
 .nav-item-logged-in {
     color: #fff !important;
     padding-bottom: 10px;
@@ -1008,8 +1035,18 @@ div#rxCol {
     margin-right: 5px;
     margin-left: 5px;
     color: #fff !important;
-    border-radius: 0 !important;
+    // border-radius: 0 !important;
     text-transform: uppercase;
+}
+.cta-login {
+    background-color: transparent !important;
+    border-radius: 3px !important;
+    border: 2px solid #fff;
+}
+.cta-login:hover {
+    background-color: #fff !important;
+    color: #4095e3 !important;
+    border: 2px solid #fff !important;
 }
 .settings-header {
     padding-left: 15px;
@@ -1322,11 +1359,11 @@ div#rxCol {
 /* Footer */
 .footer {
     padding: 30px;
-    background-color: #3986cc;
+    background-color: #4095e3;
 }
 .footer-link {
     color: #9bc6e4;
-    font-size: 12px !important;
+    font-size: 14px !important;
 }
 .footer-link:hover {
     color: #fff;

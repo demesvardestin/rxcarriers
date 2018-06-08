@@ -104,6 +104,6 @@ Rails.application.routes.draw do
   end
   
   # root path
-  root 'batches#home'
+  root 'pharmacies#home'
   
 end

@@ -47,7 +47,9 @@ function urlB64ToUint8Array(base64String) {
 $('.main-page-card').fadeIn();
 $( document ).on('turbolinks:load', function() {
     // if current_pharmacy, get pharmacy id
-    document.getElementById("sound").innerHTML='';
+    if (document.getElementById("sound") != null) {
+        document.getElementById("sound").innerHTML='';
+    }
     const pharmacy_id = $('#pharmacy_id').text();
     
     // set variables for firebase requests collections reference

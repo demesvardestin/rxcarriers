@@ -22,7 +22,7 @@ class TwilioPatient < ActiveRecord::Base
     def self.bulk_call(pharmacy, unpicked_meds_batch=nil, issue_present_batch=nil)
         if !unpicked_meds_batch.nil?
             message_unpicked, twilio_unpicked, twilio_phone_unpicked = self.twilio('unpicked prescriptions', pharmacy)
-            message_unpicked = "Hi there! You have some medications that have not been picked up at #{pharmacy}. Please stop by or request a delivery at www.rxcarriers.com/status"
+            message_unpicked = "Hi there! You have some medications that have not been picked up at #{pharmacy}. Please stop by or request a delivery at rxcarriers.com/status"
             unpicked_meds_batch.each do |b|
                 twilio_unpicked.calls.create(
                     to: b.phone_number,
@@ -116,7 +116,7 @@ class TwilioPatient < ActiveRecord::Base
     end
     
     def self.unpicked_prescriptions(pharmacy)
-        return "Hi there! You have some prescriptions that have not been picked up at #{pharmacy}. Please give us a visit or request a delivery at www.rxcarriers.com/status"
+        return "Hi there! You have some prescriptions that have not been picked up at #{pharmacy}. Please give us a visit or request a delivery at rxcarriers.com/status"
     end
     
     def self.delivery_request(pharmacy)
@@ -124,7 +124,7 @@ class TwilioPatient < ActiveRecord::Base
     end
     
     def self.refill_ready(pharmacy)
-        return "Great news! Your refill is ready to be picked up at #{pharmacy}. You may request a delivery at www.rxcarriers.com/status"
+        return "Great news! Your refill is ready to be picked up at #{pharmacy}. You may request a delivery at rxcarriers.com/status"
     end
     
     def self.delivery_sent(pharmacy)
