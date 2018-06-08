@@ -616,7 +616,7 @@
         document.getElementById('rx-number').value = "";
         document.getElementById('rx-dob').value = "";
         document.getElementById('rx-phone').value = "";
-        document.getElementById('rx-address').value = "";
+        // document.getElementById('rx-address').value = "";
         $('.clear-rx-form').hide();
         $('#newRxForm').show();
     };
@@ -625,8 +625,8 @@
         var rx = elem.id;
         var dob = document.getElementById('editRxField-'+rx).value;
         var phone = document.getElementById('editRxPhone-'+rx).value;
-        var address = document.getElementById('editRxAddress-'+rx).value;
-        var instructions = document.getElementById('editRxDeliveryInstructions-'+rx).value;
+        // var address = document.getElementById('editRxAddress-'+rx).value;
+        // var instructions = document.getElementById('editRxDeliveryInstructions-'+rx).value;
         $('.updateRxBtn-'+rx).css('opacity', '0.6');
         $('.updateRxBtn-'+rx).html('Updating...');
         $('#updateRxDobModalBody-'+rx).html(`
@@ -639,7 +639,7 @@
                 </div>
             </div>
         `);
-        $.get('/update_rx_dob?dob='+dob+'&instructions='+instructions+'&rx='+rx+'&phone='+phone+'&address='+address, function(data) {
+        $.get('/update_rx_dob?dob='+dob+'&rx='+rx+'&phone='+phone, function(data) {
             $('#updateRxDobModalBody-'+rx).html(`
                 <div class="row">
                     <div class="col-md-12 text-center">

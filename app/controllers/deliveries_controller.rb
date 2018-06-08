@@ -206,16 +206,16 @@ class DeliveriesController < ApplicationController
   
   def update_rx_dob
     dob = params[:dob]
-    instructions = params[:instructions] if !params[:instructions].blank?
+    # instructions = params[:instructions] if !params[:instructions].blank?
     phone = params[:phone] if !params[:phone].blank?
-    address = params[:address] if !params[:address].blank?
-    if instructions == 'undefined'
-      instructions = 'no delivery instructions provided'
-    end
+    # address = params[:address] if !params[:address].blank?
+    # if instructions == 'undefined'
+      # instructions = 'no delivery instructions provided'
+    # end
     rx = params[:rx]
     @rx = Rx.find_by(rx: rx, pharmacy_id: current_pharmacy.id)
     if !@rx.nil?
-      @rx.update(dob: dob, delivery_instructions: instructions, phone_number: phone, address: address)
+      @rx.update(dob: dob, phone_number: phone)
     end
     render :layout => false
   end
