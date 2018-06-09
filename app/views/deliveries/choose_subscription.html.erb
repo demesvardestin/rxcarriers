@@ -175,8 +175,8 @@
               errorElement.textContent = result.error.message;
             } else {
                 $('#payment-form').hide();
-                $('#pharmacyCard').html(`
-                    <div class="row">
+                $('#pharmacyCard').append(`
+                    <div class="row card-bullet-loader">
                         <div class="col-md-12 text-center">
                             <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
                         </div>
