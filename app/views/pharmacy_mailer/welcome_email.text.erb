@@ -3,8 +3,12 @@ Welcome to example.com, <%= @pharmacy.name %>
 ===============================================
  
 You are currently on a trial account for 7 days, after which your
-credit card on file will be charged for $<%= @plan.price %>.
+credit card on file will be charged for $<%= @plan.get_price %>.
  
-If you have enough questions, please reach out to hello@rxcarriers.com
+If you have any questions, please reach out to hello@rxcarriers.com
+or visit <%= @url %>.
  
-Thanks for joining and have a great day!
+Best,
+
+Dem
+Founder
