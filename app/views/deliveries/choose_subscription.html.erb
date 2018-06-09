@@ -201,6 +201,29 @@
             $('.progress-bar').attr('aria-valuenow', '100');
             document.getElementsByClassName('progress-bar')[0].style.width = '100%';
             $('#termsCard').show();
+        }).fail(function() {
+            $('#pharmacyCard').html(`
+                <form action="/pharmacy/update_card" method="get" id="payment-form">
+                    <div class="form-row row">
+                        <label for="card-element">
+                          <h6 class="font-16">Add a payment method on file</h6>
+                        </label>
+                        <div id="card-element" class="col-md-12">
+                          <!-- a Stripe Element will be inserted here. -->
+                        </div>
+                        
+                        <!-- Used to display form errors -->
+                        <div id="card-errors" role="alert" class="col-md-12"></div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4 offset-md-4 submit-card">
+                            <button class="btn btn-info btn-block font-14 transaction-buttons"><i class="fa fa-check-circle"></i> Save card info</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="font-16 theme-red">There seems to be an issue with this card. Please use a different card</div>
+            `);
         });
     };
     
