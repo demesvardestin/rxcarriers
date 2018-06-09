@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   # def 
   
   def check_current_pharmacy
-    redirect_to unauthorized_path unless current_pharmacy
+    redirect_to :back unless current_pharmacy
   end
   
   def check_current_driver

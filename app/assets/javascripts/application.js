@@ -153,7 +153,7 @@ $( document ).on('turbolinks:load', function() {
                     <h6 class="font-14 theme-yellow text-center add-padding-top bold">Rx #<span id="rxSpan">`+rx+`</span></h6>
                 </div>
                 <div class="col-md-6 offset-md-3">
-                    <input type="text" class="form-control font-14" id="editRxField-`+rx+`" placeholder="date of birth (mm/dd/yyyy)">
+                    <input type="text" class="form-control font-14" id="editRxField-`+rx+`" placeholder="birth year (format: yyyy)">
                 </div>
             </div>
         `);

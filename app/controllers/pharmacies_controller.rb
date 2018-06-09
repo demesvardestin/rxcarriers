@@ -1,7 +1,7 @@
 class PharmaciesController < ApplicationController
   before_action :set_pharmacy, only: [:update, :destroy]
   before_filter :load_patable, only: [:show]
-  before_action :check_current_pharmacy, except: [:home]
+  before_action :check_current_pharmacy, except: [:home, :contact, :blog, :terms, :privacy, :press]
   
   def edit
     @pharmacy = current_pharmacy
@@ -19,6 +19,26 @@ class PharmaciesController < ApplicationController
   end
   
   def home
+    
+  end
+  
+  def press
+    
+  end
+  
+  def privacy
+    
+  end
+  
+  def terms
+    
+  end
+  
+  def blog
+    
+  end
+  
+  def contact
     
   end
   

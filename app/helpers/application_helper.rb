@@ -1,10 +1,34 @@
 module ApplicationHelper
     
+    def url
+        request.original_url 
+    end
+    
     def render_navigation
         if current_pharmacy
             render 'pharmacies/pharmacy_home'
         else
             render 'layouts/main_nav'
+        end
+    end
+    
+    def get_page_title
+        if url.include?('contact')
+            'Contact Us'
+        elsif url.include?('blog')
+            'Blog'
+        elsif url.include?('status')
+            'Rx Status'
+        elsif url.include?('for-pharmacies')
+            'For Pharmacies'
+        elsif url.include?('privacy')
+            'Privacy'
+        elsif url.include?('terms')
+            'Terms'
+        elsif url.include?('login') || url.include?('signup')
+            'Authentication'
+        else
+            'Home'
         end
     end
     

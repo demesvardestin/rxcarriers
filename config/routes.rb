@@ -89,14 +89,16 @@ Rails.application.routes.draw do
   get '/choose_subscription', to: 'deliveries#choose_subscription'
   get '/add_plan', to: 'deliveries#add_plan'
   post '/stripe_notification', to: 'deliveries#stripe_notification'
+  get '/contact', to: 'pharmacies#contact'
+  get '/legal/terms', to: 'pharmacies#terms'
+  get '/legal/privacy', to: 'pharmacies#privacy'
+  get '/legal/press', to: 'pharmacies#press'
+  get '/blog', to: 'pharmacies#blog'
   
   # resource path
   resources :invoices, only: [:create, :show, :index, :destroy]
   resources :pharmacies
   resources :deliveries, only: [:create, :show, :edit, :update, :destroy]
-  resources :batches do
-    resources :deliveries, only: [:create, :show, :edit, :update, :destroy]
-  end
   
   # authenticated devise models root path
   authenticated :pharmacy do

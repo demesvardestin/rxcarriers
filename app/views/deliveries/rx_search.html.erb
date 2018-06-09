@@ -109,7 +109,7 @@
                             <h6 class="font-14 theme-yellow text-center add-padding-top bold">Rx #<span id="rxSpan"><%= rx.rx %></span></h6>
                         </div>
                         <div class="col-md-8 offset-md-2">
-                            <input type="text" class="form-control font-14 no-box-shadow" id="editRxField-<%= rx.rx %>" placeholder="date of birth (mm/dd/yyyy)" value="<%= rx.dob if !rx.dob.nil? %>">
+                            <input type="text" class="form-control font-14 no-box-shadow" id="editRxField-<%= rx.rx %>" placeholder="birth year (format: yyyy)" value="<%= rx.dob if !rx.dob.nil? %>">
                             <input type="text" class="form-control font-14 no-box-shadow" id="editRxPhone-<%= rx.rx %>" placeholder="phone number" value="<%= rx.phone_number if !rx.phone_number.nil? %>">
                             <!--<input type="text" class="form-control font-14 no-box-shadow" id="editRxAddress-<%= rx.rx %>" placeholder="address" value="<%= rx.address if !rx.address.nil? %>">-->
                             <!--<div class="add-padding-top"></div>-->

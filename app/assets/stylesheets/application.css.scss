@@ -20,17 +20,17 @@
 /* --scrollbar-- */
 ::-webkit-scrollbar {
     width: 10px;
-    color: #678aab !important;
+    color: #4e4e4f !important;
 }
  
 ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 15px #526e88; 
+    -webkit-box-shadow: inset 0 0 15px #4e4e4f; 
     // border-radius: 10px;
 }
  
 ::-webkit-scrollbar-thumb {
     // border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 15px #526e88; 
+    -webkit-box-shadow: inset 0 0 15px #4e4e4f; 
 }
 body {
     overflow-x: hidden !important;
@@ -1362,11 +1362,11 @@ div#rxCol {
     background-color: #4095e3;
 }
 .footer-link {
-    color: #9bc6e4;
+    color: #9bc6e4 !important;
     font-size: 14px !important;
 }
 .footer-link:hover {
-    color: #fff;
+    color: #fff !important
 }
 .footer-color {
     color: #9bc6e4;
@@ -1502,6 +1502,12 @@ input:focus + label {
     .avatar-col {
         display: block !important;
     }
+    div.card.thick-border {
+        margin-bottom: 15px;
+    }
+    img.box-shadow {
+        display: none;
+    }
     .profile-details-col {
         border-left: none !important;
     }
@@ -1553,6 +1559,10 @@ input:focus + label {
     div#rxCol {
         padding-top: 0 !important;
         padding-bottom: 20px;
+    }
+    .mobile-container {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
     }
     .no-mobile {
         display: none;
