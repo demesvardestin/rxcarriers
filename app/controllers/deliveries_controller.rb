@@ -32,6 +32,7 @@ class DeliveriesController < ApplicationController
     amount = params["data"]["object"]["amount_paid"]
     @pharmacy = Pharmacy.find_by(stripe_cus: customer)
     if @pharmacy.nil?
+      render :layout => false
       return
     end
     # SendGridEmail.email_pharmacy(@pharmacy.email, type, amount)
