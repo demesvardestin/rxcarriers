@@ -202,7 +202,7 @@
             $('.progress-bar').attr('aria-valuenow', '100');
             document.getElementsByClassName('progress-bar')[0].style.width = '100%';
             $('#termsCard').show();
-        }).fail(function() {
+        }).fail(function(error) {
             console.log(error);
             $('.card-bullet-loader').remove();
             $('#payment-form').show();
