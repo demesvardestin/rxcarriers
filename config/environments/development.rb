@@ -35,7 +35,7 @@ Rails.application.configure do
   # Checks for improperly declared sprockets dependencies.
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
-  
+  config.action_mailer.delivery_method = :test
   config.action_mailer.default_url_options = { :host => 'https://udemy-class-demo07.c9users.io'}
 
   # Raises error for missing translations

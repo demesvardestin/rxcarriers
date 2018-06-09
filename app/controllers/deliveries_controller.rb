@@ -46,6 +46,9 @@ class DeliveriesController < ApplicationController
       when 'customer.subscription.created'
         ## Email the pharmacy here
         PharmacyMailer.welcome_email(@pharmacy).deliver_now
+      when 'customer.source.created'
+        ## Email the pharmacy here
+        PharmacyMailer.welcome_email(@pharmacy).deliver_now
       when 'invoice.upcoming'
         ## Email the pharmacy here
         # PharmacyMailer.with(pharmacy: @pharmacy).welcome_email.deliver_now
