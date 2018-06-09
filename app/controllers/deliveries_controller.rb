@@ -28,7 +28,7 @@ class DeliveriesController < ApplicationController
   
   def stripe_notification
     type = params["type"]
-    customer = params["customer"]
+    customer = params["data"]["object"]["customer"]
     @pharmacy = Pharmacy.find_by(stripe_cus: customer)
     if @pharmacy.nil?
       render :layout => false
