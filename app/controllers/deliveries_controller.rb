@@ -130,7 +130,7 @@ class DeliveriesController < ApplicationController
     end
     @refill = RequestAlert.create(pharmacy_id: @rx.pharmacy_id, rx: @rx.rx, active: true)
     pusher.trigger('new-rx', 'rx-request', {
-      message: "New refill request for rx ##{@rx.rx}. Please verify/update the date of birth",
+      message: "New refill request for rx ##{@rx.rx}. Please verify/update the birth year",
       id: @rx.id,
       type: 'refill',
       rx: @rx.rx,
@@ -140,7 +140,7 @@ class DeliveriesController < ApplicationController
     if !@notification.nil?
       @notification.delete
     end
-    refill_content = "A refill has been requested for rx ##{@rx.rx}. Make sure to verify that the rx exists, and update the date of birth."
+    refill_content = "A refill has been requested for rx ##{@rx.rx}. Make sure to verify that the rx exists, and update the birth year."
     Notification.create(pharmacy_id: @rx.pharmacy_id, content: refill_content, notification_type: "refill", read: false, rx: rx, active: true)
     TwilioPatient.alert_patient @rx.phone_number, pharmacy_name, 'refill request'
     render :layout => false
@@ -276,7 +276,7 @@ class DeliveriesController < ApplicationController
     if @rx.nil?
       return
     elsif (@rx.dob != dob) || (dob.nil?)
-      @rejected = 'Sorry, the date of birth does not match the one in our records.'
+      @rejected = 'Sorry, the birth year does not match the one in our records.'
     else
       @pharmacy = Pharmacy.find_by(id: @rx.pharmacy_id)
       if !@pharmacy.nil?
@@ -324,7 +324,7 @@ class DeliveriesController < ApplicationController
       return
     end
     content_delivery = "A delivery has been requested for rx ##{rx}. Delivery time is #{time}."
-    refill_content = "A refill has been requested for rx ##{rx}. Make sure to verify that the rx exists, and update the date of birth."
+    refill_content = "A refill has been requested for rx ##{rx}. Make sure to verify that the rx exists, and update the birth year."
     if type == 'delivery'
       Notification.create(pharmacy_id: current_pharmacy.id, content: content_delivery, notification_type: "delivery", read: false, rx: rx, active: true)
     elsif type == 'refill'

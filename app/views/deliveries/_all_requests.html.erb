@@ -4,7 +4,7 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title font-16" id="exampleModalLabel"><i class="fa fa-exclamation-circle"></i> Confirm date of birth of rx recipient</h5>
+                <h5 class="modal-title font-16" id="exampleModalLabel"><i class="fa fa-exclamation-circle"></i> Confirm birth year of rx recipient</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -12,7 +12,7 @@
               <div class="modal-body" id="updateRxDobModalBody-<%= r.rx %>">
                     <div class="row">
                         <div class="col-md-12" style="padding-bottom: 10px;">
-                            <h6 class="font-14 theme-blue">If the following rx exists, confirm the date of birth (from your records)</h6>
+                            <h6 class="font-14 theme-blue">If the following rx exists, confirm the birth year (from your records)</h6>
                             <h6 class="font-14 theme-yellow text-center add-padding-top bold">Rx #<span id="rxSpan"><%= r.rx %></span></h6>
                         </div>
                         <div class="col-md-6 offset-md-3">
@@ -43,7 +43,7 @@
         <div class="col-md-3">
             <button class="btn btn-info btn-block white transaction-buttons no-box-shadow <% if !r.get_rx.dob.nil? %>disabled<% end %>" id="editRx" data-toggle="modal"
                 <% if r.get_rx.dob.nil? %>data-target="#editRx<%= r.id %>"<% end %>>
-                <i class="fa fa-plus-circle"></i> Confirm date of birth
+                <i class="fa fa-plus-circle"></i> Confirm birth year
             </button>
         </div>
         <div class="col-md-1">

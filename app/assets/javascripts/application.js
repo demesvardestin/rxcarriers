@@ -131,7 +131,7 @@ $( document ).on('turbolinks:load', function() {
                         <i class="fa fa-check-circle theme-green font-40"></i>
                     </div>
                     <div class="col-md-12 text-center">
-                        <h6 class="font-14">Date of birth added!</h6>
+                        <h6 class="font-14">birth year added!</h6>
                     </div>
                     <div class="col-md-12 text-center">
                         <button class="btn btn-info transaction-buttons" id="`+rx+`"
@@ -149,7 +149,7 @@ $( document ).on('turbolinks:load', function() {
         $('#updateRxDobModalBody-'+rx).html(`
             <div class="row">
                 <div class="col-md-12" style="padding-bottom: 10px;">
-                    <h6 class="font-14 theme-blue">If the following rx exists, confirm the date of birth (from your records)</h6>
+                    <h6 class="font-14 theme-blue">If the following rx exists, confirm the birth year (from your records)</h6>
                     <h6 class="font-14 theme-yellow text-center add-padding-top bold">Rx #<span id="rxSpan">`+rx+`</span></h6>
                 </div>
                 <div class="col-md-6 offset-md-3">
