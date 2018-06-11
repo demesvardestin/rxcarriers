@@ -73,6 +73,12 @@ class PharmaciesController < ApplicationController
     redirect_to choose_subscription_path
   end
   
+  def update_first_time
+    sign_in_count = current_pharmacy.sign_in_count + 1
+    current_pharmacy.update(sign_in_count: sign_in_count)
+    render :layout => false
+  end
+  
   def update_card
     token = params['stripeToken']
     @pharmacy = current_pharmacy

@@ -9,6 +9,13 @@ class PharmacyMailer < ApplicationMailer
         mail(to: @pharmacy.email, subject: 'Your RxCarriers Subscription')
     end
     
+    def subscription_deleted(pharmacy, plan)
+        @pharmacy = pharmacy
+        @plan = plan
+        @url  = 'https://rxcarriers.zendesk.com/hc/en-us'
+        mail(to: @pharmacy.email, subject: 'Your RxCarriers Subscription')
+    end
+    
     def new_user_email(pharmacy)
         @pharmacy = pharmacy
         # @url  = 'http://example.com/login'

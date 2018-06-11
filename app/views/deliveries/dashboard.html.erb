@@ -178,12 +178,16 @@
 <% if current_pharmacy.sign_in_count < 2 %>
     <div class="modal" id="welcomeModal" tabindex="-1" role="dialog" style="display: inline; margin-top: 20px;">
       <div class="modal-dialog" role="document">
-        <div class="modal-content box-shadow">
+        <div class="modal-content box-shadow batch-list">
             <div class="modal-header background-cyan white">
                 <h5 class="modal-title font-18"><i class="fa fa-smile-o"></i> Welcome, <%= current_pharmacy.name %>!</h5>
             </div>
-            <div class="modal-body">
-                <%= render 'layouts/get_started' %>
+            <div class="modal-body" style="height: 350px; padding-top: 20px !important;">
+                <div id="scrollable" style="width: 100% !important;">
+                    <div id="scrollableChild" style="width: 100%; overflow-x: hidden !important; padding-right: 20px;">
+                        <%= render 'layouts/get_started' %>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <a class="btn btn-primary" href="https://rxcarriers.zendesk.com/hc/en-us" target="_blank">
@@ -304,6 +308,7 @@
         if (welcome_modal == null || welcome_modal == undefined) {
             $('div.requests-index-header').css('opacity', '1');
         }
+        $.get('/update_first_time');
     };
     
     firstTime();

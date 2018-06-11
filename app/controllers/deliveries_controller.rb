@@ -46,6 +46,9 @@ class DeliveriesController < ApplicationController
       when 'customer.subscription.created'
         ## Email the pharmacy here
         PharmacyMailer.welcome_email(@pharmacy, @plan).deliver_now
+      when 'customer.subscription.deleted'
+        ## Email the pharmacy here
+        PharmacyMailer.subscription_cancelled(@pharmacy, @plan).deliver_now
       when 'customer.source.created'
         ## Email the pharmacy here
         # PharmacyMailer.welcome_email(@pharmacy).deliver_now
@@ -67,7 +70,7 @@ class DeliveriesController < ApplicationController
           stripe_invoice_id: stripe_id,
           currency: currency,
           paid: true,
-          billing_date: date.to_datetime,
+          billing_date: DateTime.now,
           stripe_status: 'succeeded',
           value: @amount_paid
         )
@@ -87,7 +90,7 @@ class DeliveriesController < ApplicationController
           stripe_invoice_id: stripe_id,
           currency: currency,
           paid: true,
-          billing_date: date.to_datetime,
+          billing_date: DateTime.now,
           stripe_status: 'failed',
           value: @amount_paid
         )
