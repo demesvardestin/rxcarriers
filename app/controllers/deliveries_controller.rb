@@ -28,7 +28,7 @@ class DeliveriesController < ApplicationController
   
   def stripe_notification
     type = params["type"]
-    customer = params["data"]["object"]["customer"]
+    customer = params["customer"]
     @pharmacy = Pharmacy.find_by(stripe_cus: customer)
     @plan = StripePlan.find_by(pharmacy_id: @pharmacy.id)
     if @pharmacy.nil?
@@ -57,44 +57,42 @@ class DeliveriesController < ApplicationController
         # PharmacyMailer.with(pharmacy: @pharmacy).welcome_email.deliver_now
       when 'invoice.payment_succeeded'
         ## Email the pharmacy here
-        # object = params["data"]["object"]
-        # @amount_paid = object["amount_paid"].to_s
-        # stripe_id = object["id"]
-        # currency = object["currency"]
-        # date = object["date"]
-        # @plan.name == 'beginner' ? name = 'startup' : name = @plan.name
-        # Invoice.create(
-        #   pharmacy_id: @pharmacy.id,
-        #   description: "Payment for: #{name.capitalize} monthly plan",
-        #   stripe_invoice_id: stripe_id,
-        #   currency: currency,
-        #   paid: true,
-        #   billing_date: DateTime.now,
-        #   stripe_status: 'succeeded',
-        #   value: @amount_paid
-        # )
-        # PharmacyMailer.successful_billing_notice(@pharmacy, @plan, @amount_paid).deliver_now
-        PharmacyMailer.welcome_email(@pharmacy, @plan).deliver_now
+        object = params["data"]["object"]
+        @amount_paid = object["amount_paid"].to_s
+        stripe_id = object["id"]
+        currency = object["currency"]
+        date = object["date"]
+        @plan.name == 'beginner' ? name = 'startup' : name = @plan.name
+        Invoice.create(
+          pharmacy_id: @pharmacy.id,
+          description: "Payment for: #{name.capitalize} monthly plan",
+          stripe_invoice_id: stripe_id,
+          currency: currency,
+          paid: true,
+          billing_date: DateTime.now,
+          stripe_status: 'succeeded',
+          value: @amount_paid
+        )
+        PharmacyMailer.successful_billing_notice(@pharmacy, @plan, @amount_paid).deliver_now
       when 'invoice.payment_failed'
         ## Email the pharmacy here
-        # object = params["data"]["object"]
-        # @amount_paid = object["amount_paid"].to_s
-        # stripe_id = object["id"]
-        # currency = object["currency"]
-        # date = object["date"]
-        # @plan.name == 'beginner' ? name = 'startup' : name = @plan.name
-        # Invoice.create(
-        #   pharmacy_id: @pharmacy.id,
-        #   description: "Payment for: #{name.capitalize} monthly plan",
-        #   stripe_invoice_id: stripe_id,
-        #   currency: currency,
-        #   paid: true,
-        #   billing_date: DateTime.now,
-        #   stripe_status: 'failed',
-        #   value: @amount_paid
-        # )
-        # PharmacyMailer.failed_billing_notice(@pharmacy, @plan, @amount_paid).deliver_now
-        PharmacyMailer.welcome_email(@pharmacy, @plan).deliver_now
+        object = params["data"]["object"]
+        @amount_paid = object["amount_paid"].to_s
+        stripe_id = object["id"]
+        currency = object["currency"]
+        date = object["date"]
+        @plan.name == 'beginner' ? name = 'startup' : name = @plan.name
+        Invoice.create(
+          pharmacy_id: @pharmacy.id,
+          description: "Payment for: #{name.capitalize} monthly plan",
+          stripe_invoice_id: stripe_id,
+          currency: currency,
+          paid: true,
+          billing_date: DateTime.now,
+          stripe_status: 'failed',
+          value: @amount_paid
+        )
+        PharmacyMailer.failed_billing_notice(@pharmacy, @plan, @amount_paid).deliver_now
       else
         ## Do something else
     end
