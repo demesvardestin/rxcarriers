@@ -4,10 +4,10 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Welcome to RxCarriers, <%= @pharmacy.name %></h1>
+    <h1>Hi, <%= @pharmacy.name %></h1>
     <p>
-      You are currently on a trial account for 7 days, after which your
-      credit card on file will be charged for $<%= @plan.get_price %>.
+      We were unable to charge your credit/debit card for your monthly subscription.
+      Please update or replace your credit card on file at <%= @url_ %>.
     </p>
     <p>
       If you have any questions, please email </b>hello@rxcarriers.com</b> or visit <%= @url %>.

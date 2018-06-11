@@ -170,8 +170,31 @@
     #btnLoad {
         font-size: 14px !important;
     }
+    .requests-index-header {
+        opacity: 0.4;
+    }
 </style>
 
+<% if current_pharmacy.sign_in_count < 2 %>
+    <div class="modal" id="welcomeModal" tabindex="-1" role="dialog" style="display: inline; margin-top: 20px;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content box-shadow">
+            <div class="modal-header background-cyan white">
+                <h5 class="modal-title font-18"><i class="fa fa-smile-o"></i> Welcome, <%= current_pharmacy.name %>!</h5>
+            </div>
+            <div class="modal-body">
+                <%= render 'layouts/get_started' %>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" href="https://rxcarriers.zendesk.com/hc/en-us" target="_blank">
+                    <i class="fa fa-question-circle"></i> Go to help center
+                </a>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()"><i class="fa fa-thumbs-o-up"></i> Got it!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+<% end %>
 <div class="requests-index-header">
     <div class="row" id="batchPageHeader">
         <div class="col-md-3">
@@ -276,7 +299,14 @@
 
 <script>
     
-    // Add bounds to count so that number is for the current day //
+    function firstTime() {
+        var welcome_modal = document.getElementById('welcomeModal');
+        if (welcome_modal == null || welcome_modal == undefined) {
+            $('div.requests-index-header').css('opacity', '1');
+        }
+    };
+    
+    firstTime();
     
     function setRequestInvalid(elem) {
         var id = elem.id;
@@ -293,6 +323,11 @@
                 $('#deliveryRequestsToday').text(parseInt(deliveries) - 1);
             }
         });
+    };
+    
+    function closeModal() {
+        $('#welcomeModal').remove();
+        $('div.requests-index-header').css('opacity', '1');
     };
     
     function updateRxDob0(elem) {

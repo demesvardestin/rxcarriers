@@ -30,6 +30,7 @@ class DeliveriesController < ApplicationController
     type = params["type"]
     customer = params["data"]["object"]["customer"]
     @pharmacy = Pharmacy.find_by(stripe_cus: customer)
+    @plan = StripePlan.find_by(pharmacy_id: @pharmacy.id)
     if @pharmacy.nil?
       render :layout => false
       return
@@ -44,19 +45,53 @@ class DeliveriesController < ApplicationController
         # PharmacyMailer.with(pharmacy: @pharmacy).welcome_email.deliver_now
       when 'customer.subscription.created'
         ## Email the pharmacy here
-        PharmacyMailer.welcome_email(@pharmacy).deliver_now
+        PharmacyMailer.welcome_email(@pharmacy, @plan).deliver_now
       when 'customer.source.created'
         ## Email the pharmacy here
-        PharmacyMailer.welcome_email(@pharmacy).deliver_now
+        # PharmacyMailer.welcome_email(@pharmacy).deliver_now
       when 'invoice.upcoming'
         ## Email the pharmacy here
         # PharmacyMailer.with(pharmacy: @pharmacy).welcome_email.deliver_now
       when 'invoice.payment_succeeded'
         ## Email the pharmacy here
-        ## Stripe may possibly be already handling this part
+        object = params["data"]["object"]
+        @amount_paid = object["amount_paid"]
+        amount_remaining = object["amount_due"]
+        stripe_id = object["id"]
+        currency = object["currency"]
+        date = object["date"]
+        @plan.name == 'beginner' ? name = 'startup' : name = @plan.name
+        Invoice.create(
+          pharmacy_id: @pharmacy.id,
+          description: "Payment for: #{name.capitalize} monthly plan",
+          stripe_invoice_id: stripe_id,
+          currency: currency,
+          paid: true,
+          billing_date: date.to_datetime,
+          stripe_status: 'succeeded',
+          value: @amount_paid
+        )
+        PharmacyMailer.successful_billing_notice(@pharmacy, @plan, @amount_paid).deliver_now
       when 'invoice.payment_failed'
         ## Email the pharmacy here
-        ## Stripe may possibly be already handling this part
+        object = params["data"]["object"]
+        @amount_paid = object["amount_paid"]
+        amount_remaining = object["amount_due"]
+        stripe_id = object["id"]
+        currency = object["currency"]
+        date = object["date"]
+        @plan.name == 'beginner' ? name = 'startup' : name = @plan.name
+        Invoice.create(
+          pharmacy_id: @pharmacy.id,
+          description: "Payment for: #{name.capitalize} monthly plan",
+          stripe_invoice_id: stripe_id,
+          currency: currency,
+          paid: true,
+          billing_date: date.to_datetime,
+          stripe_status: 'failed',
+          value: @amount_paid
+        )
+        PharmacyMailer.failed_billing_notice(@pharmacy, @plan, @amount_paid).deliver_now
       else
         ## Do something else
     end
@@ -77,12 +112,24 @@ class DeliveriesController < ApplicationController
       end
     else
       @rxes = Rx.where(pharmacy_id: current_pharmacy.id)
+      @rxes_pharma = Rx.where(pharmacy_id: current_pharmacy.id)
     end
     if @rxes
       if @rxes.count == 1
         @rx = @rxes.last
       end
     end
+  end
+  
+  def check_rx_exist
+    rx = params[:rx]
+    @rx = Rx.find_by(rx: rx, pharmacy_id: current_pharmacy.id)
+    if @rx.nil?
+      @authorized = true
+    else
+      @authorized = false
+    end
+    render :layout => false
   end
   
   def dashboard

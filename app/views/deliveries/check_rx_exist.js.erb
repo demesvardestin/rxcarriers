@@ -1,0 +1,10 @@
+var auth = '<%= @authorized %>';
+if (auth == 'false') {
+    $('#rx-number').css('border-bottom', '1px solid red');
+    $('#rx-number0').css('border-bottom', '1px solid red');
+    $('.displayRxCheckError').show();
+} else {
+    $('#rx-number').css('border-bottom', '1px solid #e1e1e2');
+    $('#rx-number0').css('border-bottom', '1px solid #e1e1e2');
+    $('.displayRxCheckError').hide();
+}

@@ -66,6 +66,13 @@ class PharmaciesController < ApplicationController
     render :layout => false
   end
   
+  def cancel_subscription
+    subscription = Stripe::Subscription.retrieve(current_pharmacy.sub_auth)
+    subscription.delete
+    current_pharmacy.update(on_trial: false, is_subscribed: false, sub_auth: nil, sub_plan: nil, delinquent: false)
+    redirect_to choose_subscription_path
+  end
+  
   def update_card
     token = params['stripeToken']
     @pharmacy = current_pharmacy

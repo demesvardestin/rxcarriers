@@ -15,8 +15,9 @@
                     </div>
                     <div class="row" id="newRxForm0">
                         <div class="col-md-3 field">
-                            <input type="text" class="form-control form--control font-14 pf" id="rx-number0" name="rx-number0" placeholder=" " value="<%= @search %>">
+                            <input type="text" class="form-control form--control font-14 pf" id="rx-number0" onkeyup="checkRxExist(this)" name="rx-number0" placeholder=" " value="<%= @search %>">
                             <label for="rx-number0">Rx number</label>
+                            <div class="font-14 theme-red displayRxCheckError" style="display: none;">Already exists</div>
                         </div>
                         <div class="col-md-6 field">
                             <input type="text" class="form-control form--control font-14 pf" id="rx-phone0" name="rx-phone0" placeholder=" ">

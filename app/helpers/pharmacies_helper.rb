@@ -62,4 +62,16 @@ module PharmaciesHelper
         url.include?('/transactions') 
     end
     
+    def check_current_plan(plan)
+        @plan = StripePlan.find_by(pharmacy_id: current_pharmacy.id)
+        if !@plan.nil?
+            name = @plan.name
+        end
+        if name == plan
+            'Cancel subscription'
+        else
+            'Change subscription'
+        end
+    end
+    
 end

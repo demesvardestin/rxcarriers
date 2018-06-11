@@ -355,7 +355,7 @@ div#rxCol {
 .form--control {
     border: none;
     border-radius: 0 !important;
-    border-bottom: 1px solid #e1e1e2 !important;
+    border-bottom: 1px solid #e1e1e2;
     box-shadow: none !important;
     padding: 0 !important;
 }
@@ -1501,6 +1501,9 @@ input:focus + label {
 @media only screen and (max-device-width: 768px) {
     .avatar-col {
         display: block !important;
+    }
+    .logo {
+        font-size: 20px !important;
     }
     div.card.thick-border {
         margin-bottom: 15px;

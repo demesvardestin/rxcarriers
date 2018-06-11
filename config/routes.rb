@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   get 'patient_search', to: 'patients#patient_search'
   get 'pharmacy/search', to: 'pharmacies#index'
   get 'pharmacy/:id/settings', to: 'pharmacies#edit', as: "account_settings"
-  get 'transactions', to: 'invoices#index'
+  get '/payment-history', to: 'invoices#index'
   get 'batches', to: 'batches#index'
   get 'not-found', to: 'drivers#not_found'
   get 'invoices/:id/delete', to: 'invoices#destroy'
@@ -93,7 +93,8 @@ Rails.application.routes.draw do
   get '/legal/terms', to: 'pharmacies#terms'
   get '/legal/privacy', to: 'pharmacies#privacy'
   get '/legal/press', to: 'pharmacies#press'
-  get '/blog', to: 'pharmacies#blog'
+  get '/check_rx_exist', to: 'deliveries#check_rx_exist'
+  get '/cancel_subscription', to: 'pharmacies#cancel_subscription'
   
   # resource path
   resources :invoices, only: [:create, :show, :index, :destroy]

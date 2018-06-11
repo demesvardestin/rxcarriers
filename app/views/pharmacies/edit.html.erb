@@ -63,25 +63,24 @@
                         <div class="float-left" style="width: 47.5%;">
                             <div class="card">
                                 <div class="card-header background-blue white font-16 text-center">
-                                    Beginner
+                                    Startup
                                 </div>
                                 <div class="card-body background-dark font-24 white text-center" style="padding: 40px;">
                                     <b>$99.99</b> </span class="font-14">/month</span>
-                                    <!--<span class="font-16 text-center">-->
-                                    <!--    + <b>$0.05</b> per text message-->
-                                    <!--</span>-->
                                 </div>
                                 <div class="card-footer font-14 text-center" style="padding-bottom: 20px;">
                                     <div>
                                         <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Search page visibility</h5>
                                         <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Unlimited notifications</h5>
-                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> 1000 message limit</h5>
-                                        <h5 class="weighted font-14"><i class="fa fa-times theme-red"></i> Unlimited notifications</h5>
+                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> 2000 message limit</h5>
+                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> 1000 calls limit</h5>
+                                        <h5 class="weighted font-14"><i class="fa fa-times theme-red"></i> Activity summary analysis</h5>
+                                        <h5 class="weighted font-14"><i class="fa fa-times theme-red"></i> Weekly stats report emails</h5>
                                     </div>
                                     <div class="add-padding-top">
-                                        <button class="btn btn-secondary disabled btn-block no-box-shadow">
-                                            This is your current Plan
-                                        </button>
+                                        <a class="btn btn-primary btn-block no-box-shadow" <% if check_current_plan('beginner') == 'This is your current plan'%>id="cancelSubscription"<% end %>>
+                                            <%= check_current_plan('beginner') %>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -94,21 +93,20 @@
                                 </div>
                                 <div class="card-body background-dark font-24 white text-center" style="padding: 40px;">
                                     <b>$129.99</b> </span class="font-14">/month</span>
-                                    <!--<span class="font-16 text-center">-->
-                                    <!--    + <b>free</b> unlimited text messages-->
-                                    <!--</span>-->
                                 </div>
                                 <div class="card-footer font-14 text-center" style="padding-bottom: 20px;">
                                     <div>
                                         <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Sponsored search page visibility</h5>
                                         <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Unlimited notifications</h5>
                                         <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Unlimited text messages</h5>
-                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Weekly stats report</h5>
+                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Unlimited calls</h5>
+                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Activity summary analysis</h5>
+                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Weekly stats report emails</h5>
                                     </div>
                                     <div class="add-padding-top">
-                                        <button class="btn btn-primary btn-block" id="upgradeToPro">
-                                            Upgrade
-                                        </button>
+                                        <a class="btn btn-primary btn-block" <% if check_current_plan('beginner') == 'This is your current plan'%>id="cancelSubscription"<% end %>>
+                                            <%= check_current_plan('pro') %>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -137,6 +135,15 @@
 <script>
     $('#card-form').hide();
     $('.spinner-row').hide();
+    
+    $('#cancelSubscription').on('click', function() {
+        var innerValue = $(this).text();
+        if (innerValue == 'Cancel subscription') {
+            $.get('/cancel_subscription');
+        } else {
+            window.location.replace('/choose_subscription');
+        }
+    });
     
     function showCardForm() {
         $('#confirmation-form').hide();

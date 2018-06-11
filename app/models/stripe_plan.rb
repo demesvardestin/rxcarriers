@@ -9,4 +9,8 @@ class StripePlan < ActiveRecord::Base
             "129.99"
         end
     end
+    
+    def self.get_for(id)
+        return StripePlan.find_by(pharmacy_id: id) 
+    end
 end
