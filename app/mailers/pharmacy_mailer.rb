@@ -22,19 +22,16 @@ class PharmacyMailer < ApplicationMailer
         mail(to: @pharmacy.email, subject: 'Welcome to RxCarriers!')
     end
     
-    def successful_billing_notice(pharmacy, plan, amount)
+    def successful_billing_notice(pharmacy, plan)
         @pharmacy = pharmacy
         @plan = plan
-        @amount = amount
         @url  = 'https://rxcarriers.zendesk.com/hc/en-us'
-        @url_ = 'https://www.rxcarriers.com/settings'
         mail(to: @pharmacy.email, subject: 'Billing Notice')
     end
     
-    def failed_billing_notice(pharmacy, plan, amount)
+    def failed_billing_notice(pharmacy, plan)
         @pharmacy = pharmacy
         @plan = plan
-        @amount = amount
         @url  = 'https://rxcarriers.zendesk.com/hc/en-us'
         @url_ = 'https://www.rxcarriers.com/settings'
         mail(to: @pharmacy.email, subject: 'Failed Billing Notice')
