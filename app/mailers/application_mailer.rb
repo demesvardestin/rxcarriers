@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "Dem from RxCarriers"
+  default from: "hello@rxcarriers.com"
   layout 'mailer'
 end

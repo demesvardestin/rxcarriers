@@ -58,7 +58,7 @@ class DeliveriesController < ApplicationController
       when 'invoice.payment_succeeded'
         ## Email the pharmacy here
         object = params["data"]["object"]
-        amount_paid = object["amount_paid"].to_s
+        @amount_paid = object["amount_paid"].to_s
         stripe_id = object["id"]
         currency = object["currency"]
         date = object["date"]
@@ -71,13 +71,13 @@ class DeliveriesController < ApplicationController
           paid: true,
           billing_date: DateTime.now,
           stripe_status: 'succeeded',
-          value: amount_paid
+          value: @amount_paid
         )
-        PharmacyMailer.successful_billing_notice(@pharmacy, @plan).deliver_now
+        PharmacyMailer.successful_billing_notice(@pharmacy, @plan, @amount_paid).deliver_now
       when 'invoice.payment_failed'
         ## Email the pharmacy here
         object = params["data"]["object"]
-        amount_paid = object["amount_paid"].to_s
+        @amount_paid = object["amount_paid"].to_s
         stripe_id = object["id"]
         currency = object["currency"]
         date = object["date"]
@@ -90,9 +90,9 @@ class DeliveriesController < ApplicationController
           paid: true,
           billing_date: DateTime.now,
           stripe_status: 'failed',
-          value: amount_paid
+          value: @amount_paid
         )
-        PharmacyMailer.failed_billing_notice(@pharmacy, @plan).deliver_now
+        PharmacyMailer.failed_billing_notice(@pharmacy, @plan, @amount_paid).deliver_now
       else
         ## Do something else
     end

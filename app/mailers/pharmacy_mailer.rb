@@ -1,6 +1,6 @@
 class PharmacyMailer < ApplicationMailer
     include SendGrid
-    default from: 'Dem from RxCarriers'
+    default from: 'hello@rxcarriers.com'
     
     def welcome_email(pharmacy, plan)
         @pharmacy = pharmacy
@@ -22,16 +22,19 @@ class PharmacyMailer < ApplicationMailer
         mail(to: @pharmacy.email, subject: 'Welcome to RxCarriers!')
     end
     
-    def successful_billing_notice(pharmacy, plan)
+    def successful_billing_notice(pharmacy, plan, amount)
         @pharmacy = pharmacy
         @plan = plan
+        @amount = amount
         @url  = 'https://rxcarriers.zendesk.com/hc/en-us'
+        @url_ = 'https://www.rxcarriers.com/settings'
         mail(to: @pharmacy.email, subject: 'Billing Notice')
     end
     
-    def failed_billing_notice(pharmacy, plan)
+    def failed_billing_notice(pharmacy, plan, amount)
         @pharmacy = pharmacy
         @plan = plan
+        @amount = amount
         @url  = 'https://rxcarriers.zendesk.com/hc/en-us'
         @url_ = 'https://www.rxcarriers.com/settings'
         mail(to: @pharmacy.email, subject: 'Failed Billing Notice')
