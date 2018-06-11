@@ -1,6 +1,6 @@
 class PharmacyMailer < ApplicationMailer
     include SendGrid
-    default from: 'hello@rxcarriers.com'
+    default from: 'Dem from RxCarriers'
     
     def welcome_email(pharmacy, plan)
         @pharmacy = pharmacy
