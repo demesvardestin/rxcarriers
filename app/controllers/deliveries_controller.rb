@@ -58,8 +58,7 @@ class DeliveriesController < ApplicationController
       when 'invoice.payment_succeeded'
         ## Email the pharmacy here
         object = params["data"]["object"]
-        @amount_paid = object["amount_paid"]
-        amount_remaining = object["amount_due"]
+        @amount_paid = object["amount_paid"].to_s
         stripe_id = object["id"]
         currency = object["currency"]
         date = object["date"]
@@ -78,8 +77,7 @@ class DeliveriesController < ApplicationController
       when 'invoice.payment_failed'
         ## Email the pharmacy here
         object = params["data"]["object"]
-        @amount_paid = object["amount_paid"]
-        amount_remaining = object["amount_due"]
+        @amount_paid = object["amount_paid"].to_s
         stripe_id = object["id"]
         currency = object["currency"]
         date = object["date"]
