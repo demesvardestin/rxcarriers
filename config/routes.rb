@@ -96,6 +96,8 @@ Rails.application.routes.draw do
   get '/check_rx_exist', to: 'deliveries#check_rx_exist'
   get '/cancel_subscription', to: 'pharmacies#cancel_subscription'
   get '/update_first_time', to: 'pharmacies#update_first_time'
+  get '/search', to: 'pharmacies#search'
+  get '/pharmacy_search', to: 'pharmacies#search_pharmacy'
   
   # resource path
   resources :invoices, only: [:create, :show, :index, :destroy]

@@ -76,6 +76,9 @@ a:hover {
 .background-cyan {
     background-color: #1cc7c7 !important;
 }
+.theme-cyan {
+    color: #1cc7c7 !important;
+}
 .background-green {
     background-color: #56c681 !important;
 }
@@ -1576,5 +1579,16 @@ input:focus + label {
     .nav-col {
         padding-right: 15px !important;
         padding-left: 15px !important;
+    }
+    .pharmacy-search-main-div {
+        padding-top: 15px !important;
+        padding-bottom: 0 !important;
+    }
+    div.search-div {
+        margin-top: 15px !important;
+    }
+    div.card.box-shadow {
+        margin-bottom: 15px !important;
+        margin-top: 15px !important;
     }
 }

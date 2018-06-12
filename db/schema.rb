@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180606025739) do
+ActiveRecord::Schema.define(version: 20180612113356) do
 
   create_table "deliveries", force: :cascade do |t|
     t.datetime "created_at",             null: false
@@ -140,6 +140,8 @@ ActiveRecord::Schema.define(version: 20180606025739) do
     t.boolean  "delinquent"
     t.integer  "strikes"
     t.boolean  "on_trial"
+    t.string   "hours"
+    t.string   "delivers"
   end
 
   add_index "pharmacies", ["email"], name: "index_pharmacies_on_email"

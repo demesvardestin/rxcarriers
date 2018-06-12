@@ -1,0 +1,5076 @@
+/* line 1, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.bold {
+  font-weight: 900;
+}
+
+/* line 5, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.semi-bold {
+  font-weight: 700;
+}
+
+/* line 9, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.open-sans {
+  font-family: 'Open Sans', sans-serif !important;
+}
+
+/* line 13, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.medium-gray {
+  color: #707071 !important;
+}
+
+/* line 17, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.font-13 {
+  font-size: 13px;
+}
+
+/* line 21, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.font-40 {
+  font-size: 40px !important;
+}
+
+/* line 25, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.font-11 {
+  font-size: 11px;
+}
+
+/* line 29, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.font-9 {
+  font-size: 9px;
+}
+
+/* line 33, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.font-30 {
+  font-size: 30px;
+}
+
+/* line 37, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.font-10 {
+  font-size: 10px;
+}
+
+/* line 41, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.font-14 {
+  font-size: 14px;
+}
+
+/* line 45, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.font-12 {
+  font-size: 12px !important;
+}
+
+/* line 49, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.font-16 {
+  font-size: 16px;
+}
+
+/* line 53, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.weighted {
+  color: #32325d;
+}
+
+/* line 57, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.font-20 {
+  font-size: 20px;
+}
+
+/* line 61, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.font-18 {
+  font-size: 18px;
+}
+
+/* line 65, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.font-24 {
+  font-size: 24px;
+}
+
+/* line 69, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.border-white {
+  border-color: #fff !important;
+}
+
+/* line 73, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.thick-border {
+  border-width: 2px !important;
+}
+
+/* line 77, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.height-40 {
+  height: 40px !important;
+}
+
+/* line 81, /home/ubuntu/workspace/app/assets/stylesheets/fonts.css.scss */
+.pale-border {
+  border-color: #e1e1e2 !important;
+}
+@font-face {
+  font-family: 'Journal';
+  src: url('journal.eot');
+  src: url('journal.eot?#iefix') format('embedded-opentype'),
+       url('journal.woff') format('woff'),
+       url('journal.ttf') format('truetype'),
+       url('journal.svg#JournalRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.sigPad {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+}
+
+.sigPad label {
+  display: block;
+  margin: 0 0 0.515em;
+  padding: 0;
+
+  color: #000;
+  font: italic normal 1em/1.375 Georgia,Times,serif;
+}
+
+.sigPad label.error {
+  color: #f33;
+}
+
+.sigPad input {
+  margin: 0;
+  padding: 0.2em 0;
+  width: 198px;
+
+  border: 1px solid #666;
+
+  font-size: 1em;
+}
+
+.sigPad input.error {
+  border-color: #f33;
+}
+
+.sigPad button {
+  margin: 1em 0 0 0;
+  padding: 0.6em 0.6em 0.7em;
+
+  background-color: #ccc;
+  border: 0;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  color: #555;
+  font: bold 1em/1.375 sans-serif;
+  text-align: left;
+}
+
+.sigPad button:hover {
+  background-color: #333;
+
+  color: #fff;
+}
+
+.sig {
+  display: none;
+}
+
+.sigNav {
+  display: none;
+  height: 2.25em;
+  margin: 0;
+  padding: 0;
+  position: relative;
+
+  list-style-type: none;
+}
+
+.sigNav li {
+  display: inline;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+.sigNav a,
+.sigNav a:link,
+.sigNav a:visited {
+  display: block;
+  margin: 0;
+  padding: 0 0.6em;
+
+  border: 0;
+
+  color: #333;
+  font-weight: bold;
+  line-height: 2.25em;
+  text-decoration: underline;
+}
+
+.sigNav a.current,
+.sigNav a.current:link,
+.sigNav a.current:visited {
+  background-color: #666;
+  -moz-border-radius-topleft: 8px;
+  -moz-border-radius-topright: 8px;
+  -webkit-border-top-left-radius: 8px;
+  -webkit-border-top-right-radius: 8px;
+  border-radius: 8px 8px 0 0;
+
+  color: #fff;
+  text-decoration: none;
+}
+
+.sigNav .typeIt a.current,
+.sigNav .typeIt a.current:link,
+.sigNav .typeIt a.current:visited {
+  background-color: #ccc;
+
+  color: #555;
+}
+
+.sigNav .clearButton {
+  bottom: 0.2em;
+  display: none;
+  position: absolute;
+  right: 0;
+
+  font-size: 0.75em;
+  line-height: 1.375;
+}
+
+.sigWrapper {
+  clear: both;
+  height: 55px;
+
+  border: 1px solid #ccc;
+}
+
+.sigWrapper.current {
+  border-color: #666;
+}
+
+.signed .sigWrapper {
+  border: 0;
+}
+
+.pad {
+  position: relative;
+
+  /**
+   * For cross browser compatibility, this should be an absolute URL
+   * In IE the cursor is relative to the HTML document
+   * In all other browsers the cursor is relative to the CSS file
+   *
+   * http://www.useragentman.com/blog/2011/12/21/cross-browser-css-cursor-images-in-depth/
+   */
+  cursor: url("../assets/pen.cur"), crosshair;
+  /**
+   * IE will ignore this line because of the hotspot position
+   * Unfortunately we need this twice, because some browsers ignore the hotspot inside the .cur
+   */
+  cursor: url("pen.cur") 16 16, crosshair;
+
+  -ms-touch-action: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.typed {
+  height: 55px;
+  margin: 0;
+  padding: 0 5px;
+  position: absolute;
+  z-index: 90;
+
+  cursor: default;
+
+  color: #145394;
+  font: normal 1.875em/50px "Journal",Georgia,Times,serif;
+}
+
+.typeItDesc,
+.drawItDesc {
+  display: none;
+  margin: 0.75em 0 0.515em;
+  padding: 0.515em 0 0;
+
+  border-top: 3px solid #ccc;
+
+  color: #000;
+  font: italic normal 1em/1.375 Georgia,Times,serif;
+}
+
+p.error {
+  display: block;
+  margin: 0.5em 0;
+  padding: 0.4em;
+
+  background-color: #f33;
+
+  color: #fff;
+  font-weight: bold;
+}
+/* line 1, /home/ubuntu/workspace/app/assets/stylesheets/scaffolds.scss */
+body {
+  background-color: #fff;
+  color: #333;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+/* line 9, /home/ubuntu/workspace/app/assets/stylesheets/scaffolds.scss */
+p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+/* line 15, /home/ubuntu/workspace/app/assets/stylesheets/scaffolds.scss */
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+/* line 21, /home/ubuntu/workspace/app/assets/stylesheets/scaffolds.scss */
+a {
+  color: #000;
+}
+/* line 24, /home/ubuntu/workspace/app/assets/stylesheets/scaffolds.scss */
+a:visited {
+  color: #666;
+}
+/* line 28, /home/ubuntu/workspace/app/assets/stylesheets/scaffolds.scss */
+a:hover {
+  color: #fff;
+  background-color: #000;
+}
+
+/* line 35, /home/ubuntu/workspace/app/assets/stylesheets/scaffolds.scss */
+div.field, div.actions {
+  margin-bottom: 10px;
+}
+
+/* line 40, /home/ubuntu/workspace/app/assets/stylesheets/scaffolds.scss */
+#notice {
+  color: green;
+}
+
+/* line 44, /home/ubuntu/workspace/app/assets/stylesheets/scaffolds.scss */
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+/* line 50, /home/ubuntu/workspace/app/assets/stylesheets/scaffolds.scss */
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+/* line 58, /home/ubuntu/workspace/app/assets/stylesheets/scaffolds.scss */
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  margin-bottom: 0px;
+  background-color: #c00;
+  color: #fff;
+}
+/* line 69, /home/ubuntu/workspace/app/assets/stylesheets/scaffolds.scss */
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+@charset "UTF-8";
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+
+
+ */
+/* App Layout*/
+/* --scrollbar-- */
+/* line 22, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+::-webkit-scrollbar {
+  width: 10px;
+  color: #4e4e4f !important;
+}
+
+/* line 27, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 15px #4e4e4f;
+}
+
+/* line 32, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 15px #4e4e4f;
+}
+
+/* line 36, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+body {
+  overflow-x: hidden !important;
+  background: #f4f8fb;
+  font-family: 'Open Sans', sans-serif !important;
+  color: #525f7f;
+}
+
+/* line 42, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.spinner-row {
+  padding-top: 20px;
+}
+
+/* line 45, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+a:hover {
+  color: inherit;
+}
+
+/* line 48, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.main-page {
+  padding-top: 90px;
+  padding-bottom: 60px;
+}
+
+/* line 52, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.navbar {
+  border-top: 3px solid #04c004;
+  box-shadow: 0px 1px 5px #3484c6;
+  font-family: Camphor, "Open Sans", "Segoe UI", sans-serif;
+  background-color: #3484c6;
+  padding: 0 !important;
+}
+
+/* line 62, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.border-white {
+  border-color: #fff !important;
+}
+
+/* line 65, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.radius-5 {
+  border-radius: 5px !important;
+}
+
+/* line 68, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.background-blue {
+  background-color: #3484c6 !important;
+}
+
+/* line 71, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.background-yellow {
+  background-color: #878706 !important;
+}
+
+/* line 74, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.background-purple {
+  background-color: #7264a5 !important;
+}
+
+/* line 77, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.background-cyan {
+  background-color: #1cc7c7 !important;
+}
+
+/* line 80, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.theme-cyan {
+  color: #1cc7c7 !important;
+}
+
+/* line 83, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.background-green {
+  background-color: #56c681 !important;
+}
+
+/* line 86, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.background-gray {
+  background-color: #707071 !important;
+}
+
+/* line 89, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.background-dark {
+  background-color: #454d5e !important;
+}
+
+/* line 93, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.di-nav {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+/* line 97, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-item-courier-view-1:hover, .active_li {
+  border-bottom: 2px solid #4095e3 !important;
+}
+
+/* line 100, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-item-courier-view-1 {
+  padding-bottom: 15px;
+  border-bottom: 2px solid #fff;
+}
+
+/* line 104, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.main-nav {
+  background-color: #3484c6;
+  box-shadow: none;
+}
+
+/* line 108, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.driver-nav {
+  background-color: transparent;
+  box-shadow: none !important;
+  border-bottom: 1px solid #e1e1e2;
+}
+
+/* line 114, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.float-left {
+  float: left !important;
+}
+
+/* line 117, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.float-right {
+  float: right !important;
+}
+
+/* line 120, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.logo {
+  color: #fff;
+  letter-spacing: 3px;
+}
+
+/* line 124, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.driver-nav-logo {
+  color: #3484c6;
+}
+
+/* line 127, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#profile-page {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+/* line 131, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.font-14 {
+  font-size: 14px;
+}
+
+/* line 134, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.font-12 {
+  font-size: 12px;
+}
+
+/* line 137, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.font-82 {
+  font-size: 82px;
+}
+
+/* line 140, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.account-dropdown {
+  background-color: transparent !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+  box-shadow: none !important;
+  padding-top: 7px !important;
+  padding-bottom: 7px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+/* line 150, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.rx-dropdown {
+  background-color: transparent !important;
+  color: #4095e3 !important;
+  border-color: #4095e3 !important;
+  box-shadow: none !important;
+}
+
+/* line 156, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.padding-14 {
+  padding-left: 14px;
+  padding-right: 14px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+
+/* line 162, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.card {
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 0;
+}
+
+/* line 166, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.form-control, .input-group-text {
+  border-radius: 0 !important;
+}
+
+/* line 169, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.btn, .card {
+  border-radius: 2px;
+}
+
+/* line 172, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.border-radius {
+  border-radius: 2px !important;
+}
+
+/* line 175, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#requestRow {
+  padding: 5px 0;
+  border-bottom: 1px solid #e1e1e2;
+}
+
+/* line 179, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.main-page-card {
+  box-shadow: 0 5px 15px rgba(84, 96, 103, 0.25);
+}
+
+/* line 182, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.page-logo {
+  padding-bottom: 10px;
+}
+
+/* line 185, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.vertical-center {
+  padding-top: 50%;
+}
+
+/* line 188, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+div#rxCol {
+  padding-top: 30px !important;
+  padding-bottom: 30px;
+}
+
+/* line 199, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.messageText {
+  height: 100px !important;
+}
+
+/* line 202, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#sendRxRequest {
+  margin-top: 10px;
+}
+
+/* line 205, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.request-row {
+  padding: 5px 0;
+  border-bottom: 1px solid #e1e1e2;
+}
+
+/* line 209, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.no-display {
+  display: none !important;
+}
+
+/* line 212, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#searchMyRx {
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+/* line 216, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.pharmacy-name-field, .pharmacy-npi-field, .rx-status-field, .rx-status-btn {
+  height: 45px !important;
+}
+
+/* line 219, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.rx-status-btn {
+  margin-top: 15px;
+}
+
+/* line 222, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.rx-status-form-div {
+  padding-top: 30px;
+}
+
+/* line 225, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.no-horizontal-padding {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* line 229, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.right-padding-3 {
+  padding-right: 3px;
+}
+
+/* line 232, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.left-padding-3 {
+  padding-left: 3px;
+}
+
+/* line 235, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.no-right-padding {
+  padding-right: 0 !important;
+}
+
+/* line 238, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.no-left-padding {
+  padding-left: 0 !important;
+}
+
+/* line 241, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.main-card {
+  padding-top: 0;
+}
+
+/* line 244, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.theme-blue {
+  color: #4095e3 !important;
+}
+
+/* line 247, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.theme-gray {
+  color: #e5e5e5;
+}
+
+/* line 250, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.theme-red {
+  color: #ff3232 !important;
+}
+
+/* line 253, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.location-green {
+  color: #5f9616 !important;
+}
+
+/* line 256, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.request-sent, .request-failed {
+  display: none;
+}
+
+/* line 259, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.rmPat, .clear-content, .add-patient {
+  cursor: pointer;
+}
+
+/* line 262, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.rmPat, .clear-content, .add-patient:hover {
+  text-decoration: underline;
+}
+
+/* line 265, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.pharmacy-search {
+  display: block !important;
+  width: 80% !important;
+  height: 40px;
+  border: none !important;
+  border: 0.5px solid #03032b;
+  box-shadow: none !important;
+}
+
+/* line 273, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.pharmacy-search-addon {
+  height: 40px;
+  border: none !important;
+  border: 0.5px solid #03032b;
+  background: #fff !important;
+}
+
+/* line 279, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.background-transparent {
+  background: transparent !important;
+}
+
+/* line 282, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.no-border-radius {
+  border-radius: 0 !important;
+}
+
+/* line 285, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.no-border-right {
+  border-right: none;
+}
+
+/* line 288, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.no-border-left {
+  border-left: none;
+}
+
+/* line 291, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#authAlert, #authAlert0, #onboardingError {
+  display: none;
+}
+
+/* line 294, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.right-nav {
+  padding-left: 35px;
+  padding-right: 35px;
+}
+
+/* line 298, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.for-pharmacy-button {
+  color: #fff !important;
+  border: 1px solid #fff;
+  font-size: 14px;
+  padding: 9px;
+}
+
+/* line 304, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.for-pharmacy-button:hover {
+  color: #03032b !important;
+  background: #FFF !important;
+  border: 1px solid #fff;
+  box-shadow: none !important;
+}
+
+/* line 310, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.new-driver-button {
+  color: #03032b !important;
+  background: #fff !important;
+  border: 1px solid #fff;
+  font-size: 14px;
+  padding: 9px;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* line 318, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.new-driver-button:hover {
+  color: #fff !important;
+  background: transparent !important;
+  border: 1px solid #fff;
+}
+
+/* line 323, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.sign-in-link {
+  color: #fff !important;
+  font-size: 16px !important;
+  font-family: 'Roboto', sans-serif;
+  margin-top: 10px;
+}
+
+/* line 329, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.sign-in-link:hover {
+  /*color: #03032b !important;*/
+}
+
+/* line 332, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.vertical-align-center {
+  vertical-align: middle !important;
+}
+
+/* Devise */
+/* line 337, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.driver-signup-banner {
+  padding-bottom: 20px;
+}
+
+/* line 340, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.driver-signup-banner-text {
+  color: #03032b !important;
+}
+
+/* line 343, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.placeholder-div {
+  float: right;
+  padding: 0 !important;
+  height: 100% !important;
+}
+
+/* line 348, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.bordered {
+  border: 1px solid #e1e1e2;
+  padding-bottom: 40px;
+  padding-top: 30px;
+}
+
+/* line 353, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.box-shadow {
+  box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
+}
+
+/* line 356, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#updateProfile {
+  padding: 40px;
+}
+
+/* line 359, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.form--control {
+  border: none;
+  border-radius: 0 !important;
+  border-bottom: 1px solid #e1e1e2;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* line 366, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.form-control {
+  height: 40px;
+}
+
+/* line 369, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.pharmacy-signup {
+  float: left !important;
+  height: 100% !important;
+}
+
+/* line 373, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.courier-image {
+  width: 115% !important;
+  height: 115% !important;
+}
+
+/* line 377, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.courier-license-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+/* line 382, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.courier-license-image-1 {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+}
+
+/* line 387, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.pharmacy-signup-div {
+  vertical-align: middle !important;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+/* line 392, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.driver-login-button {
+  color: #fff !important;
+}
+
+/* line 395, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.driver-signup-button {
+  cursor: pointer;
+}
+
+/* Batches Views */
+/* line 400, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.patient-print {
+  padding-top: 40px;
+  padding-bottom: 30px;
+}
+
+/* line 404, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.badge {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300px;
+  font-size: 12px;
+}
+
+/* line 409, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.item-header {
+  color: #4095e3;
+  font-size: 13px;
+}
+
+/* line 413, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.ubuntu {
+  font-family: 'Ubuntu', sans-serif !important;
+}
+
+/* line 416, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.item {
+  font-size: 13px;
+  color: #707071 !important;
+}
+
+/* line 420, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.item:hover {
+  background: #707071;
+  color: #fff !important;
+}
+
+/* line 424, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.all-batches {
+  padding: 40px;
+}
+
+/* line 427, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.batches-details {
+  color: #000;
+}
+
+/* line 430, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.new-batch-card {
+  padding: 40px;
+  border: 1px solid #03032b;
+}
+
+/* line 434, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.batch-list {
+  box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  position: relative;
+  height: 100%;
+}
+
+/* line 439, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.submission-load {
+  display: none;
+}
+
+/* line 442, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.new-batch-card:hover {
+  background: #03032b !important;
+}
+/* line 444, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.new-batch-card:hover .add-new-batch {
+  color: #fff !important;
+}
+/* line 447, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.new-batch-card:hover .create-new-batch {
+  color: #fff !important;
+}
+
+/* line 451, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.add-new-batch {
+  font-size: 28px !important;
+  color: #03032b !important;
+}
+
+/* line 455, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.batch-new {
+  padding-right: 10px;
+}
+
+/* line 458, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.batch-index-body {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+/* line 464, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.create-new-batch {
+  font-size: 24px;
+}
+
+/* line 467, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.new-batch-form {
+  padding-left: 240px;
+  padding-right: 240px;
+  padding-top: 100px;
+  padding-bottom: 150px;
+}
+
+/* line 473, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.new-batch-button {
+  cursor: pointer;
+  font-size: 14px;
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* line 482, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.new-batch-button:hover {
+  background: #fff !important;
+  color: #03032b !important;
+}
+
+/* line 486, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.batch-notes-field {
+  height: 75px !important;
+}
+
+/* line 489, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.show-batch {
+  padding: 40px;
+}
+
+/* line 492, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+/* line 495, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.prescription-card-div {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* line 499, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.prescription-card {
+  border: 1px solid #d9dfc0;
+}
+
+/* line 502, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.border-theme-blue {
+  border: 1px solid #03032b;
+}
+
+/* line 505, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.border-blue {
+  border-color: #4095e3 !important;
+}
+
+/* line 508, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.font-50 {
+  font-size: 50px !important;
+}
+
+/* line 511, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.border-green {
+  border-color: #05f005 !important;
+}
+
+/* line 514, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.no-prescriptions {
+  padding-bottom: 20px;
+}
+
+/* line 517, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.batch-card-show {
+  height: 151px !important;
+  border: 1px solid #e7f1ca;
+  box-shadow: inset 0px 0px 3px #b8c0a1;
+}
+
+/* line 522, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.request-card {
+  border: 1px solid #ccccd4;
+}
+
+/* line 525, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.batch-card-show:hover {
+  border: 1px solid #8a9079;
+}
+
+/* line 528, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.request-card:hover {
+  border: 1px solid #8a9079;
+}
+
+/* line 531, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.batch-title-index:hover {
+  color: #000 !important;
+}
+
+/* line 534, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.request-show {
+  padding: 40px;
+}
+
+/* line 537, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.request-search {
+  padding-left: 0;
+  border: none;
+  box-shadow: none !important;
+  font-size: 14px;
+  background: transparent;
+}
+
+/* line 544, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.request-search-addon {
+  height: 40px;
+  border: none !important;
+  border: 0.5px solid #03032b;
+  background: #fff !important;
+  padding-right: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* line 552, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.request-search-border {
+  background: #fff;
+  padding: 1px;
+  border: 1px solid #ccccd4;
+  border-radius: 5px;
+}
+
+/* line 558, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.req-search-icon {
+  font-size: 12px !important;
+}
+
+/* line 561, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.search-icon-div {
+  padding-top: 10px !important;
+}
+
+/* line 564, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.dropdown-menu {
+  font-size: 14px;
+}
+
+/* line 567, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.batches-buttons {
+  font-size: 12px;
+  padding: 10px;
+}
+
+/* line 571, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.modal, .modal-content {
+  border-color: #e1e1e2;
+}
+
+/* line 574, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.remove-patient {
+  padding-top: 5px;
+}
+
+/* line 577, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.modal-header {
+  background-color: #e1e1e2;
+  border-bottom-color: #e1e1e2;
+}
+
+/* line 581, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.cancel-create {
+  font-size: 14px;
+  font-weight: 400px;
+  padding: 13px;
+}
+
+/* line 586, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.patient-form {
+  padding-bottom: 20px;
+}
+
+/* line 589, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.no-border {
+  border: none !important;
+}
+
+/* line 592, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.no-border-bottom {
+  border-bottom: none !important;
+}
+
+/* line 595, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.add-padding-top {
+  padding-top: 15px;
+}
+
+/* line 598, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.add-margin-top {
+  margin-top: 10px;
+}
+
+/* line 601, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.verified-alert-badge {
+  background-color: transparent;
+  padding: 7px 15px !important;
+  border: 1px solid #28a745;
+  color: #05f005 !important;
+}
+
+/* line 607, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.unverified-alert-badge {
+  background-color: transparent;
+  border: 1px solid #ffc107;
+  color: #878706 !important;
+  padding: 7px 15px !important;
+}
+
+/* line 613, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.display-block {
+  display: block !important;
+}
+
+/* line 616, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.add-padding-bottom {
+  padding-bottom: 15px;
+}
+
+/* line 619, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.add-padding-top-10 {
+  padding-top: 10px;
+}
+
+/* line 622, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.add-padding-top-5 {
+  padding-top: 5px;
+}
+
+/* line 625, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.add-padding-left {
+  padding-left: 5px;
+}
+
+/* line 628, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.add-padding-left-20 {
+  padding-left: 20px;
+}
+
+/* line 631, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.add-padding-left-60 {
+  padding-left: 60px;
+}
+
+/* line 634, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.clear-row, .spinner-row, .search-error, #patient-search, .spinner-row {
+  display: none;
+}
+
+/* line 637, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#batch_create_modal {
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
+}
+
+/* Invoice Views */
+/* line 643, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.invoice-list {
+  padding-bottom: 30px;
+}
+
+/* line 646, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.transaction-graph-tab {
+  color: #03032b !important;
+}
+
+/* line 649, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.transaction-graph-tab:hover {
+  background: #fff !important;
+}
+
+/* line 652, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.pharmacy-transaction-report {
+  padding-top: 40px;
+}
+
+/* line 655, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.transaction-page-header {
+  padding-bottom: 20px;
+}
+
+/* Charges Views */
+/* line 660, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.unconnected-stripe-warning {
+  padding: 150px;
+}
+
+/* line 663, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.transactions-table-header {
+  background: #ccccd4;
+}
+
+/* line 666, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.transactions-div-card-header {
+  background: #265988 !important;
+  padding-bottom: 0;
+  padding-top: 10px;
+}
+
+/* line 671, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.connected-stripe-div {
+  padding-top: 20px;
+}
+
+/* Request Views */
+/* line 676, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.request-driver-card {
+  padding: 10px;
+}
+
+/* line 679, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.request-driver-avatar {
+  border: 0.5px solid #ccccd4;
+  width: 100px;
+  height: 100px;
+  background-color: transparent;
+  text-align: center;
+  height: 160px;
+  width: 160px;
+  border-radius: 80px !important;
+  box-shadow: 0px 0px 4px #888888;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+}
+
+/* line 692, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.request-driver-avi-div {
+  overflow: hidden !important;
+  padding-top: 5px;
+}
+
+/* line 696, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.initials {
+  position: relative;
+  top: 25px;
+  /* 25% of parent */
+  font-size: 50px;
+  /* 50% of parent */
+  line-height: 50px;
+  /* 50% of parent */
+  color: #fff;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+}
+
+/* line 705, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.all-requests {
+  padding: 40px !important;
+}
+
+/* line 709, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.all-requests-header {
+  padding-top: 40px;
+}
+
+/* line 712, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.request-card:hover {
+  border: 1px solid #03032b;
+  color: #000 !important;
+}
+
+/* line 716, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.request-details-row {
+  padding-bottom: 0;
+}
+
+/* line 719, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.request-card-div {
+  padding-bottom: 10px;
+}
+
+/* line 722, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.request-details {
+  padding-right: 100px;
+}
+
+/* line 725, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.request-detail {
+  padding-bottom: 20px;
+}
+
+/* line 728, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.badge-notif {
+  border-radius: 50% !important;
+  font-size: 9px !important;
+  padding: 5px;
+  border: 1px solid #fff;
+}
+
+/* line 734, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.show-request-header {
+  padding-bottom: 40px;
+  padding-top: 40px;
+}
+
+/* line 738, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.theme-green {
+  color: #05f005 !important;
+}
+
+/* line 741, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.theme-darkblue {
+  color: #265988;
+}
+
+/* line 744, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.green {
+  color: #05f005 !important;
+}
+
+/* line 747, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.btn-info {
+  font-size: 14px;
+  color: #fff;
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* line 762, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.btn-primary {
+  color: #fff !important;
+  font-size: 14px;
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* line 773, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.btn-secondary {
+  color: #fff;
+  font-size: 14px;
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* line 782, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.btn-delete {
+  font-size: 14px;
+}
+
+/* line 785, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.btn-danger {
+  background-color: #df4957 !important;
+  border: 2px solid #df4957 !important;
+  font-size: 14px;
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: #fff !important;
+}
+
+/* line 795, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.btn-danger:hover {
+  background-color: #fff !important;
+  color: #df4957 !important;
+}
+
+/* line 799, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.theme-yellow {
+  color: #878706 !important;
+}
+
+/* line 802, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.status-icon {
+  font-size: 34px !important;
+}
+
+/* line 805, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.status-icon-div {
+  padding-top: 10px;
+}
+
+/* line 808, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.load-status {
+  font-size: 9px !important;
+}
+
+/* Driver Views*/
+/* line 813, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-item-courier-view-1 {
+  padding-top: 13px !important;
+}
+
+/* line 816, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.onfido-section {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+/* line 820, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.fa-circle-green {
+  color: #4cff4c;
+}
+
+/* line 823, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.fa-circle-gray {
+  color: #e5e5e5;
+}
+
+/* line 826, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.clock-in-btn {
+  background: transparent !important;
+  color: #000;
+  padding-left: 10px;
+}
+
+/* line 831, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.interval-type {
+  margin-top: 10px;
+}
+
+/* line 834, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.transaction-filtering {
+  padding-bottom: 25px;
+}
+
+/* line 837, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.list-group-item-earnings {
+  border: 3px solid #e5e5e5;
+  margin-bottom: 5px;
+}
+
+/* line 841, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.driver-stripe-balance {
+  margin-bottom: 10px;
+}
+
+/* line 844, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.driver-earnings {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+/* line 848, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.driver-profile-details {
+  text-align: center !important;
+  padding-left: 35px;
+  padding-top: 30px;
+  padding-bottom: 10px;
+}
+
+/* line 854, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.driver-avatar-div {
+  border-radius: 60px !important;
+  width: 120px;
+  height: 120px;
+  padding: 0;
+  overflow: hidden !important;
+}
+
+/* line 861, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.driver-avatar {
+  border: 1px solid #fff;
+  width: 100%;
+  height: 100%;
+  border-radius: 60px !important;
+  margin-top: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* line 869, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.no-live-routes {
+  padding-top: 240px;
+}
+
+/* line 872, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.driver-edit-row {
+  padding: 40px;
+}
+
+/* line 875, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.complete-signup-header {
+  padding-top: 40px;
+}
+
+/* line 878, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.other-div {
+  float: center !important;
+}
+
+/* line 881, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.post-driver-signup-notice {
+  padding-top: 30px;
+}
+
+/* line 884, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.post-driver-signup-card {
+  border: 1px solid #03032b;
+}
+
+/* line 887, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.account-under-review {
+  padding-top: 115px;
+}
+
+/* line 890, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.log-out-from-notice {
+  color: #fff !important;
+}
+
+/* Package Views */
+/* line 896, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.package-action-buttons {
+  padding-top: 10px;
+}
+
+/* Pharmacy Views */
+/* line 901, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.pharmacy-bottom-icons {
+  font-size: 18px !important;
+}
+
+/* line 904, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.pharmacy-bottom-icons:hover {
+  color: #4095e3;
+}
+
+/* line 907, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.search-header {
+  padding-bottom: 20px;
+}
+
+/* line 910, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.search-container {
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+/* line 914, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.no-underline {
+  text-decoration: none !important;
+}
+
+/* line 917, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.underline {
+  text-decoration: underline !important;
+}
+
+/* line 920, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.vertical-panel {
+  float: left !important;
+  background: #03032b !important;
+  position: fixed !important;
+  border-right: 1px solid #020222;
+  box-shadow: inset 0px 0px 5px #010115;
+  height: 100vw !important;
+}
+
+/* line 928, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.white {
+  color: #fff !important;
+}
+
+/* line 931, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.black {
+  color: #000 !important;
+}
+
+/* line 934, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-button-1 {
+  padding-right: 15px;
+}
+
+/* line 937, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-button-2 {
+  padding: 0;
+}
+
+/* line 940, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-button-3 {
+  padding-left: 15px;
+}
+
+/* line 943, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-hr {
+  color: #fff !important;
+  margin-top: -13px;
+  border-bottom: 0px;
+  background-color: #fff !important;
+  border-color: #fff !important;
+  height: 1.5px !important;
+  width: 0;
+  transition: width 0.25s;
+}
+
+/* line 953, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.navbar-nav-second {
+  padding-top: 0 !important;
+}
+
+/* line 956, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.main-signup-button {
+  border: 2px solid #fff;
+  border-radius: 3px;
+  padding-top: 0 !important;
+}
+
+/* line 961, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-col {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+/* line 965, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.main-signup-button:hover {
+  background-color: #fff;
+}
+/* line 967, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.main-signup-button:hover .nav-link-right {
+  color: #4e4e6a !important;
+}
+
+/* line 971, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.navbar-toggler {
+  border: 1px solid #fff;
+}
+
+/* line 974, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.toggler-icon {
+  color: #fff !important;
+  font-size: 25px !important;
+  padding: 0 !important;
+}
+
+/* line 980, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-item-logged-out:hover .nav-hr {
+  width: 100%;
+  color: #fff !important;
+  background-color: #fff !important;
+  border-color: #fff !important;
+  height: 1.5px !important;
+}
+
+/* line 988, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-item-logged-out {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+/* line 992, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-item-logged-in {
+  color: #fff !important;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-bottom: 3px solid #3484c6;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* line 1000, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-item-logged-in:hover, .activated {
+  color: #fff !important;
+  border-bottom: 3px solid #fff;
+  background-color: #2e76b2 !important;
+}
+
+/* line 1006, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.edit-delete-inline {
+  display: inline !important;
+}
+
+/* line 1010, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.bulkMessages {
+  color: white;
+  padding: 15px 20px !important;
+  border-radius: 50% !important;
+}
+
+/* line 1016, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.addAnRx {
+  color: white;
+  padding: 15px 20px !important;
+  border-radius: 50% !important;
+}
+
+/* line 1022, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#mybutton {
+  position: fixed;
+  bottom: 40px;
+  right: 30px;
+}
+
+/* line 1027, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-link-left {
+  font-size: 12px;
+  padding: 13px;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  color: #9bc6e4 !important;
+  border-radius: .25rem !important;
+  line-height: 20px;
+  text-transform: uppercase;
+}
+
+/* line 1037, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-link-right {
+  font-size: 12px;
+  margin-right: 5px;
+  margin-left: 5px;
+  color: #fff !important;
+  text-transform: uppercase;
+}
+
+/* line 1045, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.cta-login {
+  background-color: transparent !important;
+  border-radius: 3px !important;
+  border: 2px solid #fff;
+}
+
+/* line 1050, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.cta-login:hover {
+  background-color: #fff !important;
+  color: #4095e3 !important;
+  border: 2px solid #fff !important;
+}
+
+/* line 1055, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.settings-header {
+  padding-left: 15px;
+}
+
+/* line 1058, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.transaction-buttons {
+  font-size: 12px;
+  padding: 5px;
+}
+
+/* line 1062, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#dismissAll {
+  padding-top: 2px;
+  padding-left: 10px;
+}
+
+/* line 1066, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.medium-size-btn {
+  font-size: 11px;
+  padding: 4px;
+}
+
+/* line 1070, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-link-side {
+  font-size: 14px;
+  color: #fff !important;
+}
+
+/* line 1074, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-link-left:hover {
+  color: #fff !important;
+  background-color: transparent;
+  border: none;
+}
+
+/* line 1079, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-link-right:hover {
+  color: #4095e3 !important;
+  background-color: transparent;
+  border: none;
+}
+
+/* line 1084, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-link-edit {
+  font-size: 14px !important;
+  padding-right: 120px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  margin-top: 15px;
+}
+
+/* line 1092, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-link-edit:hover {
+  background: #01665d !important;
+  color: #fff !important;
+}
+
+/* line 1096, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.flex-column {
+  padding-bottom: 20px;
+}
+
+/* line 1099, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.pharmacy-avatar {
+  height: 90px;
+}
+
+/* line 1102, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.profile-details {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+/* line 1106, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.pharmacy-name {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 600px;
+}
+
+/* line 1111, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.logout-btn-div {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* line 1115, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.pharmacy-logout {
+  font-size: 14px !important;
+  padding-left: 14px;
+  padding-right: 14px;
+  background: transparent !important;
+}
+
+/* line 1121, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.pharmacy-logout:hover {
+  background: #fff !important;
+  color: #03032b !important;
+}
+
+/* line 1125, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.dashboard-control {
+  padding-top: 20px;
+  padding-bottom: 100px;
+}
+
+/* line 1129, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.billing-tab {
+  padding-top: 0 !important;
+}
+
+/* line 1132, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.hide {
+  display: none;
+}
+
+/* line 1135, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.show {
+  display: block !important;
+}
+
+/* line 1138, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-link-settings {
+  margin-bottom: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+/* line 1143, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.nav-link-settings:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* line 1147, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.profile-toggle {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* line 1153, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#logged-out-row, #logged-out-row-0, #onboardingAddress {
+  padding: 40px;
+}
+
+/* line 1156, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.disclosure-btn-padding {
+  padding: 20px 15px;
+}
+
+/* line 1159, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#logged-out-row-0 {
+  display: none;
+}
+
+/* line 1162, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#pharmacy-login {
+  padding: 40px 0;
+}
+
+/* line 1165, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.pharmacy-login-form {
+  border: 1px solid #e1e1e2;
+  padding-bottom: 70px;
+  padding-top: 30px;
+  box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
+}
+
+/* line 1171, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#loginBox, #signupBox {
+  border: 1px solid #e1e1e2;
+  padding-bottom: 100px;
+  padding-top: 30px;
+  box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
+}
+
+/* line 1177, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.submit {
+  padding-top: 20px;
+}
+
+/* Patient Views */
+/* line 1185, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.patient-avi {
+  height: 30px;
+  width: 30px;
+}
+
+/* line 1189, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.profile-actions-btn {
+  padding-bottom: 5px;
+}
+
+/* line 1192, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.patient-name-label {
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+/* line 1196, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.form-header {
+  padding-top: 5px;
+}
+
+/* line 1199, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.border-gray {
+  border: 1px solid #ccccd4;
+}
+
+/* line 1202, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.patients-instructions-field {
+  height: 80px !important;
+}
+
+/* line 1205, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.table-content {
+  padding: .75rem 1.25rem !important;
+  color: #707071;
+  font-size: 13px;
+  border-bottom: 1px solid #e1e1e2;
+}
+
+/* line 1211, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#scrollable {
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+  position: absolute;
+  top: 0;
+}
+
+/* line 1219, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#scrollableChild {
+  position: relative;
+  max-height: 100%;
+  overflow: auto;
+}
+
+/* line 1224, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#scrollPatientsCard {
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+  position: absolute;
+  top: 0;
+}
+
+/* line 1232, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#scrollPatientsCardChild {
+  position: relative;
+  max-height: 100%;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+/* line 1238, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.patient-table-header {
+  background: #ccccd4;
+  border-bottom-left-radius: 0;
+}
+
+/* line 1242, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.new-patient-form {
+  padding-left: 240px;
+  padding-right: 240px;
+  padding-top: 40px;
+  padding-bottom: 20px;
+}
+
+/* line 1248, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.patient-show {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* line 1252, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.patientCard {
+  box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
+}
+
+/* line 1255, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.details-heading {
+  padding-bottom: 10px;
+}
+
+/* line 1258, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.no-box-shadow {
+  box-shadow: none !important;
+}
+
+/* line 1261, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.opaque {
+  opacity: 0.5;
+}
+
+/* line 1264, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.patient-profile-detail {
+  padding-top: 3px;
+}
+
+/* line 1267, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.table-header-patients {
+  border-top: 1px solid #e1e1e2;
+  border-bottom: 1px solid #e1e1e2;
+  padding: .75rem 1.25rem !important;
+  background-color: #e6ebf1;
+  color: #59595a;
+  font-size: 15px;
+}
+
+/* line 1275, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.patient-prescriptions {
+  padding-top: 10px;
+}
+
+/* Notification Views */
+/* line 1280, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.inline-col {
+  display: inline !important;
+}
+
+/* line 1283, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.notif {
+  padding: 10px;
+  border-top: 1px solid #e1e1e2;
+  font-size: 14px;
+}
+
+/* line 1288, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.notification-col {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: #f8fbfd;
+  border-bottom: 1px solid #e1e1e2;
+}
+
+/* line 1294, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.notification-placeholder {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+/* line 1298, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.circle-btn {
+  border-radius: 50% !important;
+}
+
+/* Delivery Views */
+/* line 1303, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.print-form {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+/* line 1307, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.delivery-signature {
+  height: 100%;
+  width: 100%;
+}
+
+/* line 1311, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.signature_pad {
+  width: 700px;
+  height: 400px;
+  margin: 0 auto;
+}
+
+/* line 1317, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.signature_pad_body canvas {
+  width: 100%;
+  height: 100%;
+  border: dotted #444;
+  background: #CCCCCC;
+}
+
+/* Support Views */
+/* line 1325, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.welcomeheader-card {
+  background-image: url("welcomeheader.jpeg");
+}
+
+/* line 1328, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.card-0:hover {
+  background: #4095e3;
+}
+
+/* line 1331, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.contact {
+  padding-top: 30px;
+}
+
+/* line 1334, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.contact-us-header {
+  height: 150px;
+  background: #4095e3;
+  margin-bottom: 30px;
+}
+
+/* line 1339, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.middle {
+  padding-top: 55px;
+}
+
+/* line 1342, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.support-body {
+  padding: 40px;
+}
+
+/* line 1345, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.support-nav {
+  float: left;
+  background: #e5e5e5;
+  padding: 0 !important;
+  position: fixed;
+  height: 100%;
+}
+
+/* line 1352, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.support-nav-content {
+  float: right;
+  background: transparent;
+}
+
+/* line 1356, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.faq {
+  padding-bottom: 10px;
+}
+
+/* line 1359, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.tab-show {
+  background: transparent !important;
+}
+
+/* Footer */
+/* line 1364, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.footer {
+  padding: 30px;
+  background-color: #4095e3;
+}
+
+/* line 1368, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.footer-link {
+  color: #9bc6e4 !important;
+  font-size: 14px !important;
+}
+
+/* line 1372, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.footer-link:hover {
+  color: #fff !important;
+}
+
+/* line 1375, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.footer-color {
+  color: #9bc6e4;
+}
+
+/* STRIPE */
+/* line 1380, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.submit-card {
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+/* line 1384, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#card-element {
+  padding-left: 25px;
+}
+
+/* line 1387, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.StripeElement {
+  background-color: white;
+  height: 40px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+}
+
+/* line 1398, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+/* line 1402, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+/* line 1406, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}
+
+/* line 1410, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#action-button {
+  margin-top: 10px;
+}
+
+/* IDs */
+/* line 1415, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+#v-pills-profile {
+  padding-top: 0 !important;
+}
+
+/* line 1423, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+.field {
+  display: flex;
+  flex-flow: column-reverse;
+  margin-bottom: 1em;
+}
+
+/**
+* Add a transition to the label and input.
+* I'm not even sure that touch-action: manipulation works on
+* inputs, but hey, it's new and cool and could remove the 
+* pesky delay.
+*/
+/* line 1434, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+label, input {
+  transition: all 0.2s;
+  touch-action: manipulation;
+}
+
+/* line 1439, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+input {
+  font-size: 1.5em;
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  font-family: inherit;
+  -webkit-appearance: none;
+  border-radius: 0;
+  padding: 0;
+  margin-top: 10px;
+  cursor: text;
+}
+
+/* line 1451, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+input:focus {
+  outline: 0;
+  border-bottom: 1px solid #666;
+}
+
+/* line 1456, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+label {
+  letter-spacing: 0.05em;
+  font-size: 9px !important;
+  color: #4095e3 !important;
+}
+
+/**
+* Translate down and scale the label up to cover the placeholder,
+* when following an input (with placeholder-shown support).
+* Also make sure the label is only on one row, at max 2/3rds of the
+* field—to make sure it scales properly and doesn't wrap.
+*/
+/* line 1468, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+input:placeholder-shown + label {
+  cursor: text;
+  max-width: 66.66%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transform-origin: left bottom;
+  transform: translate(0, 2.125rem) scale(1.5);
+}
+
+/**
+* By default, the placeholder should be transparent. Also, it should 
+* inherit the transition.
+*/
+/* line 1481, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+::-webkit-input-placeholder {
+  opacity: 0;
+  transition: inherit;
+}
+
+/**
+* Show the placeholder when the input is focused.
+*/
+/* line 1488, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+input:focus::-webkit-input-placeholder {
+  opacity: 1;
+}
+
+/**
+* When the element is focused, remove the label transform.
+* Also, do this when the placeholder is _not_ shown, i.e. when 
+* there's something in the input at all.
+*/
+/* line 1496, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+input:not(:placeholder-shown) + label,
+input:focus + label {
+  transform: translate(0, 0) scale(1);
+  cursor: pointer;
+}
+
+/* Mobile Rules */
+@media only screen and (max-device-width: 768px) {
+  /* line 1506, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  .avatar-col {
+    display: block !important;
+  }
+
+  /* line 1509, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  .logo {
+    font-size: 20px !important;
+  }
+
+  /* line 1512, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  div.card.thick-border {
+    margin-bottom: 15px;
+  }
+
+  /* line 1515, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  img.box-shadow {
+    display: none;
+  }
+
+  /* line 1518, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  .profile-details-col {
+    border-left: none !important;
+  }
+
+  /* line 1521, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  .navbar-toggler {
+    border: none;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  /* line 1526, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  .navbar-toggler-icon {
+    color: #4095e3 !important;
+  }
+
+  /* line 1529, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  .active_li {
+    border-color: transparent !important;
+  }
+
+  /* line 1533, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  .nav-item-courier-view, .nav-item-courier-view-1 {
+    padding-bottom: 15px !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  /* line 1538, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  .courier-navbar-nav {
+    padding-left: 0 !important;
+    padding-top: 15px;
+  }
+
+  /* line 1542, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  .nav-icon-courier {
+    font-size: 28px !important;
+  }
+
+  /* line 1545, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  .profile {
+    padding-left: 0 !important;
+  }
+
+  /* line 1549, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  #loginBox, #signupBox {
+    border: none !important;
+    padding-bottom: 0;
+    padding-top: 0;
+    box-shadow: none !important;
+  }
+
+  /* line 1555, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  #logged-out-row, #logged-out-row-0 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* line 1559, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  #rxSearchResults {
+    height: auto;
+  }
+
+  /* line 1566, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  div#rxCol {
+    padding-top: 0 !important;
+    padding-bottom: 20px;
+  }
+
+  /* line 1570, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  .mobile-container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+
+  /* line 1574, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  .no-mobile {
+    display: none;
+  }
+
+  /* line 1577, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  .footer {
+    padding: 20px 0 !important;
+  }
+
+  /* line 1580, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  .nav-col {
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+  }
+
+  /* line 1584, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  .pharmacy-search-main-div {
+    padding-top: 15px !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* line 1588, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  div.search-div {
+    margin-top: 15px !important;
+  }
+
+  /* line 1591, /home/ubuntu/workspace/app/assets/stylesheets/application.css.scss */
+  div.card.box-shadow {
+    margin-bottom: 15px !important;
+    margin-top: 15px !important;
+  }
+}
+/*!
+ *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
+ *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+ */
+/* FONT PATH
+ * -------------------------- */
+
+
+
+
+
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('/assets/fontawesome-webfont-7bfcab6db99d5cfbf1705ca0536ddc78585432cc5fa41bbd7ad0f009033b2979.eot');
+  src: url('/assets/fontawesome-webfont-7bfcab6db99d5cfbf1705ca0536ddc78585432cc5fa41bbd7ad0f009033b2979.eot?#iefix') format('embedded-opentype'), url('/assets/fontawesome-webfont-2adefcbc041e7d18fcf2d417879dc5a09997aa64d675b7a3c4b6ce33da13f3fe.woff2') format('woff2'), url('/assets/fontawesome-webfont-ba0c59deb5450f5cb41b3f93609ee2d0d995415877ddfa223e8a8a7533474f07.woff') format('woff'), url('/assets/fontawesome-webfont-aa58f33f239a0fb02f5c7a6c45c043d7a9ac9a093335806694ecd6d4edc0d6a8.ttf') format('truetype'), url('/assets/fontawesome-webfont-ad6157926c1622ba4e1d03d478f1541368524bfc46f51e42fe0d945f7ef323e4.svg#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* makes the font 33% larger relative to the icon container */
+.fa-lg {
+  font-size: 1.33333333em;
+  line-height: 0.75em;
+  vertical-align: -15%;
+}
+.fa-2x {
+  font-size: 2em;
+}
+.fa-3x {
+  font-size: 3em;
+}
+.fa-4x {
+  font-size: 4em;
+}
+.fa-5x {
+  font-size: 5em;
+}
+.fa-fw {
+  width: 1.28571429em;
+  text-align: center;
+}
+.fa-ul {
+  padding-left: 0;
+  margin-left: 2.14285714em;
+  list-style-type: none;
+}
+.fa-ul > li {
+  position: relative;
+}
+.fa-li {
+  position: absolute;
+  left: -2.14285714em;
+  width: 2.14285714em;
+  top: 0.14285714em;
+  text-align: center;
+}
+.fa-li.fa-lg {
+  left: -1.85714286em;
+}
+.fa-border {
+  padding: .2em .25em .15em;
+  border: solid 0.08em #eeeeee;
+  border-radius: .1em;
+}
+.fa-pull-left {
+  float: left;
+}
+.fa-pull-right {
+  float: right;
+}
+.fa.fa-pull-left {
+  margin-right: .3em;
+}
+.fa.fa-pull-right {
+  margin-left: .3em;
+}
+/* Deprecated as of 4.4.0 */
+.pull-right {
+  float: right;
+}
+.pull-left {
+  float: left;
+}
+.fa.pull-left {
+  margin-right: .3em;
+}
+.fa.pull-right {
+  margin-left: .3em;
+}
+.fa-spin {
+  -webkit-animation: fa-spin 2s infinite linear;
+  animation: fa-spin 2s infinite linear;
+}
+.fa-pulse {
+  -webkit-animation: fa-spin 1s infinite steps(8);
+  animation: fa-spin 1s infinite steps(8);
+}
+@-webkit-keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+.fa-rotate-90 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.fa-rotate-180 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.fa-rotate-270 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
+  -webkit-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+.fa-flip-horizontal {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
+  -webkit-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+.fa-flip-vertical {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
+  -webkit-transform: scale(1, -1);
+  -ms-transform: scale(1, -1);
+  transform: scale(1, -1);
+}
+:root .fa-rotate-90,
+:root .fa-rotate-180,
+:root .fa-rotate-270,
+:root .fa-flip-horizontal,
+:root .fa-flip-vertical {
+  filter: none;
+}
+.fa-stack {
+  position: relative;
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
+  vertical-align: middle;
+}
+.fa-stack-1x,
+.fa-stack-2x {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+.fa-stack-1x {
+  line-height: inherit;
+}
+.fa-stack-2x {
+  font-size: 2em;
+}
+.fa-inverse {
+  color: #ffffff;
+}
+/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
+   readers do not read off random characters that represent icons */
+.fa-glass:before {
+  content: "\f000";
+}
+.fa-music:before {
+  content: "\f001";
+}
+.fa-search:before {
+  content: "\f002";
+}
+.fa-envelope-o:before {
+  content: "\f003";
+}
+.fa-heart:before {
+  content: "\f004";
+}
+.fa-star:before {
+  content: "\f005";
+}
+.fa-star-o:before {
+  content: "\f006";
+}
+.fa-user:before {
+  content: "\f007";
+}
+.fa-film:before {
+  content: "\f008";
+}
+.fa-th-large:before {
+  content: "\f009";
+}
+.fa-th:before {
+  content: "\f00a";
+}
+.fa-th-list:before {
+  content: "\f00b";
+}
+.fa-check:before {
+  content: "\f00c";
+}
+.fa-remove:before,
+.fa-close:before,
+.fa-times:before {
+  content: "\f00d";
+}
+.fa-search-plus:before {
+  content: "\f00e";
+}
+.fa-search-minus:before {
+  content: "\f010";
+}
+.fa-power-off:before {
+  content: "\f011";
+}
+.fa-signal:before {
+  content: "\f012";
+}
+.fa-gear:before,
+.fa-cog:before {
+  content: "\f013";
+}
+.fa-trash-o:before {
+  content: "\f014";
+}
+.fa-home:before {
+  content: "\f015";
+}
+.fa-file-o:before {
+  content: "\f016";
+}
+.fa-clock-o:before {
+  content: "\f017";
+}
+.fa-road:before {
+  content: "\f018";
+}
+.fa-download:before {
+  content: "\f019";
+}
+.fa-arrow-circle-o-down:before {
+  content: "\f01a";
+}
+.fa-arrow-circle-o-up:before {
+  content: "\f01b";
+}
+.fa-inbox:before {
+  content: "\f01c";
+}
+.fa-play-circle-o:before {
+  content: "\f01d";
+}
+.fa-rotate-right:before,
+.fa-repeat:before {
+  content: "\f01e";
+}
+.fa-refresh:before {
+  content: "\f021";
+}
+.fa-list-alt:before {
+  content: "\f022";
+}
+.fa-lock:before {
+  content: "\f023";
+}
+.fa-flag:before {
+  content: "\f024";
+}
+.fa-headphones:before {
+  content: "\f025";
+}
+.fa-volume-off:before {
+  content: "\f026";
+}
+.fa-volume-down:before {
+  content: "\f027";
+}
+.fa-volume-up:before {
+  content: "\f028";
+}
+.fa-qrcode:before {
+  content: "\f029";
+}
+.fa-barcode:before {
+  content: "\f02a";
+}
+.fa-tag:before {
+  content: "\f02b";
+}
+.fa-tags:before {
+  content: "\f02c";
+}
+.fa-book:before {
+  content: "\f02d";
+}
+.fa-bookmark:before {
+  content: "\f02e";
+}
+.fa-print:before {
+  content: "\f02f";
+}
+.fa-camera:before {
+  content: "\f030";
+}
+.fa-font:before {
+  content: "\f031";
+}
+.fa-bold:before {
+  content: "\f032";
+}
+.fa-italic:before {
+  content: "\f033";
+}
+.fa-text-height:before {
+  content: "\f034";
+}
+.fa-text-width:before {
+  content: "\f035";
+}
+.fa-align-left:before {
+  content: "\f036";
+}
+.fa-align-center:before {
+  content: "\f037";
+}
+.fa-align-right:before {
+  content: "\f038";
+}
+.fa-align-justify:before {
+  content: "\f039";
+}
+.fa-list:before {
+  content: "\f03a";
+}
+.fa-dedent:before,
+.fa-outdent:before {
+  content: "\f03b";
+}
+.fa-indent:before {
+  content: "\f03c";
+}
+.fa-video-camera:before {
+  content: "\f03d";
+}
+.fa-photo:before,
+.fa-image:before,
+.fa-picture-o:before {
+  content: "\f03e";
+}
+.fa-pencil:before {
+  content: "\f040";
+}
+.fa-map-marker:before {
+  content: "\f041";
+}
+.fa-adjust:before {
+  content: "\f042";
+}
+.fa-tint:before {
+  content: "\f043";
+}
+.fa-edit:before,
+.fa-pencil-square-o:before {
+  content: "\f044";
+}
+.fa-share-square-o:before {
+  content: "\f045";
+}
+.fa-check-square-o:before {
+  content: "\f046";
+}
+.fa-arrows:before {
+  content: "\f047";
+}
+.fa-step-backward:before {
+  content: "\f048";
+}
+.fa-fast-backward:before {
+  content: "\f049";
+}
+.fa-backward:before {
+  content: "\f04a";
+}
+.fa-play:before {
+  content: "\f04b";
+}
+.fa-pause:before {
+  content: "\f04c";
+}
+.fa-stop:before {
+  content: "\f04d";
+}
+.fa-forward:before {
+  content: "\f04e";
+}
+.fa-fast-forward:before {
+  content: "\f050";
+}
+.fa-step-forward:before {
+  content: "\f051";
+}
+.fa-eject:before {
+  content: "\f052";
+}
+.fa-chevron-left:before {
+  content: "\f053";
+}
+.fa-chevron-right:before {
+  content: "\f054";
+}
+.fa-plus-circle:before {
+  content: "\f055";
+}
+.fa-minus-circle:before {
+  content: "\f056";
+}
+.fa-times-circle:before {
+  content: "\f057";
+}
+.fa-check-circle:before {
+  content: "\f058";
+}
+.fa-question-circle:before {
+  content: "\f059";
+}
+.fa-info-circle:before {
+  content: "\f05a";
+}
+.fa-crosshairs:before {
+  content: "\f05b";
+}
+.fa-times-circle-o:before {
+  content: "\f05c";
+}
+.fa-check-circle-o:before {
+  content: "\f05d";
+}
+.fa-ban:before {
+  content: "\f05e";
+}
+.fa-arrow-left:before {
+  content: "\f060";
+}
+.fa-arrow-right:before {
+  content: "\f061";
+}
+.fa-arrow-up:before {
+  content: "\f062";
+}
+.fa-arrow-down:before {
+  content: "\f063";
+}
+.fa-mail-forward:before,
+.fa-share:before {
+  content: "\f064";
+}
+.fa-expand:before {
+  content: "\f065";
+}
+.fa-compress:before {
+  content: "\f066";
+}
+.fa-plus:before {
+  content: "\f067";
+}
+.fa-minus:before {
+  content: "\f068";
+}
+.fa-asterisk:before {
+  content: "\f069";
+}
+.fa-exclamation-circle:before {
+  content: "\f06a";
+}
+.fa-gift:before {
+  content: "\f06b";
+}
+.fa-leaf:before {
+  content: "\f06c";
+}
+.fa-fire:before {
+  content: "\f06d";
+}
+.fa-eye:before {
+  content: "\f06e";
+}
+.fa-eye-slash:before {
+  content: "\f070";
+}
+.fa-warning:before,
+.fa-exclamation-triangle:before {
+  content: "\f071";
+}
+.fa-plane:before {
+  content: "\f072";
+}
+.fa-calendar:before {
+  content: "\f073";
+}
+.fa-random:before {
+  content: "\f074";
+}
+.fa-comment:before {
+  content: "\f075";
+}
+.fa-magnet:before {
+  content: "\f076";
+}
+.fa-chevron-up:before {
+  content: "\f077";
+}
+.fa-chevron-down:before {
+  content: "\f078";
+}
+.fa-retweet:before {
+  content: "\f079";
+}
+.fa-shopping-cart:before {
+  content: "\f07a";
+}
+.fa-folder:before {
+  content: "\f07b";
+}
+.fa-folder-open:before {
+  content: "\f07c";
+}
+.fa-arrows-v:before {
+  content: "\f07d";
+}
+.fa-arrows-h:before {
+  content: "\f07e";
+}
+.fa-bar-chart-o:before,
+.fa-bar-chart:before {
+  content: "\f080";
+}
+.fa-twitter-square:before {
+  content: "\f081";
+}
+.fa-facebook-square:before {
+  content: "\f082";
+}
+.fa-camera-retro:before {
+  content: "\f083";
+}
+.fa-key:before {
+  content: "\f084";
+}
+.fa-gears:before,
+.fa-cogs:before {
+  content: "\f085";
+}
+.fa-comments:before {
+  content: "\f086";
+}
+.fa-thumbs-o-up:before {
+  content: "\f087";
+}
+.fa-thumbs-o-down:before {
+  content: "\f088";
+}
+.fa-star-half:before {
+  content: "\f089";
+}
+.fa-heart-o:before {
+  content: "\f08a";
+}
+.fa-sign-out:before {
+  content: "\f08b";
+}
+.fa-linkedin-square:before {
+  content: "\f08c";
+}
+.fa-thumb-tack:before {
+  content: "\f08d";
+}
+.fa-external-link:before {
+  content: "\f08e";
+}
+.fa-sign-in:before {
+  content: "\f090";
+}
+.fa-trophy:before {
+  content: "\f091";
+}
+.fa-github-square:before {
+  content: "\f092";
+}
+.fa-upload:before {
+  content: "\f093";
+}
+.fa-lemon-o:before {
+  content: "\f094";
+}
+.fa-phone:before {
+  content: "\f095";
+}
+.fa-square-o:before {
+  content: "\f096";
+}
+.fa-bookmark-o:before {
+  content: "\f097";
+}
+.fa-phone-square:before {
+  content: "\f098";
+}
+.fa-twitter:before {
+  content: "\f099";
+}
+.fa-facebook-f:before,
+.fa-facebook:before {
+  content: "\f09a";
+}
+.fa-github:before {
+  content: "\f09b";
+}
+.fa-unlock:before {
+  content: "\f09c";
+}
+.fa-credit-card:before {
+  content: "\f09d";
+}
+.fa-feed:before,
+.fa-rss:before {
+  content: "\f09e";
+}
+.fa-hdd-o:before {
+  content: "\f0a0";
+}
+.fa-bullhorn:before {
+  content: "\f0a1";
+}
+.fa-bell:before {
+  content: "\f0f3";
+}
+.fa-certificate:before {
+  content: "\f0a3";
+}
+.fa-hand-o-right:before {
+  content: "\f0a4";
+}
+.fa-hand-o-left:before {
+  content: "\f0a5";
+}
+.fa-hand-o-up:before {
+  content: "\f0a6";
+}
+.fa-hand-o-down:before {
+  content: "\f0a7";
+}
+.fa-arrow-circle-left:before {
+  content: "\f0a8";
+}
+.fa-arrow-circle-right:before {
+  content: "\f0a9";
+}
+.fa-arrow-circle-up:before {
+  content: "\f0aa";
+}
+.fa-arrow-circle-down:before {
+  content: "\f0ab";
+}
+.fa-globe:before {
+  content: "\f0ac";
+}
+.fa-wrench:before {
+  content: "\f0ad";
+}
+.fa-tasks:before {
+  content: "\f0ae";
+}
+.fa-filter:before {
+  content: "\f0b0";
+}
+.fa-briefcase:before {
+  content: "\f0b1";
+}
+.fa-arrows-alt:before {
+  content: "\f0b2";
+}
+.fa-group:before,
+.fa-users:before {
+  content: "\f0c0";
+}
+.fa-chain:before,
+.fa-link:before {
+  content: "\f0c1";
+}
+.fa-cloud:before {
+  content: "\f0c2";
+}
+.fa-flask:before {
+  content: "\f0c3";
+}
+.fa-cut:before,
+.fa-scissors:before {
+  content: "\f0c4";
+}
+.fa-copy:before,
+.fa-files-o:before {
+  content: "\f0c5";
+}
+.fa-paperclip:before {
+  content: "\f0c6";
+}
+.fa-save:before,
+.fa-floppy-o:before {
+  content: "\f0c7";
+}
+.fa-square:before {
+  content: "\f0c8";
+}
+.fa-navicon:before,
+.fa-reorder:before,
+.fa-bars:before {
+  content: "\f0c9";
+}
+.fa-list-ul:before {
+  content: "\f0ca";
+}
+.fa-list-ol:before {
+  content: "\f0cb";
+}
+.fa-strikethrough:before {
+  content: "\f0cc";
+}
+.fa-underline:before {
+  content: "\f0cd";
+}
+.fa-table:before {
+  content: "\f0ce";
+}
+.fa-magic:before {
+  content: "\f0d0";
+}
+.fa-truck:before {
+  content: "\f0d1";
+}
+.fa-pinterest:before {
+  content: "\f0d2";
+}
+.fa-pinterest-square:before {
+  content: "\f0d3";
+}
+.fa-google-plus-square:before {
+  content: "\f0d4";
+}
+.fa-google-plus:before {
+  content: "\f0d5";
+}
+.fa-money:before {
+  content: "\f0d6";
+}
+.fa-caret-down:before {
+  content: "\f0d7";
+}
+.fa-caret-up:before {
+  content: "\f0d8";
+}
+.fa-caret-left:before {
+  content: "\f0d9";
+}
+.fa-caret-right:before {
+  content: "\f0da";
+}
+.fa-columns:before {
+  content: "\f0db";
+}
+.fa-unsorted:before,
+.fa-sort:before {
+  content: "\f0dc";
+}
+.fa-sort-down:before,
+.fa-sort-desc:before {
+  content: "\f0dd";
+}
+.fa-sort-up:before,
+.fa-sort-asc:before {
+  content: "\f0de";
+}
+.fa-envelope:before {
+  content: "\f0e0";
+}
+.fa-linkedin:before {
+  content: "\f0e1";
+}
+.fa-rotate-left:before,
+.fa-undo:before {
+  content: "\f0e2";
+}
+.fa-legal:before,
+.fa-gavel:before {
+  content: "\f0e3";
+}
+.fa-dashboard:before,
+.fa-tachometer:before {
+  content: "\f0e4";
+}
+.fa-comment-o:before {
+  content: "\f0e5";
+}
+.fa-comments-o:before {
+  content: "\f0e6";
+}
+.fa-flash:before,
+.fa-bolt:before {
+  content: "\f0e7";
+}
+.fa-sitemap:before {
+  content: "\f0e8";
+}
+.fa-umbrella:before {
+  content: "\f0e9";
+}
+.fa-paste:before,
+.fa-clipboard:before {
+  content: "\f0ea";
+}
+.fa-lightbulb-o:before {
+  content: "\f0eb";
+}
+.fa-exchange:before {
+  content: "\f0ec";
+}
+.fa-cloud-download:before {
+  content: "\f0ed";
+}
+.fa-cloud-upload:before {
+  content: "\f0ee";
+}
+.fa-user-md:before {
+  content: "\f0f0";
+}
+.fa-stethoscope:before {
+  content: "\f0f1";
+}
+.fa-suitcase:before {
+  content: "\f0f2";
+}
+.fa-bell-o:before {
+  content: "\f0a2";
+}
+.fa-coffee:before {
+  content: "\f0f4";
+}
+.fa-cutlery:before {
+  content: "\f0f5";
+}
+.fa-file-text-o:before {
+  content: "\f0f6";
+}
+.fa-building-o:before {
+  content: "\f0f7";
+}
+.fa-hospital-o:before {
+  content: "\f0f8";
+}
+.fa-ambulance:before {
+  content: "\f0f9";
+}
+.fa-medkit:before {
+  content: "\f0fa";
+}
+.fa-fighter-jet:before {
+  content: "\f0fb";
+}
+.fa-beer:before {
+  content: "\f0fc";
+}
+.fa-h-square:before {
+  content: "\f0fd";
+}
+.fa-plus-square:before {
+  content: "\f0fe";
+}
+.fa-angle-double-left:before {
+  content: "\f100";
+}
+.fa-angle-double-right:before {
+  content: "\f101";
+}
+.fa-angle-double-up:before {
+  content: "\f102";
+}
+.fa-angle-double-down:before {
+  content: "\f103";
+}
+.fa-angle-left:before {
+  content: "\f104";
+}
+.fa-angle-right:before {
+  content: "\f105";
+}
+.fa-angle-up:before {
+  content: "\f106";
+}
+.fa-angle-down:before {
+  content: "\f107";
+}
+.fa-desktop:before {
+  content: "\f108";
+}
+.fa-laptop:before {
+  content: "\f109";
+}
+.fa-tablet:before {
+  content: "\f10a";
+}
+.fa-mobile-phone:before,
+.fa-mobile:before {
+  content: "\f10b";
+}
+.fa-circle-o:before {
+  content: "\f10c";
+}
+.fa-quote-left:before {
+  content: "\f10d";
+}
+.fa-quote-right:before {
+  content: "\f10e";
+}
+.fa-spinner:before {
+  content: "\f110";
+}
+.fa-circle:before {
+  content: "\f111";
+}
+.fa-mail-reply:before,
+.fa-reply:before {
+  content: "\f112";
+}
+.fa-github-alt:before {
+  content: "\f113";
+}
+.fa-folder-o:before {
+  content: "\f114";
+}
+.fa-folder-open-o:before {
+  content: "\f115";
+}
+.fa-smile-o:before {
+  content: "\f118";
+}
+.fa-frown-o:before {
+  content: "\f119";
+}
+.fa-meh-o:before {
+  content: "\f11a";
+}
+.fa-gamepad:before {
+  content: "\f11b";
+}
+.fa-keyboard-o:before {
+  content: "\f11c";
+}
+.fa-flag-o:before {
+  content: "\f11d";
+}
+.fa-flag-checkered:before {
+  content: "\f11e";
+}
+.fa-terminal:before {
+  content: "\f120";
+}
+.fa-code:before {
+  content: "\f121";
+}
+.fa-mail-reply-all:before,
+.fa-reply-all:before {
+  content: "\f122";
+}
+.fa-star-half-empty:before,
+.fa-star-half-full:before,
+.fa-star-half-o:before {
+  content: "\f123";
+}
+.fa-location-arrow:before {
+  content: "\f124";
+}
+.fa-crop:before {
+  content: "\f125";
+}
+.fa-code-fork:before {
+  content: "\f126";
+}
+.fa-unlink:before,
+.fa-chain-broken:before {
+  content: "\f127";
+}
+.fa-question:before {
+  content: "\f128";
+}
+.fa-info:before {
+  content: "\f129";
+}
+.fa-exclamation:before {
+  content: "\f12a";
+}
+.fa-superscript:before {
+  content: "\f12b";
+}
+.fa-subscript:before {
+  content: "\f12c";
+}
+.fa-eraser:before {
+  content: "\f12d";
+}
+.fa-puzzle-piece:before {
+  content: "\f12e";
+}
+.fa-microphone:before {
+  content: "\f130";
+}
+.fa-microphone-slash:before {
+  content: "\f131";
+}
+.fa-shield:before {
+  content: "\f132";
+}
+.fa-calendar-o:before {
+  content: "\f133";
+}
+.fa-fire-extinguisher:before {
+  content: "\f134";
+}
+.fa-rocket:before {
+  content: "\f135";
+}
+.fa-maxcdn:before {
+  content: "\f136";
+}
+.fa-chevron-circle-left:before {
+  content: "\f137";
+}
+.fa-chevron-circle-right:before {
+  content: "\f138";
+}
+.fa-chevron-circle-up:before {
+  content: "\f139";
+}
+.fa-chevron-circle-down:before {
+  content: "\f13a";
+}
+.fa-html5:before {
+  content: "\f13b";
+}
+.fa-css3:before {
+  content: "\f13c";
+}
+.fa-anchor:before {
+  content: "\f13d";
+}
+.fa-unlock-alt:before {
+  content: "\f13e";
+}
+.fa-bullseye:before {
+  content: "\f140";
+}
+.fa-ellipsis-h:before {
+  content: "\f141";
+}
+.fa-ellipsis-v:before {
+  content: "\f142";
+}
+.fa-rss-square:before {
+  content: "\f143";
+}
+.fa-play-circle:before {
+  content: "\f144";
+}
+.fa-ticket:before {
+  content: "\f145";
+}
+.fa-minus-square:before {
+  content: "\f146";
+}
+.fa-minus-square-o:before {
+  content: "\f147";
+}
+.fa-level-up:before {
+  content: "\f148";
+}
+.fa-level-down:before {
+  content: "\f149";
+}
+.fa-check-square:before {
+  content: "\f14a";
+}
+.fa-pencil-square:before {
+  content: "\f14b";
+}
+.fa-external-link-square:before {
+  content: "\f14c";
+}
+.fa-share-square:before {
+  content: "\f14d";
+}
+.fa-compass:before {
+  content: "\f14e";
+}
+.fa-toggle-down:before,
+.fa-caret-square-o-down:before {
+  content: "\f150";
+}
+.fa-toggle-up:before,
+.fa-caret-square-o-up:before {
+  content: "\f151";
+}
+.fa-toggle-right:before,
+.fa-caret-square-o-right:before {
+  content: "\f152";
+}
+.fa-euro:before,
+.fa-eur:before {
+  content: "\f153";
+}
+.fa-gbp:before {
+  content: "\f154";
+}
+.fa-dollar:before,
+.fa-usd:before {
+  content: "\f155";
+}
+.fa-rupee:before,
+.fa-inr:before {
+  content: "\f156";
+}
+.fa-cny:before,
+.fa-rmb:before,
+.fa-yen:before,
+.fa-jpy:before {
+  content: "\f157";
+}
+.fa-ruble:before,
+.fa-rouble:before,
+.fa-rub:before {
+  content: "\f158";
+}
+.fa-won:before,
+.fa-krw:before {
+  content: "\f159";
+}
+.fa-bitcoin:before,
+.fa-btc:before {
+  content: "\f15a";
+}
+.fa-file:before {
+  content: "\f15b";
+}
+.fa-file-text:before {
+  content: "\f15c";
+}
+.fa-sort-alpha-asc:before {
+  content: "\f15d";
+}
+.fa-sort-alpha-desc:before {
+  content: "\f15e";
+}
+.fa-sort-amount-asc:before {
+  content: "\f160";
+}
+.fa-sort-amount-desc:before {
+  content: "\f161";
+}
+.fa-sort-numeric-asc:before {
+  content: "\f162";
+}
+.fa-sort-numeric-desc:before {
+  content: "\f163";
+}
+.fa-thumbs-up:before {
+  content: "\f164";
+}
+.fa-thumbs-down:before {
+  content: "\f165";
+}
+.fa-youtube-square:before {
+  content: "\f166";
+}
+.fa-youtube:before {
+  content: "\f167";
+}
+.fa-xing:before {
+  content: "\f168";
+}
+.fa-xing-square:before {
+  content: "\f169";
+}
+.fa-youtube-play:before {
+  content: "\f16a";
+}
+.fa-dropbox:before {
+  content: "\f16b";
+}
+.fa-stack-overflow:before {
+  content: "\f16c";
+}
+.fa-instagram:before {
+  content: "\f16d";
+}
+.fa-flickr:before {
+  content: "\f16e";
+}
+.fa-adn:before {
+  content: "\f170";
+}
+.fa-bitbucket:before {
+  content: "\f171";
+}
+.fa-bitbucket-square:before {
+  content: "\f172";
+}
+.fa-tumblr:before {
+  content: "\f173";
+}
+.fa-tumblr-square:before {
+  content: "\f174";
+}
+.fa-long-arrow-down:before {
+  content: "\f175";
+}
+.fa-long-arrow-up:before {
+  content: "\f176";
+}
+.fa-long-arrow-left:before {
+  content: "\f177";
+}
+.fa-long-arrow-right:before {
+  content: "\f178";
+}
+.fa-apple:before {
+  content: "\f179";
+}
+.fa-windows:before {
+  content: "\f17a";
+}
+.fa-android:before {
+  content: "\f17b";
+}
+.fa-linux:before {
+  content: "\f17c";
+}
+.fa-dribbble:before {
+  content: "\f17d";
+}
+.fa-skype:before {
+  content: "\f17e";
+}
+.fa-foursquare:before {
+  content: "\f180";
+}
+.fa-trello:before {
+  content: "\f181";
+}
+.fa-female:before {
+  content: "\f182";
+}
+.fa-male:before {
+  content: "\f183";
+}
+.fa-gittip:before,
+.fa-gratipay:before {
+  content: "\f184";
+}
+.fa-sun-o:before {
+  content: "\f185";
+}
+.fa-moon-o:before {
+  content: "\f186";
+}
+.fa-archive:before {
+  content: "\f187";
+}
+.fa-bug:before {
+  content: "\f188";
+}
+.fa-vk:before {
+  content: "\f189";
+}
+.fa-weibo:before {
+  content: "\f18a";
+}
+.fa-renren:before {
+  content: "\f18b";
+}
+.fa-pagelines:before {
+  content: "\f18c";
+}
+.fa-stack-exchange:before {
+  content: "\f18d";
+}
+.fa-arrow-circle-o-right:before {
+  content: "\f18e";
+}
+.fa-arrow-circle-o-left:before {
+  content: "\f190";
+}
+.fa-toggle-left:before,
+.fa-caret-square-o-left:before {
+  content: "\f191";
+}
+.fa-dot-circle-o:before {
+  content: "\f192";
+}
+.fa-wheelchair:before {
+  content: "\f193";
+}
+.fa-vimeo-square:before {
+  content: "\f194";
+}
+.fa-turkish-lira:before,
+.fa-try:before {
+  content: "\f195";
+}
+.fa-plus-square-o:before {
+  content: "\f196";
+}
+.fa-space-shuttle:before {
+  content: "\f197";
+}
+.fa-slack:before {
+  content: "\f198";
+}
+.fa-envelope-square:before {
+  content: "\f199";
+}
+.fa-wordpress:before {
+  content: "\f19a";
+}
+.fa-openid:before {
+  content: "\f19b";
+}
+.fa-institution:before,
+.fa-bank:before,
+.fa-university:before {
+  content: "\f19c";
+}
+.fa-mortar-board:before,
+.fa-graduation-cap:before {
+  content: "\f19d";
+}
+.fa-yahoo:before {
+  content: "\f19e";
+}
+.fa-google:before {
+  content: "\f1a0";
+}
+.fa-reddit:before {
+  content: "\f1a1";
+}
+.fa-reddit-square:before {
+  content: "\f1a2";
+}
+.fa-stumbleupon-circle:before {
+  content: "\f1a3";
+}
+.fa-stumbleupon:before {
+  content: "\f1a4";
+}
+.fa-delicious:before {
+  content: "\f1a5";
+}
+.fa-digg:before {
+  content: "\f1a6";
+}
+.fa-pied-piper-pp:before {
+  content: "\f1a7";
+}
+.fa-pied-piper-alt:before {
+  content: "\f1a8";
+}
+.fa-drupal:before {
+  content: "\f1a9";
+}
+.fa-joomla:before {
+  content: "\f1aa";
+}
+.fa-language:before {
+  content: "\f1ab";
+}
+.fa-fax:before {
+  content: "\f1ac";
+}
+.fa-building:before {
+  content: "\f1ad";
+}
+.fa-child:before {
+  content: "\f1ae";
+}
+.fa-paw:before {
+  content: "\f1b0";
+}
+.fa-spoon:before {
+  content: "\f1b1";
+}
+.fa-cube:before {
+  content: "\f1b2";
+}
+.fa-cubes:before {
+  content: "\f1b3";
+}
+.fa-behance:before {
+  content: "\f1b4";
+}
+.fa-behance-square:before {
+  content: "\f1b5";
+}
+.fa-steam:before {
+  content: "\f1b6";
+}
+.fa-steam-square:before {
+  content: "\f1b7";
+}
+.fa-recycle:before {
+  content: "\f1b8";
+}
+.fa-automobile:before,
+.fa-car:before {
+  content: "\f1b9";
+}
+.fa-cab:before,
+.fa-taxi:before {
+  content: "\f1ba";
+}
+.fa-tree:before {
+  content: "\f1bb";
+}
+.fa-spotify:before {
+  content: "\f1bc";
+}
+.fa-deviantart:before {
+  content: "\f1bd";
+}
+.fa-soundcloud:before {
+  content: "\f1be";
+}
+.fa-database:before {
+  content: "\f1c0";
+}
+.fa-file-pdf-o:before {
+  content: "\f1c1";
+}
+.fa-file-word-o:before {
+  content: "\f1c2";
+}
+.fa-file-excel-o:before {
+  content: "\f1c3";
+}
+.fa-file-powerpoint-o:before {
+  content: "\f1c4";
+}
+.fa-file-photo-o:before,
+.fa-file-picture-o:before,
+.fa-file-image-o:before {
+  content: "\f1c5";
+}
+.fa-file-zip-o:before,
+.fa-file-archive-o:before {
+  content: "\f1c6";
+}
+.fa-file-sound-o:before,
+.fa-file-audio-o:before {
+  content: "\f1c7";
+}
+.fa-file-movie-o:before,
+.fa-file-video-o:before {
+  content: "\f1c8";
+}
+.fa-file-code-o:before {
+  content: "\f1c9";
+}
+.fa-vine:before {
+  content: "\f1ca";
+}
+.fa-codepen:before {
+  content: "\f1cb";
+}
+.fa-jsfiddle:before {
+  content: "\f1cc";
+}
+.fa-life-bouy:before,
+.fa-life-buoy:before,
+.fa-life-saver:before,
+.fa-support:before,
+.fa-life-ring:before {
+  content: "\f1cd";
+}
+.fa-circle-o-notch:before {
+  content: "\f1ce";
+}
+.fa-ra:before,
+.fa-resistance:before,
+.fa-rebel:before {
+  content: "\f1d0";
+}
+.fa-ge:before,
+.fa-empire:before {
+  content: "\f1d1";
+}
+.fa-git-square:before {
+  content: "\f1d2";
+}
+.fa-git:before {
+  content: "\f1d3";
+}
+.fa-y-combinator-square:before,
+.fa-yc-square:before,
+.fa-hacker-news:before {
+  content: "\f1d4";
+}
+.fa-tencent-weibo:before {
+  content: "\f1d5";
+}
+.fa-qq:before {
+  content: "\f1d6";
+}
+.fa-wechat:before,
+.fa-weixin:before {
+  content: "\f1d7";
+}
+.fa-send:before,
+.fa-paper-plane:before {
+  content: "\f1d8";
+}
+.fa-send-o:before,
+.fa-paper-plane-o:before {
+  content: "\f1d9";
+}
+.fa-history:before {
+  content: "\f1da";
+}
+.fa-circle-thin:before {
+  content: "\f1db";
+}
+.fa-header:before {
+  content: "\f1dc";
+}
+.fa-paragraph:before {
+  content: "\f1dd";
+}
+.fa-sliders:before {
+  content: "\f1de";
+}
+.fa-share-alt:before {
+  content: "\f1e0";
+}
+.fa-share-alt-square:before {
+  content: "\f1e1";
+}
+.fa-bomb:before {
+  content: "\f1e2";
+}
+.fa-soccer-ball-o:before,
+.fa-futbol-o:before {
+  content: "\f1e3";
+}
+.fa-tty:before {
+  content: "\f1e4";
+}
+.fa-binoculars:before {
+  content: "\f1e5";
+}
+.fa-plug:before {
+  content: "\f1e6";
+}
+.fa-slideshare:before {
+  content: "\f1e7";
+}
+.fa-twitch:before {
+  content: "\f1e8";
+}
+.fa-yelp:before {
+  content: "\f1e9";
+}
+.fa-newspaper-o:before {
+  content: "\f1ea";
+}
+.fa-wifi:before {
+  content: "\f1eb";
+}
+.fa-calculator:before {
+  content: "\f1ec";
+}
+.fa-paypal:before {
+  content: "\f1ed";
+}
+.fa-google-wallet:before {
+  content: "\f1ee";
+}
+.fa-cc-visa:before {
+  content: "\f1f0";
+}
+.fa-cc-mastercard:before {
+  content: "\f1f1";
+}
+.fa-cc-discover:before {
+  content: "\f1f2";
+}
+.fa-cc-amex:before {
+  content: "\f1f3";
+}
+.fa-cc-paypal:before {
+  content: "\f1f4";
+}
+.fa-cc-stripe:before {
+  content: "\f1f5";
+}
+.fa-bell-slash:before {
+  content: "\f1f6";
+}
+.fa-bell-slash-o:before {
+  content: "\f1f7";
+}
+.fa-trash:before {
+  content: "\f1f8";
+}
+.fa-copyright:before {
+  content: "\f1f9";
+}
+.fa-at:before {
+  content: "\f1fa";
+}
+.fa-eyedropper:before {
+  content: "\f1fb";
+}
+.fa-paint-brush:before {
+  content: "\f1fc";
+}
+.fa-birthday-cake:before {
+  content: "\f1fd";
+}
+.fa-area-chart:before {
+  content: "\f1fe";
+}
+.fa-pie-chart:before {
+  content: "\f200";
+}
+.fa-line-chart:before {
+  content: "\f201";
+}
+.fa-lastfm:before {
+  content: "\f202";
+}
+.fa-lastfm-square:before {
+  content: "\f203";
+}
+.fa-toggle-off:before {
+  content: "\f204";
+}
+.fa-toggle-on:before {
+  content: "\f205";
+}
+.fa-bicycle:before {
+  content: "\f206";
+}
+.fa-bus:before {
+  content: "\f207";
+}
+.fa-ioxhost:before {
+  content: "\f208";
+}
+.fa-angellist:before {
+  content: "\f209";
+}
+.fa-cc:before {
+  content: "\f20a";
+}
+.fa-shekel:before,
+.fa-sheqel:before,
+.fa-ils:before {
+  content: "\f20b";
+}
+.fa-meanpath:before {
+  content: "\f20c";
+}
+.fa-buysellads:before {
+  content: "\f20d";
+}
+.fa-connectdevelop:before {
+  content: "\f20e";
+}
+.fa-dashcube:before {
+  content: "\f210";
+}
+.fa-forumbee:before {
+  content: "\f211";
+}
+.fa-leanpub:before {
+  content: "\f212";
+}
+.fa-sellsy:before {
+  content: "\f213";
+}
+.fa-shirtsinbulk:before {
+  content: "\f214";
+}
+.fa-simplybuilt:before {
+  content: "\f215";
+}
+.fa-skyatlas:before {
+  content: "\f216";
+}
+.fa-cart-plus:before {
+  content: "\f217";
+}
+.fa-cart-arrow-down:before {
+  content: "\f218";
+}
+.fa-diamond:before {
+  content: "\f219";
+}
+.fa-ship:before {
+  content: "\f21a";
+}
+.fa-user-secret:before {
+  content: "\f21b";
+}
+.fa-motorcycle:before {
+  content: "\f21c";
+}
+.fa-street-view:before {
+  content: "\f21d";
+}
+.fa-heartbeat:before {
+  content: "\f21e";
+}
+.fa-venus:before {
+  content: "\f221";
+}
+.fa-mars:before {
+  content: "\f222";
+}
+.fa-mercury:before {
+  content: "\f223";
+}
+.fa-intersex:before,
+.fa-transgender:before {
+  content: "\f224";
+}
+.fa-transgender-alt:before {
+  content: "\f225";
+}
+.fa-venus-double:before {
+  content: "\f226";
+}
+.fa-mars-double:before {
+  content: "\f227";
+}
+.fa-venus-mars:before {
+  content: "\f228";
+}
+.fa-mars-stroke:before {
+  content: "\f229";
+}
+.fa-mars-stroke-v:before {
+  content: "\f22a";
+}
+.fa-mars-stroke-h:before {
+  content: "\f22b";
+}
+.fa-neuter:before {
+  content: "\f22c";
+}
+.fa-genderless:before {
+  content: "\f22d";
+}
+.fa-facebook-official:before {
+  content: "\f230";
+}
+.fa-pinterest-p:before {
+  content: "\f231";
+}
+.fa-whatsapp:before {
+  content: "\f232";
+}
+.fa-server:before {
+  content: "\f233";
+}
+.fa-user-plus:before {
+  content: "\f234";
+}
+.fa-user-times:before {
+  content: "\f235";
+}
+.fa-hotel:before,
+.fa-bed:before {
+  content: "\f236";
+}
+.fa-viacoin:before {
+  content: "\f237";
+}
+.fa-train:before {
+  content: "\f238";
+}
+.fa-subway:before {
+  content: "\f239";
+}
+.fa-medium:before {
+  content: "\f23a";
+}
+.fa-yc:before,
+.fa-y-combinator:before {
+  content: "\f23b";
+}
+.fa-optin-monster:before {
+  content: "\f23c";
+}
+.fa-opencart:before {
+  content: "\f23d";
+}
+.fa-expeditedssl:before {
+  content: "\f23e";
+}
+.fa-battery-4:before,
+.fa-battery:before,
+.fa-battery-full:before {
+  content: "\f240";
+}
+.fa-battery-3:before,
+.fa-battery-three-quarters:before {
+  content: "\f241";
+}
+.fa-battery-2:before,
+.fa-battery-half:before {
+  content: "\f242";
+}
+.fa-battery-1:before,
+.fa-battery-quarter:before {
+  content: "\f243";
+}
+.fa-battery-0:before,
+.fa-battery-empty:before {
+  content: "\f244";
+}
+.fa-mouse-pointer:before {
+  content: "\f245";
+}
+.fa-i-cursor:before {
+  content: "\f246";
+}
+.fa-object-group:before {
+  content: "\f247";
+}
+.fa-object-ungroup:before {
+  content: "\f248";
+}
+.fa-sticky-note:before {
+  content: "\f249";
+}
+.fa-sticky-note-o:before {
+  content: "\f24a";
+}
+.fa-cc-jcb:before {
+  content: "\f24b";
+}
+.fa-cc-diners-club:before {
+  content: "\f24c";
+}
+.fa-clone:before {
+  content: "\f24d";
+}
+.fa-balance-scale:before {
+  content: "\f24e";
+}
+.fa-hourglass-o:before {
+  content: "\f250";
+}
+.fa-hourglass-1:before,
+.fa-hourglass-start:before {
+  content: "\f251";
+}
+.fa-hourglass-2:before,
+.fa-hourglass-half:before {
+  content: "\f252";
+}
+.fa-hourglass-3:before,
+.fa-hourglass-end:before {
+  content: "\f253";
+}
+.fa-hourglass:before {
+  content: "\f254";
+}
+.fa-hand-grab-o:before,
+.fa-hand-rock-o:before {
+  content: "\f255";
+}
+.fa-hand-stop-o:before,
+.fa-hand-paper-o:before {
+  content: "\f256";
+}
+.fa-hand-scissors-o:before {
+  content: "\f257";
+}
+.fa-hand-lizard-o:before {
+  content: "\f258";
+}
+.fa-hand-spock-o:before {
+  content: "\f259";
+}
+.fa-hand-pointer-o:before {
+  content: "\f25a";
+}
+.fa-hand-peace-o:before {
+  content: "\f25b";
+}
+.fa-trademark:before {
+  content: "\f25c";
+}
+.fa-registered:before {
+  content: "\f25d";
+}
+.fa-creative-commons:before {
+  content: "\f25e";
+}
+.fa-gg:before {
+  content: "\f260";
+}
+.fa-gg-circle:before {
+  content: "\f261";
+}
+.fa-tripadvisor:before {
+  content: "\f262";
+}
+.fa-odnoklassniki:before {
+  content: "\f263";
+}
+.fa-odnoklassniki-square:before {
+  content: "\f264";
+}
+.fa-get-pocket:before {
+  content: "\f265";
+}
+.fa-wikipedia-w:before {
+  content: "\f266";
+}
+.fa-safari:before {
+  content: "\f267";
+}
+.fa-chrome:before {
+  content: "\f268";
+}
+.fa-firefox:before {
+  content: "\f269";
+}
+.fa-opera:before {
+  content: "\f26a";
+}
+.fa-internet-explorer:before {
+  content: "\f26b";
+}
+.fa-tv:before,
+.fa-television:before {
+  content: "\f26c";
+}
+.fa-contao:before {
+  content: "\f26d";
+}
+.fa-500px:before {
+  content: "\f26e";
+}
+.fa-amazon:before {
+  content: "\f270";
+}
+.fa-calendar-plus-o:before {
+  content: "\f271";
+}
+.fa-calendar-minus-o:before {
+  content: "\f272";
+}
+.fa-calendar-times-o:before {
+  content: "\f273";
+}
+.fa-calendar-check-o:before {
+  content: "\f274";
+}
+.fa-industry:before {
+  content: "\f275";
+}
+.fa-map-pin:before {
+  content: "\f276";
+}
+.fa-map-signs:before {
+  content: "\f277";
+}
+.fa-map-o:before {
+  content: "\f278";
+}
+.fa-map:before {
+  content: "\f279";
+}
+.fa-commenting:before {
+  content: "\f27a";
+}
+.fa-commenting-o:before {
+  content: "\f27b";
+}
+.fa-houzz:before {
+  content: "\f27c";
+}
+.fa-vimeo:before {
+  content: "\f27d";
+}
+.fa-black-tie:before {
+  content: "\f27e";
+}
+.fa-fonticons:before {
+  content: "\f280";
+}
+.fa-reddit-alien:before {
+  content: "\f281";
+}
+.fa-edge:before {
+  content: "\f282";
+}
+.fa-credit-card-alt:before {
+  content: "\f283";
+}
+.fa-codiepie:before {
+  content: "\f284";
+}
+.fa-modx:before {
+  content: "\f285";
+}
+.fa-fort-awesome:before {
+  content: "\f286";
+}
+.fa-usb:before {
+  content: "\f287";
+}
+.fa-product-hunt:before {
+  content: "\f288";
+}
+.fa-mixcloud:before {
+  content: "\f289";
+}
+.fa-scribd:before {
+  content: "\f28a";
+}
+.fa-pause-circle:before {
+  content: "\f28b";
+}
+.fa-pause-circle-o:before {
+  content: "\f28c";
+}
+.fa-stop-circle:before {
+  content: "\f28d";
+}
+.fa-stop-circle-o:before {
+  content: "\f28e";
+}
+.fa-shopping-bag:before {
+  content: "\f290";
+}
+.fa-shopping-basket:before {
+  content: "\f291";
+}
+.fa-hashtag:before {
+  content: "\f292";
+}
+.fa-bluetooth:before {
+  content: "\f293";
+}
+.fa-bluetooth-b:before {
+  content: "\f294";
+}
+.fa-percent:before {
+  content: "\f295";
+}
+.fa-gitlab:before {
+  content: "\f296";
+}
+.fa-wpbeginner:before {
+  content: "\f297";
+}
+.fa-wpforms:before {
+  content: "\f298";
+}
+.fa-envira:before {
+  content: "\f299";
+}
+.fa-universal-access:before {
+  content: "\f29a";
+}
+.fa-wheelchair-alt:before {
+  content: "\f29b";
+}
+.fa-question-circle-o:before {
+  content: "\f29c";
+}
+.fa-blind:before {
+  content: "\f29d";
+}
+.fa-audio-description:before {
+  content: "\f29e";
+}
+.fa-volume-control-phone:before {
+  content: "\f2a0";
+}
+.fa-braille:before {
+  content: "\f2a1";
+}
+.fa-assistive-listening-systems:before {
+  content: "\f2a2";
+}
+.fa-asl-interpreting:before,
+.fa-american-sign-language-interpreting:before {
+  content: "\f2a3";
+}
+.fa-deafness:before,
+.fa-hard-of-hearing:before,
+.fa-deaf:before {
+  content: "\f2a4";
+}
+.fa-glide:before {
+  content: "\f2a5";
+}
+.fa-glide-g:before {
+  content: "\f2a6";
+}
+.fa-signing:before,
+.fa-sign-language:before {
+  content: "\f2a7";
+}
+.fa-low-vision:before {
+  content: "\f2a8";
+}
+.fa-viadeo:before {
+  content: "\f2a9";
+}
+.fa-viadeo-square:before {
+  content: "\f2aa";
+}
+.fa-snapchat:before {
+  content: "\f2ab";
+}
+.fa-snapchat-ghost:before {
+  content: "\f2ac";
+}
+.fa-snapchat-square:before {
+  content: "\f2ad";
+}
+.fa-pied-piper:before {
+  content: "\f2ae";
+}
+.fa-first-order:before {
+  content: "\f2b0";
+}
+.fa-yoast:before {
+  content: "\f2b1";
+}
+.fa-themeisle:before {
+  content: "\f2b2";
+}
+.fa-google-plus-circle:before,
+.fa-google-plus-official:before {
+  content: "\f2b3";
+}
+.fa-fa:before,
+.fa-font-awesome:before {
+  content: "\f2b4";
+}
+.fa-handshake-o:before {
+  content: "\f2b5";
+}
+.fa-envelope-open:before {
+  content: "\f2b6";
+}
+.fa-envelope-open-o:before {
+  content: "\f2b7";
+}
+.fa-linode:before {
+  content: "\f2b8";
+}
+.fa-address-book:before {
+  content: "\f2b9";
+}
+.fa-address-book-o:before {
+  content: "\f2ba";
+}
+.fa-vcard:before,
+.fa-address-card:before {
+  content: "\f2bb";
+}
+.fa-vcard-o:before,
+.fa-address-card-o:before {
+  content: "\f2bc";
+}
+.fa-user-circle:before {
+  content: "\f2bd";
+}
+.fa-user-circle-o:before {
+  content: "\f2be";
+}
+.fa-user-o:before {
+  content: "\f2c0";
+}
+.fa-id-badge:before {
+  content: "\f2c1";
+}
+.fa-drivers-license:before,
+.fa-id-card:before {
+  content: "\f2c2";
+}
+.fa-drivers-license-o:before,
+.fa-id-card-o:before {
+  content: "\f2c3";
+}
+.fa-quora:before {
+  content: "\f2c4";
+}
+.fa-free-code-camp:before {
+  content: "\f2c5";
+}
+.fa-telegram:before {
+  content: "\f2c6";
+}
+.fa-thermometer-4:before,
+.fa-thermometer:before,
+.fa-thermometer-full:before {
+  content: "\f2c7";
+}
+.fa-thermometer-3:before,
+.fa-thermometer-three-quarters:before {
+  content: "\f2c8";
+}
+.fa-thermometer-2:before,
+.fa-thermometer-half:before {
+  content: "\f2c9";
+}
+.fa-thermometer-1:before,
+.fa-thermometer-quarter:before {
+  content: "\f2ca";
+}
+.fa-thermometer-0:before,
+.fa-thermometer-empty:before {
+  content: "\f2cb";
+}
+.fa-shower:before {
+  content: "\f2cc";
+}
+.fa-bathtub:before,
+.fa-s15:before,
+.fa-bath:before {
+  content: "\f2cd";
+}
+.fa-podcast:before {
+  content: "\f2ce";
+}
+.fa-window-maximize:before {
+  content: "\f2d0";
+}
+.fa-window-minimize:before {
+  content: "\f2d1";
+}
+.fa-window-restore:before {
+  content: "\f2d2";
+}
+.fa-times-rectangle:before,
+.fa-window-close:before {
+  content: "\f2d3";
+}
+.fa-times-rectangle-o:before,
+.fa-window-close-o:before {
+  content: "\f2d4";
+}
+.fa-bandcamp:before {
+  content: "\f2d5";
+}
+.fa-grav:before {
+  content: "\f2d6";
+}
+.fa-etsy:before {
+  content: "\f2d7";
+}
+.fa-imdb:before {
+  content: "\f2d8";
+}
+.fa-ravelry:before {
+  content: "\f2d9";
+}
+.fa-eercast:before {
+  content: "\f2da";
+}
+.fa-microchip:before {
+  content: "\f2db";
+}
+.fa-snowflake-o:before {
+  content: "\f2dc";
+}
+.fa-superpowers:before {
+  content: "\f2dd";
+}
+.fa-wpexplorer:before {
+  content: "\f2de";
+}
+.fa-meetup:before {
+  content: "\f2e0";
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+}
+.toast-title {
+	font-weight: bold;
+}
+.toast-message {
+    word-wrap: break-word;
+}
+
+.toast-message a,
+.toast-message label{
+	color: #FFF;
+}
+.toast-message a:hover {
+	color: #CCC;
+	text-decoration: none;
+}
+
+.toast-top-left {
+	top: 12px;
+	left: 12px;
+}
+
+.toast-bottom-right {
+	right: 12px;
+	bottom: 12px;
+}
+
+.toast-bottom-left {
+	left: 12px;
+	bottom: 12px;
+}
+
+#toast-container  {
+	position: fixed;
+	z-index: 9999;
+}
+
+#toast-container > div {
+	background-position: 15px center;
+	background-repeat: no-repeat;
+	-moz-border-radius: 3px 3px 3px 3px; 
+	-webkit-border-radius: 3px 3px 3px 3px; 
+	border-radius: 3px 3px 3px 3px;
+	-moz-box-shadow: 0 0 12px #999999; 
+	-webkit-box-shadow: 0 0 12px #999999; 
+	-o-box-shadow: 0 0 12px #999999; 
+	box-shadow: 0 0 12px #999999;
+	color: #FFFFFF;
+	margin: 0 0 6px;
+	filter: alpha(opacity=80);
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+	opacity: 0.8;
+	padding: 15px 15px 15px 50px;
+	width: 300px;
+}
+
+.toast {
+	background-color: #030303;
+}
+
+.toast-success{
+	background-color: #51A351;
+}
+
+.toast-error{
+	background-color: #BD362F;
+}
+
+.toast-info{
+	background-color: #2F96B4;
+}
+
+.toast-warning{
+	background-color: #F89406;
+}
+.toast-top-right {
+	top: 12px;
+	right: 12px;
+}
+
+#toast-container > :hover {
+	-moz-box-shadow: 0 0 12px #000000; 
+	-webkit-box-shadow: 0 0 12px #000000; 
+	-o-box-shadow: 0 0 12px #000000; 
+	box-shadow: 0 0 12px #000000;
+	filter: alpha(opacity=100);
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	opacity: 1;
+	cursor: pointer;
+}
+
+#toast-container > .toast-info {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGwSURBVEhLtZa9SgNBEMc9sUxxRcoUKSzSWIhXpFMhhYWFhaBg4yPYiWCXZxBLERsLRS3EQkEfwCKdjWJAwSKCgoKCcudv4O5YLrt7EzgXhiU3/4+b2ckmwVjJSpKkQ6wAi4gwhT+z3wRBcEz0yjSseUTrcRyfsHsXmD0AmbHOC9Ii8VImnuXBPglHpQ5wwSVM7sNnTG7Za4JwDdCjxyAiH3nyA2mtaTJufiDZ5dCaqlItILh1NHatfN5skvjx9Z38m69CgzuXmZgVrPIGE763Jx9qKsRozWYw6xOHdER+nn2KkO+Bb+UV5CBN6WC6QtBgbRVozrahAbmm6HtUsgtPC19tFdxXZYBOfkbmFJ1VaHA1VAHjd0pp70oTZzvR+EVrx2Ygfdsq6eu55BHYR8hlcki+n+kERUFG8BrA0BwjeAv2M8WLQBtcy+SD6fNsmnB3AlBLrgTtVW1c2QN4bVWLATaIS60J2Du5y1TiJgjSBvFVZgTmwCU+dAZFoPxGEEs8nyHC9Bwe2GvEJv2WXZb0vjdyFT4Cxk3e/kIqlOGoVLwwPevpYHT+00T+hWwXDf4AJAOUqWcDhbwAAAAASUVORK5CYII=") !important;
+}
+
+#toast-container > .toast-error {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHOSURBVEhLrZa/SgNBEMZzh0WKCClSCKaIYOED+AAKeQQLG8HWztLCImBrYadgIdY+gIKNYkBFSwu7CAoqCgkkoGBI/E28PdbLZmeDLgzZzcx83/zZ2SSXC1j9fr+I1Hq93g2yxH4iwM1vkoBWAdxCmpzTxfkN2RcyZNaHFIkSo10+8kgxkXIURV5HGxTmFuc75B2RfQkpxHG8aAgaAFa0tAHqYFfQ7Iwe2yhODk8+J4C7yAoRTWI3w/4klGRgR4lO7Rpn9+gvMyWp+uxFh8+H+ARlgN1nJuJuQAYvNkEnwGFck18Er4q3egEc/oO+mhLdKgRyhdNFiacC0rlOCbhNVz4H9FnAYgDBvU3QIioZlJFLJtsoHYRDfiZoUyIxqCtRpVlANq0EU4dApjrtgezPFad5S19Wgjkc0hNVnuF4HjVA6C7QrSIbylB+oZe3aHgBsqlNqKYH48jXyJKMuAbiyVJ8KzaB3eRc0pg9VwQ4niFryI68qiOi3AbjwdsfnAtk0bCjTLJKr6mrD9g8iq/S/B81hguOMlQTnVyG40wAcjnmgsCNESDrjme7wfftP4P7SP4N3CJZdvzoNyGq2c/HWOXJGsvVg+RA/k2MC/wN6I2YA2Pt8GkAAAAASUVORK5CYII=") !important;
+}
+
+#toast-container > .toast-success {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADsSURBVEhLY2AYBfQMgf///3P8+/evAIgvA/FsIF+BavYDDWMBGroaSMMBiE8VC7AZDrIFaMFnii3AZTjUgsUUWUDA8OdAH6iQbQEhw4HyGsPEcKBXBIC4ARhex4G4BsjmweU1soIFaGg/WtoFZRIZdEvIMhxkCCjXIVsATV6gFGACs4Rsw0EGgIIH3QJYJgHSARQZDrWAB+jawzgs+Q2UO49D7jnRSRGoEFRILcdmEMWGI0cm0JJ2QpYA1RDvcmzJEWhABhD/pqrL0S0CWuABKgnRki9lLseS7g2AlqwHWQSKH4oKLrILpRGhEQCw2LiRUIa4lwAAAABJRU5ErkJggg==") !important;
+}
+
+#toast-container > .toast-warning {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGYSURBVEhL5ZSvTsNQFMbXZGICMYGYmJhAQIJAICYQPAACiSDB8AiICQQJT4CqQEwgJvYASAQCiZiYmJhAIBATCARJy+9rTsldd8sKu1M0+dLb057v6/lbq/2rK0mS/TRNj9cWNAKPYIJII7gIxCcQ51cvqID+GIEX8ASG4B1bK5gIZFeQfoJdEXOfgX4QAQg7kH2A65yQ87lyxb27sggkAzAuFhbbg1K2kgCkB1bVwyIR9m2L7PRPIhDUIXgGtyKw575yz3lTNs6X4JXnjV+LKM/m3MydnTbtOKIjtz6VhCBq4vSm3ncdrD2lk0VgUXSVKjVDJXJzijW1RQdsU7F77He8u68koNZTz8Oz5yGa6J3H3lZ0xYgXBK2QymlWWA+RWnYhskLBv2vmE+hBMCtbA7KX5drWyRT/2JsqZ2IvfB9Y4bWDNMFbJRFmC9E74SoS0CqulwjkC0+5bpcV1CZ8NMej4pjy0U+doDQsGyo1hzVJttIjhQ7GnBtRFN1UarUlH8F3xict+HY07rEzoUGPlWcjRFRr4/gChZgc3ZL2d8oAAAAASUVORK5CYII=") !important;
+}

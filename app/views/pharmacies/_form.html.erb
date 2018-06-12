@@ -50,6 +50,14 @@
     </div>
   </div>
   <div class="field">
+    <%= f.text_field :hours, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
+    <label for="hours">What are you business hours? (Ex: 10AM - 6PM)</label>
+  </div>
+  <div class="field">
+    <%= f.text_field :delivers, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
+    <label for="delivers">Do you deliver? (Ex: yes, no, or sometimes)</label>
+  </div>
+  <div class="field">
     <%= f.text_field :website, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
     <label for="website">Website</label>
   </div>

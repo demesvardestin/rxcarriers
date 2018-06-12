@@ -29,6 +29,13 @@ class Pharmacy < ActiveRecord::Base
         (name_matches(param) + address_matches(param) + phone_matches(param)).uniq
     end
     
+    def self.search_nearby(location)
+        if location.nil?
+          return 'Invalid location'
+        end
+        return Pharmacy.near(location, 5).all
+    end
+    
     def self.name_matches(param)
         matches('name', param)
     end
@@ -47,6 +54,10 @@ class Pharmacy < ActiveRecord::Base
     
     def full_address
         [street, town, state, zipcode].join(', ')
+    end
+    
+    def full_address_without_zip
+        [street, town, state].join(', ')
     end
     
     def not_subscribed
@@ -77,6 +88,28 @@ class Pharmacy < ActiveRecord::Base
         self.name[0..17] + '...'
       else
         name
+      end
+    end
+    
+    def delivery
+      case self.delivers.downcase
+      when 'yes'
+        'Always delivers'
+      when 'no'
+        'Does not deliver'
+      else
+        'Does not always deliver'
+      end
+    end
+    
+    def delivery_color
+      case self.delivers.downcase
+      when 'yes'
+        'theme-green'
+      when 'no'
+        'theme-red'
+      else
+        'theme-yellow'
       end
     end
     

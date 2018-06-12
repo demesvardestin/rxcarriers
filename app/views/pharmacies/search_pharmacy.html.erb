@@ -1,0 +1,31 @@
+<style>
+    .fa {
+        margin-right: 15px;
+    }
+</style>
+
+<% if @invalid.present? %>
+    <div class="col-md-12 text-center font-16 theme-red">
+        <%= @invalid %>
+    </div>
+<% else %>
+    <div class="add-padding-bottom font-16 col-md-12"><%= pluralize(@pharmacies.size, 'pharmacy') %> found near <span class="theme-blue"><%= @location %></span></div>
+    <% @pharmacies.each do |pharma| %>
+        <div class="col-md-4">
+            <div class="card box-shadow text-center pharmacy-card-result" style="display: none; height: 100%; margin-bottom: 15px !important;">
+                <div class="card-header background-cyan text-center" style="padding-top: 15px; padding-bottom: 15px; height: 180px">
+                    <h1 class="bold white font-40"><%= pharma.name %></h1>
+                </div>
+                <div class="card-body text-left">
+                    <h4 class="font-16"><i class="fa fa-map-marker"></i> <%= pharma.full_address_without_zip %></h4>
+                    <hr>
+                    <h4 class="font-16"><i class="fa fa-phone"></i> <a href="tel:+1-<%= pharma.number %>" class="background-transparent theme-blue"><%= pharma.number %></h4>
+                    <hr>
+                    <h4 class="font-16"><i class="fa fa-car"></i> <span class="<%= pharma.delivery_color %>"><%= pharma.delivery %></span></h4>
+                    <hr>
+                    <h4 class="font-16"><i class="fa fa-clock-o"></i> Hours: <%= pharma.hours %></h4>
+                </div>
+            </div>
+        </div>
+    <% end %>
+<% end %>

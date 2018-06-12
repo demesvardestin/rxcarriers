@@ -1,7 +1,7 @@
 class PharmaciesController < ApplicationController
   before_action :set_pharmacy, only: [:update, :destroy]
   before_filter :load_patable, only: [:show]
-  before_action :check_current_pharmacy, except: [:home, :contact, :blog, :terms, :privacy, :press]
+  before_action :check_current_pharmacy, except: [:home, :contact, :blog, :terms, :privacy, :press, :search, :search_pharmacy]
   
   def edit
     @pharmacy = current_pharmacy
@@ -77,6 +77,19 @@ class PharmaciesController < ApplicationController
     sign_in_count = current_pharmacy.sign_in_count + 1
     current_pharmacy.update(sign_in_count: sign_in_count)
     render :layout => false
+  end
+  
+  def search_pharmacy
+    @location = params[:location]
+    @pharmacies = Pharmacy.search_nearby(@location)
+    if @pharmacies == 'Invalid location'
+      @invalid = @pharmacies
+    end
+    render :layout => false
+  end
+  
+  def search
+    
   end
   
   def update_card
@@ -176,6 +189,6 @@ class PharmaciesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def pharmacy_params
       params.require(:pharmacy).permit(:name, :street, :number, :supervisor, :website, :card_number, 
-      :town, :state, :zipcode, :avatar)
+      :town, :state, :zipcode, :avatar, :hours, :delivers)
     end
 end

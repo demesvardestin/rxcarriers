@@ -112,31 +112,31 @@ class TwilioPatient < ActiveRecord::Base
     end
     
     def self.refill_request(pharmacy)
-        return "Hi there! Your refill request has been sent to #{pharmacy}. You'll receive a text message once it's ready."
+        return "RxCarriers: Hi there! Your refill request has been sent to #{pharmacy}. You'll receive a text message once it's ready."
     end
     
     def self.unpicked_prescriptions(pharmacy)
-        return "Hi there! You have some prescriptions that have not been picked up at #{pharmacy}. Please give us a visit or request a delivery at rxcarriers.com/status"
+        return "RxCarriers: Hi there! You have some prescriptions that have not been picked up at #{pharmacy}. Please give us a visit or request a delivery at rxcarriers.com/status"
     end
     
     def self.delivery_request(pharmacy)
-        return "Great! Your delivery request has been sent to #{pharmacy}. You'll receive a text message once your medication is on the way."
+        return "RxCarriers: Great! Your delivery request has been sent to #{pharmacy}. You'll receive a text message once your medication is on the way."
     end
     
     def self.refill_ready(pharmacy)
-        return "Great news! Your refill is ready to be picked up at #{pharmacy}. You may request a delivery at rxcarriers.com/status"
+        return "RxCarriers: Great news! Your refill is ready to be picked up at #{pharmacy}. You may request a delivery at rxcarriers.com/status"
     end
     
     def self.delivery_sent(pharmacy)
-        return "Hey! Your medicine delivery from #{pharmacy} is now on the way. We estimate that it should arrive within the next 60-75mns. Make sure to have someone available to sign for it!"
+        return "RxCarriers: Hey! Your medicine delivery from #{pharmacy} is now on the way. We estimate that it should arrive within the next 60-75mns. Make sure to have someone available to sign for it!"
     end
     
     def self.refill_updated(pharmacy)
-        return "Hey there! An update has been made to your prescription at #{pharmacy}. This may mean that there is an issue with your insurance, or that your refills have run out. We recommend contacting the pharmacy at your earliest convenience."
+        return "RxCarriers: Hey there! An update has been made to your prescription at #{pharmacy}. This may mean that there is an issue with your insurance, or that your refills have run out. We recommend contacting the pharmacy at your earliest convenience."
     end
     
     def self.refill_inactive(pharmacy)
-        return "Hey there! There seems to be an issue with your prescription at #{pharmacy}. Please contact the pharmacy at your earliest convenience."
+        return "RxCarriers: Hey there! There seems to be an issue with your prescription at #{pharmacy}. Please contact the pharmacy at your earliest convenience."
     end
     
     def self.get_call_text(type)
