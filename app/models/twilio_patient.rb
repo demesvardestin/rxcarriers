@@ -9,16 +9,6 @@ class TwilioPatient < ActiveRecord::Base
         )
     end
     
-    def self.message_patient(phone, message)
-        auto_message, twilio, twilio_phone = self.twilio
-        auto_message = message if message
-        twilio.messages.create(
-            body: message,
-            to: phone,
-            from: twilio_phone
-        )
-    end
-    
     def self.bulk_call(pharmacy, unpicked_meds_batch=nil, issue_present_batch=nil)
         if !unpicked_meds_batch.nil?
             message_unpicked, twilio_unpicked, twilio_phone_unpicked = self.twilio('unpicked prescriptions', pharmacy)
@@ -91,6 +81,16 @@ class TwilioPatient < ActiveRecord::Base
         end
     end
     
+    def self.message_patient(phone, message)
+        auto_message, twilio, twilio_phone = self.twilio
+        auto_message = message if message
+        twilio.messages.create(
+            body: message,
+            to: phone,
+            from: twilio_phone
+        )
+    end
+    
     def self.get_message(type, pharmacy)
         type.nil? ? type = 'nil' : type
         case type.downcase
@@ -149,6 +149,12 @@ class TwilioPatient < ActiveRecord::Base
     
     def self.twilio(type=nil, pharmacy=nil)
         message = self.get_message(type, pharmacy)
+        twilio = self.initialize_twilio
+        twilio_phone = ENV["TWILIO_PHONE"]
+        return message, twilio, twilio_phone
+    end
+    
+    def self.twilio
         twilio = self.initialize_twilio
         twilio_phone = ENV["TWILIO_PHONE"]
         return message, twilio, twilio_phone
