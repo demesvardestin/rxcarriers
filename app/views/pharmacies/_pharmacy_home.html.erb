@@ -1,69 +1,48 @@
-<nav class="navbar navbar-expand-lg main-nav fixed-top">
-  <div class="container">
-    <a class="navbar-brand background-transparent" href="/"><h3 class="logo ubuntu"><img src="/javascripts/pharmacy.png"> RxCarriers</h3></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <div class="col-md-9 offset-md-3 nav-col">
-        <ul class="navbar-nav justify-content-end">
-          <% if !current_pharmacy.not_subscribed %>
-            <li id="pharmacy_id" style="display: none;"><%= current_pharmacy.id %></li>
-            <a class="nav-item nav-item-logged-in nav-item-pharmacy-view no-underline background-transparent <% if home %>activated<% end %>" href="/dashboard">
-              <li class="nav-link nav-link-side">
-                <i class="fa fa-dashboard"></i> Dashboard
-              </li>
-            </a>
-            <a class="nav-item nav-item-logged-in nav-item-pharmacy-view no-underline background-transparent <% if rx_list_path %>activated<% end %>" href="/rx">
-              <li class="nav-link nav-link-side">
-                <i class="fa fa-files-o"></i> Rx List
-              </li>
-            </a>
-            <a class="nav-item nav-item-logged-in cursor-pointer no-underline background-transparent notification-tab" data-toggle="modal" data-target="#notificationsModal">
-              <li class="nav-link nav-link-side notification-tab" style="margin-right: 5px !important;">
-                <i class="fa fa-bell-o" style="font-size: 18px !important; margin-right: -13px !important; margin-bottom: -2px;"></i>
-                <span id="alertCount">
-                  <% if notifications_are_present %>
-                    <span class="badge badge-danger badge-notif white"> </span>
-                  <% end %>
-                </span>
-              </li>
-            </a>
-          <% end %>
-          <div class="nav-item nav-item-logged-in nav-item-pharmacy-view no-underline background-transparent dropdown <% if account_path %>activated<% end %> show" style="">
-            <a class="nav-link nav-link-side background-transparent no-underline" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-user-md"></i> Account
-            </a>
-          
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="border-radius: 0 !important;">
-              <li class="dropdown-item di-nav" href="/settings">
-                <%= link_to settings_path, class:"no-underline background-transparent font-14 theme-blue" do %>
-                  Settings <i class="fa fa-cog" style="margin-left: 5px;"></i>
-                <% end %>
-              </li>
-              <div class="dropdown-divider"></div>
-              <li class="dropdown-item di-nav" href="/help">
-                <a href="https://rxcarriers.zendesk.com/hc/en-us" class="no-underline background-transparent font-14 theme-blue" target="_blank">
-                  Help <i class="fa fa-question-circle-o" style="margin-left: 5px;"></i>
-                </a>
-              </li>
-              <div class="dropdown-divider"></div>
-              <li class="dropdown-item di-nav" href="/help">
-                <a href="/payment-history" class="no-underline background-transparent font-14 theme-blue">
-                  Payment History <i class="fa fa-credit-card" style="margin-left: 5px;"></i>
-                </a>
-              </li>
-              <div class="dropdown-divider"></div>
-              <li class="dropdown-item di-nav" href="#">
-                <%= link_to destroy_pharmacy_session_path, class:"no-underline background-transparent font-14 theme-blue", method: :delete do %>
-                  Sign out <i class="fa fa-sign-out" style="margin-left: 5px;"></i>
-                <% end %>
-              </li>
-            </ul>
-          </div>
-        </ul>
-      </div>
-    </div>
+<style>
+  a.nav-link.sidebar {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 14px;
+    color: #fff;
+  }
+  a.nav-link.sidebar:hover, .activated {
+    font-size: 16px !important;
+    background-color: #003d7f;
+    border-right: 3px solid #000c19;
+  }
+</style>
+
+
+<div class="float-left background-blue" style="width: 20%; position: fixed; height: 100%; z-index: 2; padding-top: 100px;">
+  <div id="pharmacy-avi" class="text-center" style="padding-bottom: 10px;">
+    <img src="/javascripts/pharmacy.png" height="80px" style="border: 1px solid #2c91de; border-radius: 50% !important;">
   </div>
-</nav>
+  <div id="pharmacy-name" class="text-center font-16 white" style="padding-bottom: 20px;">
+    <%= current_pharmacy.name %>
+  </div>
+  <div id="pharmacy-name" style="padding-bottom: 10px; padding-left: 15px; padding-right: 15px;">
+    <hr style="background-color: #fff; border-color: #fff;">
+  </div>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link sidebar <% if home %>activated<% end %>" href="/dashboard">
+        Dashboard
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="/delivery-history" class="nav-link sidebar">
+        Delivery History
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="/queues" class="nav-link sidebar">
+        Queues
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="https://rxcarriers.zendesk.com/hc/en-us" class="nav-link sidebar" target="_blank">
+        Help
+      </a>
+    </li>
+  </ul>
+</div>

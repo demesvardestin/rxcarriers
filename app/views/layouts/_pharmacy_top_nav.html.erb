@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-lg background-white box-shadow fixed-top" style="padding: 8px 35px !important;">
+  <a class="navbar-brand background-transparent" href="/"><h3 class="logo ubuntu"><img src="/javascripts/pharmacy.png"></h3></a>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent" style="padding-left: 0 !important; padding-right: 0 !important;">
+      <!--<div class="col-md-7 offset-md-5 nav-col no-horizontal-padding">-->
+        <ul class="navbar-nav navbar-nav-second">
+          <% if !current_pharmacy.not_subscribed %>
+            <li id="pharmacy_id" style="display: none;"><%= current_pharmacy.id %></li>
+            <a class="nav-item cursor-pointer no-underline background-transparent notification-tab" data-toggle="modal" data-target="#notificationsModal">
+              <li class="nav-link nav-link-side notification-tab" style="margin-right: 15px !important;">
+                <i class="fa fa-bell-o theme-blue" style="font-size: 22px !important; margin-top: 8px;"></i>
+                <span id="alertCount">
+                  <% if notifications_are_present %>
+                    <span class="badge badge-danger badge-notif white"> </span>
+                  <% end %>
+                </span>
+              </li>
+            </a>
+          <% end %>
+          <div class="nav-item btn btn-primary dropdown box-shadow show" style="padding: 3px 15px">
+            <a class="nav-link background-transparent no-underline white font-16" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-user-md"></i> Account
+            </a>
+          
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="border-radius: 0 !important;">
+              <li class="dropdown-item di-nav" href="/settings">
+                <%= link_to settings_path, class:"no-underline background-transparent font-14 theme-blue" do %>
+                  Settings <i class="fa fa-cog" style="margin-left: 5px;"></i>
+                <% end %>
+              </li>
+              <div class="dropdown-divider"></div>
+              <li class="dropdown-item di-nav">
+                <a href="/payment-history" class="no-underline background-transparent font-14 theme-blue">
+                  Payment History <i class="fa fa-credit-card" style="margin-left: 5px;"></i>
+                </a>
+              </li>
+              <div class="dropdown-divider"></div>
+              <li class="dropdown-item di-nav" href="#">
+                <%= link_to destroy_pharmacy_session_path, class:"no-underline background-transparent font-14 theme-blue", method: :delete do %>
+                  Sign out <i class="fa fa-sign-out" style="margin-left: 5px;"></i>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        </ul>
+    </div>
+</nav>

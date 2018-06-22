@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180612113356) do
+ActiveRecord::Schema.define(version: 20180617235203) do
 
   create_table "deliveries", force: :cascade do |t|
     t.datetime "created_at",             null: false
@@ -39,6 +39,19 @@ ActiveRecord::Schema.define(version: 20180612113356) do
   end
 
   add_index "deliveries", ["deliverable_type", "deliverable_id"], name: "index_deliveries_on_deliverable_type_and_deliverable_id"
+
+  create_table "delivery_hours", force: :cascade do |t|
+    t.string   "monday"
+    t.string   "tuesday"
+    t.string   "wednesday"
+    t.string   "thursday"
+    t.string   "friday"
+    t.string   "saturday"
+    t.string   "sunday"
+    t.integer  "pharmacy_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "delivery_requests", force: :cascade do |t|
     t.datetime "created_at",    null: false

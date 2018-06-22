@@ -135,14 +135,12 @@ class DeliveriesController < ApplicationController
   
   def dashboard
     @refills = RequestAlert.where(pharmacy_id: current_pharmacy.id, active: true)
-    @deliveries = DeliveryRequest.where(pharmacy_id: current_pharmacy.id, active: true)
-    @requests = @refills + @deliveries
+    @requests = @refills
   end
   
   def live_requests_dashboard
     @refills = RequestAlert.where(pharmacy_id: current_pharmacy.id, created_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc, active: true)
-    @deliveries = DeliveryRequest.where(pharmacy_id: current_pharmacy.id, created_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc, active: true)
-    @requests = @refills + @deliveries
+    @requests = @refills
     render :layout => false
   end
   

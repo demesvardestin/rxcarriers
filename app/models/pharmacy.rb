@@ -56,6 +56,23 @@ class Pharmacy < ActiveRecord::Base
         [street, town, state, zipcode].join(', ')
     end
     
+    def slug
+        unslug = self.name << ' ' + self.town + ' ' + self.state
+        return unslug.downcase.split(' ').join('-')
+    end
+    
+    def to_slug(string)
+        string.downcase.split(' ').join('-')
+    end
+    
+    def unslug(string)
+        string.downcase.split('-').join(', ')
+    end
+    
+    def url
+        "/pharmacies/#{self.slug}/#{self.id}"
+    end
+    
     def full_address_without_zip
         [street, town, state].join(', ')
     end

@@ -98,6 +98,7 @@ Rails.application.routes.draw do
   get '/update_first_time', to: 'pharmacies#update_first_time'
   get '/search', to: 'pharmacies#search'
   get '/pharmacy_search', to: 'pharmacies#search_pharmacy'
+  get '/pharmacies/:name/:id', to: 'pharmacies#show'
   
   # resource path
   resources :invoices, only: [:create, :show, :index, :destroy]

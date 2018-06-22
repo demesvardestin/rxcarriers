@@ -2,6 +2,9 @@
     .fa {
         margin-right: 15px;
     }
+    p {
+        letter-spacing: 1.5px;
+    }
 </style>
 
 <% if @invalid.present? %>
@@ -11,19 +14,65 @@
 <% else %>
     <div class="add-padding-bottom font-16 col-md-12"><%= pluralize(@pharmacies.size, 'pharmacy') %> found near <span class="theme-blue"><%= @location %></span></div>
     <% @pharmacies.each do |pharma| %>
-        <div class="col-md-4">
+        <div class="pharmacy-result-card" style="width: 25%; padding: 10px; height: auto;">
             <div class="card box-shadow text-center pharmacy-card-result" style="display: none; height: 100%; margin-bottom: 15px !important;">
-                <div class="card-header background-cyan text-center" style="padding-top: 15px; padding-bottom: 15px; height: 180px">
-                    <h1 class="bold white font-40"><%= pharma.name %></h1>
+                <div class="card-header background-cyan text-center pharmacy" style="padding-top: 15px; padding-bottom: 15px; height: 100px; vertical-align: middle;">
+                    <p class="white" style="font-size: 20px;"><%= pharma.name %></p>
                 </div>
-                <div class="card-body text-left">
-                    <h4 class="font-16"><i class="fa fa-map-marker"></i> <%= pharma.full_address_without_zip %></h4>
-                    <hr>
-                    <h4 class="font-16"><i class="fa fa-phone"></i> <a href="tel:+1-<%= pharma.number %>" class="background-transparent theme-blue"><%= pharma.number %></a></h4>
-                    <hr>
-                    <h4 class="font-16"><i class="fa fa-car"></i> <span class="<%= pharma.delivery_color %>"><%= pharma.delivery %></span></h4>
-                    <hr>
-                    <h4 class="font-16"><i class="fa fa-clock-o"></i> Hours: <%= pharma.hours %></h4>
+                <div class="card-body text-left" style="height: auto !important;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="font-14">
+                                <%= "#{pharma.town}" %>&bull;
+                                <%= "#{pharma.state}" %> |
+                                <span class="theme-blue"><%= "#{pharma.distance_to(@location).round(2)} miles away" %></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 add-padding-top">
+                            <p class="font-14"><span class="<%= pharma.delivery_color %>"><%= pharma.delivery %></span></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-center col-md-12">
+                            <a class="btn btn-primary btn-block" style="border-radius: 30px; letter-spacing: 1.5px;" href="<%= pharma.url %>">
+                                View Pharmacy
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% end %>
+    <% @pharmacies.each do |pharma| %>
+        <div class="pharmacy-result-card" style="width: 25%; padding: 10px; height: auto;">
+            <div class="card box-shadow text-center pharmacy-card-result" style="display: none; height: 100%; margin-bottom: 15px !important;">
+                <div class="card-header background-cyan text-center pharmacy" style="padding-top: 15px; padding-bottom: 15px; height: 100px; vertical-align: middle;">
+                    <p class="white" style="font-size: 20px;"><%= pharma.name %></p>
+                </div>
+                <div class="card-body text-left" style="height: auto !important;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="font-14">
+                                <%= "#{pharma.town}" %>&bull;
+                                <%= "#{pharma.state}" %> |
+                                <span class="theme-blue"><%= "#{pharma.distance_to(@location).round(2)} miles away" %></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 add-padding-top">
+                            <p class="font-14"><span class="<%= pharma.delivery_color %>"><%= pharma.delivery %></span></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-center col-md-12">
+                            <a class="btn btn-primary btn-block" style="border-radius: 30px; letter-spacing: 1.5px;" href="<%= pharma.url %>?original_location=<%= pharma.to_slug(@location) %>">
+                                View Pharmacy
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

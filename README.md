@@ -1,7 +1,9 @@
-## MedX (Medicine Express)
+## RxCarriers
 
- MedX is a logistics platform built on rails, to facilitate same-day prescriptions
- delivery for pharmacies. To run the site, clone or download this repo.
+ RxCarriers is a pharmacy-to-patients web-based communication platform built to
+ help pharmacists better serve their customers through task automation.
+ 
+ The live app can be found at https://rxcarriers.com
  
 #### APIs & 3rd Parties
 
@@ -10,6 +12,10 @@
  - Stripe
  - Twilio
  - Checkr
+ - Zendesk
+ - Sendgrid
+ - Pusher
+ - DNSimple
 
 #### Installation
 
@@ -45,3 +51,7 @@
  ```
  
  Make sure that you have a recent version of Rails and/or Ruby installed as well.
+
+#### Thoughts/Feedback
+
+ I'm happy to hear your thoughts! Please reach out at hello@rxcarriers.com

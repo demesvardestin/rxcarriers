@@ -5,6 +5,7 @@
     }
     .main-card, .main-page-card {
         padding: none !important;
+        background-color: transparent !important;
     }
     .batches-buttons {
         font-size: 12px;
@@ -15,8 +16,7 @@
         padding-bottom: 30px;
         margin-bottom: 0;
     }
-    .batch-list {
-        box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
+    .batch-list-0 {
         position: relative;
         height: 100%;
     }
@@ -93,10 +93,6 @@
         padding-top: 15px;
         padding-bottom: 15px;
     }
-    #batchPageHeader {
-        padding-bottom: 10px;
-        border-bottom: 1px solid #e2e2e2;
-    }
     #markPickedUpSpan {
         font-weight: 800px !important;
     }
@@ -153,7 +149,6 @@
         border-color: #c5c5c6 !important;
     }
     #requestsToday {
-        padding-top: 5px;
         margin-bottom: 10px;
     }
     .submit-search {
@@ -200,23 +195,26 @@
     </div>
 <% end %>
 <div class="requests-index-header">
-    <div class="row" id="batchPageHeader">
-        <div class="col-md-3">
-            <span class="theme-blue font-18">Dashboard</span>&bull;
-            <span class="font-14"><%= today %></span>
-            <span class="medium-gray font-9 .firebase-id" id="firebaseID" firebase=""></span>
-        </div>
-        <div class="col-md-1 offset-md-8" style="padding: 0;">
-            <a class="btn btn-primary transaction-buttons white" href="/dashboard">
-                <i class="fa fa-refresh"></i> Refresh 
-            </a>
+    <div class="card ">
+        <div class="card-body">
+            <div class="row" id="batchPageHeader">
+                <div class="col-md-3">
+                    <p class="font-16"><%= today %></p>
+                    <span class="medium-gray font-9 .firebase-id" id="firebaseID" firebase=""></span>
+                </div>
+                <div class="col-md-1 offset-md-8" style="padding: 0;">
+                    <a class="btn btn-info transaction-buttons white" href="/dashboard">
+                        <i class="fa fa-refresh"></i> Refresh 
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-    <div id="main" class="row add-padding-top" style="padding: 40px 0;">
+    <div id="main" class="row add-padding-top" style="padding-top: 10px; padding-left: 0; padding-right: 0;">
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card" style="margin-bottom: 15px;">
+                    <div class="card " style="margin-bottom: 10px;">
                         <div class="card-body text-center" id="requestCountCard">
                             <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="deliveriesSentToday"><%= deliveries_today %></span>
                             <h6 class="font-13 medium-gray">deliveries sent today</h6></div>
@@ -225,53 +223,47 @@
                 </div>
                 <div class="col-md-12">
                     <div id="requestsToday">
-                        <div class="float-left" style="width: 49%;">
-                            <a href="/rx?type=new&request_type=refill&pharma_id=<%= current_pharmacy.id %>&sort_by=latest" class="background-transparent no-underline">
-                                <div class="card">
-                                    <div class="card-body text-center" id="requestCountCard">
-                                        <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="refillsToday"><%= refills_today %></span>
-                                        <h6 class="font-13 medium-gray">new refill requests</h6></div>
-                                    </div>
+                        <a href="/rx?type=new&request_type=delivery&pharma_id=<%= current_pharmacy.id %>&sort_by=latest" class="background-transparent no-underline">
+                            <div class="card " style="margin-bottom: 10px;">
+                                <div class="card-body text-center" id="requestCountCard">
+                                    <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="deliveryRequestsToday"><%= requests_today %></span>
+                                    <h6 class="font-13 medium-gray">new delivery requests</h6></div>
                                 </div>
-                            </a>
-                        </div>
-                        <div class="float-right" style="width: 49%;">
-                            <a href="/rx?type=new&request_type=delivery&pharma_id=<%= current_pharmacy.id %>&sort_by=latest" class="background-transparent no-underline">
-                                <div class="card" style="margin-bottom: 15px;">
-                                    <div class="card-body text-center" id="requestCountCard">
-                                        <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="deliveryRequestsToday"><%= requests_today %></span>
-                                        <h6 class="font-13 medium-gray">new delivery requests</h6></div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div id="supervisingPharmacist">
-                        <!--<div>-->
-                        <!--    <h6 class="font-14 medium-gray">-->
-                        <!--        Name of current supervisor-->
-                        <!--        <i class="fa fa-question-circle cursor-pointer" data-toggle="tooltip" data-placement="top"-->
-                        <!--            title="Supervising PharmD on duty"></i>-->
-                        <!--    </h6>-->
-                        <!--</div>-->
-                        <div><h6 class="font-14 theme-blue" id="supervisorName"><%= current_pharmacy.supervisor || 'No pharmacy manager name provided' %></h6></div>
-                        <div class="input-group-prepend" id="supervisorDetails">
-                            <span class="input-group-text background-transparent theme-blue" id="onDutyMDAddon">
-                                <i class="fa fa-user-md"></i>
-                            </span>
-                            <input class="form-control font-12 " id="supervisorSignature" name="pharmacist" placeholder="Pharmacy manager">
-                            <button class="btn btn-success white" id="sendSupervisorName">
-                                <i class="fa fa-check"></i>
-                            </button>
+                    <div class="card ">
+                        <div class="card-body" style="padding: 10px !important;">
+                            <div id="supervisingPharmacist">
+                                <div>
+                                    <h6 class="font-14 medium-gray">
+                                        Current supervisor
+                                        <i class="fa fa-question-circle cursor-pointer" data-toggle="tooltip" data-placement="top"
+                                            title="Supervising PharmD on duty"></i>
+                                    </h6>
+                                </div>
+                                <div><h6 class="font-14 theme-blue" id="supervisorName"><%= current_pharmacy.supervisor || 'No pharmacy manager name provided' %></h6></div>
+                                <div class="input-group-prepend" id="supervisorDetails">
+                                    <span class="input-group-text background-transparent theme-blue" id="onDutyMDAddon">
+                                        <i class="fa fa-user-md"></i>
+                                    </span>
+                                    <form id="supervisorForm">
+                                        <input class="form-control font-12 " id="supervisorSignature" name="pharmacist" placeholder="Pharmacy manager">
+                                        <!--<button class="btn btn-success white" id="sendSupervisorName">-->
+                                        <!--    <i class="fa fa-check"></i>-->
+                                        <!--</button>-->
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-9" id="batchCardContainer">
-            <div class="card batch-list">
+            <div class="card batch-list-0">
                 <div id="scrollable">
                     <div id="scrollableChild">
                         <div class="table-header-batch container">
@@ -283,7 +275,7 @@
                                     <span>Time of request</span>
                                 </div>
                                 <div class="col-md-2">
-                                    <span>Request Type</span>
+                                    <span>Actions</span>
                                 </div>
                             </div>
                         </div>
@@ -399,8 +391,9 @@
         });
     };
     
-    
-    document.getElementById('sendSupervisorName').addEventListener('click', function() {
+    var form = document.getElementById('supervisorForm');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
         var signatureName = document.getElementById('supervisorSignature');
         var value = signatureName.value;
         var id = <%= current_pharmacy.id %>

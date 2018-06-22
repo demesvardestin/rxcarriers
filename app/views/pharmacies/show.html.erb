@@ -1,4 +1,81 @@
-<p id="notice"><%= notice %></p>
+<style>
+    input, form {
+        margin-top: 0 !important;
+    }
+    form {
+        padding-top: 0 !important;
+    }
+</style>
 
-<%= link_to 'Edit', edit_pharmacy_path(@pharmacy) %> |
-<%= link_to 'Back', pharmacies_path %>
+<section id="pharmacyShowHeader">
+    <div class="jumbotron background-green add-padding-top no-border-radius">
+        <div class="container">
+            <h2 class="bold white" style="margin-top: 20px;"><%= @pharmacy.name %></h2>
+            <p class="font-16 white">
+                <%= "#{@distance.round(2)} miles" %> &bull;
+                <%= @pharmacy.full_address_without_zip %>
+            </p>
+            <button class="btn btn-primary" id="showDeliveryHours" style="border-radius: 30px;">
+                Delivery Hours
+            </button>
+        </div>
+    </div>
+</section>
+
+<section id="prescriptionOrder">
+    <div class="col-md-12 no-horizontal-padding">
+        <div class="col-md-4 offset-md-4">
+            <div class="card box-shadow radius-5">
+                <div class="card-header background-transparent">
+                    <p class="font-18">Order a prescription</p>
+                </div>
+                <div class="card-body" style="padding-top: 10px !important; padding-bottom: 25px;">
+                    <div id="spinner" style="display: none;"><%= render 'common/bullet_spinner' %></div>
+                    <form method="get" id="rxOrderForm" action="order_prescription" style="padding: 0; margin: 0;">
+                        <div class="field">
+                            <input class="form-control form--control font-16" id="prescriptionNumber" name="prescription-number" placeholder=" ">
+                            <label for="prescription-number">Your rx number</label>
+                        </div>
+                        <div class="field">
+                            <input class="form-control form--control font-16" id="birthYear" name="birth-year" placeholder=" ">
+                            <label for="birth-year">Your birth year</label>
+                        </div>
+                        <div class="actions text-center" style="margin-top: 25px;">
+                            <button class="btn btn-primary">
+                                <i class="fa fa-paper-plane-o"></i> Submit order
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card box-shadow radius-5" style="margin-top: 20px;">
+                <div class="card-header background-transparent">
+                    <p class="font-18">Track an order</p>
+                </div>
+                <div class="card-body" style="padding-top: 10px !important; padding-bottom: 25px;">
+                    <div id="spinner1" style="display: none;"><%= render 'common/bullet_spinner' %></div>
+                    <form method="get" id="orderTrackingForm" action="track_order" style="padding: 0; margin: 0;">
+                        <div class="field">
+                            <input class="form-control form--control font-16" id="prescriptionNumber" name="prescription-number" placeholder=" ">
+                            <label for="prescription-number">Your order number</label>
+                        </div>
+                        <div class="actions text-center" style="margin-top: 25px;">
+                            <button class="btn btn-primary">
+                                <i class="fa fa-location-arrow"></i> Track order status
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card box-shadow radius-5" style="margin-top: 20px;">
+                <div class="card-header background-transparent">
+                    <p class="font-18">Reviews</p>
+                </div>
+                <div class="card-body" style="padding-top: 10px !important; padding-bottom: 25px;">
+                    <div id="spinner2" style="display: none;"><%= render 'common/bullet_spinner' %></div>
+                    <p class="font-16"><em>No reviews yet</em></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

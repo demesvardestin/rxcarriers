@@ -25,7 +25,7 @@ module DeliveriesHelper
     
     def deliveries_today
         id = current_pharmacy.id
-        @deliveries = DeliveryRequest.where(pharmacy_id: id, created_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc, active: false, is_valid: true)
+        @deliveries = RequestAlert.where(pharmacy_id: id, created_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc, active: false, is_valid: true)
         if @deliveries
             return @deliveries.count
         end
@@ -33,7 +33,7 @@ module DeliveriesHelper
     
     def requests_today
         id = current_pharmacy.id
-        @delivery_requests = DeliveryRequest.where(pharmacy_id: id, created_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc, active: true)
+        @delivery_requests = RequestAlert.where(pharmacy_id: id, created_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc, active: true)
         if @delivery_requests
             return @delivery_requests.count
         end

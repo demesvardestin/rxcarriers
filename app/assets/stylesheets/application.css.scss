@@ -38,6 +38,13 @@ body {
     font-family: 'Open Sans', sans-serif !important;
     color: #525f7f;
 }
+#page-loader {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 30px;
+}
 .spinner-row {
     padding-top: 20px;
 }
@@ -55,9 +62,6 @@ a:hover {
     background-color: #3484c6;
     padding: 0 !important;
 }
-// #main-body {
-//     background-color: #f4f8fb;
-// }\
 .border-white {
     border-color: #fff !important;
 }
@@ -65,7 +69,7 @@ a:hover {
     border-radius: 5px !important;
 }
 .background-blue {
-    background-color: #3484c6 !important;
+    background-color: #2c91de !important;
 }
 .background-yellow {
     background-color: #878706 !important;
@@ -75,6 +79,16 @@ a:hover {
 }
 .background-cyan {
     background-color: #1cc7c7 !important;
+}
+.half-bright{
+    -webkit-filter: brightness(200%);
+    filter: brightness(50%);
+}
+.background-image-rx {
+    background-image: url('/javascripts/pharmacy.png') no-repeat;
+}
+div.card-header.background-cyan {
+    border: 1px solid #1cc7c7 !important;
 }
 .theme-cyan {
     color: #1cc7c7 !important;
@@ -176,7 +190,8 @@ a:hover {
     border-bottom: 1px solid #e1e1e2;
 }
 .main-page-card {
-    box-shadow: 0 5px 15px rgba(84,96,103,.25);
+    // box-shadow: 0 5px 15px rgba(84,96,103,.25);
+    border: none !important;
 }
 .page-logo {
     padding-bottom: 10px;
@@ -277,6 +292,9 @@ div#rxCol {
 }
 .background-transparent {
     background: transparent !important;
+}
+.background-white {
+    background: #fff !important;
 }
 .no-border-radius {
     border-radius: 0 !important;
@@ -996,7 +1014,7 @@ div#rxCol {
     padding-left: 15px;
     padding-right: 15px;
 }
-.nav-item-logged-in:hover, .activated {
+.nav-item-logged-in:hover{
     color: #fff !important;
     border-bottom: 3px solid #fff;
     background-color: #2e76b2 !important;
@@ -1590,5 +1608,12 @@ input:focus + label {
     div.card.box-shadow {
         margin-bottom: 15px !important;
         margin-top: 15px !important;
+    }
+    div.pharmacy-result-card {
+        display: block !important;
+        width: 100% !important;
+    }
+    div.card-header.pharmacy {
+        text-align: left !important;
     }
 }

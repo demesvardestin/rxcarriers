@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CourierTest < ActiveSupport::TestCase
+class DeliveryHourTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

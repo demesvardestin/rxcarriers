@@ -1,10 +1,14 @@
 class PharmaciesController < ApplicationController
   before_action :set_pharmacy, only: [:update, :destroy]
-  before_filter :load_patable, only: [:show]
-  before_action :check_current_pharmacy, except: [:home, :contact, :blog, :terms, :privacy, :press, :search, :search_pharmacy]
+  before_action :check_current_pharmacy, except: [:home, :contact, :blog, :terms, :privacy, :press, :search, :search_pharmacy, :show]
+  before_action :check_parameters, only: [:show]
   
   def edit
     @pharmacy = current_pharmacy
+  end
+  
+  def show
+    
   end
   
   def billing
@@ -180,10 +184,18 @@ class PharmaciesController < ApplicationController
       @pharmacy = Pharmacy.find(params[:id])
     end
     
-    # Patient load
-    def load_patable
-      resource, id = request.path.split('/')[1, 2]
-      @patable = resource.singularize.classify.constantize.find(id)
+    def check_parameters
+      name = params[:name]
+      id = params[:id]
+      if name.blank? || id.blank?
+        redirect_to :back
+      end
+      @pharmacy = Pharmacy.find_by(id: id)
+      if @pharmacy.nil?
+        redirect_to :back
+      end
+      distance = @pharmacy.unslug(params[:original_location])
+      @distance = @pharmacy.distance_to(distance)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

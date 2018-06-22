@@ -152,19 +152,22 @@
   </script>
   <!--<a  href="https://www.instantssl.com/" id="comodoTL">Essential SSL</a>-->
   <body id="main-body">
-    <%= render_navigation %>
     <% if current_pharmacy %>
-      <div class="container main-page">
-        <div id="sound"></div>
-        <div class="card main-page-card">
-          <div class="card-body main-card">
-            <%= render 'layouts/notifications_modal' %>
-            <%= render 'layouts/messages_modal' %>
-            <%= yield %>
+      <%= render 'layouts/pharmacy_top_nav' %>
+      <%= render 'pharmacies/pharmacy_home' %>
+      <div class="float-right" style="width: 80%;">
+        <div class="container main-page">
+          <div id="sound"></div>
+          <div class="card main-page-card">
+            <div class="card-body main-card">
+              <%= render 'layouts/notifications_modal' %>
+              <%= yield %>
+            </div>
           </div>
         </div>
       </div>
     <% else %>
+      <%= render 'layouts/main_nav' %>
       <div style="padding-top: 60px !important; padding-bottom: 40px;">
         <%= yield %>
       </div>
