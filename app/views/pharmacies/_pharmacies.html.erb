@@ -1,0 +1,39 @@
+<style>
+    p {
+        margin-bottom: 5px;
+    }
+    .fa {
+        margin-right: 15px;
+    }
+    p {
+        letter-spacing: 1.5px;
+    }
+</style>
+<% if invalid.present? %>
+    <div class="col-md-12 text-center font-16 theme-red">
+        <%= invalid %>
+    </div>
+<% else %>
+    <% pharmacies.each do |pharma| %>
+        <div class="col-md-3" style="height: auto;">
+            <a href="<%= pharma.url + '?original_location=' + @location %>" class="background-transparent no-underline">
+                <div class="card no-border text-center pharmacy-card-result" style="height: 100%; margin-bottom: 15px !important;">
+                    <div class="card-header background-cyan text-center pharmacy" style="padding-top: 30px; padding-bottom: 30px;">
+                        <img src="/javascripts/pharmacy.png" height="50">
+                    </div>
+                    <div class="card-body text-left no-horizontal-padding" style="padding-top: 10px;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="font-14 bold"><%= pharma.name %></p>
+                                <p class="font-14">
+                                    <span class="<%= pharma.delivery_color %>"><%= pharma.delivery %></span> &bull;
+                                    <span class="theme-blue"><%= "#{pharma.distance_to(@location).round(2)} miles" %></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    <% end %>
+<% end %>

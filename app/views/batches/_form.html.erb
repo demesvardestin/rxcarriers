@@ -1,23 +1,22 @@
-<%= form_for(@batch) do |f| %>
-    <% if @batch.errors.any? %>
+<%= form_for(batch, :html => {:id => "batchForm", :multipart => true, :remote => true}) do |f| %>
+    <% if batch.errors.any? %>
         <div id="error_explanation">
-          <h2><%= pluralize(@batch.errors.count, "error") %> prohibited this batch from being saved:</h2>
+          <h2><%= pluralize(batch.errors.count, "error") %> prohibited this batch from being saved:</h2>
     
           <ul>
-          <% @batch.errors.full_messages.each do |message| %>
+          <% batch.errors.full_messages.each do |message| %>
             <li><%= message %></li>
           <% end %>
           </ul>
         </div>
     <% end %>
     <div class="field">
-        <%= f.text_area :notes, class:"form-control batch-notes-field", autofocus: true, placeholder:"Add a note to this batch" %>
+        <%= f.text_field :address, class:"form-control radius-5 no-box-shadow", autofocus: true, placeholder:"Delivery address" %>
     </div>
     <div class="field">
-        <%= f.text_field :pharmacist, class:"form-control", autofocus: true, placeholder:"Pharmacist Signature" %>
+        <%= f.text_field :phone_number, class:"form-control radius-5 no-box-shadow", autofocus: true, placeholder:"Recipient phone number" %>
     </div>
-    <div class="actions text-right">
-        <span class="cancel-batch batch-new"><%= link_to "Cancel", batches_path, class:"btn btn-primary btn-lg white" %></span>
-        <span class="submit-batch batch-new-1"><%= f.submit "Add", class:"btn btn-primary btn-lg new-batch-button"%></span>
+    <div class="actions">
+        <%= f.submit "Update", class:"btn btn-primary btn-block", id:"submitBatch#{batch.id}" %>
     </div>
 <% end %>

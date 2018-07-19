@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-md-8">
+        <div class="card add-margin-bottom">
+            <div class="card-body">
+                <p class="text-center font-18 theme-blue">
+                    Bag History
+                </p>
+            </div>
+        </div>
+        <div id="allBatches"><%= render partial: 'batch_history', locals: {batches: @batches} %></div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header background-cyan">
+                <p class="font-16 white" style="margin-bottom: 0;">Deliveries sent</p>
+            </div>
+            <div class="card-body" style="padding: 0;">
+                <div class="col-md-12" style="border-bottom: 1px solid #ced2da; padding: .75rem 1.25rem;">
+                    <p class="font-16">
+                        <span class="text-left">Today:</span>
+                        <span class="text-right theme-blue"><%= delivery_count_today %></span>
+                    </p>
+                </div>
+                <div class="col-md-12" style="border-bottom: 1px solid #ced2da; padding: .75rem 1.25rem;">
+                    <p class="font-16">
+                        <span class="text-left">This week:</span>
+                        <span class="text-right theme-blue"><%= delivery_count_this_week %></span>
+                    </p>
+                </div>
+                <div class="col-md-12" style="padding: .75rem 1.25rem;">
+                    <p class="font-16">
+                        <span class="text-left">This month:</span>
+                        <span class="text-right theme-blue"><%= delivery_count_this_month %></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

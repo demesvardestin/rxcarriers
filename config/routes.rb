@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   get 'not-found', to: 'drivers#not_found'
   get 'invoices/:id/delete', to: 'invoices#destroy'
   get 'transactions/:id', to: 'invoices#show'
-  get '/create_batch', to: 'batches#create_batch'
+  post '/create_batch', to: 'batches#create'
   get '/update_batch', to: 'batches#update_batch'
   get 'order_asc', to: 'batches#order_asc'
   get 'order_desc', to: 'batches#order_desc'
@@ -57,7 +57,7 @@ Rails.application.routes.draw do
   get '/dismiss_notification', to: 'deliveries#dismiss_notification'
   get '/dismiss_all_notifications', to: 'deliveries#dismiss_all_notifications'
   get 'update_profile', to: 'pharmacies#update_profile'
-  get '/mark_picked', to: 'batches#mark_picked'
+  get '/mark_picked', to: 'batches#mark_picked', as: 'mark_picked'
   get '/cancel_request', to: 'batches#cancel_request'
   get '/store_push_endpoint', to: 'drivers#store_push_endpoint'
   get '/store_pharma_push_endpoint', to: 'pharmacies#store_push_endpoint'
@@ -96,12 +96,27 @@ Rails.application.routes.draw do
   get '/check_rx_exist', to: 'deliveries#check_rx_exist'
   get '/cancel_subscription', to: 'pharmacies#cancel_subscription'
   get '/update_first_time', to: 'pharmacies#update_first_time'
-  get '/search', to: 'pharmacies#search'
   get '/pharmacy_search', to: 'pharmacies#search_pharmacy'
+  get '/search', to: 'pharmacies#search'
   get '/pharmacies/:name/:id', to: 'pharmacies#show'
+  get '/bag-history', to: 'batches#history'
+  get '/bags', to: 'batches#index'
+  get '/get_quote', to: 'batches#get_quote'
+  get '/request_courier', to: 'batches#request_courier'
+  get '/remove_rx', to: 'batches#remove_rx'
+  post '/delivery', to: 'batches#delivery'
+  get '/delivery_update', to: 'batches#delivery_update'
+  post '/test', to: 'batches#test_'
+  get '/cancel_courier_request', to: 'batches#cancel_courier_request'
+  post '/order_prescriptions', to: 'rxes#order_prescriptions'
+  get '/track_order', to: 'rxes#track_order'
+  post '/reviews', to: 'pharmacies#create_review'
   
   # resource path
   resources :invoices, only: [:create, :show, :index, :destroy]
+  resources :batches
+  resources :reviews, onl: [:create, :index]
+  resources :rxes, only: [:create, :index]
   resources :pharmacies
   resources :deliveries, only: [:create, :show, :edit, :update, :destroy]
   
@@ -111,6 +126,6 @@ Rails.application.routes.draw do
   end
   
   # root path
-  root 'pharmacies#home'
+  root 'pharmacies#landing'
   
 end

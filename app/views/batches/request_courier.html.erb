@@ -1,0 +1,7 @@
+<div class="text-center">
+    <div id="bulletSpinner">
+        <%= render 'common/bullet_spinner' %>
+        <p class="font-16 add-margin-top">Request sent. Looking for nearby courier...</p>
+        <%= link_to 'Cancel request', cancel_courier_request_path(:batch_id => @batch.id), class:"btn btn-danger btn-block white add-margin-top", :remote => true %>
+    </div>
+</div>

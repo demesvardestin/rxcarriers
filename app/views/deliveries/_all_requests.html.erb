@@ -26,40 +26,26 @@
             </div>
           </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 bold theme-blue">
             <%= r.rx %>
         </div>
         <div class="col-md-3">
             <%= to_mm_dd_yy(r.created_at) %>
         </div>
         <div class="col-md-2">
-            <span class="<%= get_type_color(r.type) %> bold"><%= r.type %></span>
-        </div>
-        <div class="col-md-1">
-            <a class="btn btn-secondary white transaction-buttons" href="/rx?type=new&request_type=<%= r.type %>&request_rx=<%= r.rx %>">
-               <i class="fa fa-search"></i> View
+            <a class="btn btn-success btn-block white transaction-buttons">
+               <i class="fa fa-check-circle"></i> Processed
             </a>
         </div>
-        <div class="col-md-3">
-            <button class="btn btn-info btn-block white transaction-buttons no-box-shadow <% if !r.get_rx.dob.nil? %>disabled<% end %>" id="editRx" data-toggle="modal"
-                <% if r.get_rx.dob.nil? %>data-target="#editRx<%= r.id %>"<% end %>>
-                <i class="fa fa-plus-circle"></i> Confirm birth year
-            </button>
+        <div class="col-md-2">
+            <a class="btn btn-warning btn-block white transaction-buttons">
+               <i class="fa fa-exclamation-circle"></i> Cannot refill
+            </a>
         </div>
-        <div class="col-md-1">
-            <div class="dropdown show" style="padding-bottom: 0 !important;">
-                <a class="btn btn-secondary btn-block dropdown-toggle rx-dropdown transaction-buttons" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  
-                </a>
-              
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <li class="dropdown-item">
-                        <button class="btn btn-link font-12 no-padding-left" id="<%= r.id %>-invalid" type="<%= r.type %>" status="invalid" onclick="setRequestInvalid(this)">
-                            Invalid (rx does not exist)
-                        </button>
-                    </li>
-                </ul>
-            </div>
+        <div class="col-md-2">
+            <a class="btn btn-danger btn-block white transaction-buttons">
+               <i class="fa fa-times-circle"></i> Invalid
+            </a>
         </div>
     </div>
 <% end %>

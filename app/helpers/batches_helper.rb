@@ -181,15 +181,39 @@ module BatchesHelper
         return Batch.find(id)
     end
     
-    def deliveries_today
+    def delivery_count_today
         id = current_pharmacy.id
-        @all = Delivery.where(pharmacy_id: id, request_sent_on: DateTime.now.at_beginning_of_day.utc..Time.now.utc)
-        @deliveries = @all.select {|d| d.deliverable != nil && d.deliverable.request_id != nil }
-        return @deliveries.count
+        @deliveries = Batch.where(pharmacy_id: id, requested_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc, delivered: true, deleted: false)
+        @deliveries.count if @deliveries
+    end
+    
+    def delivery_count_this_week
+        id = current_pharmacy.id
+        @deliveries = Batch.where(pharmacy_id: id, requested_at: DateTime.now.at_beginning_of_week.utc..Time.now.utc, delivered: true, deleted: false)
+        @deliveries.count if @deliveries
+    end
+    
+    def delivery_count_this_month
+        id = current_pharmacy.id
+        @deliveries = Batch.where(pharmacy_id: id, requested_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc, delivered: true, deleted: false)
+        @deliveries.count if @deliveries
     end
     
     def to_param(string)
         string.downcase.split(' ').join('_') 
+    end
+    
+    def to_price(fee)
+        rx_carriers_fee = fee * 0.10
+        ((fee + rx_carriers_fee) / 100).to_f.round(2)
+    end
+    
+    def request_btn_text(batch)
+        if batch.status == 'initialized'
+            'Delivery estimate'
+        else
+            'Delivery details'
+        end
     end
     
 end

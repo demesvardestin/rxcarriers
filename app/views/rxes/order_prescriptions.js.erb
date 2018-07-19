@@ -1,0 +1,25 @@
+var denied = <%= @denied %>;
+if (denied == 0) {
+    $('#spinner0').hide();
+    $('#confirmationNumber').html(`
+        <p class="font-18 theme-blue">Oops! Something went wrong...</p>
+        <p><i class="fa fa-exclamation-circle theme-yellow" style="font-size: 40px;"></i></p>
+        <br />
+        <button class="btn btn-primary" onclick="showForm();">
+            Try again
+        </button>
+    `).show();
+} else {
+    console.log('approved');
+    $('#spinner0').hide();
+    document.getElementById('rxNumbers').value = '';
+    $('#confirmationNumber').html(`
+        <p class="font-18 theme-blue">Delivery order sent!</p>
+        <p class="font-16">Confirmation number</p>
+        <p class="font-18 theme-green bold"><%= @confirmation %></p>
+        <br />
+        <button class="btn btn-primary" onclick="showForm();">
+            Place another order
+        </button>
+    `).show();
+}

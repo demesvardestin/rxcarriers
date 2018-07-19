@@ -1,372 +1,50 @@
-<style>
-    .requests-index-header {
-        padding-bottom: 20px !important;
-        padding-top: 20px !important;
-    }
-    .main-card, .main-page-card {
-        padding: none !important;
-    }
-    .batches-buttons {
-        font-size: 12px;
-        padding: 10px;
-    }
-    #requestCountCard {
-        padding-top: 30px;
-        padding-bottom: 30px;
-    }
-    .batch-list {
-        box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
-        position: relative;
-        height: 100%;
-    }
-    .create-batch {
-        display: block;
-    }
-    .batch-search {
-        border-left: none !important;
-        border-right: none !important;
-        border: 1px solid #c5c5c6 !important;
-        border-radius: 0;
-        border-top-right-radius: .25rem;
-        border-bottom-right-radius: .25rem;
-        box-shadow: none !important;
-        padding-left: 10px !important;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        margin-top: auto !important;
-    }
-    #supervisorSignature {
-        border-left: none !important;
-        border-right: none !important;
-        border: 1px solid #c5c5c6 !important;
-        border-radius: 0;
-        box-shadow: none !important;
-        padding-left: 5px !important;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        margin-top: auto !important;
-    }
-    .modal, .modal-content {
-        border-color: #e1e1e2;
-    }
-    .remove-patient {
-        padding-top: 5px;
-    }
-    .modal-header {
-        background-color: #e1e1e2;
-        border-bottom-color: #e1e1e2;
-    }
-    .cancel-create {
-        font-size: 14px;
-        font-weight: 400px;
-        padding: 13px;
-    }
-    .table-content {
-        padding-top: 5px;
-        padding-bottom: 5px;
-        color: #707071;
-        font-size: 13px;
-        border-bottom: 1px solid #e1e1e2;
-    }
-    .table-header-batch {
-        border-top: 1px solid #e1e1e2;
-        border-bottom: 1px solid #e1e1e2;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        background-color: #e6ebf1;
-        color: #59595a;
-        font-size: 15px;
-    }
-    .ellipsis-border {
-        padding: 2px;
-        border: 1px solid #707071;
-    }
-    .d--toggle--info {
-        border: 1px solid #128193;
-    }
-    .create-batch, .filter-batch {
-        padding-top: 10px !important;
-        padding-bottom: 10px !important;
-    }
-    #placeholder {
-        padding-top: 15px;
-        padding-bottom: 15px;
-    }
-    #batchPageHeader {
-        padding-bottom: 10px;
-        border-bottom: 1px solid #e2e2e2;
-    }
-    #markPickedUpSpan {
-        font-weight: 800px !important;
-    }
-    #markPickedUp {
-        box-shadow: none !important;
-    }
-    .add-padding-top {
-        padding-top: 15px;
-    }
-    #createButton {
-        padding-top: 10px;
-    }
-    #batchCreation {
-        text-align: center !important;
-    }
-    #batchSearchInput {
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
-    }
-    .hide {
-        padding-top: 30px;
-    }
-    #scrollable {
-        height: 100%;
-        overflow: hidden;
-        box-sizing: border-box;
-        width: 100%;
-        position: absolute;
-        top: 0;
-    }
-    #scrollableChild {
-        position: relative;
-        max-height: 100%;
-        overflow: auto;
-    }
-    .search-load {
-        padding-top: 30px;
-        padding-bottom: 30px;
-    }
-    .no-match-error {
-        padding-top: 20px;
-        padding-bottom: 20px;
-    }
-    #onDutyMDAddon {
-        border-right: none !important;
-        border-top-right-radius: 0 !important;
-        border-bottom-right-radius: 0 !important;
-        border-color: #c5c5c6 !important;
-    }
-    #searchAddon {
-        border-right: none !important;
-        border-top-right-radius: 0 !important;
-        border-bottom-right-radius: 0 !important;
-        border-color: #c5c5c6 !important;
-    }
-    #supervisingPharmacist, #requestsToday {
-        padding-top: 20px;
-    }
-    .submit-search {
-        margin-top: 5px;
-        padding-top: 10px !important;
-        padding-bottom: 10px !important;
-    }
-    #sendSupervisorName {
-        border-left: none !important;
-        border-top-left-radius: 0 !important;
-        border-bottom-left-radius: 0 !important;
-        box-shadow: none !important;
-    }
-    #btnLoad {
-        font-size: 14px !important;
-    }
-    #creatingNewBatch, .clear-row, .search-error, .loader-row, .spinner-row,
-    #placeholder, .load-status, .hide, #hiddenBatches, .batch-list,
-    #requestCountLoader {
-        display: none;
-    }
-</style>
-
-<div class="requests-index-header">
-    <div class="row" id="batchPageHeader">
-        <div class="col-md-2">
-            <span class="theme-blue font-18">Batches</span>
-            <span class="medium-gray font-9 .firebase-id" id="firebaseID" firebase=""></span>
-        </div>
-    </div>
-    <div id="main" class="row add-padding-top">
-        <div class="col-md-3">
-            <div>
-                <div class="input-group-prepend">
-                    <span class="input-group-text background-transparent theme-blue" id="searchAddon">
-                        <i class="fa fa-search"></i>
-                    </span>
-                    <input type="text" class="form-control font-12 batch-search" placeholder="search batch" id="batchSearch" onkeyup="batchLiveSearch(this)">
-                </div>
-            </div>
-            <div id="createButton" class="row">
-                <div class="col-md-6 right-padding-3">
-                    <a class="btn btn-primary white font-12 create-batch btn-block" href="/create_batch?pharmacist=<%= to_param(current_pharmacy.supervisor) if current_pharmacy.supervisor %>" id="createBatch">
-                        <i class="fa fa-plus"></i>
-                        New Batch
-                    </a>
-                </div>
-                <div class="col-md-6 left-padding-3">
-                    <button class="btn btn-info dropdown-toggle d--toggle--info transaction-buttons filter-batch btn-block" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Filter By
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <%= render 'dropdown' %>
-                    </div>
-                </div>
-            </div>
-            <div id="requestsToday">
-                <div class="float-left" style="width: 49%;">
-                    <div class="card">
-                        <div class="card-body text-center" id="requestCountCard">
-                            <div><i class="fa fa-circle-o-notch theme-blue fa-spin fa-3x fa-fw" id="requestCountLoader"></i></div>
-                            <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="requestNumber"><%= deliveries_today %></span>
-                            <h6 class="font-14 medium-gray">deliveries today</h6></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="float-right" style="width: 49%;">
-                    <a href="/rx" class="background-transparent no-underline">
-                        <div class="card">
-                            <div class="card-body text-center" id="requestCountCard">
-                                <div><i class="fa fa-circle-o-notch theme-blue fa-spin fa-3x fa-fw" id="requestCountLoader"></i></div>
-                                <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="requestNumber"><%= deliveries_today %></span>
-                                <h6 class="font-14 medium-gray">delivery requests</h6></div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div id="supervisingPharmacist">
-                <div><h6 class="font-14 medium-gray">
-                    Name of current supervisor 
-                    <i class="fa fa-question-circle cursor-pointer" data-toggle="tooltip" data-placement="top"
-                        title="Supervising PharmD on duty"></i>
-                </div>
-                <div><h6 class="font-14 theme-blue" id="supervisorName"><%= current_pharmacy.supervisor %></h6></div>
-                <div class="input-group-prepend" id="supervisorDetails">
-                    <span class="input-group-text background-transparent theme-blue" id="onDutyMDAddon">
-                        <i class="fa fa-user-md"></i>
-                    </span>
-                    <input class="form-control font-12 " id="supervisorSignature" name="pharmacist" placeholder="Change current supervisor">
-                    <button class="btn btn-success white" id="sendSupervisorName">
-                        <i class="fa fa-check"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <%= render 'common/loader' %>
-        <div class="col-md-9" id="batchCardContainer">
-            <div class="card hide">
+<div class="row">
+    <div class="col-md-8">
+        <div class="card add-margin-bottom">
+            <a class="btn btn-link font-18" onclick="createBatch()">
                 <div class="card-body">
-                    <section id="placeholder" class="row">
-                        <div class="col-md-12 text-center">
-                            <h6 class="medium-gray">You have not created any batch yet</h6>
-                        </div>
-                    </section>
-                    <section id="creatingNewBatch" class="row">
-                        <div class="col-md-12 text-center" id="batchCreation">
-                            <%= render 'common/spinner' %>
-                            <h6 class="medium-gray font-14 text-center">Creating batch...</h6>
-                        </div>
-                    </section>
+                    <p class="text-center font-18 theme-blue">
+                        <i class="fa fa-plus-circle"></i> Create a new delivery bag
+                        <i class="fa fa-spinner fa-pulse fa-3x fa-fw hidden" id="creating-batch"></i>
+                    </p>
                 </div>
+            </a>
+        </div>
+        <div id="placeholder"><%= render partial: 'placeholder' unless !@batches.empty? %></div>
+        <div id="allBatches"><%= render partial: 'batches', locals: {batches: @batches} %></div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header background-cyan white">
+                <p class="font-16 white" style="margin-bottom: 0;">Deliveries sent</p>
             </div>
-            <div class="card batch-list">
-                <div id="scrollable">
-                    <div id="scrollableChild">
-                        <div class="table-header-batch container">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <span>Batch ID</span>
-                                </div>
-                                <div class="col-md-4">
-                                    <span>Date Created</span>
-                                </div>
-                                <div class="col-md-6">
-                                    <span>Action</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="allBatches">
-                            <%= render 'all' %>
-                        </div>
-                    </div>
+            <div class="card-body" style="padding: 0;">
+                <div class="col-md-12" style="border-bottom: 1px solid #ced2da; padding: .75rem 1.25rem;">
+                    <p class="font-16">
+                        <span class="text-left">Today:</span>
+                        <span class="text-right theme-blue count_today"><%= delivery_count_today %></span>
+                    </p>
+                </div>
+                <div class="col-md-12" style="border-bottom: 1px solid #ced2da; padding: .75rem 1.25rem;">
+                    <p class="font-16">
+                        <span class="text-left">This week:</span>
+                        <span class="text-right theme-blue count_this_week"><%= delivery_count_this_week %></span>
+                    </p>
+                </div>
+                <div class="col-md-12" style="padding: .75rem 1.25rem;">
+                    <p class="font-16">
+                        <span class="text-left">This month:</span>
+                        <span class="text-right theme-blue count_this_month"><%= delivery_count_this_month %></span>
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <script>
-    
-    // onLoad //
-    $('#firebaseID').hide();
-    $('.hide').hide();
-    $('#creatingNewBatch').hide();
-    $('#placeholder').hide();
-    $('.loader-row').show();
-    
-    // fetch rows of batch //
-    var batches = "<%= current_pharmacy.has_batches? %>";
-    console.log(batches);
-    // if rows present, return list, if not, return placeholder //
-    if (batches == 'true') {
-        $('.loader-row').hide();
-        $('.batch-list').show();
-    } else {
-        $('.loader-row').hide();
-        $('.hide').show();
-        $('#placeholder').show();
-    };
-    
-    // Add bounds to count so that number is for the current day //
-    function loadRequestCount() {
-        $('#requestCountDetails').hide();
-        $('#requestCountLoader').show();
-        $.get('/deliveries_today', function(data) {
-            $('#requestCountLoader').hide();
-            $('#requestNumber').html(data);
-            $('#requestCountDetails').show();
-        });
-    };
-    
-    function checkStatus(elem) {
-        var id = elem.getAttribute('batch');
-        console.log(id);
-        $.get('/mark_picked?id='+id, function(data) {
-            $('.mark-picked'+id).html('Batch picked up!');
-            console.log('Batch picked up!');
+    function createBatch() {
+        $.post('/create_batch?', {batch: {"name": "batch"}}, e => {
+            $('#placeholder').hide();
         });
     }
-    
-    function parseRequest(value) {
-        if (value == false) {
-            return 'request pending'
-        } else {
-            return 'request accepted'
-        }
-    };
-  
-    // Create a batch //
-    var batch = document.getElementById('createBatch');
-    batch.addEventListener('click', function() {
-        $('.batch-list').hide();
-        $('.spinner-row').show()
-        $('#creatingNewBatch').show();
-        $('.hide').fadeIn();
-    });
-    
-    
-    document.getElementById('sendSupervisorName').addEventListener('click', function() {
-        var signatureName = document.getElementById('supervisorSignature');
-        var value = signatureName.value;
-        var id = <%= current_pharmacy.id %>
-        
-        $('#sendSupervisorName').html('<i class="fa fa-circle-o-notch white fa-spin fa-3x fa-fw" id="btnLoad"></i>');
-        $.get('/update_supervisor?pharmacist='+value+'&pharmacy_id='+id.toString(), function(data) {
-            signatureName.value = '';
-        });
-    });
-    
-    function batchLiveSearch(elem) {
-        var search = document.getElementById("batchSearch").value;
-        $.get('/batch_search?search='+search, function(html) {
-            $("#allBatches").html(html);
-        });
-    };
-  
 </script>

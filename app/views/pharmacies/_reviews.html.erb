@@ -1,0 +1,10 @@
+<% reviews.each do |rev| %>
+    <p class="author font-16 theme-blue" style="margin-bottom: 5px;">
+        Anonymous
+    </p>
+    <p class="font-16" class="review">
+       <span class="medium-gray">
+           "<%= rev.content %>"
+       </span> 
+    </p>
+<% end %>

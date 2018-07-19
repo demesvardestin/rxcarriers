@@ -1,0 +1,22 @@
+<%= form_for(@rx, :html => {:id => "rxForm", :multipart => true, :remote => true}) do |f| %>
+    <% if @rx.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@rx.errors.count, "error") %> prohibited this rx from being saved:</h2>
+    
+          <ul>
+          <% @rx.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <div class="field">
+        <%= f.text_field :rx, class:"form-control no-box-shadow radius-5", autofocus: true, placeholder:"Rx number" %>
+    </div>
+    <div class="field">
+        <%= f.hidden_field :batch_id, id:"batchId", class:"batch-id" %>
+    </div>
+    <div class="actions">
+        <%= f.submit "Add", class:"btn btn-primary btn-block" %>
+    </div>
+<% end %>

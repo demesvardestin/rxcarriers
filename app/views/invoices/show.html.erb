@@ -17,9 +17,6 @@
     .attributes, .attributes-content, h6 {
         font-size: 14px;
     }
-    .return-to-transactions {
-        margin-right: 5px;
-    }
     .return-to-transactions-col {
         left: 50px;
     }
@@ -34,74 +31,78 @@
 
 <%= render 'common/spinner' %>
 <main id="main">
-    <div class="row amount-details">
-        <div class="col-md-2">
-            <span class="semi-bold medium-gray font-24"><%= to_dollar(@invoice.value) %></span> <span class="medium-gray font-20"><%= @invoice.currency %></span>
-        </div>
-        <div class="col-md-2 offset-md-8">
-            <a href="/payment-history" class="btn btn-info transaction-buttons white" id="return-to-transactions">
-                <i class="fa fa-long-arrow-left"></i> Return To Transactions
-            </a>
-        </div>
-    </div>
-    
-    <div class="row status-details">
-        <div class="col-md-1 no-right-padding">
-            <span><%= render "#{@invoice.stripe_status}" %></span>
-        </div>
-        <div class="col-md-2 no-left-padding">
-            <h6 class="font-14 semi-bold medium-gray no-horizontal-padding"><%= 'Payment' + ' ' + @invoice.stripe_status %></h6>
-            <h6 class="font-13 medium-gray no-horizontal-padding"><%= @invoice.updated_at %></h6>
-        </div>
-    </div>
-    
-    <div class="row details">
-        <div class="col-md-12">
-            <h6 class="bold medium-gray">Payment Details</h6>
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-2 text-right attributes">
+    <div class="card">
+        <div class="card-body" style="padding-top: 10px; padding-bottom: 20px;">
+            <div class="row amount-details">
+                <div class="col-md-2">
+                    <span class="semi-bold medium-gray font-24"><%= to_dollar(@invoice.value) %></span> <span class="medium-gray font-20"><%= @invoice.currency %></span>
+                </div>
+                <div class="col-md-2 offset-md-8">
+                    <a href="/payment-history" class="btn btn-info transaction-buttons white" id="return-to-transactions">
+                        <i class="fa fa-long-arrow-left"></i> Return To Transactions
+                    </a>
+                </div>
+            </div>
+            
+            <div class="row status-details">
+                <div class="col-md-1 no-right-padding">
+                    <span><%= render "#{@invoice.stripe_status}" %></span>
+                </div>
+                <div class="col-md-2 no-left-padding">
+                    <h6 class="font-14 semi-bold medium-gray no-horizontal-padding"><%= 'Payment' + ' ' + @invoice.stripe_status %></h6>
+                    <h6 class="font-13 medium-gray no-horizontal-padding"><%= @invoice.updated_at %></h6>
+                </div>
+            </div>
+            
+            <div class="row details">
+                <div class="col-md-12">
+                    <h6 class="bold medium-gray">Payment Details</h6>
+                    <div class="card">
+                        <div class="card-body">
                             <div class="row">
-                                <div class="col-md-12 text-right">
-                                    <h6 class="charge_id medium-gray">ID:</h6>
+                                <div class="col-md-2 text-right attributes">
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <h6 class="charge_id medium-gray">ID:</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <h6 class="charge_amount medium-gray">Amount:</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <h6 class="charge_date medium-gray">Date:</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <h6 class="charge_description medium-gray">Description:</h6>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 text-right">
-                                    <h6 class="charge_amount medium-gray">Amount:</h6>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 text-right">
-                                    <h6 class="charge_date medium-gray">Date:</h6>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 text-right">
-                                    <h6 class="charge_description medium-gray">Description:</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 text-left attributes-content">
-                            <div class="row">
-                                <div class="col-md-12 text-left">
-                                    <h6 class="charge_id"><%= @invoice.id %></h6>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 text-left">
-                                    <h6 class="charge_amount"><%= @invoice.amount %></h6>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 text-left">
-                                    <h6 class="charge_date"><%= to_mm_dd_yy(@invoice.updated_at) %></h6>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 text-left">
-                                    <h6 class="charge_description"><%= @invoice.description %></h6>
+                                <div class="col-md-4 text-left attributes-content">
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <h6 class="charge_id"><%= @invoice.id %></h6>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <h6 class="charge_amount"><%= @invoice.amount %></h6>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <h6 class="charge_date"><%= to_mm_dd_yy(@invoice.updated_at) %></h6>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <h6 class="charge_description"><%= @invoice.description %></h6>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

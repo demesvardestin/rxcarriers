@@ -1,0 +1,22 @@
+<%= form_for(@review, :html => {:id => "reviewForm", :multipart => true, :remote => true}) do |f| %>
+    <% if @review.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@review.errors.count, "error") %> prohibited this rx from being saved:</h2>
+    
+          <ul>
+          <% @review.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <div class="field">
+        <%= f.text_field :content, class:"form-control no-box-shadow no-border no-horizontal-padding", autofocus: true, placeholder:"Write your review", id:"review_input" %>
+    </div>
+    <div class="field">
+        <%= f.hidden_field :pharmacy_id, id:"batchId", class:"batch-id", value:"#{@pharmacy.id}" %>
+    </div>
+    <div class="actions">
+        <%= f.submit "Add", class:"btn btn-primary btn-block", style:"display: none;" %>
+    </div>
+<% end %>

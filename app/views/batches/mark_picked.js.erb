@@ -1,0 +1,10 @@
+$('#<%= @batch.id %>').hide();
+var today = parseInt($('.count_today').text());
+var week = parseInt($('.count_this_week').text());
+var month = parseInt($('.count_this_month').text());
+$('.count_today').html(today+1);
+$('.count_this_week').html(week+1);
+$('.count_this_month').html(month+1);
+if (<%= @batches.count %> == 0) {
+    $('#placeholder').show();
+}

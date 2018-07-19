@@ -51,7 +51,15 @@
   </div>
   <div class="field">
     <%= f.text_field :hours, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-    <label for="hours">What are you business hours? (Ex: 10AM - 6PM)</label>
+    <label for="hours">Weekday business hours (Ex: 9AM - 5PM or Closed)</label>
+  </div>
+  <div class="field">
+    <%= f.text_field :saturday, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
+    <label for="hours">Saturday business hours (Ex: 9AM - 5PM or Closed)</label>
+  </div>
+  <div class="field">
+    <%= f.text_field :sunday, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
+    <label for="hours">Sunday business hours (Ex: 9AM - 5PM or closed)</label>
   </div>
   <div class="field">
     <%= f.text_field :delivers, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>

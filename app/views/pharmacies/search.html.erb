@@ -2,21 +2,32 @@
     #main-body {
         background-color: #fff !important;
     }
+    .search-value {
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+    .prepend-box {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
 </style>
 
 <div class="container">
     <div class="col-md-12 no-horizontal-padding pharmacy-search-main-div" style="padding-top: 45px; padding-bottom: 15px; border-bottom: 1px solid #e1e1e2;">
-        <div class="row">
-            <div class="col-md-6">
-                <p style="font-size: 22px;">Get your prescriptions delivered to your door!</p>
+        <div class="row" style="height: 100% !important;">
+            <div class="col-md-6" style="height: 100% !important;">
+                <p style="font-size: 22px; vertical-align: middle;">Find an independent pharmacy near you!</p>
             </div>
             <div class="col-md-6 field search-div">
                 <form action="/pharmacy_search" method="get" id="pharmacySearchForm">
-                    <div class="input-group mb-3" style="border: 2px solid #e1e1e2; margin-top: -10px !important; border-radius: 20px !important;">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text background-transparent no-border no-box-shadow" id="basic-addon1"><i class="fa fa-search"></i></span>
-                        </div>
-                        <input class="form-control font-16 no-box-shadow no-border background-white no-horizontal-padding search-value" style="margin-top: 0 !important; border-radius: 20px !important;" id="new-pharmacy-search" name="new-pharmacy-searc" placeholder="Enter your address">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text background-transparent prepend-box" id="basic-addon1">
+                            <i class="fa fa-search"></i>
+                        </span>
+                      </div>
+                      <input class="form-control font-16 no-box-shadow search-value" style="margin-top: 0 !important;" id="new-pharmacy-search"
+                            name="new-pharmacy-search" placeholder="Enter your address" <% if params[:location] %>value="<%= params[:location] %>"<% end %>>
                     </div>
                 </form>
                 <button type="button" style="display: none;">Submit</button>
@@ -24,42 +35,22 @@
         </div>
     </div>
     <div class="col-md-12 no-horizontal-padding" style="padding-top: 30px; padding-bottom: 60px;">
-        <div id="searchIncentive">
+        <div id="searchResults">
+            <div class="add-padding-bottom"><p class="font-16 bold">Near you</p></div>
             <div style="display: none; padding: 70px;" id="bulletSpinner"><%= render 'common/bullet_spinner' %></div>
-            <div id="searchResults" class="row"></div>
-            <div class="row" id="searchIncentivePlaceholder">
-                <div class="col-md-3 add-margin-top">
-                    <div class="card box-shadow text-center" style="padding: 40px; height: 100%;">
-                        <i class="fa fa-search theme-blue" style="font-size: 50px;"></i><br />
-                        <h4 class="font-18">
-                            Find a pharmacy nearby
-                        </h4>
-                    </div>
-                </div>
-                <div class="col-md-3 add-margin-top">
-                    <div class="card box-shadow text-center" style="padding: 40px; height: 100%;">
-                        <i class="fa fa-volume-control-phone theme-yellow" style="font-size: 50px;"></i><br />
-                        <h4 class="font-18">
-                            Give them a quick call
-                        </h4>
-                    </div>
-                </div>
-                <div class="col-md-3 add-margin-top">
-                    <div class="card box-shadow text-center" style="padding: 40px; height: 100%;">
-                        <i class="fa fa-exchange theme-cyan" style="font-size: 50px;"></i><br />
-                        <h4 class="font-18">
-                            Transfer your prescriptions
-                        </h4>
-                    </div>
-                </div>
-                <div class="col-md-3 add-margin-top">
-                    <div class="card box-shadow text-center" style="padding: 40px; height: 100%;">
-                        <i class="fa fa-check-square-o theme-green" style="font-size: 50px;"></i><br />
-                        <h4 class="font-18">
-                            Enjoy your new, hassle-free life!
-                        </h4>
-                    </div>
-                </div>
+            <div class="row search-results">
+                <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
+                <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
+                <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
+                <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
+                <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
+                <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
+                <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
+                <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
+                <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
+                <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
+                <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
+                <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
             </div>
         </div>
     </div>
@@ -69,10 +60,11 @@
     var form = document.getElementById('pharmacySearchForm');
     form.addEventListener('submit', function(event) {
         event.preventDefault();
-        $('#searchIncentivePlaceholder').hide();
+        $('.search-results').remove();
         $('#bulletSpinner').show();
         var location = document.getElementById('new-pharmacy-search').value;
         $.get('/pharmacy_search?location='+location, function(data) {
+            $('.pharmacy-card-result').hide();
             $('#bulletSpinner').hide();
             $('#searchResults').html(data);
             $('.pharmacy-card-result').fadeIn();

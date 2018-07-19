@@ -1,0 +1,6 @@
+$('.remove-rx<%= @rx.id %>').remove();
+var count = <%= @batch.rxes.count %>;
+if (count == 0) {
+    document.getElementsByClassName('request_btn<%= @batch.id %>')[0].setAttribute('disabled', 'true');
+    $('#rxListPlaceholder<%= @batch.id %>').show();
+}

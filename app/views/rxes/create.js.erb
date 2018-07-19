@@ -1,0 +1,11 @@
+$('#rxListPlaceholder'+<%= @batch.id %>).hide();
+$('#rxList'+<%= @batch.id %>).show();
+$('#rxList'+<%= @batch.id %>)
+.append(`
+    <p class="font-14 badge badge-primary white remove-rx<%= @rx.id %>">
+        <%= @rx.rx %>
+        <span class="fa fa-times-circle cursor-pointer" id="<%= @batch.id %>" onclick="removeRx(<%= @rx.id %>, this)"></span>
+    </p>
+`);
+document.getElementsByClassName('request_btn<%= @batch.id %>')[0].removeAttribute('disabled');
+document.getElementById('#rxForm').reset();

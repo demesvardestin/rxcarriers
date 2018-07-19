@@ -33,6 +33,10 @@ class Invoice < ActiveRecord::Base
         end 
     end
     
+    def total
+        (self.value.to_i/100).to_f 
+    end
+    
     def shorten(obj)
         return obj[0..45] + '...' 
     end

@@ -1,1 +1,4 @@
-$('#<%= @batch.id %>').fadeOut();
+$('#<%= @batch.id %>').hide();
+if (<%= @batches.count %> == 0) {
+    $('#placeholder').show();
+}

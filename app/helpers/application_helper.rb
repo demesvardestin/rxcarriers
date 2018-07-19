@@ -86,4 +86,20 @@ module ApplicationHelper
         return "#{Rails.application.secrets.vapid_public}"
     end
     
+    def current_invoice
+        @invoice = Invoice.find_by(active: true, pharmacy_id: current_pharmacy.id)
+        if @invoice.nil?
+            @invoice = Invoice.create(active: true, pharmacy_id: current_pharmacy.id, value: '000')
+        end
+        @invoice
+    end
+    
+    def current_invoice_total
+        current_invoice.total
+    end
+    
+    def next_billing_date
+        to_mm_dd_yy(current_invoice.billing_date)
+    end
+    
 end

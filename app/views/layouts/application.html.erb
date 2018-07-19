@@ -60,23 +60,6 @@
         }
 
         // Pusher.logToConsole = true;
-        
-        toastr.options = {
-          "closeButton": true,
-          "debug": false,
-          "newestOnTop": true,
-          "progressBar": true,
-          "positionClass": "toast-top-right",
-          "preventDuplicates": false,
-          "showDuration": "300000",
-          "hideDuration": "1000",
-          "timeOut": "300000",
-          "extendedTimeOut": "1000",
-          "showEasing": "swing",
-          "hideEasing": "linear",
-          "showMethod": "fadeIn",
-          "hideMethod": "fadeOut"
-        };
     
         var pusher = new Pusher('6b4730083f66596ec97e', {
           cluster: 'us2',
@@ -84,54 +67,16 @@
         });
         
         var rx_channel = pusher.subscribe('new-rx');
-        var alert_channel = pusher.subscribe('rx-alert');
-        
-        alert_channel.bind('new-rx-alert', function(data) {
-          var pharmacy_id = data.pharmacy_i
-          if (current_pharma_id == pharmacy_id) {
-            var message = data.message;
-            var id = data.id;d;
-            var type = data.type;
-            var rx = data.rx;
-            toastr["success"](message);
-            console.log(type);
-          }
-        });
         
         rx_channel.bind('rx-request', function(data) {
           var pharmacy_id = data.pharmacy_id
           if (current_pharma_id == pharmacy_id) {
             var message = data.message;
             var id = data.id;
-            var time = data.time;
-            var type = data.type;
-            var rx = data.rx;
-            toastr["success"](message);
-            playSound('ping');
-            console.log(type);
-            $.get('/live_requests_dashboard', function(data) {
-              $('#liveRequestsUpdate').html(data);
-            });
-            if (type == 'delivery') {
-              var deliveriesToday = $('#deliveryRequestsToday').text();
-              $.get('/get_all_notifications', function(data) {
-                $('.notification-placeholder').hide();
-                $('#notificationsModalBody').html(data);
-              });
-              $('#deliveryRequestsToday').text(parseInt(deliveriesToday) + 1);
-              $('#newDeliveryRequest'+id).html(
-                '<span class="badge badge-success verified-alert-badge">' +
-                'Delivery request: ' + time + '</span>');
-            } else if (type == 'refill') {
-              var refillsToday = $('#refillsToday').text();
-              $.get('/get_all_notifications', function(data) {
-                $('.notification-placeholder').hide();
-                $('#notificationsModalBody').html(data);
-              });
-              $('#refillsToday').text(parseInt(refillsToday) + 1);
-              $('#newRefillRequest'+id).html(
-                '<span class="badge badge-success verified-alert-badge">' +
-                '<i class="fa fa-refresh"></i> Refill</span>');
+            var status = data.status;
+            $.get('/delivery_update?batch_id='+id+'&status='+status);
+            if (status == 'pickup completed') {
+              $.get('/mark_picked?id='+id);
             }
             var count = $('.badge-notif').text();
             if (count.length > 0) {
@@ -154,21 +99,23 @@
   <body id="main-body">
     <% if current_pharmacy %>
       <%= render 'layouts/pharmacy_top_nav' %>
-      <%= render 'pharmacies/pharmacy_home' %>
-      <div class="float-right" style="width: 80%;">
-        <div class="container main-page">
-          <div id="sound"></div>
-          <div class="card main-page-card">
-            <div class="card-body main-card">
-              <%= render 'layouts/notifications_modal' %>
-              <%= yield %>
+      <section id="layout" class="add-padding-top">
+        <%= render 'pharmacies/pharmacy_home' %>
+        <div class="float-right" style="width: 85%; padding-right: 15px;">
+          <div class="main-page">
+            <div id="sound"></div>
+            <div class="card main-page-card">
+              <div class="card-body main-card">
+                <%= render 'layouts/notifications_modal' %>
+                <%= yield %>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     <% else %>
       <%= render 'layouts/main_nav' %>
-      <div style="padding-top: 60px !important; padding-bottom: 40px;">
+      <div style="padding-top: 50px !important; height: 100%;">
         <%= yield %>
       </div>
     <% end %>

@@ -1,7 +1,6 @@
 <style>
     .requests-index-header {
         padding-bottom: 20px !important;
-        padding-top: 20px !important;
     }
     .main-card, .main-page-card {
         padding: none !important;
@@ -37,10 +36,9 @@
         margin-top: auto !important;
     }
     #supervisorSignature {
-        border-left: none !important;
-        border-right: none !important;
-        border: 1px solid #c5c5c6 !important;
-        border-radius: 0;
+        border: none;
+        border: 0.5px solid #c5c5c6 !important;
+        border-radius: 5px;
         box-shadow: none !important;
         padding-left: 5px !important;
         padding-top: 10px;
@@ -70,9 +68,9 @@
         border-bottom: 1px solid #e1e1e2;
     }
     .table-header-batch {
-        border-top: 1px solid #e1e1e2;
         border-bottom: 1px solid #e1e1e2;
         padding-top: 10px;
+        border-radius: 5px !important;
         padding-bottom: 10px;
         background-color: #e6ebf1;
         color: #59595a;
@@ -214,48 +212,40 @@
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card " style="margin-bottom: 10px;">
-                        <div class="card-body text-center" id="requestCountCard">
-                            <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="deliveriesSentToday"><%= deliveries_today %></span>
-                            <h6 class="font-13 medium-gray">deliveries sent today</h6></div>
+                    <div id="requestsToday">
+                        <div class="card " style="margin-bottom: 10px;">
+                            <div class="card-header background-cyan">
+                                <p class="font-16 white text-center" style="margin-bottom: 0;">New requests</p>
+                            </div>
+                            <div class="card-body text-center" id="requestCountCard">
+                                <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="deliveryRequestsToday"><%= requests_today %></span></div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div id="requestsToday">
-                        <a href="/rx?type=new&request_type=delivery&pharma_id=<%= current_pharmacy.id %>&sort_by=latest" class="background-transparent no-underline">
-                            <div class="card " style="margin-bottom: 10px;">
-                                <div class="card-body text-center" id="requestCountCard">
-                                    <div id="requestCountDetails"><span class="font-30 theme-blue semi-bold" id="deliveryRequestsToday"><%= requests_today %></span>
-                                    <h6 class="font-13 medium-gray">new delivery requests</h6></div>
-                                </div>
+                    <div class="card">
+                        <div class="card-header background-cyan white">
+                            <p class="font-16 white" style="margin-bottom: 0;">Requests processed</p>
+                        </div>
+                        <div class="card-body" style="padding: 0;">
+                            <div class="col-md-12" style="border-bottom: 1px solid #ced2da; padding: .75rem 1.25rem;">
+                                <p class="font-16">
+                                    <span class="text-left">Today:</span>
+                                    <span class="text-right theme-blue count_today"><%= refill_count_today %></span>
+                                </p>
                             </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="card ">
-                        <div class="card-body" style="padding: 10px !important;">
-                            <div id="supervisingPharmacist">
-                                <div>
-                                    <h6 class="font-14 medium-gray">
-                                        Current supervisor
-                                        <i class="fa fa-question-circle cursor-pointer" data-toggle="tooltip" data-placement="top"
-                                            title="Supervising PharmD on duty"></i>
-                                    </h6>
-                                </div>
-                                <div><h6 class="font-14 theme-blue" id="supervisorName"><%= current_pharmacy.supervisor || 'No pharmacy manager name provided' %></h6></div>
-                                <div class="input-group-prepend" id="supervisorDetails">
-                                    <span class="input-group-text background-transparent theme-blue" id="onDutyMDAddon">
-                                        <i class="fa fa-user-md"></i>
-                                    </span>
-                                    <form id="supervisorForm">
-                                        <input class="form-control font-12 " id="supervisorSignature" name="pharmacist" placeholder="Pharmacy manager">
-                                        <!--<button class="btn btn-success white" id="sendSupervisorName">-->
-                                        <!--    <i class="fa fa-check"></i>-->
-                                        <!--</button>-->
-                                    </form>
-                                </div>
+                            <div class="col-md-12" style="border-bottom: 1px solid #ced2da; padding: .75rem 1.25rem;">
+                                <p class="font-16">
+                                    <span class="text-left">This week:</span>
+                                    <span class="text-right theme-blue count_this_week"><%= refill_count_this_week %></span>
+                                </p>
+                            </div>
+                            <div class="col-md-12" style="padding: .75rem 1.25rem;">
+                                <p class="font-16">
+                                    <span class="text-left">This month:</span>
+                                    <span class="text-right theme-blue count_this_month"><%= refill_count_this_month %></span>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -266,7 +256,7 @@
             <div class="card batch-list-0">
                 <div id="scrollable">
                     <div id="scrollableChild">
-                        <div class="table-header-batch container">
+                        <div class="card-header background-cyan white font-16">
                             <div class="row">
                                 <div class="col-md-2">
                                     <span>Rx Number</span>
@@ -274,12 +264,12 @@
                                 <div class="col-md-3">
                                     <span>Time of request</span>
                                 </div>
-                                <div class="col-md-2">
-                                    <span>Actions</span>
+                                <div class="col-md-7">
+                                    <span>Mark as</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="table-body container" id="liveRequestsUpdate">
+                        <div class="card-body" id="liveRequestsUpdate" style="padding-top: 0;">
                             <% if @requests.present? %>
                                 <%= render 'all_requests' %>
                             <% else %>

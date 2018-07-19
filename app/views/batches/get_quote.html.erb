@@ -1,0 +1,7 @@
+<div class="text-center">
+    <h5>Estimated price</h5>
+    <p class="font-20 theme-blue">$<%= to_price(@quote.fee) %></p><br />
+    <button class="btn btn-primary btn-block font-18" id="<%= @batch.id %>" onclick="requestCourier(this)">
+        Request courier
+    </button>
+</div>

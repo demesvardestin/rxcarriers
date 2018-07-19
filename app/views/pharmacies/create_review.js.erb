@@ -1,0 +1,14 @@
+document.getElementById('review_input').value = '';
+var review_count = $('#review_count').text();
+$('#reviews').append(`
+    <div class="review">
+        <p class="author font-16 theme-blue">Anonymous</p>
+        <p class="font-16">
+           <span class="medium-gray">
+               "<%= @review.content %>"
+           </span> 
+        </p>
+    </div>
+`);
+$('#review_count').html(parseInt(review_count)+1);
+$('.review').fadeIn();

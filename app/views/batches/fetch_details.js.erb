@@ -1,0 +1,67 @@
+if (<%= @batch.status %> == 'initialized') {
+    getQuote(<%= @batch.id.to_s %>);
+    $('#deliveryDetailsModalBody<%= @batch.id %>').html(`
+        <div class="text-center">
+            <h5>Est. price</h5>
+            <p class="font-20 theme-blue">$<%= to_price(@quote.fee) %></p><br />
+            <button class="btn btn-primary btn-block font-18" id="<%= @batch.id %>" onclick="requestCourier(this)">
+                Request courier
+            </button>
+        </div>
+    `);
+} else {
+    $('#deliveryDetailsModalBody<%= @batch.id %>').html(`
+        <div class="text-center">
+            <h5 class="bold">Courier</h5>
+            <img src="<%= @batch.courier_avatar %>" height="80" style="border-radius: 40px; border: 1px solid #e1e1e2;">
+            <p class="font-16 add-margin-top">
+                Name: <span class="theme-blue"><%= @batch.courier_name %></span>
+            </p>
+            <p class="font-16">
+                Rating: <span class="theme-blue"><%= @batch.courier_rating %></span>
+            </p>
+            <p class="font-16">
+                Phone: <span class="theme-blue"><%= @batch.courier_phone_number %></span>
+            </p>
+            <hr>
+            <h5 class="bold">Delivery details</h5>
+            <p class="font-16">
+                Total: <span class="theme-blue">$<%= to_price(@batch.quote_price) %></span>
+            </p>
+            <p class="font-16">
+                Status: <span class="theme-blue"><%= @batch.status %></span>
+            </p>
+            <p class="font-16 add-margin-top">
+                <a class="btn btn-success white" href="<%= @batch.tracking_url%>" target="_blank">
+                    <i class="fa fa-clock-o"></i> Track this order on Postmates
+                </a>
+            </p>
+        </div>
+    `);
+}
+
+function getQuote(id) {
+    console.log('clicked');
+    var id = id;
+    $('#bulletSpinner')
+    .append('<p class="font-16 add-margin-top text-center">Getting delivery details...</p>');
+    $('#bulletSpinner').show();
+    $.get('/get_quote?batch_id='+id, function(data) {
+        $('#bulletSpinner').hide();
+        $('#bulletSpinner > p').remove();
+        $('#deliveryDetailsModalBody'+id).html(data);
+    })
+    .done(e => {
+        console.log('Quote retrieved!')
+    })
+    .fail(function(data) {
+        console.error(data);
+        $('#bulletSpinner').hide();
+        $('#bulletSpinner > p').remove();
+        $('#deliveryDetailsModalBody'+id)
+        .html(`<span class="theme-red font-16">Failed to retrieve estimate, 
+                try again later. If the problem persists, contact us.
+                </span>`
+            );
+    }
+}

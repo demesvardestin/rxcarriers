@@ -7,75 +7,235 @@
     }
 </style>
 
-<section id="pharmacyShowHeader">
-    <div class="jumbotron background-green add-padding-top no-border-radius">
-        <div class="container">
-            <h2 class="bold white" style="margin-top: 20px;"><%= @pharmacy.name %></h2>
-            <p class="font-16 white">
-                <%= "#{@distance.round(2)} miles" %> &bull;
-                <%= @pharmacy.full_address_without_zip %>
-            </p>
-            <button class="btn btn-primary" id="showDeliveryHours" style="border-radius: 30px;">
-                Delivery Hours
+<div class="modal" id="deliveryHours" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content box-shadow batch-list">
+        <div class="modal-header background-transparent">
+            <h5 class="modal-title font-18">Deliver Hours</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
             </button>
+        </div>
+        <div class="modal-body" style="padding-top: 20px !important;">
+            <div class="float-left" style="width: 33.3%;">
+                <p class="font-16">Monday</p>
+                <p class="font-16">Tuesday</p>
+                <p class="font-16">Wednesday</p>
+                <p class="font-16">Thursday</p>
+                <p class="font-16">Friday</p>
+                <p class="font-16">Saturday</p>
+                <p class="font-16">Sunday</p>
+            </div>
+            <div class="float-left" style="width: 66.6%;">
+                <p class="font-16"><%= @pharmacy.hours %></p>
+                <p class="font-16"><%= @pharmacy.hours %></p>
+                <p class="font-16"><%= @pharmacy.hours %></p>
+                <p class="font-16"><%= @pharmacy.hours %></p>
+                <p class="font-16"><%= @pharmacy.hours %></p>
+                <p class="font-16"><%= @pharmacy.saturday %></p>
+                <p class="font-16"><%= @pharmacy.sunday %></p>
+            </div>
+            <div class="row" style="width: 100%;">
+                <div class="col-md-12 add-padding-top">
+                    <p class="font-16 theme-yellow">Holiday hours may vary</p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="modal" id="contactInfo" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content box-shadow batch-list">
+        <div class="modal-header background-transparent">
+            <h5 class="modal-title font-18">Contact Info</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body text-center" style="padding-top: 20px !important;">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="font-16 bold">Pharmacist</p>
+                    <p class="font-16"><%= @pharmacy.supervisor %></p>
+                </div>
+                <div class="col-md-12">
+                    <p class="font-16 bold">Phone</p>
+                    <p class="font-16"><%= @pharmacy.number %></p>
+                </div>
+                <div class="col-md-12">
+                    <p class="font-16 bold">Email</p>
+                    <p class="font-16"><%= @pharmacy.email %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="modal" id="allReviews" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content box-shadow batch-list" style="padding-bottom: 0;">
+        <div class="modal-header background-transparent">
+            <h5 class="modal-title font-18">Reviews</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" style="padding-top: 20px !important; min-height: 180px;">
+            <div class="row">
+                <div class="col-md-12" id="reviews">
+                    <%= render partial: 'reviews', locals: {reviews: @pharmacy.reviews} %>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer" style="padding: 0 !important;">
+            <div class="col-md-12">
+                <%= render 'review_form' %>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<section id="pharmacyShowHeader">
+    <div class="jumbotron add-padding-top no-border-radius" style='background-image: url("/javascripts/background.jpg"); background-size: cover;'>
+        <div class="container pharmacy-banner">
+            <div class="row">
+                <div class="col-md-5">
+                    <h2 class="bold white" style="margin-top: 20px;"><%= @pharmacy.name %></h2>
+                    <p class="font-16 white">
+                        <%= "#{@distance.round(2)} miles" %> &bull;
+                        <%= @pharmacy.full_address_without_zip %>
+                    </p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button class="btn btn-light" style="border-radius: 30px;" data-toggle="modal" data-target="#deliveryHours">
+                                <i class="fa fa-clock-o"></i> Delivery Hours
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-light" style="border-radius: 30px;" data-toggle="modal" data-target="#contactInfo">
+                                <i class="fa fa-info-circle"></i> Contact Information
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
 <section id="prescriptionOrder">
-    <div class="col-md-12 no-horizontal-padding">
-        <div class="col-md-4 offset-md-4">
-            <div class="card box-shadow radius-5">
-                <div class="card-header background-transparent">
-                    <p class="font-18">Order a prescription</p>
-                </div>
-                <div class="card-body" style="padding-top: 10px !important; padding-bottom: 25px;">
-                    <div id="spinner" style="display: none;"><%= render 'common/bullet_spinner' %></div>
-                    <form method="get" id="rxOrderForm" action="order_prescription" style="padding: 0; margin: 0;">
-                        <div class="field">
-                            <input class="form-control form--control font-16" id="prescriptionNumber" name="prescription-number" placeholder=" ">
-                            <label for="prescription-number">Your rx number</label>
+    <div class="container">
+        <div class="col-md-12 no-horizontal-padding add-padding-bottom">
+            <div class="row">
+                <div class="col-md-4 add-margin-bottom-mobile">
+                    <div class="card radius-5" style="height: 100%;">
+                        <div class="card-header background-cyan">
+                            <p class="font-18 white"><span class="badge badge-light radius-5">1</span> Order your prescription</p>
                         </div>
-                        <div class="field">
-                            <input class="form-control form--control font-16" id="birthYear" name="birth-year" placeholder=" ">
-                            <label for="birth-year">Your birth year</label>
+                        <div class="card-body" style="padding-top: 10px !important; padding-bottom: 25px;">
+                            <div id="spinner0" style="display: none;"><%= render 'common/bullet_spinner' %></div>
+                            <div id="confirmationNumber" class="text-center"></div>
+                            <form method="post" id="rxOrderForm" action="/order_prescriptions" data-remote="true" style="padding: 0; margin: 0;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="field" style="padding-top: 20px;">
+                                            <input class="form-control font-14 radius-5" id="rxNumbers" name="rx_numbers" placeholder="Separated by a comma">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="field">
+                                            <input class="form-control font-14 radius-5" id="birthYear" name="birth_year" placeholder="Birth year">
+                                        </div>
+                                        <div class="field" style="display: none;">
+                                            <input class="form-control form--control font-16" id="pharmacyId" name="pharmacy_id" value="<%= @pharmacy.id %>" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="field">
+                                            <input class="form-control font-14 radius-5" id="phoneNumber" name="phone_number" placeholder="Phone number">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="actions text-center" style="margin-top: 25px;">
+                                    <button class="btn btn-primary">
+                                        <i class="fa fa-paper-plane-o"></i> Submit order
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                        <div class="actions text-center" style="margin-top: 25px;">
-                            <button class="btn btn-primary">
-                                <i class="fa fa-paper-plane-o"></i> Submit order
-                            </button>
+                    </div>
+                </div>
+                <div class="col-md-4 add-margin-top-mobile add-margin-bottom-mobile">
+                    <div class="card radius-5" style="height: 100% !important;">
+                        <div class="card-header background-cyan">
+                            <p class="font-18 white"><span class="badge badge-light radius-5">2</span> Track your order</p>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="card box-shadow radius-5" style="margin-top: 20px;">
-                <div class="card-header background-transparent">
-                    <p class="font-18">Track an order</p>
-                </div>
-                <div class="card-body" style="padding-top: 10px !important; padding-bottom: 25px;">
-                    <div id="spinner1" style="display: none;"><%= render 'common/bullet_spinner' %></div>
-                    <form method="get" id="orderTrackingForm" action="track_order" style="padding: 0; margin: 0;">
-                        <div class="field">
-                            <input class="form-control form--control font-16" id="prescriptionNumber" name="prescription-number" placeholder=" ">
-                            <label for="prescription-number">Your order number</label>
+                        <div class="card-body" style="padding-top: 10px !important; padding-bottom: 25px;">
+                            <div id="spinner1" style="display: none;"><%= render 'common/bullet_spinner' %></div>
+                            <div id="orderStatus" class="text-center"></div>
+                            <form method="get" id="orderTrackingForm" action="/track_order" data-remote="true" style="padding: 0; margin: 0;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="field" style="padding-top: 20px;">
+                                            <input class="form-control font-16 radius-5" id="confirmationNumber" name="confirmation_number" placeholder="Confirmation number">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="actions text-center" style="margin-top: 25px;">
+                                    <button class="btn btn-primary">
+                                        <i class="fa fa-location-arrow"></i> Track order status
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                        <div class="actions text-center" style="margin-top: 25px;">
-                            <button class="btn btn-primary">
-                                <i class="fa fa-location-arrow"></i> Track order status
-                            </button>
+                    </div>
+                </div>
+                <div class="col-md-4 add-margin-top-mobile">
+                    <div class="card radius-5" style="height: 100% !important;">
+                        <div class="card-header background-cyan">
+                            <p class="font-18 white"><span class="badge badge-light radius-5">3</span> Add a quick review</p>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="card box-shadow radius-5" style="margin-top: 20px;">
-                <div class="card-header background-transparent">
-                    <p class="font-18">Reviews</p>
-                </div>
-                <div class="card-body" style="padding-top: 10px !important; padding-bottom: 25px;">
-                    <div id="spinner2" style="display: none;"><%= render 'common/bullet_spinner' %></div>
-                    <p class="font-16"><em>No reviews yet</em></p>
+                        <div class="card-body" style="padding-top: 10px !important; padding-bottom: 25px;">
+                            <div id="spinner2" style="display: none;"><%= render 'common/bullet_spinner' %></div>
+                            <% if @pharmacy.reviews.empty? %>
+                                <p class="font-16"><em>No reviews yet</em></p>
+                            <% else %>
+                                <%= render partial: 'reviews', locals: {reviews: @pharmacy.reviews.last(3)} %>
+                            <% end %>
+                            <div class="text-right">
+                                <button class="btn btn-link font-16 theme-blue" style="margin-bottom: 0 !important; padding: 0;" data-toggle="modal" data-target="#allReviews">
+                                    All reviews (<span id="review_count"><%= @pharmacy.reviews.count %></span>) <i class="fa fa-angle-double-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+    $('#rxOrderForm').on('submit', e => {
+        $('#rxOrderForm').hide();
+        $('#spinner0').show();
+    });
+    
+    $('#orderTrackingForm').on('submit', e => {
+        $('#orderTrackingForm').hide();
+        $('#spinner1').show();
+    });
+    
+    function showForm() {
+        $('#confirmationNumber')
+        .html('').hide();
+        $('#rxOrderForm').show();
+    }
+    
+    function showTrackerForm() {
+        $('#orderStatus')
+        .html('').hide();
+        $('#orderTrackingForm').show();
+    }
+</script>

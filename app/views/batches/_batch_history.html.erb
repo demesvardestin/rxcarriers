@@ -1,0 +1,67 @@
+<% batches.reverse.each do |batch| %>
+    <div class="modal fade" id="deliveryDetails<%= batch.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 75%; left: 12.5%;">
+          <div class="modal-header">
+            <h5 class="modal-title font-14" id="exampleModalLabel"><i class="fa fa-car"></i> Delivery</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+                <div id="deliveryDetailsModalBody<%= batch.id %>">
+                    <%= render partial: 'courier', locals: {batch: batch} if batch.courier_requested %>
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom: 15px;" id="<%= batch.id %>">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-3">
+                    <h6 class="bold">
+                        #<%= batch.auto_id %>
+                    </h6>
+                </div>
+                <div class="col-md-2 offset-md-7">
+                    <div class="dropdown">
+                        <button class="btn btn-primary btn-block transaction-buttons dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <%= link_to batch_path(batch), class:"dropdown-item theme-red", remote: true, method: :delete do %>
+                                <i class="fa fa-times-circle"></i> Delete
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-7">
+                    <h6>Rx list:</h6>
+                    <% if batch.rxes.count == 0 %>
+                        <p class="font-14 theme-blue" id="rxListPlaceholder<%= batch.id %>">
+                            This bag is empty
+                        </p>
+                    <% else %>
+                        <div id="rxList<%= batch.id %>">
+                            <% batch.rxes.each do |r| %>
+                                <p class="font-14 badge badge-primary white remove-rx<%= r.id %>">
+                                    <%= r.rx %>
+                                </p>
+                            <% end %>
+                        </div>
+                    <% end %>
+                </div>
+                <div class="col-md-5 text-right">
+                    <button id="requestACourier" class="btn btn-info box-shadow white" data-toggle="modal" data-target="#deliveryDetails<%= batch.id %>">
+                        <p class="font-14 white"><i class="fa fa-file-text-o"></i> Delivery details</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+<% end %>

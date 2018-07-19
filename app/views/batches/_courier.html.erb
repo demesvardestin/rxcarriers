@@ -1,0 +1,26 @@
+<div class="text-center">
+    <h5 class="bold">Courier</h5>
+    <img src="<%= batch.courier_avatar %>" height="80" style="border-radius: 40px; border: 1px solid #e1e1e2;">
+    <p class="font-16 add-margin-top">
+        Name: <span class="theme-blue"><%= batch.courier_name %></span>
+    </p>
+    <p class="font-16">
+        Rating: <span class="theme-blue"><%= batch.courier_rating %></span>
+    </p>
+    <p class="font-16">
+        Phone: <span class="theme-blue"><%= batch.courier_phone_number %></span>
+    </p>
+    <hr>
+    <h5 class="bold">Delivery details</h5>
+    <p class="font-16">
+        Total: <span class="theme-blue">$<%= to_price(batch.quote_price) %></span>
+    </p>
+    <p class="font-16">
+        Status: <span class="theme-blue"><%= batch.status %></span>
+    </p>
+    <p class="font-16 add-margin-top">
+        <a class="btn btn-success white" href="<%= batch.tracking_url%>" target="_blank">
+            <i class="fa fa-clock-o"></i> Track this order on Postmates
+        </a>
+    </p>
+</div>

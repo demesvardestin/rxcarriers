@@ -134,8 +134,7 @@ class DeliveriesController < ApplicationController
   end
   
   def dashboard
-    @refills = RequestAlert.where(pharmacy_id: current_pharmacy.id, active: true)
-    @requests = @refills
+    @requests = Rx.where(pharmacy_id: current_pharmacy.id, deleted: false, processed: false)
   end
   
   def live_requests_dashboard

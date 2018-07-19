@@ -31,95 +31,34 @@
 </style>
 
 <div class="row" id="updateProfile">
-    <div class="col-md-12">
-        <h5 class="weighted bold">Settings</h5>
-        <hr>
-    </div>
-    <div class="col-md-3">
-        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-          <a class="nav-link active nav-link-settings font-14" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Account</a>
-          <a class="nav-link nav-link-settings font-14" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Billing</a>
-        </div>
-        <section class="notice" style="display: none;">
-            <div class="alert alert-success no-border-radius alert-dismissible fade show notice-alert" role="alert">
-                <i class="fa fa-check-circle"></i>
-                <span class="notice-text"><%= notice %></span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body" style="padding-bottom: 20px;">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                  <a class="nav-link active nav-link-settings font-14" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Account</a>
+                  <a class="nav-link nav-link-settings font-14" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Billing</a>
+                </div>
+                <section class="notice" style="display: none;">
+                    <div class="alert alert-success no-border-radius alert-dismissible fade show notice-alert" role="alert">
+                        <i class="fa fa-check-circle"></i>
+                        <span class="notice-text"><%= notice %></span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </section>
             </div>
-        </section>
+        </div>
     </div>
-    <div class="col-md-8 offset-md-1">
+    <div class="col-md-8">
         <div class="tab-content" id="v-pills-tabContent">
-            <div class="tab-pane fade show active box-shadow bordered" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" style="padding: 10px 15px;">
+            <div class="tab-pane fade show active bordered background-white" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" style="padding: 10px 15px; border-radius: 5px;">
                 <%= render 'form' %>
             </div>
             <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" id="">
                 <div id="currentPlan" class="row">
-                    <div class="col-md-12" style="padding-bottom: 20px;">
-                        <h6 class="font-16 bold">Plan</h6>
-                        <hr>
-                        <div class="float-left" style="width: 47.5%;">
-                            <div class="card">
-                                <div class="card-header background-blue white font-16 text-center">
-                                    Startup
-                                </div>
-                                <div class="card-body background-dark font-24 white text-center" style="padding: 40px;">
-                                    <b>$99.99</b> </span class="font-14">/month</span>
-                                </div>
-                                <div class="card-footer font-14 text-center" style="padding-bottom: 20px;">
-                                    <div>
-                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Search page visibility</h5>
-                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Unlimited notifications</h5>
-                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> 2000 message limit</h5>
-                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> 1000 calls limit</h5>
-                                        <h5 class="weighted font-14"><i class="fa fa-times theme-red"></i> Activity summary analysis</h5>
-                                        <h5 class="weighted font-14"><i class="fa fa-times theme-red"></i> Weekly stats report emails</h5>
-                                    </div>
-                                    <div class="add-padding-top">
-                                        <a class="btn btn-primary btn-block no-box-shadow" <% if check_current_plan('beginner') == 'This is your current plan'%>id="cancelSubscription"<% end %>>
-                                            <%= check_current_plan('beginner') %>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="float-left" style="width: 5%;"></div>
-                        <div class="float-right" style="width: 47.5%;">
-                            <div class="card">
-                                <div class="card-header background-blue white font-16 text-center">
-                                    Pro
-                                </div>
-                                <div class="card-body background-dark font-24 white text-center" style="padding: 40px;">
-                                    <b>$129.99</b> </span class="font-14">/month</span>
-                                </div>
-                                <div class="card-footer font-14 text-center" style="padding-bottom: 20px;">
-                                    <div>
-                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Sponsored search page visibility</h5>
-                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Unlimited notifications</h5>
-                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Unlimited text messages</h5>
-                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Unlimited calls</h5>
-                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Activity summary analysis</h5>
-                                        <h5 class="weighted font-14"><i class="fa fa-check theme-green"></i> Weekly stats report emails</h5>
-                                    </div>
-                                    <div class="add-padding-top">
-                                        <a class="btn btn-primary btn-block" <% if check_current_plan('beginner') == 'This is your current plan'%>id="cancelSubscription"<% end %>>
-                                            <%= check_current_plan('pro') %>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-md-12">
-                        <h6 class="font-16 bold">Debit/Credit Card</h6>
-                        <hr>
-                    </div>
-                    <div class="col-md-12">
-                        <div id="pharmacyCard" class="box-shadow bordered" style="padding: 10px 15px;">
+                        <div id="pharmacyCard" class="bordered background-white radius-5" style="padding: 10px 15px;">
                             <% if current_pharmacy.card_token %>
                                 <%= render 'card_data' %>
                             <% else %>

@@ -1,6 +1,8 @@
 class Rx < ActiveRecord::Base
     
     has_many :delivery_requests
+    belongs_to :batch
+    belongs_to :pharmacy
     
     # validates_presence_of :rx
     # validates
@@ -85,6 +87,21 @@ class Rx < ActiveRecord::Base
     
     def object?
         return self.is_a?(Rx) 
+    end
+    
+    def self.sanitized?(list)
+        bad_words = 'shit, fuck, fucked, nigga, bitch, ass, pussy, cunt, dick, cock, cum, nigg'
+        sanitized = false
+        obscenities = 0
+        bad_words.split(', ').each do |b|
+            obscenities += 1 if list.include?(b)
+        end
+        sanitized = true unless obscenities > 0
+        return sanitized
+    end
+    
+    def self.generate_confirmation
+        rand(1000000..9999999)
     end
     
 end

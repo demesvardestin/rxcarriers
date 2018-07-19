@@ -1,0 +1,11 @@
+console.log('approved');
+$('#spinner1').hide();
+document.getElementById('confirmationNumber').value = '';
+$('#orderStatus').html(`
+    <p class="font-18">Your order</p>
+    <p class="font-18 theme-green bold"><%= @status %></p>
+    <br />
+    <button class="btn btn-primary" onclick="showTrackerForm();">
+        Track another order
+    </button>
+`).show();

@@ -38,6 +38,9 @@ body {
     font-family: 'Open Sans', sans-serif !important;
     color: #525f7f;
 }
+p {
+    font-family: 'Roboto', sans-serif !important;
+}
 #page-loader {
     width: 30px;
     height: 30px;
@@ -77,8 +80,14 @@ a:hover {
 .background-purple {
     background-color: #7264a5 !important;
 }
+.theme-purple {
+    color: #7264a5 !important;
+}
 .background-cyan {
     background-color: #1cc7c7 !important;
+}
+.border-cyan {
+    border: 1px solid #1cc7c7 !important;
 }
 .half-bright{
     -webkit-filter: brightness(200%);
@@ -97,7 +106,7 @@ div.card-header.background-cyan {
     background-color: #56c681 !important;
 }
 .background-gray {
-    background-color: #707071 !important;
+    background-color: #e7e7e7 !important;
 }
 .background-dark {
     background-color: #454d5e !important;
@@ -117,6 +126,7 @@ div.card-header.background-cyan {
 .main-nav {
     background-color: #3484c6;
     box-shadow: none;
+    padding-bottom: 10px !important;
 }
 .driver-nav {
     background-color: transparent;
@@ -132,7 +142,7 @@ div.card-header.background-cyan {
 }
 .logo {
     color: #fff;
-    letter-spacing: 3px;
+    // letter-spacing: 3px;
 }
 .driver-nav-logo {
     color: #3484c6;
@@ -173,14 +183,14 @@ div.card-header.background-cyan {
     padding-bottom: 9px;
 }
 .card {
-    border: 1px solid #e5e5e5 !important;
+    border: 0.5px solid #ced2da !important;
     border-radius: 0;
 }
-.form-control, .input-group-text {
-    border-radius: 0 !important;
+.form-control {
+    border-radius: 0;
 }
 .btn, .card {
-    border-radius: 2px;
+    border-radius: 5px;
 }
 .border-radius {
     border-radius: 2px !important;
@@ -192,6 +202,7 @@ div.card-header.background-cyan {
 .main-page-card {
     // box-shadow: 0 5px 15px rgba(84,96,103,.25);
     border: none !important;
+    background-color: transparent !important;
 }
 .page-logo {
     padding-bottom: 10px;
@@ -220,7 +231,7 @@ div#rxCol {
     padding: 5px 0;
     border-bottom: 1px solid #e1e1e2;
 }
-.no-display {
+.no-display, .hidden {
     display: none !important;
 }
 #searchMyRx {
@@ -253,7 +264,7 @@ div#rxCol {
     padding-left: 0 !important;
 }
 .main-card {
-    padding-top: 0;
+    padding-top: 0 !important;
 }
 .theme-blue {
     color: #4095e3 !important;
@@ -370,13 +381,10 @@ div#rxCol {
 .box-shadow {
     box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
 }
-#updateProfile {
-    padding: 40px;
-}
 .form--control {
-    border: none;
-    border-radius: 0 !important;
-    border-bottom: 1px solid #e1e1e2;
+    border: none !important;
+    border-radius: 0;
+    border-bottom: 1px solid #e1e1e2 !important;
     box-shadow: none !important;
     padding: 0 !important;
 }
@@ -522,6 +530,10 @@ div#rxCol {
 .border-blue {
     border-color: #4095e3 !important;
 }
+.reduced-padding {
+    padding-left: 5px;
+    padding-right: 5px;
+}
 .font-50 {
     font-size: 50px !important;
 }
@@ -614,6 +626,9 @@ div#rxCol {
 }
 .add-margin-top {
     margin-top: 10px;
+}
+.add-margin-bottom {
+    margin-bottom: 10px;
 }
 .verified-alert-badge {
     background-color: transparent;
@@ -942,6 +957,9 @@ div#rxCol {
     box-shadow: inset 0px 0px 5px #010115;
     height: 100vw !important;
 }
+.fixed {
+    position: fixed !important;
+}
 .white {
     color: #fff !important;
 }
@@ -1061,13 +1079,21 @@ div#rxCol {
 }
 .cta-login {
     background-color: transparent !important;
-    border-radius: 3px !important;
-    border: 2px solid #fff;
+    border-radius: 20px !important;
+    padding: 10px 20px !important;
+    border: 1px solid #fff;
+}
+.cta-signup, .cta-signup:hover {
+    background-color: #fff !important;
+    border-radius: 20px !important;
+    padding: 10px 20px !important;
+    border: 1px solid #fff !important;
+    color: #4095e3 !important;
 }
 .cta-login:hover {
-    background-color: #fff !important;
+    // background-color: #fff !important;
     color: #4095e3 !important;
-    border: 2px solid #fff !important;
+    border: 1px solid #fff !important;
 }
 .settings-header {
     padding-left: 15px;
@@ -1183,7 +1209,8 @@ div#rxCol {
     border: 1px solid #e1e1e2;
     padding-bottom: 70px;
     padding-top: 30px;
-    box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
+    border-radius: 5px;
+    // box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
 }
 #loginBox, #signupBox {
     border: 1px solid #e1e1e2;
@@ -1615,5 +1642,18 @@ input:focus + label {
     }
     div.card-header.pharmacy {
         text-align: left !important;
+    }
+    .pharmacy-banner {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .add-margin-top-mobile {
+        margin-top: 10px !important;
+    }
+    .add-margin-bottom-mobile {
+        margin-bottom: 10px !important;
+    }
+    .mbm {
+        padding-bottom: 50px !important;
     }
 }

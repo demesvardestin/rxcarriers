@@ -11,7 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180617235203) do
+ActiveRecord::Schema.define(version: 20180716190902) do
+
+  create_table "batches", force: :cascade do |t|
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "name"
+    t.integer  "pharmacy_id"
+    t.boolean  "deleted"
+    t.string   "auto_id"
+    t.boolean  "delivered"
+    t.time     "requested_at"
+    t.string   "address"
+    t.string   "phone_number"
+    t.string   "quote_id"
+    t.integer  "quote_price"
+    t.string   "courier_name"
+    t.string   "courier_rating"
+    t.string   "courier_vehicle_type"
+    t.string   "courier_phone_number"
+    t.string   "courier_avatar"
+    t.string   "delivery_id"
+    t.boolean  "courier_requested"
+    t.string   "tracking_url"
+    t.string   "status"
+  end
 
   create_table "deliveries", force: :cascade do |t|
     t.datetime "created_at",             null: false
@@ -79,6 +103,7 @@ ActiveRecord::Schema.define(version: 20180617235203) do
     t.datetime "billing_date"
     t.string   "stripe_status"
     t.string   "value"
+    t.boolean  "active"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -155,6 +180,8 @@ ActiveRecord::Schema.define(version: 20180617235203) do
     t.boolean  "on_trial"
     t.string   "hours"
     t.string   "delivers"
+    t.string   "saturday"
+    t.string   "sunday"
   end
 
   add_index "pharmacies", ["email"], name: "index_pharmacies_on_email"
@@ -191,6 +218,14 @@ ActiveRecord::Schema.define(version: 20180617235203) do
     t.integer  "pharmacy_id"
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.string   "content"
+    t.integer  "pharmacy_id"
+    t.boolean  "flagged"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "rxes", force: :cascade do |t|
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
@@ -207,6 +242,11 @@ ActiveRecord::Schema.define(version: 20180617235203) do
     t.boolean  "delivery_requested"
     t.string   "dob"
     t.boolean  "refill_requested"
+    t.time     "requested_at"
+    t.boolean  "processed"
+    t.boolean  "deleted"
+    t.string   "birth_year"
+    t.string   "confirmation"
   end
 
   create_table "sendgrid_emails", force: :cascade do |t|

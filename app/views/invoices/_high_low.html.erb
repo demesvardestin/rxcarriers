@@ -1,29 +1,29 @@
 <% @pharmacy.invoices.desc_amount.each do |c| %>
-    <div id="charge" class="col-md-12 table-content charge<%= c.id %>" name="<%= c.id %>" status="<%= c.stripe_status %>">
+    <div id="charge" class="charge<%= c.id %>" name="<%= c.id %>" status="<%= c.stripe_status %>">
         <div class="row">
-            <div class="col-md-1 no-right-padding">
+            <div class="col-md-1">
                 <span data-toggle="tooltip" data-placement="top" title="Payment <%= c.stripe_status %>"><%= render c.stripe_status %></span>
             </div>
-            <div class="col-md-1 no-horizontal-padding">
+            <div class="col-md-1">
                 <span class="theme-blue"><strong><%= to_dollar(c.value) %></strong></span>
             </div>
-            <div class="col-md-1 no-horizontal-padding">
+            <div class="col-md-1">
                 <%= c.currency %>
             </div>
-            <div class="col-md-4 no-horizontal-padding">
+            <div class="col-md-4">
                 <%= c.shorten(c.description) %>
             </div>
-            <div class="col-md-3 offset-md-1 no-horizontal-padding">
+            <div class="col-md-3">
                 <%= to_mm_dd_yy(c.updated_at) %>
             </div>
-            <div class="col-md-1 no-horizontal-padding">
+            <div class="col-md-1">
                 <a class="dropdown-toggle ellipsis" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-ellipsis-h"></i>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                     <a class="dropdown-item disabled">Action</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item show-charge-link" id="charge-link-id" href="/invoices/<%= c.id %>">
+                    <a class="dropdown-item show-charge-link" id="charge-link-id" href="/transactions/<%= c.id %>">
                         <span class="theme-blue">View charge <i class="fa fa-arrow-right"></i></span>
                     </a>
                 </div>

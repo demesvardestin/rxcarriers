@@ -11,15 +11,11 @@ class Pharmacy < ActiveRecord::Base
     has_many :patients, :as => :patable
     has_many :invoices
     has_many :deliveries
+    has_many :reviews
     
     # validations
     has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>", placeholder: '/images/user_full.png' }
     validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
-    # validates :name, presence: true
-    # validates :street, presence: true
-    # validates :number, uniqueness: true, presence: true
-    # validates :website, presence: true
-    # validates :email, {uniqueness: true, presence: true}
     
     # methods
     
@@ -57,7 +53,7 @@ class Pharmacy < ActiveRecord::Base
     end
     
     def slug
-        unslug = self.name << ' ' + self.town + ' ' + self.state
+        unslug = self.name + ' ' + self.town + ' ' + self.state
         return unslug.downcase.split(' ').join('-')
     end
     
@@ -111,7 +107,7 @@ class Pharmacy < ActiveRecord::Base
     def delivery
       case self.delivers.downcase
       when 'yes'
-        'Always delivers'
+        'Free delivery'
       when 'no'
         'Does not deliver'
       else

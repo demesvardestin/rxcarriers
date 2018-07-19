@@ -1,14 +1,32 @@
 class PharmaciesController < ApplicationController
   before_action :set_pharmacy, only: [:update, :destroy]
-  before_action :check_current_pharmacy, except: [:home, :contact, :blog, :terms, :privacy, :press, :search, :search_pharmacy, :show]
+  before_action :check_current_pharmacy, except: [:home, :contact, :blog, :terms,
+                :privacy, :press, :search, :search_pharmacy, :show, :create_review,
+                :landing]
   before_action :check_parameters, only: [:show]
   
   def edit
     @pharmacy = current_pharmacy
   end
   
-  def show
+  def landing
     
+  end
+  
+  def show
+    @review = Review.new
+  end
+  
+  def create_review
+    @pharmacy = Pharmacy.find_by(id: params[:id])
+    @review = Review.new(review_params)
+    respond_to do |format|
+      if @review.save
+        format.js {render 'create_review', :layout => false}
+      else
+        format.js {render 'review_error', :layout => false}
+      end
+    end
   end
   
   def billing
@@ -93,7 +111,11 @@ class PharmaciesController < ApplicationController
   end
   
   def search
-    
+    @location = params[:location]
+    @pharmacies = Pharmacy.search_nearby(@location)
+    if @pharmacies == 'Invalid location'
+      @invalid = @pharmacies
+    end
   end
   
   def update_card
@@ -199,6 +221,9 @@ class PharmaciesController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
+    def review_params
+      params.require(:review).permit(:content, :pharmacy_id)
+    end
     def pharmacy_params
       params.require(:pharmacy).permit(:name, :street, :number, :supervisor, :website, :card_number, 
       :town, :state, :zipcode, :avatar, :hours, :delivers)

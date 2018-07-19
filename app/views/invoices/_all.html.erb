@@ -1,22 +1,22 @@
 <% @pharmacy.invoices.each do |c| %>
-    <div id="charge" class="col-md-12 table-content charge<%= c.id %>" name="<%= c.id %>" status="<%= c.stripe_status %>">
+    <div id="charge" class="charge<%= c.id %>" name="<%= c.id %>" status="<%= c.stripe_status %>">
         <div class="row">
-            <div class="col-md-1 no-right-padding">
+            <div class="col-md-1">
                 <span data-toggle="tooltip" data-placement="top" title="Payment <%= c.stripe_status %>"><%= render c.stripe_status %></span>
             </div>
-            <div class="col-md-1 no-horizontal-padding">
+            <div class="col-md-1">
                 <span class="theme-blue"><strong><%= to_dollar(c.value) %></strong></span>
             </div>
-            <div class="col-md-1 no-horizontal-padding">
+            <div class="col-md-1">
                 <%= c.currency %>
             </div>
-            <div class="col-md-4 no-horizontal-padding">
+            <div class="col-md-4">
                 <%= c.shorten(c.description) %>
             </div>
-            <div class="col-md-3 offset-md-1 no-horizontal-padding">
+            <div class="col-md-3">
                 <%= to_mm_dd_yy(c.updated_at) %>
             </div>
-            <div class="col-md-1 no-horizontal-padding">
+            <div class="col-md-1">
                 <a class="dropdown-toggle ellipsis" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-ellipsis-h"></i>
                 </a>
@@ -31,19 +31,3 @@
         </div>
     </div>
 <% end %>
-
-<script>
-    // $('.pending').on('click', function() {
-    //     // $('#charge').hide();
-    //     $('.spinner-row').show();
-    //     var elems = document.getElementsByClassName('table-content');
-    //     for (i=0;i<elems.length;i++) {
-    //         var name = elems[i].attributes[2].value
-    //         $('.charge'+name.toString()).hide();
-    //         if (elems[i].attributes[3].value == 'pending') {
-    //             $('.charge'+name.toString()).show();
-    //             console.log(name);
-    //         }
-    //     }
-    // });
-</script>

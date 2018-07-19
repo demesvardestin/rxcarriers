@@ -35,7 +35,7 @@ module PharmaciesHelper
     # end
     
     def home
-        url.include?("/dashboard")
+        url.include?("/dashboard") || url.ends_with?('https://udemy-class-demo07.c9users.io/') || url == 'https://www.rxcarriers.com'
     end
     
     def request_path
@@ -46,12 +46,16 @@ module PharmaciesHelper
         url.include?('/settings') || url.include?('/choose_subscription') 
     end
     
-    def rx_list_path
-        url.include?('/rx') 
+    def history_path
+        url.include?('/payment-history') || url.include?('/transaction') 
     end
     
-    def patients_path
-        url.include?('/patients') 
+    def bag_history_path
+        url.include?('/bag-history')
+    end
+    
+    def bags_path
+        url.include?('/bags') 
     end
     
     def payments_path
