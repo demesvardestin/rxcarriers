@@ -5,6 +5,6 @@ class AddDeliveryDetailsToOrders < ActiveRecord::Migration
     add_column :orders, :phone_number, :string
     add_column :orders, :apartment_number, :string
     add_column :orders, :processed, :boolean
-    add_column :orders, :requested_at, :date_time
+    add_column :orders, :requested_at, :datetime
   end
 end
