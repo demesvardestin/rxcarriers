@@ -71,7 +71,7 @@ $( document ).on('turbolinks:load', function() {
         $.get('/dismiss_all_notifications');
     });
     
-    $('.nav-item').on('click', e => {
+    $('.nav-item').on('click', function() {
         $('SOURCE#pingMP3').remove();
     });
     
@@ -99,7 +99,7 @@ $( document ).on('turbolinks:load', function() {
         $('.spinner-row').show();
     });
     
-    $('#updateProfile').on('submit', e => {
+    $('#updateProfile').on('submit', function() {
         $('#v-pills-home').html(`
             <div class="row">
                 <div class="col-md-12 text-center">
