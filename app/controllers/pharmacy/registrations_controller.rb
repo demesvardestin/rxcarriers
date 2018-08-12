@@ -15,9 +15,5 @@ class Pharmacy::RegistrationsController < Devise::RegistrationsController
     def after_sign_up_path_for(resource)
         getting_started_path
     end
-    
-    def after_sign_out_path_for(resource)
-        pharmacy_log_in_path 
-    end
 
 end

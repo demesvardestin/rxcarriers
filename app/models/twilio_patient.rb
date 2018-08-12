@@ -147,13 +147,6 @@ class TwilioPatient < ActiveRecord::Base
         end
     end
     
-    def self.twilio(type=nil, pharmacy=nil)
-        message = self.get_message(type, pharmacy)
-        twilio = self.initialize_twilio
-        twilio_phone = ENV["TWILIO_PHONE"]
-        return message, twilio, twilio_phone
-    end
-    
     def self.twilio
         twilio = self.initialize_twilio
         twilio_phone = ENV["TWILIO_PHONE"]

@@ -119,10 +119,10 @@ class Pharmacy < ActiveRecord::Base
     end
     
     def delivery
-      case self.delivers.downcase
-      when 'yes'
+      case self.delivery_option.downcase
+      when 'delivers'
         'Free delivery'
-      when 'no'
+      when 'does not deliver'
         'Does not deliver'
       else
         'Does not always deliver'
@@ -130,10 +130,10 @@ class Pharmacy < ActiveRecord::Base
     end
     
     def delivery_color
-      case self.delivers.downcase
-      when 'yes'
+      case self.delivery_option.downcase
+      when 'delivers'
         'theme-green'
-      when 'no'
+      when 'does not deliver'
         'theme-red'
       else
         'theme-yellow'

@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   devise_scope :pharmacy do
     get 'pharmacy/login', to: 'devise/sessions#new'
     get 'pharmacy/signup', to: 'devise/registrations#new'
+    get 'pharmacy/retrieve-password', to: 'devise/passwords#edit'
   end
   
   

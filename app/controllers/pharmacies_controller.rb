@@ -246,6 +246,9 @@ class PharmaciesController < ApplicationController
     @order.update(processed: true, status: 'processed', delivered: false)
     @orders = Order.all.where(pharmacy_id: current_pharmacy.id, processed: false, status: 'pending', online: true)
     ## TEXT CUSTOMER ORDER UPDATE
+    @pharmacy = Pharmacy.find_by(id: @order.pharmacy_id)
+    message = "Good news! Your order is now being prepared by #{@pharmacy.name}."
+    TwilioPatient.alert_patient(@order.phone, @pharmacy, message)
     render :layout => false
   end
   
@@ -265,6 +268,9 @@ class PharmaciesController < ApplicationController
       stripe_cus: @order.stripe_charge_id
     )
     ## TEXT CUSTOMER ORDER UPDATE
+    @pharmacy = Pharmacy.find_by(id: @order.pharmacy_id)
+    message = "Hey there, just confirming that your order has been cancelled. A refund should be on the way soon."
+    TwilioPatient.alert_patient(@order.phone, @pharmacy, message)
     render :layout => false
   end
   
@@ -277,6 +283,9 @@ class PharmaciesController < ApplicationController
     @order.update(processed: true, status: 'delivered', delivered: true)
     @orders = Order.all.where(pharmacy_id: current_pharmacy.id, delivered: false, status: 'processed')
     ## TEXT CUSTOMER ORDER UPDATE
+    @pharmacy = Pharmacy.find_by(id: @order.pharmacy_id)
+    message = "Great news! Your order is now on the way. Keep your phone handy, as the courier may attempt to call you upon arrival."
+    TwilioPatient.alert_patient(@order.phone, @pharmacy, message)
     render :layout => false
   end
   
