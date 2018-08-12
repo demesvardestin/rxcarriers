@@ -1,0 +1,26 @@
+<div class="modal" id="trackOrderModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content box-shadow batch-list" style="padding-bottom: 0; margin-top: 100px;">
+        <div class="modal-header background-transparent">
+            <h5 class="font-18 bold">
+                <i class="fa fa-map-marker"></i> Track my order
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+            </button>
+        </div>
+        <div class="modal-body" id="orderStatusBody" style="padding-top: 20px; padding-bottom: 20px;">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <form id="orderTrackingForm" data-remote="true" method="get" action="/track_order">
+                        <input type="text" class="form-control" name="order_number" id="orderNumber" placeholder="Order number" value="<%= @order.confirmation if @order %>">
+                        <button type="submit" role="button" class="btn btn-success btn-block box-shadow white" style="margin-top: 15px;">
+                            Track order status
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

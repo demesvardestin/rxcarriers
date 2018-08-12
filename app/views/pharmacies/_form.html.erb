@@ -12,68 +12,44 @@
   <% end %>
   
   <div class="field">
-    <%= f.text_field :name, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-    <label for="name">Pharmacy Name</label>
+    <%= f.text_field :name, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy name" %>
   </div>
   <div class="field">
-    <%= f.text_field :number, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-    <label for="number">Phone Number</label>
+    <%= f.text_field :number, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy phone number" %>
   </div>
   <div class="field">
-    <%= f.text_field :supervisor, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-    <label for="supervisor">Supervisor</label>
+    <%= f.text_field :supervisor, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy manager/supervisor" %>
   </div>
   <div class="row">
     <div class="col-md-5">
       <div class="field">
-        <%= f.text_field :street, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-        <label for="street">Street</label>
+        <%= f.text_field :street, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy street address" %>
       </div>
     </div>
     <div class="col-md-3">
       <div class="field">
-        <%= f.text_field :town, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-        <label for="town">Town</label>
+        <%= f.text_field :town, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy town" %>
       </div>
     </div>
     <div class="col-md-2">
       <div class="field">
-        <%= f.text_field :state, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-        <label for="state">State</label>
+        <%= f.text_field :state, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy state" %>
       </div>
     </div>
     <div class="col-md-2">
       <div class="field">
-        <%= f.text_field :zipcode, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-        <label for="zipcode">Zipcode</label>
+        <%= f.text_field :zipcode, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy zipcode" %>
       </div>
     </div>
   </div>
   <div class="field">
-    <%= f.text_field :hours, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-    <label for="hours">Weekday business hours (Ex: 9AM - 5PM or Closed)</label>
-  </div>
-  <div class="field">
-    <%= f.text_field :saturday, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-    <label for="hours">Saturday business hours (Ex: 9AM - 5PM or Closed)</label>
-  </div>
-  <div class="field">
-    <%= f.text_field :sunday, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-    <label for="hours">Sunday business hours (Ex: 9AM - 5PM or closed)</label>
-  </div>
-  <div class="field">
-    <%= f.text_field :delivers, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-    <label for="delivers">Do you deliver? (Ex: yes, no, or sometimes)</label>
-  </div>
-  <div class="field">
-    <%= f.text_field :website, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-    <label for="website">Website</label>
+    <%= f.text_field :website, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:" " %>
   </div>
   <!--<div class="field">-->
   <!--  <%= f.label :pharmacy_logo %>-->
-  <!--  <%= f.file_field :avatar, class:"form-control font-14" %>-->
+  <!--  <%= f.file_field :avatar, class:"form-control no-box-shadow height-50 font-14" %>-->
   <!--</div>-->
   <div class="actions text-right">
-    <%= f.submit "Update!", class:"btn btn-info font-14 btn-lg cursor-pointer update-profile" %>
+    <%= f.submit "Update!", class:"btn btn-info font-14 btn-lg cursor-pointer update-profile height-50" %>
   </div>
 <% end %>

@@ -7,7 +7,7 @@
     }
 </style>
 
-<div class="add-padding-bottom"><p class="font-16 bold">Near you</p></div>
+<div class="add-padding-bottom"><p class="font-16 bold"><%= pluralize(@pharmacies.size, 'pharmacy') %> found</p></div>
 <div style="display: none; padding: 70px;" id="bulletSpinner"><%= render 'common/bullet_spinner' %></div>
 <div class="row search-results">
     <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
@@ -22,4 +22,8 @@
     <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
     <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
     <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+    </div>
 </div>

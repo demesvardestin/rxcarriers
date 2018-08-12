@@ -16,7 +16,7 @@
 <% else %>
     <% pharmacies.each do |pharma| %>
         <div class="col-md-3" style="height: auto;">
-            <a href="<%= pharma.url + '?original_location=' + @location %>" class="background-transparent no-underline">
+            <a href="<%= pharma.url + '?original_location=' + @param %>" class="background-transparent no-underline">
                 <div class="card no-border text-center pharmacy-card-result" style="height: 100%; margin-bottom: 15px !important;">
                     <div class="card-header background-cyan text-center pharmacy" style="padding-top: 30px; padding-bottom: 30px;">
                         <img src="/javascripts/pharmacy.png" height="50">
@@ -27,7 +27,7 @@
                                 <p class="font-14 bold"><%= pharma.name %></p>
                                 <p class="font-14">
                                     <span class="<%= pharma.delivery_color %>"><%= pharma.delivery %></span> &bull;
-                                    <span class="theme-blue"><%= "#{pharma.distance_to(@location).round(2)} miles" %></span>
+                                    <span class="theme-blue"><%= "#{pharma.distance_to(request.location.latitude.to_s + ', ' + request.location.longitude.to_s).round(2)} miles" %></span>
                                 </p>
                             </div>
                         </div>

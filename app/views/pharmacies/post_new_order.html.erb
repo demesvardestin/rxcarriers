@@ -1,0 +1,76 @@
+<% unless @order.processed %>
+    <div class="modal" id="orderDetails<%= @order.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" id="orderDetailsContent<%= @order.id %>">
+            <div class="modal-header background-transparent">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <%= @order.confirmation %>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" style="padding-bottom: 20px;">
+                        <p class="font-16 bold">Items ordered</p>
+                    </div>
+                </div>
+                <% @order.item_list_array.each_with_index do |i, idx| %>
+                    <div class="row">
+                        <div class="col-md-12 add-margin-bottom">
+                            <div class="float-left theme-green" style="width: 10%;">
+                                <p class="font-16 theme-blue"><%= @order.item_list_count_array[idx] %></p>
+                            </div>
+                            <div class="float-right" style="width: 90%;">
+                                <p class="font-16"><%= @order.get_item(i).name %></p>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
+                <div class="row">
+                    <div class="col-md-12" style="padding-top: 20px; padding-bottom: 20px;">
+                        <p class="font-16 bold">Delivery details</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="font-16 add-margin-bottom"><%= @order.street_address %><%= ' ' + @order.apartment_number if @order.apartment_number %></p>
+                        <p class="font-16 add-margin-bottom"><%= @order.town_state_zipcode %></p>
+                        <p class="font-16 add-margin-bottom"><%= @order.phone_number %></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" id="orderDetailsModalFooter<%= @order.id %>">
+                <%= link_to cancel_order_path(:id => @order.id), class:"btn btn-danger box-shadow", id:"cancelButton#{@order.id}", remote: true do %>
+                    <i class="fa fa-times-circle"></i> Cancel order
+                <% end %>
+                <%= link_to process_order_path(:id => @order.id), class:"btn btn-success box-shadow", id:"processButton#{@order.id}", remote: true do %>
+                    <i class="fa fa-check-circle"></i> Process order
+                <% end %>
+            </div>
+        </div>
+      </div>
+    </div>
+<% end %>
+<div class="col-md-3 add-padding-bottom" id="orderBox<%= @order.id %>">
+    <a class="background-transparent no-underline cursor-pointer" data-toggle="modal" data-target="#orderDetails<%= @order.id %>">
+        <div class="card">
+            <div class="card-header">
+                <h6><%= @order.confirmation %></h6>
+            </div>
+            <div class="card-body">
+                <% @order.item_list_array.each_with_index do |i, idx| %>
+                    <div class="col-md-12 no-horizontal-padding">
+                        <div class="float-left theme-green" style="width: 15%;">
+                            <%= @order.item_list_count_array[idx] %>
+                        </div>
+                        <div class="float-right" style="width: 85%;">
+                            <%= @order.get_item(i).minify_name(20) %>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </a>
+</div>

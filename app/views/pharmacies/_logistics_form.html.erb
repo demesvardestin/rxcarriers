@@ -1,0 +1,29 @@
+<%= form_for(@pharmacy, :html => {:id => "profileForm",:multipart => true, :remote => true}) do |f| %>
+  <% if @pharmacy.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pharmacy.errors.count, "error") %> prohibited your information from being saved:</h2>
+
+      <ul>
+      <% @pharmacy.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="field">
+    <%= f.text_field :hours, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Weekday business hours (Ex: 9AM - 5PM or Closed)" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :saturday, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Saturday business hours (Ex: 9AM - 5PM or Closed)" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :sunday, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Sunday business hours (Ex: 9AM - 5PM or closed)" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :delivers, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Do you deliver? (Ex: yes, no, or sometimes)" %>
+  </div>
+  <div class="actions text-right">
+    <%= f.submit "Update!", class:"btn btn-info font-14 btn-lg cursor-pointer update-profile height-50" %>
+  </div>
+<% end %>

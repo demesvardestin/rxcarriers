@@ -1,0 +1,7 @@
+var count = <%= @items.count %>;
+$('#alreadyExists').hide();
+$('#itemNDC').css('border-color', '#b4b4b4');
+if (count > 0) {
+    $('#itemNDC').css('border-color', 'red');
+    alert('This item already exists');
+}

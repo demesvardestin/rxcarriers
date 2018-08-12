@@ -1,0 +1,48 @@
+<div class="row" style="margin-top: 40px;" id="prePOS">
+    <div class="col-md-4 offset-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>In-store sale</h5>
+            </div>
+            <div class="card-body text-center">
+                <button class="btn btn-primary" id="startSale" onclick="startSale()">
+                    Start new sale
+                </button>
+                <input class="form-control height-50" id="inStoreItemSaleSearch" placeholder="Item name or ndc" onkeyup="inStoreItemSaleSearch()" style="display: none;">
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="row" style="display: none;" id="pointOfSale">-->
+<!--    <div class="col-md-4" style="border-right: 1px solid #b4b4b4;">-->
+<!--        <div class="row" style="min-height: 350px;">-->
+<!--            <div class="col-md-8">-->
+<!--                <h5></h5>-->
+<!--            </div>-->
+<!--            <div class="col-md-4">-->
+<!--                <h5>$</h5>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <hr>-->
+<!--        <div class="row">-->
+<!--            <div class="col-md-8">-->
+<!--                <h5>Subtotal</h5>-->
+<!--            </div>-->
+<!--            <div class="col-md-4">-->
+<!--                <h5>$<%= @cart.sale_total %></h5>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="col-md-8">-->
+        
+<!--    </div>-->
+<!--</div>-->
+
+<script>
+    function startSale() {
+        // $('/initiate_in_store_sale', e => {
+            // $('#prePOS').hide();
+            $('#inStoreItemSaleSearch').show();
+        // });
+    }
+</script>

@@ -1,6 +1,33 @@
 Rails.application.routes.draw do
-  
 
+  namespace :admin do
+    resources :shoppers
+    resources :pharmacies
+    resources :batches
+    resources :carts
+    resources :deliveries
+    resources :delivery_hours
+    resources :inventories
+    resources :invoices
+    resources :items
+    resources :item_categories
+    resources :notifications
+    resources :orders
+    resources :refunds
+    resources :request_alerts
+    resources :reviews
+    resources :rxes
+    resources :sendgrid_emails
+    resources :stripe_plans
+    resources :terms_and_agreements
+    resources :twilio_patients
+    resources :users
+
+    root to: "pharmacies#pharmacies"
+  end
+
+  devise_for :shoppers
+  devise_for :customers
   # devise controller path
   devise_for :pharmacies, :controllers => {:registrations => "pharmacy/registrations"}
   devise_scope :pharmacy do
@@ -31,7 +58,7 @@ Rails.application.routes.draw do
   get 'patient_search', to: 'patients#patient_search'
   get 'pharmacy/search', to: 'pharmacies#index'
   get 'pharmacy/:id/settings', to: 'pharmacies#edit', as: "account_settings"
-  get '/payment-history', to: 'invoices#index'
+  get '/payment-settings', to: 'invoices#index'
   get 'batches', to: 'batches#index'
   get 'not-found', to: 'drivers#not_found'
   get 'invoices/:id/delete', to: 'invoices#destroy'
@@ -52,8 +79,9 @@ Rails.application.routes.draw do
   get '/get_delivery_details/:id', to: 'batches#get_delivery_details'
   get '/deliveries_today', to: 'batches#deliveries_today'
   get '/update_supervisor', to: 'batches#update_supervisor'
-  get '/notifications', to: 'batches#notifications'
-  get '/notifications/mark_as_read', to: 'batches#clear_notifications'
+  get '/notifications', to: 'pharmacies#notifications'
+  get '/fetch_notification', to: 'pharmacies#fetch_notification'
+  get '/mark_read', to: 'pharmacies#mark_read'
   get '/dismiss_notification', to: 'deliveries#dismiss_notification'
   get '/dismiss_all_notifications', to: 'deliveries#dismiss_all_notifications'
   get 'update_profile', to: 'pharmacies#update_profile'
@@ -74,7 +102,7 @@ Rails.application.routes.draw do
   get '/update_rx_status', to: 'deliveries#update_rx_status'
   get '/rx_search', to: 'deliveries#rx_search'
   get '/add_new_rx', to: 'deliveries#add_new_rx'
-  get '/dashboard', to: 'deliveries#dashboard'
+  get '/dashboard', to: 'pharmacies#dashboard'
   get '/update_rx_phone_number', to: 'deliveries#update_rx_phone_number'
   get '/live_requests_dashboard', to: 'deliveries#live_requests_dashboard'
   get '/set_invalid_rx', to: 'deliveries#set_invalid_rx'
@@ -109,20 +137,54 @@ Rails.application.routes.draw do
   post '/test', to: 'batches#test_'
   get '/cancel_courier_request', to: 'batches#cancel_courier_request'
   post '/order_prescriptions', to: 'rxes#order_prescriptions'
-  get '/track_order', to: 'rxes#track_order'
   post '/reviews', to: 'pharmacies#create_review'
+  post '/add_item_to_cart', to: 'carts#add_item'
+  post '/remove_item_from_cart', to: 'carts#remove_item'
+  post '/clear_cart', to: 'carts#clear_cart'
+  get '/submit_order', to: 'carts#process_payment'
+  get '/checkout', to: 'carts#show'
+  get '/order_queue', to: 'pharmacies#queue'
+  get '/inventory', to: 'pharmacies#inventory'
+  post '/items', to: 'pharmacies#create_item'
+  patch '/items/:id', to: 'pharmacies#update_item'
+  get '/expiring_soon', to: 'pharmacies#expiring_soon'
+  get '/remove_filters', to: 'pharmacies#remove_filters'
+  get '/low_available_count', to: 'pharmacies#low_available_count'
+  get '/search_item', to: 'pharmacies#search_item'
+  get '/validate_presence', to: 'pharmacies#validate_presence'
+  get '/remove_item', to: 'pharmacies#remove_item'
+  get '/reg_a_pharma', to: 'pharmacies#reg_a_pharma', as: 'register'
+  get '/calculate_tip', to: 'carts#calculate_tip'
+  get '/confirmation', to: 'carts#confirmation'
+  get '/track_order', to: 'carts#track_order_status'
+  get '/analytics', to: 'pharmacies#analytics'
+  get '/analytics_weekly', to: 'pharmacies#analytics_weekly'
+  get '/analytics_monthly', to: 'pharmacies#analytics_monthly'
+  get '/analytics_annually', to: 'pharmacies#analytics_annually'
+  get '/analytics_overall', to: 'pharmacies#analytics_overall'
+  get '/process_order', to: 'pharmacies#process_order'
+  get '/cancel_order', to: 'pharmacies#cancel_order'
+  get '/send_for_delivery', to: 'pharmacies#send_for_delivery'
+  get '/post_new_order', to: 'pharmacies#post_new_order'
+  get '/in-store', to: 'pharmacies#in_store'
+  get '/initiate_in_store_sale', to: 'carts#initiate_in_store_sale'
+  get '/register-a-pharmacy', to: 'pharmacies#register_your_pharmacy'
+  post '/registration_requests', to: 'pharmacies#submit_registration_request'
+  get '/getting_started', to: 'pharmacies#getting_started'
   
   # resource path
   resources :invoices, only: [:create, :show, :index, :destroy]
   resources :batches
-  resources :reviews, onl: [:create, :index]
+  resources :reviews, only: [:create, :index]
+  resources :items
   resources :rxes, only: [:create, :index]
   resources :pharmacies
   resources :deliveries, only: [:create, :show, :edit, :update, :destroy]
+  resources :help_tickets, only: [:index, :create]
   
   # authenticated devise models root path
   authenticated :pharmacy do
-    root 'deliveries#dashboard', as: :authenticated_pharmacy_root
+    root 'pharmacies#dashboard', as: :authenticated_pharmacy_root
   end
   
   # root path

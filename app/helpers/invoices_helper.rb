@@ -88,21 +88,21 @@ module InvoicesHelper
     
     def invoice_sort
         url = request.original_url
-        url_end = url[url.index("/payment-history")..-1]
+        url_end = url[url.index("/payment-settings")..-1]
         case url_end
-            when "/payment-history?status=pending"
+            when "/payment-settings?status=pending"
                 "pending_payments"
-            when "/payment-history?status=succeeded"
+            when "/payment-settings?status=succeeded"
                 "succeeded_payments"
-            when "/payment-history?status=failed"
+            when "/payment-settings?status=failed"
                 "failed_payments"
-            when "/payment-history?amount=asc"
+            when "/payment-settings?amount=asc"
                 "low_high"
-            when "/payment-history?amount=desc"
+            when "/payment-settings?amount=desc"
                 "high_low"
-            when "/payment-history?date=asc"
+            when "/payment-settings?date=asc"
                 "old_new"
-            when "/payment-history?date=desc"
+            when "/payment-settings?date=desc"
                 "new_old"
             else
                 "all"

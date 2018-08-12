@@ -1,0 +1,5 @@
+$('#inventoryItems').html(`
+    <%= render partial: 'inventory_item', locals: {items: @items} %>
+`);
+document.getElementById('itemForm').reset();
+toastr["success"]('Item successfully added!');

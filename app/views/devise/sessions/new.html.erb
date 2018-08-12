@@ -2,30 +2,44 @@
 
 <div class="row" id="pharmacy-login">
   <div class="col-md-4 offset-md-4 pharmacy-login-form" style="background: #fff !important;">
-    <div class="header"><h4 class="text-center medium-gray"><%= path %> login</h4></div>
+    <div class="header">
+      <h5 class="text-center medium-gray"><%= path %> login</h5>
+      <hr style="text-align: center; width: 25%;">
+    </div>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <%= devise_error_messages! %>
+      <% if !devise_error_messages!.empty? %>
+        <div id="error_explanation">
+          <ul>
+            <li><%= devise_error_messages! %></li>
+          </ul>
+        </div>
+      <% end %>
     
-      <div class="field">
-        <%= f.email_field :email, class:"form-control form--control font-14", autofocus: true, placeholder:" " %>
-        <label for="email">Email</label>
+      <div class="field" style="margin-bottom: 0 !important;">
+        <%= f.email_field :email, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"Email" %>
       </div>
     
-      <div class="field">
-        <%= f.password_field :password, class:"form-control form--control font-14", autocomplete: "off", placeholder:" " %>
-        <label for="password">Password</label>
+      <div class="field" style="margin-bottom: 0 !important;">
+        <%= f.password_field :password, class:"form-control height-50 no-box-shadow", autocomplete: "off", placeholder:"Password" %>
       </div>
     
-      <div class="actions" style="padding-top: 30px;">
+      <div class="actions" style="margin-top: 10px;">
         <div class="row">
           <div class="col-md-12">
-            <%= f.submit "Log in", class:"btn btn-primary btn-block" %>
+            <%= f.submit "Log in", class:"btn btn-primary btn-block box-shadow height-50 log-in", id:"logIn" %>
           </div>
           <div class="col-md-12 add-padding-top">
-            <%= link_to "Don't have an account? Register here", pharmacy_signup_path, class:"btn btn-link btn-block" %>
+            <%= link_to "Don't have an account? Register here", register_a_pharmacy_path, class:"btn btn-link btn-block" %>
           </div>
         </div>
       </div>
     <% end %>
   </div>
 </div>
+
+<script>
+  $('#new_pharmacy').on('submit', e => {
+    $('#logIn').css('opacity', '0.7');
+    document.getElementById('logIn').value = 'Logging you in...';
+  });
+</script>

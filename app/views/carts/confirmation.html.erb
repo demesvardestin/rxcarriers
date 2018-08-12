@@ -1,0 +1,203 @@
+<div class="jumbotron no-border-radius" style="height: 350px; margin-bottom: 0; background-image: url('/images/gradient_background.jpg'); background-size: cover;"></div>
+
+<section id="receiptCard" style="margin-top: -350px !important; padding-bottom: 40px;">
+    <div class="col-md-8 offset-md-2" style="margin-top: 40px;">
+        <div class="confirmation-text-box" style="margin-bottom: 20px;">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4 class="white">Thanks for ordering!</h4>
+                    <p class="font-16 white">
+                       Estimated delivery <i class="fa fa-clock-o" style="margin-left: 20px;"></i> <%= estimated_delivery %>
+                    </p>
+                    <p class="font-14 white">
+                       Check out your receipt details below.<br />
+                       Keep your phone near you. We may try to call you!
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-warning btn-block box-shadow white">
+                        Refer a friend & get $5
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card box-shadow">
+            <div class="card-header background-transparent" style="border-bottom: 1px dotted #b4b4b4;">
+                <span class="font-20 float-left" style="margin-top: 10px;">Order details</span>
+                <span class="font-16 float-right">
+                    <button class="btn btn-primary background-transparent theme-blue">
+                        <i class="fa fa-print"></i> Print receipt
+                    </button>    
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 add-border-bottom">
+                        <div id="orderedFrom">
+                            <h6 class="black">
+                                Ordered from
+                            </h6>
+                            <h6 class="bold">
+                                <%= @cart.get_pharmacy.name %>
+                            </h6>
+                            <h6>
+                                <a class="background-transparent cursor-pointer theme-blue" href="tel:+1<%= @cart.get_pharmacy.number %>">
+                                    <%= @cart.get_pharmacy.number %>
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="deliveryTo" style="margin-top: 20px;">
+                            <h6 class="black">
+                                Delivery to
+                            </h6>
+                            <h6>
+                                <%= @cart.order.street_address_with_apartment %>
+                            </h6>
+                            <h6>
+                                <%= @cart.order.town_state_zipcode %>
+                            </h6>
+                            <h6>
+                                <%= @cart.order.phone_number %>
+                            </h6>
+                        </div>
+                        <div id="orderConfirmation" style="margin-top: 20px;">
+                            <h6 class="black">
+                                Order number
+                            </h6>
+                            <h6>
+                                <%= @cart.order.confirmation %>
+                            </h6>
+                        </div>
+                        <div id="orderConfirmation" style="margin-top: 20px;">
+                            <h6 class="black">
+                                Order date
+                            </h6>
+                            <h6>
+                                <%= @cart.order.requested_at.strftime('%m/%d/%y %l:%M %p') %>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="col-md-4 add-border-bottom">
+                        <div id="trackOrder">
+                            <h6 class="black">Track your order</h6>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 align="center">Get real-time status updates!</h6>
+                                    <div align="center">
+                                        <button class="btn btn-success box-shadow" data-toggle="modal" data-target="#trackOrderModal">
+                                            <i class="fa fa-map-marker"></i> Track my order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 add-border-bottom">
+                        <div id="orderInfo">
+                            <h6 class="black" style="margin-bottom: 20px;">
+                                Order information
+                            </h6>
+                            <% @cart.item_list_array.each_with_index do |i, idx| %>
+                                <div id="orderItem<%= i %>" class="dotted-bottom">
+                                    <h6 style="margin-top: 10px;">
+                                        <span class="theme-green " style="margin-right: 5px;">
+                                            <%= @cart.item_list_count_array[idx] %>
+                                        </span>
+                                        <span><%= get_item(i).shorten_name %></span>
+                                    </h6>
+                                </div>
+                            <% end %>
+                            <div class="card no-border" style="margin-top: 20px; background-color: #f0f0f0;">
+                                <div class="card-body">
+                                    <div class="float-left">
+                                        <p class="font-16">Items subtotal:</p>
+                                        <p class="font-16">Sales tax:</p>
+                                        <p class="font-16"><span id="tipPercent"><%= @cart.tip %></span> Tip:</p>
+                                    </div>
+                                    <div class="float-right">
+                                        <p class="font-16 theme-blue">$<%= @cart.get_total_cost %></p>
+                                        <p class="font-16 theme-blue">$<%= @cart.calculate_tax %></p>
+                                        <p class="font-16 theme-blue">$<span id="tipAmt"><%= @cart.get_tip %></span></p>
+                                    </div>
+                                </div>
+                                <div class="card-footer background-transparent" style="border-top: 1px dotted #b4b4b4;">
+                                    <p class="font-16 bold no-margin-bottom float-left">Total:</p>
+                                    <p class="font-16 theme-blue bold no-margin-bottom float-right">$<%= @cart.sale_total %></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer background-transparent">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <i class="fa fa-question-circle float-left" style="font-size: 22px;"></i>
+                                <span class="font-16 bold float-left" style="margin-left: 10px;">
+                                    Billing or support questions?
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="font-16" style="margin-left: 28px;">
+                                    <a class="background-transparent theme-blue add-margin-top" href="mailto:hello@rxcarriers.com">
+                                        Contact us
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 offset-md-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <i class="fa fa-bullhorn float-left" style="font-size: 22px;"></i>
+                                <span class="font-16 bold float-left" style="margin-left: 10px;">
+                                    Delivery issues?
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="font-16" style="margin-left: 32px;">
+                                    Call <%= @cart.get_pharmacy.name %> at <%= @cart.get_pharmacy.number %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $('#orderTrackingForm').on('submit', e => {
+        $('#orderStatusBody').html(`
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
+                </div>
+            </div>
+            <div class="row add-margin-top">
+                <div class="col-md-12 text-center">
+                    <h6>Fetching your order's status...</h6>
+                </div>
+            </div>
+        `);
+    });
+    
+    function trackAnotherOrder() {
+        $('#orderStatusBody').html(`
+            <div class="col-md-6 offset-md-3">
+                <form id="orderTrackingForm" data-remote="true" method="get" action="/track_order">
+                    <input type="text" class="form-control" name="order_number" id="orderNumber" placeholder="Order number" value="<%= @order.confirmation if @order %>">
+                    <button type="submit" role="button" class="btn btn-success btn-block box-shadow white" style="margin-top: 15px;">
+                        Track order status
+                    </button>
+                </form>
+            </div>
+        `);
+    }
+</script>

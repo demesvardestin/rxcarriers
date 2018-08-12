@@ -1,0 +1,60 @@
+<div class="col-md-12 add-margin-bottom">
+    <h5 class="font-18 black" id="<%= category.name.split(' ').join('_') %>"><%= category.name %></h5>
+    <hr>
+</div>
+<% items.where(:item_category_id => category.id).each do |i| %>
+    <div class="modal" id="itemOrderDetails<%= i.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content no-border-radius" id="modalContent<%= i.id %>">
+          <div class="modal-header background-transparent no-border-bottom">
+            <h4 class="modal-title black" id="exampleModalLabel"><%= i.name %>
+                <span class="font-18 badge badge-primary" stle="margin-left: 5px;"><%= i.item_size %></span>
+            </h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class="theme-green font-16">$<%= i.price %></p>
+            <div id="itemImageContainer" style="margin-bottom: 80px;"></div>
+            <textarea class="form-control no-box-shadow" placeholder="Special instructions" id="specialInstructions<%= i.id %>" style="height: 80px;"></textarea>
+          </div>
+            <div class="modal-footer" id="modalFooter<%= i.id %>">
+                <% if i.in_cart(present_cart) %>
+                    <button class="btn btn-danger box-shadow remove-from-cart<%= i.id %>" id="<%= i.id %>" onclick="removeFromCart(this)">
+                        <i class="fa fa-times-circle"></i> Remove (<span id="setForRemoval<%= i.id %>"><%= present_cart.total(i) %></span>) from cart
+                    </button>
+                <% elsif @pharmacy.is_not_related_to(present_cart) %>
+                    <a class="btn btn-link theme-blue" id="<%= i.id %>" href="<%= checkout_link %>">
+                        You have an incomplete order from <%= present_cart.get_pharmacy.name %>
+                    </a>
+                <% else %>
+                    <div class="text-left">
+                        <button class="btn btn-secondary box-shadow decrease-item-count<%= i.id %>" id="<%= i.id %>" style="padding-left: 15px; padding-right: 15px;"
+                            disabled="true" onclick="decreaseItemCount(this);">-</button>
+                        <span id="itemCount<%= i.id %>" class="font-16 bold text-center radius-5"
+                            style="margin-left: 5px; margin-right: 5px; border: 1px solid #e1e1e2; padding: 11px 15px; vertical-align: middle; font-size: 14px; line-height: 1.5;">
+                            0</span>
+                        <button class="btn btn-secondary box-shadow add-item-count<%= i.id %>" id="<%= i.id %>" style="padding-left: 15px; padding-right: 15px;"
+                            onclick="increaseItemCount(this);">+</button>
+                    </div>
+                    <button class="btn btn-primary box-shadow add-to-cart<%= i.id %>" id="<%= i.id %>" disabled onclick="addToCart(this)">
+                        <i class="fa fa-plus-circle"></i> Add to cart
+                    </button>
+                <% end %>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 pharmacy-item" id="itemCol-<%= i.id %>" style="padding-bottom: 30px;">
+        <div class="card light-border no-border-radius">
+            <a class="background-transparent no-underline cursor-pointer" <% if @pharmacy.is_not_related_to(present_cart) %>disabled<% end %> data-toggle="modal" data-target="#itemOrderDetails<%= i.id %>">
+                <div class="card-body">
+                    <p class="font-16 no-margin-bottom" style="font-weight: 600;" id="itemName-<%= i.id %>"><%= i.name %></p>
+                    <p class="font-16 medium-gray"><%= i.item_size %></p>
+                    <p class="font-16 theme-green no-margin-bottom">$<%= i.price %></p>
+                </div>
+            </a>
+        </div>
+    </div>
+<% end %>

@@ -17,6 +17,10 @@ class Delivery < ActiveRecord::Base
     
     # methods
     
+    def delete_all
+       self.all.each {|d| d.delete } 
+    end
+    
     def find_driver(id)
         @request = Request.find_by(batch_id: id)
         if @request

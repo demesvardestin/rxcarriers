@@ -1,0 +1,135 @@
+<div class="col-md-12" style="margin-top: 15px; margin-bottom: 15px;">
+    <div class="card">
+        <div class="card-header">
+            <h6>Total orders by month</h6>
+        </div>
+        <div class="card-body">
+            <%= column_chart orders_grouped_by_month %>
+        </div>
+    </div>
+</div>
+<div class="col-md-2">
+    <div class="card" style="height: 100%;">
+        <div class="card-header text-center ">
+            <h6>Total orders</h6>
+        </div>
+        <div class="card-body text-center" style="">
+            <p style="font-size: 16px;" class=" no-margin-bottom theme-blue"><%= total_orders('this month').count %></p>
+        </div>
+    </div>
+</div>
+<div class="col-md-2">
+    <div class="card" style="height: 100%;">
+        <div class="card-header text-center ">
+            <h6>Units sold</h6>
+        </div>
+        <div class="card-body text-center" style="">
+            <p style="font-size: 16px;" class=" no-margin-bottom theme-blue"><%= total_units_sold('this month') %></p>
+        </div>
+    </div>
+</div>
+<div class="col-md-2">
+    <div class="card" style="height: 100%;">
+        <div class="card-header text-center ">
+            <h6>Total sales</h6>
+        </div>
+        <div class="card-body text-center" id="totalSales" style="">
+            <p style="font-size: 16px;" class=" no-margin-bottom theme-blue"><%= '$' + totals_to_array(current_pharmacy.id, 'this month').to_s %></p>
+        </div>
+    </div>
+</div>
+<div class="col-md-2">
+    <div class="card" style="height: 100%;">
+        <div class="card-header text-center ">
+            <h6>RPI*</h6>
+        </div>
+        <div class="card-body text-center" style="">
+            <p style="font-size: 16px;" class=" no-margin-bottom theme-blue"><%= revenue_per_item(current_pharmacy.id, 'this month') %></p>
+        </div>
+    </div>
+</div>
+<div class="col-md-2">
+    <div class="card" style="height: 100%;">
+        <div class="card-header text-center ">
+            <h6>Cancellations</h6>
+        </div>
+        <div class="card-body text-center" style="">
+            <p style="font-size: 16px;" class=" no-margin-bottom theme-blue"><%= total_refund_count('this month') %></p>
+        </div>
+    </div>
+</div>
+<div class="col-md-2">
+    <div class="card" style="height: 100%;">
+        <div class="card-header text-center ">
+            <h6>MOM**</h6>
+        </div>
+        <div class="card-body text-center" style="">
+            <p style="font-size: 16px;" class="theme-green no-margin-bottom"><%= month_to_day('this month').to_s.include?('Infinity') ? 'n/a' : month_to_day('this month').to_s %></p>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 add-margin-bottom" style="margin-top: 15px;"><h5>Popular items</h5></div>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-4">
+                    <h6>Item</h6>
+                </div>
+                <div class="col-md-2 text-center">
+                    <h6>Units sold(<%= total_units_sold('this month') %>)</h6>
+                </div>
+                <div class="col-md-2 text-center">
+                    <h6>Total revenue</h6>
+                </div>
+                <div class="col-md-2 text-center">
+                    <h6>Last sold on</h6>
+                </div>
+                <div class="col-md-2 text-center">
+                    <h6>MOM</h6>
+                </div>
+            </div>
+        </div>
+        <div class="card-body" id="inventoryItems" style="padding: 0;">
+            <% popular_items('this month').each do |i| %>
+                <div id="inventory-item<%= i.id %>">
+                    <div class="inventory-item" id="inventoryItem-<%= i.id %>">
+                        <div class="row" style="padding: 15px 20px;">
+                            <div id="itemNDC-<%= i.id %>" style="display: none;">
+                                <h6><%= i.ndc %></h6>
+                            </div>
+                            <div class="col-md-4 theme-blue" id="itemName-<%= i.id %>">
+                                <h6><%= i.name %></h6>
+                            </div>
+                            <div class="col-md-2 text-center" id="unitsSold-<%= i.id %>">
+                                <h6><%= units_sold_for(i.id, 'this month') %></h6>
+                            </div>
+                            <div class="col-md-2 text-center theme-green" id="revenuePerUnit-<%= i.id %>">
+                                <h6><%= '$' + revenue_per_unit_for(i.id, 'this month').to_s %></h6>
+                            </div>
+                            <div class="col-md-2 text-center" id="lastOrdered-<%= i.id %>">
+                                <h6><%= last_order_for(i.id) %></h6>
+                            </div>
+                            <div class="col-md-2 text-center <%= trend_color(mom(i.id, 'this month', 'last month')) %>" id="mom-<%= i.id %>">
+                                <h6>
+                                    <% if mom(i.id, 'this month', 'last month') == 'n/a' %>
+                                        <%= mom(i.id, 'this month', 'last month') %>
+                                    <% else %>
+                                        <%= mom(i.id, 'this month', 'last month').abs.to_s + '%' %>
+                                    <% end %>
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="col-md-12 no-horizontal-padding">
+                            <hr style="margin: 0;">
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+<div class="col-md-12" style="margin-top: 15px;">
+    <h6>*Revenue per item</h6>
+    <h6>**Month over month</h6>
+</div>

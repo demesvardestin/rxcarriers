@@ -82,19 +82,19 @@ module DeliveriesHelper
     
     def refill_count_today
         id = current_pharmacy.id
-        @deliveries = Rx.where(pharmacy_id: id, requested_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc, processed: true, deleted: false)
+        @deliveries = Order.where(pharmacy_id: id, requested_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc, processed: true)
         @deliveries.count if @deliveries
     end
     
     def refill_count_this_week
         id = current_pharmacy.id
-        @deliveries = Rx.where(pharmacy_id: id, requested_at: DateTime.now.at_beginning_of_week.utc..Time.now.utc, processed: true, deleted: false)
+        @deliveries = Order.where(pharmacy_id: id, requested_at: DateTime.now.at_beginning_of_week.utc..Time.now.utc, processed: true)
         @deliveries.count if @deliveries
     end
     
     def refill_count_this_month
         id = current_pharmacy.id
-        @deliveries = Rx.where(pharmacy_id: id, requested_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc, processed: true, deleted: false)
+        @deliveries = Order.where(pharmacy_id: id, requested_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc, processed: true)
         @deliveries.count if @deliveries
     end
     

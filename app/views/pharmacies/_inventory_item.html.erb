@@ -1,0 +1,51 @@
+<% items.each do |i| %>
+    <div class="modal" id="itemDetails<%= i.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" id="orderDetailsContent<%= i.id %>">
+            <div class="modal-header background-transparent">
+                <h4 class="modal-title" id="exampleModalLabel">
+                    <%= i.name %>
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <%= render partial: 'item_modal_form', locals: {item: i} %>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div id="inventory-item<%= i.id %>">
+        <a class="background-transparent cursor-pointer" data-toggle="modal" data-target="#itemDetails<%= i.id %>">
+            <div class="inventory-item" id="inventoryItem-<%= i.id %>">
+                <div class="row" style="padding: 15px 20px;">
+                    <div id="itemNDC-<%= i.id %>" style="display: none;">
+                        <h6><%= i.ndc %></h6>
+                    </div>
+                    <div class="col-md-2 theme-blue" id="itemName-<%= i.id %>">
+                        <h6><%= i.minify_name(20) %></h6>
+                    </div>
+                    <div class="col-md-1 theme-green">
+                        <h6><%= i.price %></h6>
+                    </div>
+                    <div class="col-md-2 theme-yellow">
+                        <h6><%= "#{i.size} #{i.size_type}" %></h6>
+                    </div>
+                    <div class="col-md-4">
+                        <h6><%= i.details %></h6>
+                    </div>
+                    <div class="col-md-1 <%= check_count_threshold(i.quantity) %>">
+                        <h6><%= i.quantity %></h6>
+                    </div>
+                    <div class="col-md-2 <%= check_expiration(i.expiration) %>">
+                        <h6><%= i.expiration %></h6>
+                    </div>
+                </div>
+                <div class="col-md-12 no-horizontal-padding">
+                    <hr style="margin: 0;">
+                </div>
+            </div>
+        </a>
+    </div>
+<% end %>

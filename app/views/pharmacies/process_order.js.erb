@@ -1,0 +1,17 @@
+$('#orderBox<%= @order.id %>').fadeOut().remove();
+var order_count = <%= @orders.count %>;
+if (order_count == 0) {
+    $('#liveRequestsUpdate').append(`
+        <div class="col-md-12 text-center no-delivery-requests" style="padding-top: 40px;">
+            <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
+        </div>
+        <div class="col-md-12 text-center medium-gray font-14 no-delivery-requests-spinner" style="padding-top: 20px;">
+            Awaiting new orders...
+        </div>
+    `);
+}
+
+$('#processButton<%= @order.id %>').html(`
+    Order processed!
+`);
+toastr["success"]('This order has been added to the processing queue!');

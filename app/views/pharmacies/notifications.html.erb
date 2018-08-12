@@ -1,0 +1,67 @@
+<style>
+    .btn.notification-button {
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid #e6e8ec;
+        border-radius: 0;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        margin-top: 0 !important;
+    }
+</style>
+
+<div class="modal" id="loadingNotification" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 50%; left: 25%; margin-top: 200px; opacity: 1 !important; z-index: 1000 !important;">
+            <div class="modal-body">
+                <%= render 'common/bullet_spinner' %>
+                <h6 class="text-center">Loading notification...</h6>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" id="main">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body" style="padding: 0;">
+                <% @notifications.reverse.each do |n| %>
+                    <a class="btn btn-light btn-block theme-blue notification-button" id="notification-<%= n.id %>" onclick="fetchNotification(this)">
+                        <%= n.title %> <% if n.not_read %><span class="badge badge-success badge-<%= n.id %>">new</span><% end %>
+                    </a>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body" id="notificationBox">
+                <h5>Notifications</h5>
+                <hr>
+                <div class="">
+                    <i class="fa fa-bell-o theme-blue" style="font-size: 40px;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function fetchNotification(elem) {
+        var id = elem.id;
+        var notif_id = id.split('-')[1];
+        var notification = {"id": notif_id};
+        $('#main').css('opacity', '0.6');
+        $('#loadingNotification').css('display', 'block');
+        var badges = document.getElementsByClassName('badge-success');
+        $.get('/fetch_notification', { notification: notification }, function(data) {
+            $('#notificationBox').html(data);
+            $('#main').css('opacity', '1');
+            $('#loadingNotification').css('display', 'none');
+            $('.badge-'+notif_id).remove();
+            console.log(badges.length);
+            if (badges.length - 1  == 0) {
+                $('.badge-circle').fadeOut();
+            }
+        });
+    }
+</script>

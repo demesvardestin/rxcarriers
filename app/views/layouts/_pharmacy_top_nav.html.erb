@@ -1,45 +1,69 @@
-<nav class="navbar navbar-expand-lg background-white no-box-shadow fixed-top" style="padding: 8px 35px !important; border-bottom: 1px solid #e1e1e2;">
-  <a class="navbar-brand background-transparent" href="/"><h3 class="logo ubuntu"><img src="/javascripts/pharmacy.png"></h3></a>
+<nav class="navbar navbar-expand-lg background-white no-box-shadow fixed-top" style="padding-top: 0; padding-bottom: 0; border-bottom: 1px solid #e1e1e2;">
+  <div class="container">
+    <a class="navbar-brand background-transparent" href="/"><h3 class="logo ubuntu"><img src="/javascripts/pharmacy.png"></h3></a>
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-        <ul class="navbar-nav navbar-nav-second">
+        <ul class="navbar-nav navbar-nav-second no-right-padding">
           <% if !current_pharmacy.not_subscribed %>
             <li id="pharmacy_id" style="display: none;"><%= current_pharmacy.id %></li>
-            <a class="nav-item cursor-pointer no-underline background-transparent notification-tab" data-toggle="modal" data-target="#notificationsModal">
-              <li class="nav-link nav-link-side notification-tab" style="margin-right: 15px !important;">
-                <i class="fa fa-bell-o theme-blue" style="font-size: 22px !important; margin-top: 8px;"></i>
-                <span id="alertCount">
-                  <% if notifications_are_present %>
-                    <span class="badge badge-danger badge-notif white"> </span>
-                  <% end %>
-                </span>
-              </li>
-            </a>
           <% end %>
-          <div class="nav-item btn btn-primary dropdown box-shadow show" style="padding: 3px 15px">
-            <a class="nav-link background-transparent no-underline white font-16" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-user-md"></i> Account
+          <li class="nav-item pharma-navbar">
+            <a class="nav-link sidebar <% if home %><% end %>" href="/dashboard">
+              New orders
+            </a>
+          </li>
+          <li class="nav-item pharma-navbar">
+            <a class="nav-link sidebar <% if order_queue %><% end %>" href="/order_queue">
+              Processing-queue
+            </a>
+          </li>
+          <li class="nav-item pharma-navbar">
+            <a class="nav-link sidebar <% if inventory %><% end %>" href="/inventory">
+              Inventory
+            </a>
+          </li>
+          <li class="nav-item pharma-navbar">
+            <a class="nav-link sidebar <% if inventory %><% end %>" href="/analytics">
+              Analytics
+            </a>
+          </li>
+          <li class="nav-item pharma-navbar">
+            <a class="nav-link sidebar <% if inventory %><% end %>" href="/notifications">
+              Notifications <% if notifications_are_present == true %><span class="badge badge-success badge-circle"> </span><% end %>
+            </a>
+          </li>
+          <li class="nav-item pharma-navbar dropdown show" style="margin: 0; padding-right: 0 !important;">
+            <a class="nav-link sidebar" href="#"
+              role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Account <i class="fa fa-angle-down"></i>
             </a>
           
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="right: 0; left: auto;">
               <li class="dropdown-item di-nav" href="/settings">
                 <%= link_to settings_path, class:"no-underline background-transparent font-14 theme-blue" do %>
-                  Settings <i class="fa fa-cog" style="margin-left: 5px;"></i>
+                  Settings
                 <% end %>
               </li>
-              <!--<div class="dropdown-divider"></div>-->
-              <!--<li class="dropdown-item di-nav">-->
-              <!--  <a href="/payment-history" class="no-underline background-transparent font-14 theme-blue">-->
-              <!--    Payment History <i class="fa fa-credit-card" style="margin-left: 5px;"></i>-->
-              <!--  </a>-->
-              <!--</li>-->
+              <div class="dropdown-divider"></div>
+              <li class="dropdown-item di-nav" href="/settings">
+                <%= link_to payment_settings_path, class:"no-underline background-transparent font-14 theme-blue" do %>
+                  Earnings
+                <% end %>
+              </li>
+              <div class="dropdown-divider"></div>
+              <li class="dropdown-item di-nav" href="/getting_started">
+                <%= link_to getting_started_path, class:"no-underline background-transparent font-14 theme-blue" do %>
+                  Help
+                <% end %>
+              </li>
               <div class="dropdown-divider"></div>
               <li class="dropdown-item di-nav" href="#">
-                <%= link_to destroy_pharmacy_session_path, class:"no-underline background-transparent font-14 theme-blue", method: :delete do %>
-                  Sign out <i class="fa fa-sign-out" style="margin-left: 5px;"></i>
+                <%= link_to destroy_pharmacy_session_path, class:"no-underline background-transparent font-14", method: :delete do %>
+                  Sign out
                 <% end %>
               </li>
             </ul>
           </div>
         </ul>
     </div>
+  </div>
 </nav>

@@ -12,6 +12,13 @@ class Pharmacy < ActiveRecord::Base
     has_many :invoices
     has_many :deliveries
     has_many :reviews
+    has_many :items
+    has_many :item_categories
+    has_one :inventory
+    has_many :orders
+    has_many :refunds
+    has_many :help_tickets
+    has_many :notifications
     
     # validations
     has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>", placeholder: '/images/user_full.png' }
@@ -23,6 +30,13 @@ class Pharmacy < ActiveRecord::Base
         param.strip!
         param.downcase!
         (name_matches(param) + address_matches(param) + phone_matches(param)).uniq
+    end
+    
+    def self.sort_search(param)
+      if Pharmacy.search(param).empty?
+        return Pharmacy.search_nearby(param)
+      end
+      return Pharmacy.search(param)
     end
     
     def self.search_nearby(location)
@@ -128,6 +142,21 @@ class Pharmacy < ActiveRecord::Base
     
     def billing_attributes
       self.card_number.present? && self.exp_year.present? && self.exp_month.present? && self.bill_street.present? && self.bill_city.present? && self.bill_state.present? && self.bill_zip.present?
+    end
+    
+    def is_not_related_to(cart)
+      @pharmacy = cart.get_pharmacy
+      return if @pharmacy.nil?
+      cart.get_pharmacy.id != self.id
+    end
+    
+    def orders_for(period)
+      case period
+      when 'this month'
+          Order.this_month.where(pharmacy_id: self.id).all
+      else
+          Order.where(pharmacy_id: self.id).all
+      end
     end
     
 end

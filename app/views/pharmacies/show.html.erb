@@ -18,22 +18,16 @@
         </div>
         <div class="modal-body" style="padding-top: 20px !important;">
             <div class="float-left" style="width: 33.3%;">
-                <p class="font-16">Monday</p>
-                <p class="font-16">Tuesday</p>
-                <p class="font-16">Wednesday</p>
-                <p class="font-16">Thursday</p>
-                <p class="font-16">Friday</p>
-                <p class="font-16">Saturday</p>
-                <p class="font-16">Sunday</p>
+                <% ['Monday', 'Tuesday', 'Wednesdday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].each do |day| %>
+                    <p class="font-16 <%= current_day?(day) %>"><%= day %></p>
+                <% end %>
             </div>
             <div class="float-left" style="width: 66.6%;">
-                <p class="font-16"><%= @pharmacy.hours %></p>
-                <p class="font-16"><%= @pharmacy.hours %></p>
-                <p class="font-16"><%= @pharmacy.hours %></p>
-                <p class="font-16"><%= @pharmacy.hours %></p>
-                <p class="font-16"><%= @pharmacy.hours %></p>
-                <p class="font-16"><%= @pharmacy.saturday %></p>
-                <p class="font-16"><%= @pharmacy.sunday %></p>
+                <% ['Monday', 'Tuesday', 'Wednesdday', 'Thursday', 'Friday'].each do |day| %>
+                    <p class="font-16 <%= current_day?(day) %>"><%= @pharmacy.hours %></p>
+                <% end %>
+                <p class="font-16 <%= current_day?('Saturday') %>"><%= @pharmacy.saturday %></p>
+                <p class="font-16 <%= current_day?('Sunday') %>"><%= @pharmacy.sunday %></p>
             </div>
             <div class="row" style="width: 100%;">
                 <div class="col-md-12 add-padding-top">
@@ -72,33 +66,9 @@
     </div>
   </div>
 </div>
-<div class="modal" id="allReviews" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content box-shadow batch-list" style="padding-bottom: 0;">
-        <div class="modal-header background-transparent">
-            <h5 class="modal-title font-18">Reviews</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body" style="padding-top: 20px !important; min-height: 180px;">
-            <div class="row">
-                <div class="col-md-12" id="reviews">
-                    <%= render partial: 'reviews', locals: {reviews: @pharmacy.reviews} %>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer" style="padding: 0 !important;">
-            <div class="col-md-12">
-                <%= render 'review_form' %>
-            </div>
-        </div>
-    </div>
-  </div>
-</div>
 <section id="pharmacyShowHeader">
-    <div class="jumbotron add-padding-top no-border-radius" style='background-image: url("/javascripts/background.jpg"); background-size: cover;'>
-        <div class="container pharmacy-banner">
+    <div class="jumbotron add-padding-top no-border-radius no-margin-bottom" style='background-image: url("/images/gradient_background.jpg"); background-size: cover;'>
+        <div class="container pharmacy-banner mobile-container">
             <div class="row">
                 <div class="col-md-5">
                     <h2 class="bold white" style="margin-top: 20px;"><%= @pharmacy.name %></h2>
@@ -107,15 +77,53 @@
                         <%= @pharmacy.full_address_without_zip %>
                     </p>
                     <div class="row">
-                        <div class="col-md-4">
-                            <button class="btn btn-light" style="border-radius: 30px;" data-toggle="modal" data-target="#deliveryHours">
+                        <div class="col-md-12">
+                            <button class="btn btn-light font-14" style="border-radius: 30px;" data-toggle="modal" data-target="#deliveryHours">
                                 <i class="fa fa-clock-o"></i> Delivery Hours
                             </button>
-                        </div>
-                        <div class="col-md-6">
-                            <button class="btn btn-light" style="border-radius: 30px;" data-toggle="modal" data-target="#contactInfo">
-                                <i class="fa fa-info-circle"></i> Contact Information
+                            <button class="btn btn-light font-14" style="border-radius: 30px; margin-left: 8px;" data-toggle="modal" data-target="#contactInfo">
+                                <i class="fa fa-info-circle"></i> Contact Info
                             </button>
+                        </div>
+                        <!--<div class="col-md-6">-->
+                        <!--    <button class="btn btn-light font-14" style="border-radius: 30px;" data-toggle="modal" data-target="#contactInfo">-->
+                        <!--        <i class="fa fa-info-circle"></i> Contact Info-->
+                        <!--    </button>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="inventorNavigation">
+    <div class="jumbotron no-border-radius" style="padding-top: 0px; padding-bottom: 0;">
+        <div class="container mobile-container no-horizontal-mobile-padding">
+            <div class="row">
+                <div class="col-md-4 nbrm no-horizontal-mobile-padding" style="padding-top: 15px; padding-bottom: 15px; border-right: 1px solid #e1e1e2;">
+                    <form action="/item_search" method="get" id="itemSearchForm">
+                        <div class="input-group mb-3" style="margin-bottom: 0 !important;">
+                            <input class="form-control font-16 no-box-shadow search-value background-transparent no-border" style="margin-top: 0 !important; padding-left: 0;"
+                                id="searchInPage" name="new-pharmacy-search" placeholder="Search a product">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text background-transparent prepend-box no-border no-horizontal-padding" id="basic-addon1">
+                                    <i class="fa fa-search"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                    <button type="button" style="display: none;">Submit</button>
+                </div>
+                <div class="col-md-4 nbrm no-horizontal-mobile-padding" style="padding-top: 15px; padding-bottom: 15px; border-right: 1px solid #e1e1e2;">
+                    <div class="dropdown">
+                        <button class="btn btn-link auto-color no-underline btn-block no-horizontal-padding no-horizontal-padding-mobile" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Categories <span class="text-right" style="margin-left: 70%;"><i class="fa fa-angle-down"></i></span>
+                        </button>
+                        <div class="dropdown-menu no-border-radius"  style="margin-top: 300px !important;" aria-labelledby="dropdownMenuButton">
+                            <% @pharmacy.inventory.item_categories.each do |cat| %>
+                                <a class="dropdown-item" href="#<%= cat.name.split(' ').join('_') %>"><%= cat.name %></a>
+                                <div class="dropdown-divider"></div>
+                            <% end %>
                         </div>
                     </div>
                 </div>
@@ -124,94 +132,20 @@
     </div>
 </section>
 
-<section id="prescriptionOrder">
+<section id="inPageSearchCount" style="display: none;">
     <div class="container">
-        <div class="col-md-12 no-horizontal-padding add-padding-bottom">
-            <div class="row">
-                <div class="col-md-4 add-margin-bottom-mobile">
-                    <div class="card radius-5" style="height: 100%;">
-                        <div class="card-header background-cyan">
-                            <p class="font-18 white"><span class="badge badge-light radius-5">1</span> Order your prescription</p>
-                        </div>
-                        <div class="card-body" style="padding-top: 10px !important; padding-bottom: 25px;">
-                            <div id="spinner0" style="display: none;"><%= render 'common/bullet_spinner' %></div>
-                            <div id="confirmationNumber" class="text-center"></div>
-                            <form method="post" id="rxOrderForm" action="/order_prescriptions" data-remote="true" style="padding: 0; margin: 0;">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="field" style="padding-top: 20px;">
-                                            <input class="form-control font-14 radius-5" id="rxNumbers" name="rx_numbers" placeholder="Separated by a comma">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="field">
-                                            <input class="form-control font-14 radius-5" id="birthYear" name="birth_year" placeholder="Birth year">
-                                        </div>
-                                        <div class="field" style="display: none;">
-                                            <input class="form-control form--control font-16" id="pharmacyId" name="pharmacy_id" value="<%= @pharmacy.id %>" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <div class="field">
-                                            <input class="form-control font-14 radius-5" id="phoneNumber" name="phone_number" placeholder="Phone number">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="actions text-center" style="margin-top: 25px;">
-                                    <button class="btn btn-primary">
-                                        <i class="fa fa-paper-plane-o"></i> Submit order
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 add-margin-top-mobile add-margin-bottom-mobile">
-                    <div class="card radius-5" style="height: 100% !important;">
-                        <div class="card-header background-cyan">
-                            <p class="font-18 white"><span class="badge badge-light radius-5">2</span> Track your order</p>
-                        </div>
-                        <div class="card-body" style="padding-top: 10px !important; padding-bottom: 25px;">
-                            <div id="spinner1" style="display: none;"><%= render 'common/bullet_spinner' %></div>
-                            <div id="orderStatus" class="text-center"></div>
-                            <form method="get" id="orderTrackingForm" action="/track_order" data-remote="true" style="padding: 0; margin: 0;">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="field" style="padding-top: 20px;">
-                                            <input class="form-control font-16 radius-5" id="confirmationNumber" name="confirmation_number" placeholder="Confirmation number">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="actions text-center" style="margin-top: 25px;">
-                                    <button class="btn btn-primary">
-                                        <i class="fa fa-location-arrow"></i> Track order status
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 add-margin-top-mobile">
-                    <div class="card radius-5" style="height: 100% !important;">
-                        <div class="card-header background-cyan">
-                            <p class="font-18 white"><span class="badge badge-light radius-5">3</span> Add a quick review</p>
-                        </div>
-                        <div class="card-body" style="padding-top: 10px !important; padding-bottom: 25px;">
-                            <div id="spinner2" style="display: none;"><%= render 'common/bullet_spinner' %></div>
-                            <% if @pharmacy.reviews.empty? %>
-                                <p class="font-16"><em>No reviews yet</em></p>
-                            <% else %>
-                                <%= render partial: 'reviews', locals: {reviews: @pharmacy.reviews.last(3)} %>
-                            <% end %>
-                            <div class="text-right">
-                                <button class="btn btn-link font-16 theme-blue" style="margin-bottom: 0 !important; padding: 0;" data-toggle="modal" data-target="#allReviews">
-                                    All reviews (<span id="review_count"><%= @pharmacy.reviews.count %></span>) <i class="fa fa-angle-double-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="alert alert-primary" role="alert">
+            <p class="font-16" id="pageSearchTotal" style="margin-bottom: 0;"></p>
+        </div>
+    </div>
+</section>
+
+<section id="inventory<%= @pharmacy.inventory.id %>" style="padding-bottom: 20px;">
+    <div class="container">
+        <div class="row">
+            <% @categories.each do |category| %>
+                <%= render partial: 'items', locals: {category: category, items: @pharmacy.inventory.items} %>
+            <% end %>
         </div>
     </div>
 </section>
@@ -227,15 +161,95 @@
         $('#spinner1').show();
     });
     
-    function showForm() {
-        $('#confirmationNumber')
-        .html('').hide();
-        $('#rxOrderForm').show();
+    function getItemCount(id) {
+        return $('#itemCount'+id).text();
     }
     
-    function showTrackerForm() {
-        $('#orderStatus')
-        .html('').hide();
-        $('#orderTrackingForm').show();
+    function increaseItemCount(elem) {
+        var id = elem.id;
+        var decreaseCount = document.getElementsByClassName('decrease-item-count'+id)[0];
+        var count = getItemCount(id);
+        $('#itemCount'+id).html(parseInt(count) + 1);
+        if (document.getElementsByClassName('decrease-item-count'+id)[0].hasAttribute('disabled')) {
+            document.getElementsByClassName('decrease-item-count'+id)[0].removeAttribute('disabled');
+            document.getElementsByClassName('add-to-cart'+id)[0].removeAttribute('disabled');
+        }
     }
+    
+    function decreaseItemCount(elem) {
+        var id = elem.id;
+        var decreaseCount = document.getElementsByClassName('decrease-item-count'+id)[0];
+        var count = getItemCount(id);
+        $('#itemCount'+id).html(parseInt(count) - 1);
+        if (count - 1 == 0) {
+            document.getElementsByClassName('decrease-item-count'+id)[0].setAttribute('disabled', 'true');
+            document.getElementsByClassName('add-to-cart'+id)[0].setAttribute('disabled', 'true');
+        }
+    }
+    
+    function addToCart(elem) {
+        var id = elem.id;
+        var tempId = $('#tempId').text();
+        var count = $('#itemCount'+id).text();
+        var instructions = document.getElementById('specialInstructions'+id).value;
+        console.log(instructions);
+        var cart = {
+            "item_id": id,
+            "item_count": count,
+            "item_instructions": instructions,
+            "temp_id": tempId
+        }
+        var cartItemCount = $('#currentItemCount').text();
+        $('.add-to-cart'+id).css('opacity', '0.7')
+        .html('adding to cart...');
+        $.post('/add_item_to_cart', {cart: cart});
+    }
+    
+    function removeFromCart(elem) {
+        var id = elem.id;
+        var tempId = $('#tempId').text();
+        var count = $('#setForRemoval'+id).text();
+        var cart = {
+            "item_id": id,
+            "temp_id": tempId
+        }
+        var cartItemCount = $('#currentItemCount').text();
+        $('.remove-from-cart'+id).css('opacity', '0.7')
+        .html('removing from cart...');
+        $.post('/remove_item_from_cart', {cart: cart});
+    }
+    
+    $('#searchInPage').on('keyup', e => {
+        $('.pharmacy-item').show();
+        $('#inPageSearchCount').show()
+        
+        var value = document.getElementById('searchInPage').value.toLowerCase();
+        var items = document.getElementsByClassName('pharmacy-item');
+        var id, text;
+        var count = 0;
+        
+        for (i = 0; i < items.length; i++) {
+            id = document.getElementsByClassName('pharmacy-item')[i].id.split('-')[1];
+            text = $('#itemName-'+id).text();
+            
+            console.log(text.toLowerCase());
+            
+            if (!text.includes(value)) {
+                $('#itemCol-'+id).hide();
+                count += 1;
+            }
+        }
+        
+        var alert_text = (items.length - count).toString() + ' product(s) found';
+        $('#pageSearchTotal').html(alert_text);
+        
+        if (value == '') {
+            $('#inPageSearchCount').hide()
+        }
+    });
+    
+    $('#itemSearchForm').on('submit', function(event) {
+        event.preventDefault();
+    });
+    
 </script>

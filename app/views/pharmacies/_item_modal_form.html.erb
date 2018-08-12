@@ -1,0 +1,59 @@
+<%= form_for(item, :html => {:id => "itemForm", :multipart => true, :remote => true}) do |f| %>
+    <% if item.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+    
+          <ul>
+          <% item.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <div class="row">
+        <div class="col-md-5 field">
+            <%= f.label :name %>
+            <%= f.text_field :name, class:"form-control no-box-shadow", autofocus: true, placeholder:"Tylenol PM", id:"itemName" %>
+        </div>
+        <div class="col-md-3 field">
+            <%= f.label :price %>
+            <%= f.text_field :price, class:"form-control no-box-shadow", autofocus: true, placeholder:"8.99", id:"itemPrice" %>
+        </div>
+        <div class="col-md-4 field">
+            <%= f.label :item_expiration %>
+            <%= f.text_field :expiration, class:"form-control no-box-shadow", autofocus: true, placeholder:"yyyy-mm-dd", id:"itemSizeType" %>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 field">
+            <%= f.label :available_units %>
+            <div class="row">
+                <div class="col-md-3 field">
+                    <button class="btn btn-secondary decrease-item-count<%= item.id %>"
+                        id="<%= item.id %>" <% if item.quantity.to_i == 0%>disabled<% end %> onclick="decreaseItemCount(this)">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
+                <div class="col-md-6 field">
+                    <%= f.text_field :quantity, class:"form-control no-box-shadow", autofocus: true, placeholder:"20", id:"itemAvailability#{item.id}" %>
+                </div>
+                <div class="col-md-3 field">
+                    <button class="btn btn-secondary increase-item-count<%= item.id %>" id="<%= item.id %>" onclick="increaseItemCount(this)">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 field">
+            <%= f.label :details %>
+            <%= f.text_field :details, class:"form-control no-box-shadow", autofocus: true, placeholder:"Pain reliever, fever reducer", id:"itemName" %>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 actions">
+            <%= f.submit "Update item", class:"btn btn-success box-shadow btn-block font-16" %>
+            <hr>
+            <%= link_to 'Remove this item from inventory', remove_item_path(:id => item.id), class:"btn btn-danger btn-block font-16 box-shadow", :remote => true %>
+        </div>
+    </div>
+<% end %>

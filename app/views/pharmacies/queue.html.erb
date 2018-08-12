@@ -1,0 +1,57 @@
+<style>
+    .table-header {
+        background-color: #e1e1e2;
+        margin: 0 !important;
+    }
+    .table-body {
+        margin: 0 !important;
+    }
+    .float-left {
+        padding: 0 15px;
+    }
+    .order-nav {
+        margin-right: 10px;
+    }
+    .no-margin-bottom {
+        margin-bottom: 0 !important;
+    }
+</style>
+
+<div class="col-md-12 no-horizontal-padding">
+    <div class="card">
+        <div class="card-header background-transparent">
+            <ul class="nav nav-pills mb-3 no-margin-bottom" id="pills-tab" role="tablist">
+              <li class="nav-item order-nav">
+                <a class="nav-link active font-16" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Pending delivery</a>
+              </li>
+              <li class="nav-item order-nav">
+                <a class="nav-link font-16" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Delivered</a>
+              </li>
+            </ul>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <div class="table-header row" style="padding: 15px !important;">
+                <div class="float-left" style="width: 15%;">
+                    <h6>Order number</h6>
+                </div>
+                <div class="float-left" style="width: 25%;">
+                    <h6>Time requested</h6>
+                </div>
+                <div class="float-left" style="width: 45%;">
+                    <h6>Order Details</h6>
+                </div>
+                <div class="float-left" style="width: 15%;">
+                    <h6>Status</h6>
+                </div>
+            </div>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active pending-orders" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <%= render partial: 'pending_delivery', locals: { orders: @pending_orders }%>
+                </div>
+                <div class="tab-pane fade delivered-orders" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <%= render partial: 'delivered', locals: { orders: @delivered_orders }%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

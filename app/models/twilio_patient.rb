@@ -1,7 +1,7 @@
 class TwilioPatient < ActiveRecord::Base
     
-    def self.alert_patient(phone, pharmacy, type=nil)
-        message, twilio, twilio_phone = self.twilio(type, pharmacy)
+    def self.alert_patient(phone, pharmacy, message)
+        twilio, twilio_phone = self.twilio
         twilio.messages.create(
             body: message,
             to: phone,
@@ -157,7 +157,7 @@ class TwilioPatient < ActiveRecord::Base
     def self.twilio
         twilio = self.initialize_twilio
         twilio_phone = ENV["TWILIO_PHONE"]
-        return message, twilio, twilio_phone
+        return twilio, twilio_phone
     end
     
     def self.twilio_token

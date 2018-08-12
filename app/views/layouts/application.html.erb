@@ -58,6 +58,23 @@
         function playSound(filename){   
             document.getElementById("sound").innerHTML='<audio autoplay="autoplay"><source src="/sounds/' + filename + '.mp3" id="pingMP3" type="audio/mpeg" /><source src="/sounds/' + filename + '.ogg" type="audio/ogg" /><embed hidden="true" autostart="true" loop="false" src="/sounds/' + filename +'.mp3" /></audio>';
         }
+        
+        toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": true,
+          "progressBar": true,
+          "positionClass": "toast-top-right",
+          "preventDuplicates": false,
+          "showDuration": "2000",
+          "hideDuration": "1000",
+          "timeOut": "300000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        };
 
         // Pusher.logToConsole = true;
     
@@ -74,18 +91,17 @@
             var message = data.message;
             var id = data.id;
             var status = data.status;
-            $.get('/delivery_update?batch_id='+id+'&status='+status);
-            if (status == 'pickup completed') {
-              $.get('/mark_picked?id='+id);
+            var order = {
+              "id": id,
+              "pharmacy_id": pharmacy_id
             }
-            var count = $('.badge-notif').text();
-            if (count.length > 0) {
-              var new_count = parseInt(count) + 1;
-            } else {
-              var new_count = 1;
-            }
-            $('#alertCount')
-            .html('<span class="badge badge-danger badge-notif white"> </span>');
+            $.get('/post_new_order', { order: order}, function(data) {
+              toastr["success"](message);
+              $('.no-delivery-requests').hide();
+              $('.no-delivery-requests-spinner').hide();
+              $('#liveRequestsUpdate').prepend(data);
+            });
+            playSound('ping');
           }
         });
       <% end %>
@@ -97,25 +113,22 @@
   </script>
   <!--<a  href="https://www.instantssl.com/" id="comodoTL">Essential SSL</a>-->
   <body id="main-body">
+    <div id="sound"></div>
     <% if current_pharmacy %>
       <%= render 'layouts/pharmacy_top_nav' %>
       <section id="layout" class="add-padding-top">
-        <%= render 'pharmacies/pharmacy_home' %>
-        <div class="float-right" style="width: 85%; padding-right: 15px;">
+        <div class="container">
           <div class="main-page">
-            <div id="sound"></div>
-            <div class="card main-page-card">
-              <div class="card-body main-card">
-                <%= render 'layouts/notifications_modal' %>
-                <%= yield %>
-              </div>
-            </div>
+            <%= render 'layouts/notifications_modal' %>
+            <%= yield %>
           </div>
         </div>
       </section>
     <% else %>
+      <%= render 'carts/cart' %>
+      <%= render 'carts/track' %>
       <%= render 'layouts/main_nav' %>
-      <div style="padding-top: 50px !important; height: 100%;">
+      <div style="padding-top: 45px !important; height: 100%;">
         <%= yield %>
       </div>
     <% end %>

@@ -1,0 +1,5 @@
+$('#inventory-item<%= @item.id %>').remove();
+$('#itemDetails<%= @item.id %>').remove();
+document.getElementById('main-body').classList.remove('modal-open');
+$('.modal-backdrop').remove();
+toastr["success"]('Item removed!');

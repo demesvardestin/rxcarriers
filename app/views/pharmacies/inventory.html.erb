@@ -1,0 +1,157 @@
+<style>
+    label {
+        font-size: 16px !important;
+    }
+    .float-left {
+        padding: 0 15px;
+    }
+    .order-nav {
+        margin-right: 10px;
+    }
+    .no-margin-bottom {
+        margin-bottom: 0 !important;
+    }
+</style>
+
+<div class="card">
+    <div class="card-header background-transparent">
+        <ul class="nav nav-pills mb-3 no-margin-bottom" id="pills-tab" role="tablist">
+          <li class="nav-item order-nav">
+            <a class="nav-link active font-16" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Search an item</a>
+          </li>
+          <li class="nav-item order-nav">
+            <a class="nav-link font-16" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Add new item</a>
+          </li>
+        </ul>
+        <!--<h5 class="text-center font-16">Add an item<h5>-->
+    </div>
+    <div class="card-body">
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <form id="searchItemForm" style="margin: 0;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input class="form-control no-box-shadow height-50" autofocus="true" id="searchItem" onkeyup="searchItem(this)" placeholder="Search an item by name or ndc" style="margin: 0;">
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-success box-shadow btn-block height-50" id="searchItemSubmit">
+                                Search <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-info box-shadow btn-block height-50" id="filterItems" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Filter by <i class="fa fa-angle-down"></i>
+                            </button>
+                            <div class="dropdown-menu" style="width: 100%;" aria-labelledby="dropdownMenuButton">
+                                <%= link_to 'Remove filters', remove_filters_path, class:"dropdown-item font-14 theme-blue", :remote => true %>
+                                <div class="dropdown-divider"></div>
+                                <%= link_to 'Expiring soon', expiring_soon_path, class:"dropdown-item font-14", :remote => true %>
+                                <div class="dropdown-divider"></div>
+                                <%= link_to 'Low Available Amount', low_available_count_path, class:"dropdown-item font-14", :remote => true %>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <%= render 'item_form' %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card" style="margin-top: 20px;">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-2">
+                <h6>Item</h6>
+            </div>
+            <div class="col-md-1">
+                <h6>Price</h6>
+            </div>
+            <div class="col-md-2">
+                <h6>Size</h6>
+            </div>
+            <div class="col-md-4">
+                <h6>Details</h6>
+            </div>
+            <div class="col-md-1">
+                <h6>Units</h6>
+            </div>
+            <div class="col-md-2">
+                <h6>Expiration</h6>
+            </div>
+        </div>
+    </div>
+    <div class="card-body" id="inventoryItems" style="padding: 0;">
+        <%= render partial: 'inventory_item', locals: {items: @items} %>
+    </div>
+</div>
+
+<script>
+    $('#searchItem').on('keyup', e => {
+        var value = document.getElementById('searchItem').value.toLowerCase();
+        var data = {"param": value};
+        $.get('/search_item', { data: data });
+    });
+    
+    $('#searchItemForm').on('submit', function(event) {
+        event.preventDefault();
+        
+        var value = document.getElementById('searchItem').value.toLowerCase();
+        var data = {"param": value};
+        $.get('/search_item', { data: data });
+    });
+    
+    $('#itemNDC').on('keyup', e => {
+        var value = document.getElementById('itemNDC').value.toLowerCase();
+        var data = {"param": value};
+        $.get('/validate_presence', { data: data });
+    });
+    
+    function getItemCount(id) {
+        return document.getElementById('itemAvailability'+id).value;
+    }
+    
+    function increaseItemCount(elem) {
+        var id = elem.id;
+        var count = getItemCount(id);
+        console.log(id, count);
+        document.getElementById('itemAvailability'+id).value = parseInt(count) + 1;
+        if (document.getElementsByClassName('decrease-item-count'+id)[0].hasAttribute('disabled')) {
+            document.getElementsByClassName('decrease-item-count'+id)[0].removeAttribute('disabled');
+        }
+    }
+    
+    function decreaseItemCount(elem) {
+        var id = elem.id;
+        var decreaseCount = document.getElementsByClassName('decrease-item-count'+id)[0];
+        var count = getItemCount(id);
+        document.getElementById('itemAvailability'+id).value = parseInt(count) - 1;
+        if (count - 1 == 0) {
+            document.getElementsByClassName('decrease-item-count'+id)[0].setAttribute('disabled', 'true');
+        }
+    }
+    
+    function setCategory(elem) {
+        var id = elem.id;
+        var catId = id.split('-')[1]
+        document.getElementById('itemCategory').value = catId;
+        var category = $('#'+id).text();
+        console.log(category);
+        $('.filter-items').html(
+            category + ' <i class="fa fa-angle-down"></i>'
+        );
+    }
+    
+    function setTaxable(elem) {
+        var id = elem.id;
+        var taxId = id.split('-')[1]
+        document.getElementById('itemTaxable').value = taxId;
+        var taxed = $('#'+id).text();
+        console.log(taxed);
+        $('.taxable-items').html(
+            taxed + ' <i class="fa fa-angle-down"></i>'
+        );
+    }
+</script>

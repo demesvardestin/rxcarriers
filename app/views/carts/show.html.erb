@@ -1,0 +1,288 @@
+<style>
+    .StripeElement {
+        border: 1px solid #b4b4b4 !important;
+        padding: 10px 30px !important;
+    }
+    label.btn {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+</style>
+
+<div class="modal" id="cancelConfirmation" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content box-shadow cancel-order" style="top: 100px; width: 50%; left: 25%;">
+        <div class="modal-body text-center" style="padding-top: 20px !important;">
+            <div id="spinnerCancel" style="display: none;"><%= render 'common/bullet_spinner' %></div>
+            <div id="cancelOrderWarning">
+                <p class="font-16">Are you sure you want to cancel?</p>
+                <button class="btn btn-danger add-margin-top btn-block" id="<%= guest_shopper.email %>" onclick="cancelOrder(this)">
+                    Yes
+                </button>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="modal" id="submitConfirmation" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content box-shadow submit-order" style="top: 100px; width: 50%; left: 25%;">
+        <div class="modal-body text-center" style="padding-top: 20px !important;">
+            <div id="spinnerSubmit" style="display: none;"><%= render 'common/bullet_spinner' %></div>
+            <div id="submitOrderReceipt">
+                <p class="font-16" style="margin-top: 20px;">
+                    Submitting order
+                </p>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<main class="container" style="padding-top: 40px;">
+    <div class="alert alert-primary" role="alert">
+        <h5>
+            <i class="fa fa-shopping-bag"></i>
+            Your order from
+            <a href="<%= @cart.get_pharmacy.url if !@cart.get_pharmacy.nil? %>" class="background-transparent theme-blue">
+                <%= @cart.get_pharmacy.name if !@cart.get_pharmacy.nil? %>
+            </a>
+        </h5>
+    </div>
+    <section id="orderDetails" style="padding: 0 0 45px 0;">
+        <div class="row">
+            <div class="col-md-6 order-summary-col add-margin-bottom-mobile" style="border-right: 1px solid #b4b4b4;">
+                <div id="orderSummary">
+                    <div class="card">
+                        <div class="card-header background-transparent">
+                            <h5><i class="fa fa-file-text-o"></i> Order summary</h5>
+                        </div>
+                        <div class="card-body">
+                            <% @cart.item_list.split(', ').each_with_index do |i, idx| %>
+                                <p class="font-16">
+                                    <span class="theme-green " style="margin-right: 5px;">
+                                        <%= @cart.item_list_count.split(', ')[idx] %>
+                                    </span>
+                                    <span class="black"><%= get_item(i).name %></span>
+                                </p>
+                            <% end %>
+                            <hr style="height: 1px !important; color: #b4b4b4; border: 1px solid #b4b4b4; background: #b4b4b4;">
+                            <div id="orderSubtotal" style="margin-top: 40px;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="float-left">
+                                            <p class="font-16">Items subtotal:</p>
+                                            <p class="font-16">Sales tax:</p>
+                                            <p class="font-16"><span id="tipPercent"><%= @cart.tip %></span> tip:</p>
+                                            <p class="font-16 bold add-margin-top">Total:</p>
+                                        </div>
+                                        <div class="float-right">
+                                            <p class="font-16 theme-blue">$<%= @cart.get_total_cost %></p>
+                                            <p class="font-16 theme-blue">$<%= @cart.calculate_tax %></p>
+                                            <p class="font-16 theme-blue">$<span id="tipAmt"><%= @cart.get_tip %></span></p>
+                                            <p class="font-16 theme-blue bold add-margin-top">$<%= @cart.sale_total %></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="height: 1px !important; color: #b4b4b4; border: 1px solid #b4b4b4; background: #b4b4b4;">
+                            <div id="orderNext" class="row add-margin-bottom-mobile" style="margin-top: 20px;">
+                                <div class="col-md-6">
+                                    <a class="btn btn-primary box-shadow btn-block add-margin-bottom-mobile white" id="modifyOrder" href="<%= @cart.get_pharmacy.url if !@cart.get_pharmacy.nil? %>">
+                                        <i class="fa fa-pencil"></i> Modify current order
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a class="btn btn-danger box-shadow btn-block" id="<%= @cart.id %>" data-toggle="modal" data-target="#cancelConfirmation">
+                                        <i class="fa fa-times-circle"></i> Cancel current order
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="shopperLogin" style="padding-top: 10px;">
+                    <div class="card">
+                        <div class="card-header background-transparent">
+                            <h5><i class="fa fa-plus-circle"></i> Tip</h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="col-md-12 text-center no-horizontal-padding">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                  <label class="btn btn-secondary <% if @cart.tip == '10%' %>active<% end %> white" id="tip10" onclick="getTip(this)">
+                                    <input type="radio" name="10%" autocomplete="off"> <span>10%</span>
+                                  </label>
+                                  <label class="btn btn-secondary <% if @cart.tip == '15%' %>active<% end %> white" id="tip15" onclick="getTip(this)">
+                                    <input type="radio" name="15%" autocomplete="off"> <span>15%</span>
+                                  </label>
+                                  <label class="btn btn-secondary <% if @cart.tip == '20%' %>active<% end %> white" id="tip20" onclick="getTip(this)">
+                                    <input type="radio" name="20%" autocomplete="off"> <span>20%</span>
+                                  </label>
+                                  <label class="btn btn-danger <% if @cart.tip == '0%' %>active<% end %> white" id="tip0" onclick="getTip(this)">
+                                    <input type="radio" name="0%" autocomplete="off"> <span style="display: none;">0%</span>No tip
+                                  </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div id="deliveryDetails">
+                    <div class="card">
+                        <div class="card-header background-transparent">
+                            <h5><i class="fa fa-bicycle"></i> Delivery details</h5>
+                        </div>
+                        <div class="card-body">
+                            <input class="form-control radius-5 no-box-shadow" id="streetAddress" placeholder="Street address">
+                            <input class="form-control radius-5 no-box-shadow" id="aptNum" placeholder="Apartment number (if applicable)">
+                            <input class="form-control radius-5 no-box-shadow" id="townStateZip" placeholder="Town, state, zipcode">
+                            <input class="form-control radius-5 no-box-shadow" id="phone" placeholder="Phone number">
+                        </div>
+                    </div>
+                </div>
+                <div id="paymentInformation" style="padding-top: 10px;">
+                    <div class="card">
+                        <div class="card-header background-transparent">
+                            <h5><i class="fa fa-credit-card"></i> Payment information</h5>
+                        </div>
+                        <div class="card-body">
+                            <form action="/complete_order" method="get" id="payment-form">
+                                <div class="form-row row">
+                                    <div class="col-md-12">
+                                        <div id="card-element" class="col-md-12"></div>
+                                    </div>
+                                    <div id="card-errors" role="alert" class="col-md-12"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 complete-order add-margin-top">
+                                        <button class="btn btn-success btn-block box-shadow submit-button" id="<%= guest_shopper.email %>"
+                                            data-toggle="modal" data-target="#submitConfirmation">
+                                            <i class="fa fa-check-circle"></i> Submit order
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-warning add-margin-top" role="alert">
+                    <p class="font-14" style="margin-bottom: 0;">
+                        <i class="fa fa-exclamation-circle"></i> All submitted orders are considered final
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+    // Create a Stripe client
+    // pk_live_4pzDtq9AB3QeJbeJq1YXLaya
+    
+    var stripe = Stripe('pk_test_hX4NI6giYh5tnHPaDXWxIUoM');
+    
+    // Create an instance of Elements
+    var elements = stripe.elements();
+    
+    // Custom styling can be passed to options when creating an Element.
+    // (Note that this demo uses a wider set of styles than the guide below.)
+    var style = {
+      base: {
+        color: '#32325d',
+        lineHeight: '18px',
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
+        '::placeholder': {
+          color: '#aab7c4'
+        }
+      },
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a'
+      }
+    };
+    
+    // Create an instance of the card Element
+    var card = elements.create('card', {style: style});
+    
+    // Add an instance of the card Element into the `card-element` <div>
+    card.mount('#card-element');
+    
+    // Handle real-time validation errors from the card Element.
+    card.addEventListener('change', function(event) {
+      var displayError = document.getElementById('card-errors');
+      if (event.error) {
+        displayError.textContent = event.error.message;
+      } else {
+        displayError.textContent = '';
+      }
+    });
+    
+    $('.StripeElement').css('border', '1px solid #b4b4b4 !important');
+    
+    // Handle form submission //
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        stripe.createToken(card).then(function(result) {
+            if (result.error) {
+              var errorElement = document.getElementById('card-errors');
+              errorElement.textContent = result.error.message;
+            } else {
+              submitOrder(result.token);
+            }
+      });
+    });
+    
+    function cancelOrder(elem) {
+        $('#cancelOrderWarning').hide();
+        $('#spinnerCancel').show();
+        var cart = {
+            'shopper_email': elem.id
+        }
+        $.post('/clear_cart', { cart: cart }, e => {
+            $('#spinnerCancel').hide();
+            $('#cancelOrderWarning').html(`
+                <p class="font-16">Order cancelled!</p>
+            `).show();
+            window.location.replace('/');
+        });
+    }
+    
+    function submitOrder(token) {
+        $('#spinnerSubmit').show();
+        var street = document.getElementById('streetAddress').value;
+        var townStateZip = document.getElementById('townStateZip').value;
+        var phone = document.getElementById('phone').value;
+        var aptNum = document.getElementById('aptNum').value;
+        var cart = {
+            'guest_shopper': document.getElementsByClassName('submit-button')[0].id,
+            'stripeToken': token,
+            'street': street,
+            'townStateZip': townStateZip,
+            'phone': phone,
+            'aptNum': aptNum
+        }
+        $.get('/submit_order', { cart: cart })
+        .fail(function(error) {
+            console.log(error);
+        });
+    }
+    
+    function getTip(elem) {
+        var id = elem.id;
+        var value = $('#' + id +' > span').text();
+        console.log(value);
+        var data = {"tip": value}
+        $.get('/calculate_tip', { data: data });
+        if (id == 'tip0') {
+            var active = document.getElementsByClassName('active');
+            for (i = 0; i < active.length; i++) {
+                if (document.getElementById(active[i].id).classList.contains('active')) {
+                    document.getElementById(active[i].id).classList.remove('active');
+                }
+            }
+        }
+    }
+</script>

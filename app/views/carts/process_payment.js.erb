@@ -1,0 +1,15 @@
+var processed = "<%= "#{@cart.completed}" %>";
+console.log(processed);
+if (processed == 'true') {
+    $('#spinnerSubmit').hide();
+    $('#submitOrderReceipt').html(`
+        <p class="font-16">Order completed!</p>
+    `).show();
+    window.location.replace('/confirmation?guest_id=<%= @order.shopper_email %>&confirmation_number=<%= @cart.order.confirmation %>&cart_id=<%= @cart.id %>');
+} else {
+    $('#spinnerSubmit').hide();
+    $('#submitOrderReceipt').html(`
+        <p class="font-16 theme-red">An error occured. Please try again later. If the problem persists,
+        contact tech support at <span class="theme-blue">hello@rxcarriers.com</span></p>
+    `).show();
+}

@@ -1,0 +1,78 @@
+<% orders.each do |ord| %>
+    <% unless ord.processed %>
+        <div class="modal" id="orderDetails<%= ord.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content" id="orderDetailsContent<%= ord.id %>">
+                <div class="modal-header background-transparent">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <%= ord.confirmation %>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" style="padding-bottom: 20px;">
+                            <p class="font-16 bold">Items ordered</p>
+                        </div>
+                    </div>
+                    <% ord.item_list_array.each_with_index do |i, idx| %>
+                        <div class="row">
+                            <div class="col-md-12 add-margin-bottom">
+                                <div class="float-left theme-green" style="width: 10%;">
+                                    <p class="font-16 theme-blue"><%= ord.item_list_count_array[idx] %></p>
+                                </div>
+                                <div class="float-right" style="width: 90%;">
+                                    <p class="font-16"><%= ord.get_item(i).name %></p>
+                                </div>
+                            </div>
+                        </div>
+                    <% end %>
+                    <div class="row">
+                        <div class="col-md-12" style="padding-top: 20px; padding-bottom: 20px;">
+                            <p class="font-16 bold">Delivery details</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="font-16 add-margin-bottom"><%= ord.street_address %><%= ' ' + ord.apartment_number if ord.apartment_number %></p>
+                            <p class="font-16 add-margin-bottom"><%= ord.town_state_zipcode %></p>
+                            <p class="font-16 add-margin-bottom"><%= ord.phone_number %></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" id="orderDetailsModalFooter<%= ord.id %>">
+                    <%= link_to cancel_order_path(:id => ord.id), class:"btn btn-danger box-shadow", id:"cancelButton#{ord.id}", remote: true do %>
+                        <i class="fa fa-times-circle"></i> Cancel order
+                    <% end %>
+                    <%= link_to process_order_path(:id => ord.id), class:"btn btn-success box-shadow", id:"processButton#{ord.id}", remote: true do %>
+                        <i class="fa fa-check-circle"></i> Process order
+                    <% end %>
+                </div>
+            </div>
+          </div>
+        </div>
+    <% end %>
+    <div class="col-md-3 add-padding-bottom" id="orderBox<%= ord.id %>">
+        <a class="background-transparent no-underline cursor-pointer" data-toggle="modal" data-target="#orderDetails<%= ord.id %>">
+            <div class="card">
+                <div class="card-header">
+                    <h6><%= ord.confirmation %></h6>
+                </div>
+                <div class="card-body">
+                    <% ord.item_list_array.each_with_index do |i, idx| %>
+                        <div class="col-md-12 no-horizontal-padding">
+                            <div class="float-left theme-green" style="width: 15%;">
+                                <%= ord.item_list_count_array[idx] %>
+                            </div>
+                            <div class="float-right" style="width: 85%;">
+                                <%= ord.get_item(i).minify_name(20) %>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </a>
+    </div>
+<% end %>

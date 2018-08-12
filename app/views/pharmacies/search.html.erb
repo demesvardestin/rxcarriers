@@ -12,31 +12,28 @@
     }
 </style>
 
-<div class="container">
-    <div class="col-md-12 no-horizontal-padding pharmacy-search-main-div" style="padding-top: 45px; padding-bottom: 15px; border-bottom: 1px solid #e1e1e2;">
-        <div class="row" style="height: 100% !important;">
-            <div class="col-md-6" style="height: 100% !important;">
-                <p style="font-size: 22px; vertical-align: middle;">Find an independent pharmacy near you!</p>
-            </div>
-            <div class="col-md-6 field search-div">
-                <form action="/pharmacy_search" method="get" id="pharmacySearchForm">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text background-transparent prepend-box" id="basic-addon1">
-                            <i class="fa fa-search"></i>
-                        </span>
-                      </div>
-                      <input class="form-control font-16 no-box-shadow search-value" style="margin-top: 0 !important;" id="new-pharmacy-search"
-                            name="new-pharmacy-search" placeholder="Enter your address" <% if params[:location] %>value="<%= params[:location] %>"<% end %>>
-                    </div>
-                </form>
-                <button type="button" style="display: none;">Submit</button>
-            </div>
+<div class="jumbotron no-border-radius" style="padding-top: 0px; padding-bottom: 0;">
+    <div class="container">
+        <div class="col-md-4 no-horizontal-padding" style="padding-top: 30px; padding-bottom: 15px;">
+            <form action="/pharmacy_search" method="get" id="pharmacySearchForm">
+                <div class="input-group mb-3" style="margin-bottom: 0 !important;">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text background-transparent prepend-box no-border no-horizontal-padding" id="basic-addon1">
+                        <i class="fa fa-search"></i>
+                    </span>
+                  </div>
+                  <input class="form-control font-16 no-box-shadow search-value background-transparent no-border" style="margin-top: 0 !important;" id="new-pharmacy-search"
+                        name="new-pharmacy-search" placeholder="Enter an address or a pharmacy name" <% if params[:q] %>value="<%= params[:q] %>"<% end %>>
+                </div>
+                <button type="submit" style="display: none;">Submit</button>
+            </form>
         </div>
     </div>
+</div>
+<div class="container">
     <div class="col-md-12 no-horizontal-padding" style="padding-top: 30px; padding-bottom: 60px;">
         <div id="searchResults">
-            <div class="add-padding-bottom"><p class="font-16 bold">Near you</p></div>
+            <div class="add-padding-bottom"><p class="font-16 bold"><%= pluralize(@pharmacies.size, 'pharmacy') %> found</p></div>
             <div style="display: none; padding: 70px;" id="bulletSpinner"><%= render 'common/bullet_spinner' %></div>
             <div class="row search-results">
                 <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
@@ -52,6 +49,10 @@
                 <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
                 <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
             </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -62,8 +63,8 @@
         event.preventDefault();
         $('.search-results').remove();
         $('#bulletSpinner').show();
-        var location = document.getElementById('new-pharmacy-search').value;
-        $.get('/pharmacy_search?location='+location, function(data) {
+        var q = document.getElementById('new-pharmacy-search').value;
+        $.get('/pharmacy_search?q='+q, function(data) {
             $('.pharmacy-card-result').hide();
             $('#bulletSpinner').hide();
             $('#searchResults').html(data);

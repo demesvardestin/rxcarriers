@@ -1,0 +1,15 @@
+$('#orderStatusBody').html(`
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <button type="submit" role="button" class="btn btn-primary btn-block background-transparent theme-blue" disabled>
+                <%= @status %>
+            </button>
+            <h6><%= @text %></h6>
+        </div>
+        <div class="col-md-6 offset-md-3 text-center" style="margin-top: 15px;">
+            <button class="btn btn-success btn-block box-shadow white" onclick="trackAnotherOrder();">
+                Track another order
+            </button>
+        </div>
+    </div>
+`)

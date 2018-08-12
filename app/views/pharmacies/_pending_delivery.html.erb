@@ -1,0 +1,86 @@
+<% if orders.empty? %>
+    <div class="col-md-12 no-horizontal-padding add-padding-top add-padding-bottom">
+        <p class="font-16 text-center">No orders pending delivery</p>
+    </div>
+<% else %>
+    <% orders.each do |ord| %>
+        <% unless ord.delivered? %>
+            <div class="modal" id="pendingOrderDetails<%= ord.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content" id="orderDetailsContent<%= ord.id %>">
+                    <div class="modal-header background-transparent">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            <%= ord.confirmation %>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12" style="padding-bottom: 20px;">
+                                <p class="font-16 bold">Items ordered</p>
+                            </div>
+                        </div>
+                        <% ord.item_list_array.each_with_index do |i, idx| %>
+                            <div class="row">
+                                <div class="col-md-12 add-margin-bottom no-horizontal-padding">
+                                    <div class="float-left theme-green" style="width: 10%;">
+                                        <p class="font-16 theme-blue"><%= ord.item_list_count_array[idx] %></p>
+                                    </div>
+                                    <div class="float-right" style="width: 90%;">
+                                        <p class="font-16"><%= ord.get_item(i).name %></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <% end %>
+                        <div class="row">
+                            <div class="col-md-12" style="padding-top: 20px; padding-bottom: 20px;">
+                                <p class="font-16 bold">Delivery details</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="font-16 add-margin-bottom"><%= ord.street_address %><%= ' ' + ord.apartment_number if ord.apartment_number %></p>
+                                <p class="font-16 add-margin-bottom"><%= ord.town_state_zipcode %></p>
+                                <p class="font-16 add-margin-bottom"><%= ord.phone_number %></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" id="orderDetailsModalFooter<%= ord.id %>">
+                        <%= link_to cancel_order_path(:id => ord.id), class:"btn btn-danger box-shadow", id:"cancelButton#{ord.id}", remote: true do %>
+                            <i class="fa fa-times-circle"></i> Cancel order
+                        <% end %>
+                        <%= link_to send_for_delivery_path(:id => ord.id), class:"btn btn-success box-shadow", id:"sendForDeliveryButton#{ord.id}", remote: true do %>
+                            Send for delivery <i class="fa fa-bicycle"></i>
+                        <% end %>
+                    </div>
+                </div>
+              </div>
+            </div>
+        <% end %>
+        <div class="table-body row" id="pendingDelivery<%= ord.id %>" style="padding: 15px !important;">
+            <div class="float-left" style="width: 15%;">
+                <h6><%= ord.confirmation %></h6>
+            </div>
+            <div class="float-left" style="width: 25%;">
+                <h6><%= ord.created_at.strftime('%-m/%e/%y at %l:%M%p') %></h6>
+            </div>
+            <div class="float-left" style="width: 45%;">
+                <h6>
+                    <a class="background-transparent theme-blue cursor-pointer" data-toggle="modal" data-target="#pendingOrderDetails<%= ord.id %>">
+                        View order details
+                    </a>
+                </h6>
+            </div>
+            <div class="float-left" style="width: 15%;">
+                <h6><%= ord.status %></h6>
+            </div>
+        </div>
+        <div class="row" style="margin: 0;">
+            <div class="col-md-12 no-horizontal-padding">
+                <hr style="margin: 0;">
+            </div>
+        </div>
+    <% end %>
+<% end %>

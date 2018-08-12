@@ -35,8 +35,8 @@
         <div class="card">
             <div class="card-body" style="padding-bottom: 20px;">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                  <a class="nav-link active nav-link-settings font-14" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Account</a>
-                  <a class="nav-link nav-link-settings font-14" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Billing</a>
+                  <a class="nav-link active nav-link-settings font-14" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Account details</a>
+                  <a class="nav-link nav-link-settings font-14" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Business operations</a>
                 </div>
                 <section class="notice" style="display: none;">
                     <div class="alert alert-success no-border-radius alert-dismissible fade show notice-alert" role="alert">
@@ -55,18 +55,8 @@
             <div class="tab-pane fade show active bordered background-white" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" style="padding: 10px 15px; border-radius: 5px;">
                 <%= render 'form' %>
             </div>
-            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" id="">
-                <div id="currentPlan" class="row">
-                    <div class="col-md-12">
-                        <div id="pharmacyCard" class="bordered background-white radius-5" style="padding: 10px 15px;">
-                            <% if current_pharmacy.card_token %>
-                                <%= render 'card_data' %>
-                            <% else %>
-                                <%= render 'card_form' %>
-                            <% end %>
-                        </div>
-                    </div>
-                </div>
+            <div class="tab-pane fade bordered background-white" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" style="padding: 10px 15px; border-radius: 5px;">
+                <%= render 'logistics_form' %>
             </div>
         </div>
     </div>
@@ -83,94 +73,4 @@
             window.location.replace('/choose_subscription');
         }
     });
-    
-    function showCardForm() {
-        $('#confirmation-form').hide();
-        $('#card-form').show();
-    };
-    function hideCardForm() {
-        var conf = document.getElementById('confirmation-form');
-        $('#card-form').hide();
-        $('#confirmation-form').show();
-    };
-    
-    // Create a Stripe client
-    var stripe = Stripe('pk_live_4pzDtq9AB3QeJbeJq1YXLaya');
-    
-    // Create an instance of Elements
-    var elements = stripe.elements();
-    
-    // Custom styling can be passed to options when creating an Element.
-    // (Note that this demo uses a wider set of styles than the guide below.)
-    var style = {
-      base: {
-        color: '#32325d',
-        lineHeight: '18px',
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-        fontSmoothing: 'antialiased',
-        fontSize: '16px',
-        '::placeholder': {
-          color: '#aab7c4'
-        }
-      },
-      invalid: {
-        color: '#fa755a',
-        iconColor: '#fa755a'
-      }
-    };
-    
-    // Create an instance of the card Element
-    var card = elements.create('card', {style: style});
-    
-    // Add an instance of the card Element into the `card-element` <div>
-    card.mount('#card-element');
-    
-    // Handle real-time validation errors from the card Element.
-    card.addEventListener('change', function(event) {
-      var displayError = document.getElementById('card-errors');
-      if (event.error) {
-        displayError.textContent = event.error.message;
-      } else {
-        displayError.textContent = '';
-      }
-    });
-    
-    // Handle form submission //
-    var form = document.getElementById('payment-form');
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        stripe.createToken(card).then(function(result) {
-            if (result.error) {
-              // Inform the user if there was an error
-              var errorElement = document.getElementById('card-errors');
-              errorElement.textContent = result.error.message;
-            } else {
-                $('.error-card').hide();
-                $('#payment-form').hide();
-                $('#pharmacyCard').append(`
-                    <div class="row card-bullet-loader">
-                        <div class="col-md-12 text-center">
-                            <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
-                        </div>
-                        <div class="col-md-12 text-center">
-                            Saving...
-                        </div>
-                    </div>
-                `);
-              // Send the token to your server
-              stripeTokenHandler(result.token);
-            }
-      });
-    });
-    function stripeTokenHandler(token) {
-      // Insert the token ID into the form so it gets submitted to the server
-        $.get( "/pharmacy/update_card?stripeToken="+token.id, function( data ) {
-            // $('#pharmacyCard').html(data);
-        }).fail(function(error) {
-            console.log(error);
-            $('.card-bullet-loader').remove();
-            $('#payment-form').show();
-            $('.error-card').show();
-        });;
-    };
 </script>

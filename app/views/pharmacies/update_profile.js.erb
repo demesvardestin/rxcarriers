@@ -1,66 +1,58 @@
 $('#v-pills-home').html(`
-    <%= form_for(@pharmacy, :html => {:id => "profileForm",:multipart => true, :remote => true}) do |f| %>
-      <% if @pharmacy.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@pharmacy.errors.count, "error") %> prohibited this pharmacy from being saved:</h2>
-    
-          <ul>
-          <% @pharmacy.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-          </ul>
-        </div>
-      <% end %>
-      
-      <div class="field">
-        <%= f.text_field :name, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-        <label for="name">Pharmacy Name</label>
-      </div>
-      <div class="field">
-        <%= f.text_field :number, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-        <label for="number">Phone Number</label>
-      </div>
-      <div class="field">
-        <%= f.text_field :supervisor, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-        <label for="supervisor">Supervisor</label>
-      </div>
-      <div class="row">
-        <div class="col-md-5">
-          <div class="field">
-            <%= f.text_field :street, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-            <label for="street">Street</label>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="field">
-            <%= f.text_field :town, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-            <label for="town">Town</label>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="field">
-            <%= f.text_field :state, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-            <label for="state">State</label>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="field">
-            <%= f.text_field :zipcode, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-            <label for="zipcode">Zipcode</label>
-          </div>
-        </div>
-      </div>
-      <div class="field">
-        <%= f.text_field :website, class:"form-control form--control font-14 pf", autofocus: true, placeholder:" " %>
-        <label for="website">Website</label>
-      </div>
-      <!--<div class="field">-->
-      <!--  <%= f.label :pharmacy_logo %>-->
-      <!--  <%= f.file_field :avatar, class:"form-control font-14" %>-->
-      <!--</div>-->
-      <div class="actions text-right">
-        <%= f.submit "Update!", class:"btn btn-info font-14 btn-lg cursor-pointer update-profile" %>
+  <%= form_for(@pharmacy, :html => {:id => "profileForm",:multipart => true, :remote => true}) do |f| %>
+    <% if @pharmacy.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@pharmacy.errors.count, "error") %> prohibited your information from being saved:</h2>
+  
+        <ul>
+        <% @pharmacy.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
       </div>
     <% end %>
+    
+    <div class="field">
+      <%= f.text_field :name, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy name" %>
+    </div>
+    <div class="field">
+      <%= f.text_field :number, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy phone number" %>
+    </div>
+    <div class="field">
+      <%= f.text_field :supervisor, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy manager/supervisor" %>
+    </div>
+    <div class="row">
+      <div class="col-md-5">
+        <div class="field">
+          <%= f.text_field :street, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy street address" %>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="field">
+          <%= f.text_field :town, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy town" %>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="field">
+          <%= f.text_field :state, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy state" %>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="field">
+          <%= f.text_field :zipcode, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy zipcode" %>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <%= f.text_field :website, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:" " %>
+    </div>
+    <!--<div class="field">-->
+    <!--  <%= f.label :pharmacy_logo %>-->
+    <!--  <%= f.file_field :avatar, class:"form-control no-box-shadow height-50 font-14" %>-->
+    <!--</div>-->
+    <div class="actions text-right">
+      <%= f.submit "Update!", class:"btn btn-info font-14 btn-lg cursor-pointer update-profile" %>
+    </div>
+  <% end %>
 `);
 toastr["success"]('Profile updated!');

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180716190902) do
+ActiveRecord::Schema.define(version: 20180811220059) do
 
   create_table "batches", force: :cascade do |t|
     t.datetime "created_at",           null: false
@@ -35,6 +35,26 @@ ActiveRecord::Schema.define(version: 20180716190902) do
     t.boolean  "courier_requested"
     t.string   "tracking_url"
     t.string   "status"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.integer  "item_count"
+    t.string   "shopper_email"
+    t.string   "total_cost"
+    t.boolean  "pending"
+    t.boolean  "completed"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.string   "item_list"
+    t.string   "item_list_count"
+    t.string   "instructions_list"
+    t.integer  "order_id"
+    t.string   "final_amount"
+    t.string   "tip"
+    t.string   "tip_amount"
+    t.boolean  "paid"
+    t.boolean  "online"
+    t.integer  "pharmacy_id"
   end
 
   create_table "deliveries", force: :cascade do |t|
@@ -89,6 +109,26 @@ ActiveRecord::Schema.define(version: 20180716190902) do
     t.string   "request_ip"
   end
 
+  create_table "help_tickets", force: :cascade do |t|
+    t.integer  "pharmacy_id"
+    t.string   "details"
+    t.string   "title"
+    t.string   "phone"
+    t.string   "preferred_time"
+    t.boolean  "processed"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "inventories", force: :cascade do |t|
+    t.integer  "pharmacy_id"
+    t.integer  "item_id"
+    t.integer  "category_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "item_category_id"
+  end
+
   create_table "invoices", force: :cascade do |t|
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
@@ -106,6 +146,34 @@ ActiveRecord::Schema.define(version: 20180716190902) do
     t.boolean  "active"
   end
 
+  create_table "item_categories", force: :cascade do |t|
+    t.integer  "inventory_id"
+    t.string   "name"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "pharmacy_id"
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.integer  "pharmacy_id"
+    t.integer  "category_id"
+    t.integer  "inventory_id"
+    t.string   "name"
+    t.string   "price"
+    t.string   "quantity"
+    t.string   "details"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "item_category_id"
+    t.integer  "cart_id"
+    t.boolean  "taxable"
+    t.integer  "size"
+    t.string   "size_type"
+    t.integer  "invoice_id"
+    t.string   "expiration"
+    t.string   "ndc"
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
@@ -116,6 +184,30 @@ ActiveRecord::Schema.define(version: 20180716190902) do
     t.string   "notification_type"
     t.string   "rx"
     t.boolean  "active"
+    t.string   "title"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer  "cart_id"
+    t.integer  "pharmacy_id"
+    t.string   "shopper_email"
+    t.string   "item_list"
+    t.string   "item_list_count"
+    t.string   "total"
+    t.string   "stripe_charge_id"
+    t.string   "confirmation"
+    t.boolean  "guest"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "street_address"
+    t.string   "town_state_zipcode"
+    t.string   "phone_number"
+    t.string   "apartment_number"
+    t.boolean  "processed"
+    t.time     "requested_at"
+    t.boolean  "delivered"
+    t.string   "status"
+    t.boolean  "online"
   end
 
   create_table "pharmacies", force: :cascade do |t|
@@ -182,6 +274,7 @@ ActiveRecord::Schema.define(version: 20180716190902) do
     t.string   "delivers"
     t.string   "saturday"
     t.string   "sunday"
+    t.integer  "item_category_id"
   end
 
   add_index "pharmacies", ["email"], name: "index_pharmacies_on_email"
@@ -194,6 +287,33 @@ ActiveRecord::Schema.define(version: 20180716190902) do
     t.boolean  "active"
     t.integer  "pharmacy_id"
     t.string   "delivery_time"
+  end
+
+  create_table "refunds", force: :cascade do |t|
+    t.string   "amount"
+    t.integer  "order_id"
+    t.integer  "pharmacy_id"
+    t.boolean  "completed"
+    t.string   "details"
+    t.string   "stripe_cus"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "registration_requests", force: :cascade do |t|
+    t.string   "pharmacy_name"
+    t.string   "pharmacy_email"
+    t.string   "pharmacy_phone"
+    t.string   "pharmacy_address"
+    t.string   "pharmacy_manager"
+    t.string   "pharmacy_website"
+    t.string   "secure_token"
+    t.boolean  "approved",          default: false
+    t.datetime "approved_on"
+    t.datetime "denied_on"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.string   "registration_link"
   end
 
   create_table "request_alerts", force: :cascade do |t|
@@ -254,6 +374,25 @@ ActiveRecord::Schema.define(version: 20180716190902) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "shoppers", force: :cascade do |t|
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,     null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "guest",                  default: false
+  end
+
+  add_index "shoppers", ["email"], name: "index_shoppers_on_email", unique: true
+  add_index "shoppers", ["reset_password_token"], name: "index_shoppers_on_reset_password_token", unique: true
+
   create_table "stripe_plans", force: :cascade do |t|
     t.string   "name"
     t.integer  "pharmacy_id"
@@ -276,5 +415,30 @@ ActiveRecord::Schema.define(version: 20180716190902) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,     null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "guest",                  default: false
+    t.string   "name"
+    t.string   "phone"
+    t.string   "street"
+    t.string   "town"
+    t.string   "state"
+    t.string   "zipcode"
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end

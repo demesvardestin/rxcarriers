@@ -22,6 +22,7 @@ gem 'sendgrid'
 gem 'mail'
 # add devise for auth
 gem 'devise'
+gem 'devise-guests'
 # stripe for transactions
 gem 'stripe'
 # oauth2 for omniauth
@@ -53,8 +54,13 @@ gem 'serviceworker-rails'
 gem 'pusher'
 gem 'toastr-rails'
 
+# DB administration
+gem "administrate"
+
 # POSTMATES
 gem 'postmates'
+# BigCommerce
+gem 'bigcommerce'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -74,6 +80,7 @@ group :development, :test do
   gem 'byebug'
   # # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
+  gem 'rspec-rails', '~> 3.7'
 end
 
 group :development do

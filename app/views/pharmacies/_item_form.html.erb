@@ -1,0 +1,82 @@
+<%= form_for(@item, :html => {:id => "itemForm", :multipart => true, :remote => true}) do |f| %>
+    <% if @item.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+    
+          <ul>
+          <% @item.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <div class="row">
+        <div class="col-md-2 field">
+            <%= f.label :ndc %>
+            <%= f.text_field :ndc, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"0000-0000-0000", id:"itemNDC" %>
+        </div>
+        <div class="col-md-3 field">
+            <%= f.label :name %>
+            <%= f.text_field :name, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"Tylenol PM", id:"itemName" %>
+        </div>
+        <div class="col-md-1 field">
+            <%= f.label :price %>
+            <%= f.text_field :price, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"8.99", id:"itemPrice" %>
+        </div>
+        <div class="col-md-1 field">
+            <%= f.label :size %>
+            <%= f.text_field :size, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"100", id:"itemSize" %>
+        </div>
+        <div class="col-md-3 field">
+            <%= f.label :size_type %>
+            <%= f.text_field :size_type, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"Caps, tabs, oz, ml, mg", id:"itemSizeType" %>
+        </div>
+        <div class="col-md-2 field">
+            <%= f.label :item_expiration %>
+            <%= f.text_field :expiration, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"yyyy-mm-dd", id:"itemSizeType" %>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 field">
+            <%= f.label :available_units %>
+            <%= f.text_field :quantity, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"20", id:"itemAvailability" %>
+        </div>
+        <div class="col-md-5 field">
+            <%= f.label :details %>
+            <%= f.text_field :details, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"Pain reliever, fever reducer", id:"itemName" %>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-info box-shadow btn-block taxable-items height-50" style="margin-top: 10px;" id="taxableItem" id="dropdownTaxable" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Taxable? <i class="fa fa-angle-down"></i>
+            </button>
+            <div class="dropdown-menu" style="width: 100%; margin-top: 300px;" aria-labelledby="dropdownTaxable">
+                <% ['Yes', 'No'].each do |t| %>
+                    <a class="dropdown-item theme-blue cursor-pointer" id="taxable-<%= t %>" onclick="setTaxable(this)"><%= t %></a>
+                    <div class="dropdown-divider"></div>
+                <% end %>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-info box-shadow btn-block filter-items height-50" style="margin-top: 10px;" id="filterItems" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Category <i class="fa fa-angle-down"></i>
+            </button>
+            <div class="dropdown-menu" style="width: 100%; margin-top: 300px;" aria-labelledby="dropdownMenuButton">
+                <% all_categories.each do |c| %>
+                    <a class="dropdown-item theme-blue cursor-pointer" id="category-<%= c.id %>" onclick="setCategory(this)"><%= c.name %></a>
+                    <div class="dropdown-divider"></div>
+                <% end %>
+            </div>
+        </div>
+        <div class="col-md-12 field" style="display: none;">
+            <%= f.text_field :item_category_id, class:"form-control no-box-shadow height-50", autofocus: true, id:"itemCategory" %>
+        </div>
+        <div class="col-md-12 field" style="display: none;">
+            <%= f.hidden_field :taxable, class:"form-control no-box-shadow height-50", autofocus: true, id:"itemTaxable" %>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 actions">
+            <%= f.submit "Add item", class:"btn btn-success box-shadow btn-block font-16" %>
+        </div>
+    </div>
+<% end %>

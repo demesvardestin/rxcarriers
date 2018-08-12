@@ -1,0 +1,18 @@
+$('#orderSubtotal').html(`
+    <div class="row">
+        <div class="col-md-12">
+            <div class="float-left">
+                <p class="font-16">Items subtotal:</p>
+                <p class="font-16">Sales tax:</p>
+                <p class="font-16"><span id="tipPercent"><%= @cart.tip %></span> tip:</p>
+                <p class="font-16 bold add-margin-top">Total:</p>
+            </div>
+            <div class="float-right">
+                <p class="font-16 theme-blue">$<%= @cart.get_total_cost %></p>
+                <p class="font-16 theme-blue">$<%= @cart.calculate_tax %></p>
+                <p class="font-16 theme-blue">$<span id="tipAmt"><%= @cart.get_tip %></span></p>
+                <p class="font-16 theme-blue bold add-margin-top">$<%= @cart.sale_total %></p>
+            </div>
+        </div>
+    </div>
+`);

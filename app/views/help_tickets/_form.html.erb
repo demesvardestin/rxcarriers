@@ -1,0 +1,49 @@
+<%= form_for(@ticket, :html => {:id => "helpTicketForm", :multipart => true, :remote => true}) do |f| %>
+    <% if @ticket.errors.any? %>
+        <div id="error_explanation">
+            <h5><%= pluralize(@ticket.errors.count, "error") %> found:</h5>
+    
+            <ul>
+                <% @ticket.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+    <div class="row" style="margin-bottom: 15px;">
+        <div class="col-md-6">
+            <%= f.text_field :title, class:"form-control height-50 no-box-shadow", id:"ticketTitle", placeholder:"Title", onkeyup:"changeColor(this)" %>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-info box-shadow btn-block height-50" style="margin-top: 10px;" id="filterTimes" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Preferred time <i class="fa fa-angle-down"></i>
+            </button>
+            <div class="dropdown-menu" style="width: 100%;" aria-labelledby="dropdownMenuButton">
+                <% all_times.each do |t| %>
+                    <a class="dropdown-item theme-blue cursor-pointer" id="time-<%= t %>" onclick="setTime(this)"><%= t %></a>
+                    <div class="dropdown-divider"></div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <%= f.text_area :details, class:"form-control no-box-shadow", id:"ticketDetails", placeholder:"What can we help you with?", style:"height: 100px;" %>
+    <%= f.hidden_field :preferred_time, class:"form-control height-50 no-box-shadow", id:"preferredTime", placeholder:"Pharmacy address" %>
+    <%= f.submit "Submit ticket", class:"btn btn-primary btn-block white box-shadow add-margin-top height-50", id:"submitTicketBtn" %>
+<% end %>
+
+<script>
+    function setTime(elem) {
+        var id = elem.id;
+        var time = id.split('-')[1];
+        document.getElementById('preferredTime').value = $('#'+id).text();
+        $('#filterTimes').html(
+            $('#'+id).text() + '<i class="fa fa-angle-down"></i>'
+        );
+        console.log($('#'+id).text());
+    }
+    
+    $('#helpTicketForm').on('submit', e => {
+        $('#submitTicketBtn').css('opacity', '0.7');
+        document.getElementById('submitTicketBtn').value = 'Submitting ticket...'
+    });
+</script>

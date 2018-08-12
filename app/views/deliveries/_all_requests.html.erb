@@ -1,51 +1,19 @@
-<% @requests.each do |r| %>
-    <div class="row request-row" id="requestRow<%= r.id %>">
-        <div class="modal fade" id="editRx<%= r.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title font-16" id="exampleModalLabel"><i class="fa fa-exclamation-circle"></i> Confirm birth year of rx recipient</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body" id="updateRxDobModalBody-<%= r.rx %>">
-                    <div class="row">
-                        <div class="col-md-12" style="padding-bottom: 10px;">
-                            <h6 class="font-14 theme-blue">If the following rx exists, confirm the birth year (from your records)</h6>
-                            <h6 class="font-14 theme-yellow text-center add-padding-top bold">Rx #<span id="rxSpan"><%= r.rx %></span></h6>
-                        </div>
-                        <div class="col-md-6 offset-md-3">
-                            <input type="text" class="form-control font-14" id="editRxField-<%= r.rx %>" placeholder="birth year (format: yyyy)">
-                        </div>
-                    </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary transaction-buttons white updateRxBtn-<%= r.rx %>" id="<%= r.rx %>" onclick="updateRxDob0(this)"><i class="fa fa-check-circle"></i> Update</button>
-              </div>
+<% all_orders.each do |ord| %>
+    <div class="col-md-4">
+        <div class="card box-shadow">
+            <div class="card-header theme-background">
+                <span class="font-16"><%= ord.confirmation %></span>
             </div>
-          </div>
-        </div>
-        <div class="col-md-2 bold theme-blue">
-            <%= r.rx %>
-        </div>
-        <div class="col-md-3">
-            <%= to_mm_dd_yy(r.created_at) %>
-        </div>
-        <div class="col-md-2">
-            <a class="btn btn-success btn-block white transaction-buttons">
-               <i class="fa fa-check-circle"></i> Processed
-            </a>
-        </div>
-        <div class="col-md-2">
-            <a class="btn btn-warning btn-block white transaction-buttons">
-               <i class="fa fa-exclamation-circle"></i> Cannot refill
-            </a>
-        </div>
-        <div class="col-md-2">
-            <a class="btn btn-danger btn-block white transaction-buttons">
-               <i class="fa fa-times-circle"></i> Invalid
-            </a>
+            <div class="card-body">
+                <% ord.item_list_array.each_with_index do |i, idx| %>
+                    <div class="float-right theme-green">
+                        <%= ord.item_list_count_array[idx] %>
+                    </div>
+                    <div class="float-right">
+                        <%= ord.get_item(i).shorten_name %>
+                    </div>
+                <% end %>
+            </div>
         </div>
     </div>
 <% end %>

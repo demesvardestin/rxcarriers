@@ -1,46 +1,56 @@
-<style>
-  a.nav-link.sidebar {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    font-size: 14px;
-    color: #aaadaf;
-  }
-  a.nav-link.sidebar:hover, .activated {
-    background-color: #007bff;
-    color: #fff !important;
-    border-radius: 4px;
-    box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
-  }
-  li > a.sidebar {
-    margin-bottom: 10px;
-  }
-  a.sidebar > i {
-    font-size: 20px !important;
-    margin-right: 15px;
-  }
-  p {
-    color: #555657;
-    margin-bottom: 0;
-  }
-</style>
+<!--<style>-->
+<!--  a.nav-link.sidebar {-->
+<!--    padding-top: 20px;-->
+<!--    padding-bottom: 20px;-->
+<!--    font-size: 14px;-->
+<!--    color: #aaadaf;-->
+<!--  }-->
+<!--  a.nav-link.sidebar:hover, .activated {-->
+<!--    background-color: #007bff;-->
+<!--    color: #fff !important;-->
+<!--    border-radius: 4px;-->
+<!--    box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);-->
+<!--  }-->
+<!--  li > a.sidebar {-->
+<!--    margin-bottom: 10px;-->
+<!--  }-->
+<!--  a.sidebar > i {-->
+<!--    font-size: 20px !important;-->
+<!--    margin-right: 15px;-->
+<!--  }-->
+<!--  p {-->
+<!--    color: #555657;-->
+<!--    margin-bottom: 0;-->
+<!--  }-->
+<!--</style>-->
 
 
-<div class="float-left" style="width: 15%; position: fixed; height: 100%; z-index: 2; padding-top: 90px; padding-left: 15px;">
-  <ul class="nav flex-column" style="padding-left: 1.25rem;">
-    <li class="nav-item">
-      <a class="nav-link sidebar <% if home %>activated box-shadow<% end %>" href="/dashboard">
-        <i class="fa fa-home"></i> Dashboard
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="/payment-history" class="nav-link sidebar <% if history_path %>activated box-shadow<% end %>">
-        <i class="fa fa-credit-card"></i> Payments
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="https://rxcarriers.zendesk.com/hc/en-us" class="nav-link sidebar" target="_blank">
-        <i class="fa fa-question-circle"></i> Help
-      </a>
-    </li>
-  </ul>
-</div>
+<!--<div>-->
+<!--  <ul class="nav flex-column" style="padding-left: 1.25rem;">-->
+<!--    <li class="nav-item">-->
+<!--      <a class="nav-link sidebar <% if home %>activated box-shadow<% end %>" href="/dashboard">-->
+<!--        <i class="fa fa-home"></i> Dashboard-->
+<!--      </a>-->
+<!--    </li>-->
+<!--    <li class="nav-item">-->
+<!--      <a class="nav-link sidebar <% if order_queue %>activated box-shadow<% end %>" href="/order_queue">-->
+<!--        <i class="fa fa-spinner"></i> Orders-->
+<!--      </a>-->
+<!--    </li>-->
+<!--    <li class="nav-item">-->
+<!--      <a class="nav-link sidebar <% if inventory %>activated box-shadow<% end %>" href="/inventory">-->
+<!--        <i class="fa fa-file-text-o"></i> Inventory-->
+<!--      </a>-->
+<!--    </li>-->
+<!--    <li class="nav-item">-->
+<!--      <a href="/payment-history" class="nav-link sidebar <% if history_path %>activated box-shadow<% end %>">-->
+<!--        <i class="fa fa-credit-card"></i> Payments-->
+<!--      </a>-->
+<!--    </li>-->
+<!--    <li class="nav-item">-->
+<!--      <a href="https://rxcarriers.zendesk.com/hc/en-us" class="nav-link sidebar" target="_blank">-->
+<!--        <i class="fa fa-question-circle"></i> Help-->
+<!--      </a>-->
+<!--    </li>-->
+<!--  </ul>-->
+<!--</div>-->

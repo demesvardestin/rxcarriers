@@ -1,0 +1,45 @@
+<div class="modal" id="cartContent" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content box-shadow batch-list" style="padding-bottom: 0; top: 50px;">
+        <div class="modal-header background-transparent">
+            <h5 class="font-18 bold">
+                <i class="fa fa-shopping-cart"></i> Cart content
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+            </button>
+        </div>
+        <div class="modal-body" style="padding-top: 20px !important; min-height: 180px;">
+            <% if present_cart.is_empty? %>
+                <p class="font-16">Your cart is empty</p>
+            <% else %>
+                <h5 style="margin-bottom: 10px;">
+                    Your order from 
+                    <a href="<%= present_cart.get_pharmacy.url %>" class="background-transparent no-underline theme-blue">
+                        <%= present_cart.get_pharmacy.name %>
+                    </a>
+                </h5>
+                <% if present_cart.item_list == '' %>
+                    <p class="font-18">Cart is empty</p>
+                <% else %>
+                    <% present_cart.item_list.split(', ').each_with_index do |i, idx| %>
+                        <p class="font-18">
+                            <span class="theme-green bold" style="margin-right: 5px;">
+                                <%= present_cart.item_list_count.split(', ')[idx] %>
+                            </span>
+                            <button class="btn btn-link" data-toggle="modal" data-target="#itemOrderDetails<%= i %>">
+                                <%= get_item(i).shorten_name %>
+                            </button>
+                        </p>
+                    <% end %>
+                <% end %>
+            <% end %>
+        </div>
+        <div class="modal-footer">
+            <a class="btn btn-success btn-md white box-shadow" <% unless present_cart.is_empty? || present_cart.get_total_cost == 0.0 %>href="<%= checkout_link %>"<% end %>>
+                Checkout ($<%= present_cart.get_total_cost %>)
+            </a>
+        </div>
+    </div>
+  </div>
+</div>

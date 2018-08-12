@@ -1,0 +1,69 @@
+<div class="jumbotron no-border-radius" style="height: 250px; margin-bottom: 0; background-image: url('/images/gradient_background.jpg'); background-size: cover;"></div>
+<section id="pharmacyForm" class="row" style="margin-top: -175px; margin-bottom: 50px;">
+    <div class="col-md-4 offset-md-4">
+        <div class="card box-shadow">
+            <div class="card-body">
+                <h5 class="text-center">Register your pharmacy</h5>
+                <hr style="text-align: center; width: 50%;">
+                <span id="form">
+                    <%= form_for(@registration, :html => {:id => "registrationRequestForm", :multipart => true, :remote => true}) do |f| %>
+                        <% if @registration.errors.any? %>
+                            <div id="error_explanation">
+                                <h5><%= pluralize(@registration.errors.count, "error") %> found:</h5>
+                        
+                                <ul>
+                                    <% @registration.errors.full_messages.each do |message| %>
+                                        <li><%= message %></li>
+                                    <% end %>
+                                </ul>
+                            </div>
+                        <% end %>
+                        <%= f.text_field :pharmacy_name, class:"form-control height-50 no-box-shadow", id:"pharmacyName", placeholder:"Pharmacy name", onkeyup:"changeColor(this)" %>
+                        <%= f.email_field :pharmacy_email, class:"form-control height-50 no-box-shadow", id:"pharmacyEmail", placeholder:"Pharmacy email", onkeyup:"changeColor(this)" %>
+                        <%= f.text_field :pharmacy_address, class:"form-control height-50 no-box-shadow", id:"pharmacyAddress", placeholder:"Pharmacy address", onkeyup:"changeColor(this)" %>
+                        <%= f.text_field :pharmacy_phone, class:"form-control height-50 no-box-shadow", id:"pharmacyPhone", placeholder:"Pharmacy phone number", onkeyup:"changeColor(this)" %>
+                        <%= f.text_field :pharmacy_manager, class:"form-control height-50 no-box-shadow", id:"pharmacyManager", placeholder:"Pharmacy manager/supervisor", onkeyup:"changeColor(this)" %>
+                        <%= f.text_field :pharmacy_website, class:"form-control height-50 no-box-shadow", id:"pharmacyWebsite", placeholder:"Pharmacy website", onkeyup:"changeColor(this)" %>
+                        <%= f.submit "Send registration request", class:"btn btn-primary btn-block white box-shadow add-margin-top" %>
+                    <% end %>
+                </span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $('#registrationRequestForm').on('submit', function(event) {
+        event.preventDefault();
+        $("#errorExplanation").remove();
+        var inputs = document.getElementsByClassName('height-50');
+        var empty_count = 0;
+        for (i = 0; i < inputs.length; i++) {
+            if (inputs[i].value == "") {
+                inputs[i].style.borderColor = '#ff5a5a'
+                empty_count += 1;
+            }
+        }
+        console.log(empty_count);
+        if (empty_count > 0) {
+            $('#form').prepend(`
+                <h6 id="errorExplanation" style="color: #ff5a5a;">The highlighted fields are required</h6>
+            `);
+            return;
+        }
+        $(this).fadeOut();
+        $('#form').append(`
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
+                </div>
+            </div>
+        `);
+        $(this).submit();
+    });
+    
+    function changeColor(elem) {
+        var id = elem.id;
+        document.getElementById(id).style.borderColor = '#ced4da';
+    }
+</script>

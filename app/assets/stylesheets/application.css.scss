@@ -34,9 +34,16 @@
 }
 body {
     overflow-x: hidden !important;
-    background: #f4f8fb;
-    font-family: 'Open Sans', sans-serif !important;
+    background: #fff;
+    font-family: 'Ubuntu', sans-serif !important;
     color: #525f7f;
+}
+.auto-color {
+    color: #525f7f !important;
+}
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 p {
     font-family: 'Roboto', sans-serif !important;
@@ -55,15 +62,33 @@ a:hover {
     color: inherit;
 }
 .main-page {
-    padding-top: 90px;
+    padding-top: 80px;
     padding-bottom: 60px;
 }
 .navbar {
-    border-top: 3px solid #04c004;
+    // border-top: 3px solid #04c004;
     box-shadow: 0px 1px 5px #3484c6;
-    font-family: Camphor, "Open Sans", "Segoe UI", sans-serif;
+    font-family: "Ubuntu", sans-serif !important;
     background-color: #3484c6;
-    padding: 0 !important;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.pharma-navbar {
+    padding: 10px;
+}
+li > a.nav-link-right, .nav-item, .di-nav {
+    font-family: "Ubuntu", sans-serif !important;
+}
+.sidebar, .sidebar:hover {
+    color: #4095e3 !important;
+    background: transparent !important;
+    padding: 1rem 0 !important;
+    margin-left: 8px;
+    font-size: 15px !important;
+    font-family: "Ubuntu", sans-serif !important;
+}
+.sidebar:hover {
+    text-decoration: underline;
 }
 .border-white {
     border-color: #fff !important;
@@ -71,8 +96,14 @@ a:hover {
 .radius-5 {
     border-radius: 5px !important;
 }
+.height-50 {
+    height: 50px !important;
+}
+.height-45 {
+    height: 45px !important;
+}
 .background-blue {
-    background-color: #2c91de !important;
+    background-color: #007bff !important;
 }
 .background-yellow {
     background-color: #878706 !important;
@@ -124,9 +155,15 @@ div.card-header.background-cyan {
     border-bottom: 2px solid #fff;
 }
 .main-nav {
-    background-color: #3484c6;
+    background: url('/images/gradient_background.jpg') !important;
+    // background: -webkit-linear-gradient(to right, #2a5298, #1e3c72);
+    // background: linear-gradient(to right, #2a5298, #1e3c72);
     box-shadow: none;
-    padding-bottom: 10px !important;
+}
+.theme-background {
+    background: #1e3c72;
+    background: -webkit-linear-gradient(to right, #2a5298, #1e3c72);
+    background: linear-gradient(to right, #2a5298, #1e3c72);
 }
 .driver-nav {
     background-color: transparent;
@@ -183,14 +220,17 @@ div.card-header.background-cyan {
     padding-bottom: 9px;
 }
 .card {
-    border: 0.5px solid #ced2da !important;
+    border: 0.5px solid #e6e8ec !important;
     border-radius: 0;
 }
 .form-control {
-    border-radius: 0;
+    border-radius: 3px !important;
 }
-.btn, .card {
-    border-radius: 5px;
+.btn, .card, .modal-content, .alert {
+    border-radius: 3px;
+}
+.modal-content {
+    top: 50px !important;
 }
 .border-radius {
     border-radius: 2px !important;
@@ -251,6 +291,9 @@ div#rxCol {
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
+.no-margin-bottom {
+    margin-bottom: 0;
+}
 .right-padding-3 {
     padding-right: 3px;
 }
@@ -309,6 +352,9 @@ div#rxCol {
 }
 .no-border-radius {
     border-radius: 0 !important;
+}
+.no-bottom-margin {
+    margin-bottom: 0;
 }
 .no-border-right {
     border-right: none;
@@ -379,7 +425,11 @@ div#rxCol {
     padding-top: 30px;
 }
 .box-shadow {
-    box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
+    // box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
+    box-shadow: 0 6px 12px 0 rgba(50,50,70,.08), 0 3px 5px 0 rgba(0,0,0,.05);
+}
+.box-shadow-amp {
+    box-shadow: 0 15px 35px rgba(70,50,50,.1), 0 5px 15px rgba(0,0,0,.08);
 }
 .form--control {
     border: none !important;
@@ -786,16 +836,16 @@ div#rxCol {
     padding-top: 10px;
     padding-bottom: 10px;
 }
+.dotted-bottom {
+    border-bottom: 1px dotted #b4b4b4;
+}
 .btn-success {
     // background: #05f005 !important;
     // border: 1px solid #04c004;
     // box-shadow: inset #82f782 0 1px;
 }
-.btn-primary {
-    // background-color: #678aab !important;
-    // border: 1px solid #526e88 !important;
-    // box-shadow: inset #b3c4d5 0 1px;
-    color: #fff !important;
+.btn-primary, .btn-success {
+    color: #fff;
     font-size: 14px;
     padding-right: 30px;
     padding-left: 30px;
@@ -813,6 +863,16 @@ div#rxCol {
 }
 .btn-delete {
     font-size: 14px;
+}
+.badge-circle {
+    height: 10px;
+    width: 10px;
+    border-radius: 5px;
+}
+.badge-circle-medium {
+    height: 30px;
+    width: 30px;
+    border-radius: 15px;
 }
 .btn-danger {
     background-color: #df4957 !important;
@@ -963,6 +1023,9 @@ div#rxCol {
 .white {
     color: #fff !important;
 }
+.cecece {
+    color: #cecece !important;
+}
 .black {
     color: #000 !important;
 }
@@ -1069,31 +1132,43 @@ div#rxCol {
     line-height: 20px;
     text-transform: uppercase;
 }
-.nav-link-right {
-    font-size: 12px;
-    margin-right: 5px;
-    margin-left: 5px;
+.font-weight-600 {
+    font-weight: 600px !important;
+}
+.cta-signup, .cta-login{
+    font-size: 16px;
+    // padding: 0 !important;
+    margin-right: 10px;
+    border: none !important;
     color: #fff !important;
-    // border-radius: 0 !important;
-    text-transform: uppercase;
 }
-.cta-login {
-    background-color: transparent !important;
-    border-radius: 20px !important;
-    padding: 10px 20px !important;
-    border: 1px solid #fff;
-}
-.cta-signup, .cta-signup:hover {
+.shopping-cart, .shopping-cart:hover {
+    font-size: 16px;
+    margin: 0 !important;
+    border: 1px solid #fff !important;
+    padding: 8px 20px !important;
     background-color: #fff !important;
-    border-radius: 20px !important;
-    padding: 10px 20px !important;
-    border: 1px solid #fff !important;
-    color: #4095e3 !important;
 }
-.cta-login:hover {
-    // background-color: #fff !important;
-    color: #4095e3 !important;
-    border: 1px solid #fff !important;
+.reg-a-pharma, .reg-a-pharma:hover {
+    font-size: 16px;
+    margin: 0 !important;
+    border: 1px solid #007bff !important;
+    padding: 8px 20px !important;
+    background-color: #007bff !important;
+    color: #fff !important;
+}
+a.btn-link.cta-signup:hover, a.btn-link.cta-login:hover {
+    // color: #fff !important;
+    font-size: 16px;
+    // padding: 0 !important;
+    border: none !important;
+}
+.blog-link, .blog-link:hover{
+    margin-right: 10px;
+    font-size: 16px;
+    // padding: 0 !important;
+    border: none !important;
+    color: #fff !important;
 }
 .settings-header {
     padding-left: 15px;
@@ -1151,6 +1226,10 @@ div#rxCol {
     font-size: 14px;
     font-weight: 600px;
 }
+.pharmacy-banner {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
 .logout-btn-div {
     padding-left: 0;
     padding-right: 0;
@@ -1203,7 +1282,7 @@ div#rxCol {
     display: none;
 }
 #pharmacy-login {
-    padding: 40px 0;
+    padding: 60px 0;
 }
 .pharmacy-login-form {
     border: 1px solid #e1e1e2;
@@ -1241,7 +1320,7 @@ div#rxCol {
     padding-top: 5px;
 }
 .border-gray {
-    border: 1px solid #ccccd4;
+    border: 1px solid #ced4da !important;
 }
 .patients-instructions-field {
     height: 80px !important;
@@ -1406,12 +1485,12 @@ div#rxCol {
 
 /* Footer */
 .footer {
-    padding: 30px;
-    background-color: #4095e3;
+    padding-top: 30px;
+    background-color: #323a45;
 }
 .footer-link {
-    color: #9bc6e4 !important;
-    font-size: 14px !important;
+    color: #b4b4b4 !important;
+    font-size: 16px !important;
 }
 .footer-link:hover {
     color: #fff !important
@@ -1500,7 +1579,7 @@ input:focus {
 label {
 //   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-size: 9px !important;
+  font-size: 16px !important;
   color: #4095e3 !important;
 }
 /**
@@ -1564,14 +1643,16 @@ input:focus + label {
     }
     .navbar-toggler {
         border: none;
-        box-shadow: none !important;
-        padding: 0 !important;
+        padding: 0;
     }
     .navbar-toggler-icon {
         color: #4095e3 !important;
     }
     .active_li {
         border-color: transparent !important;
+    }
+    .modal-content {
+        top: 50px !important;
     }
     
     .nav-item-courier-view, .nav-item-courier-view-1 {
@@ -1589,6 +1670,11 @@ input:focus + label {
     .profile {
         padding-left: 0 !important;
     }
+    .cancel-order, .submit-order {
+        width: 100% !important;
+        left: 0 !important;
+        top: 200px !important;
+    }
     
     #loginBox, #signupBox {
         border: none !important;
@@ -1600,12 +1686,15 @@ input:focus + label {
         padding-left: 0;
         padding-right: 0;
     }
+    #searchInPage {
+        padding-left: 0 !important;
+    }
+    .no-horizontal-mobile-padding {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
     #rxSearchResults {
-        // border: 1px solid #e1e1e2;
         height: auto;
-        // padding-top: 30px;
-        // padding-bottom: 30px;
-        // margin-top: 10px !important;
     }
     div#rxCol {
         padding-top: 0 !important;
@@ -1619,7 +1708,7 @@ input:focus + label {
         display: none;
     }
     .footer {
-        padding: 20px 0 !important;
+        padding: 20px 0 0 0 !important;
     }
     .nav-col {
         padding-right: 15px !important;
@@ -1653,7 +1742,41 @@ input:focus + label {
     .add-margin-bottom-mobile {
         margin-bottom: 10px !important;
     }
+    .nbrm {
+        border-right: none !important;
+    }
+    .no-mobile-padding {
+        padding: 0 !important;
+    }
+    .container {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+    .order-summary-col {
+        border: none !important;
+    }
+    #trackOrder {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    div.add-border-bottom {
+        padding-bottom: 15px;
+        padding-top: 15px;
+        border-top: 2px dotted #b4b4b4;
+    }
+    #preBannerHeader1, #preBannerHeader2 {
+        display: none;
+    }
+    #homePageBanner {
+        height: 230px !important;
+    }
+    #searchBox {
+        margin-top: -190px !important;
+    }
     .mbm {
-        padding-bottom: 50px !important;
+        padding-bottom: 15px;
+    }
+    #socialTags, #copyright {
+        text-align: center !important;
     }
 }

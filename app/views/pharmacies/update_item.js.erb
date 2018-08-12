@@ -1,0 +1,33 @@
+$('#inventory-item<%= @item.id %>').html(`
+    <a class="background-transparent cursor-pointer" data-toggle="modal" data-target="#itemDetails<%= @item.id %>">
+        <div class="inventory-item" id="inventoryItem-<%= @item.id %>">
+            <div class="row" style="padding: 15px 20px;">
+                <div id="itemNDC-<%= @item.id %>" style="display: none;">
+                    <h6><%= @item.ndc %></h6>
+                </div>
+                <div class="col-md-2 theme-blue" id="itemName-<%= @item.id %>">
+                    <h6><%= @item.minify_name(20) %></h6>
+                </div>
+                <div class="col-md-1 theme-green">
+                    <h6><%= @item.price %></h6>
+                </div>
+                <div class="col-md-2 theme-yellow">
+                    <h6><%= "#{@item.size} #{@item.size_type}" %></h6>
+                </div>
+                <div class="col-md-4">
+                    <h6><%= @item.details %></h6>
+                </div>
+                <div class="col-md-1 <%= check_count_threshold(@item.quantity) %>">
+                    <h6><%= @item.quantity %></h6>
+                </div>
+                <div class="col-md-2 <%= check_expiration(@item.expiration) %>">
+                    <h6><%= @item.expiration %></h6>
+                </div>
+            </div>
+            <div class="col-md-12 no-horizontal-padding">
+                <hr style="margin: 0;">
+            </div>
+        </div>
+    </a>
+`)
+toastr["success"]('Item updated!');

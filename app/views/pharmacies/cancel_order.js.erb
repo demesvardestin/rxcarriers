@@ -1,0 +1,6 @@
+$('#orderBox<%= @order.id %>').fadeOut().remove();
+<!--$('#orderDetails<%= @order.id %>').remove();-->
+$('#cancelButton<%= @order.id %>').html(`
+    Order cancelled!
+`);
+toastr["success"]('This order has been cancelled and a refund has been initiated!');

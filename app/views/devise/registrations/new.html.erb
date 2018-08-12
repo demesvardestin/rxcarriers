@@ -1,30 +1,56 @@
 <div class="row" id="pharmacy-login">
   <div class="col-md-4 offset-md-4 pharmacy-login-form" style="background: #fff !important;">
-    <div class="header"><h4 class="text-center medium-gray">Pharmacy signup</h4></div>
+    <div class="header">
+      <h5 class="text-center medium-gray">Pharmacy signup</h5>
+      <hr style="text-align: center; width: 25%;">
+    </div>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
       
-      <div class="field">
-        <%= f.email_field :email, class:"form-control form--control font-14", autofocus: true, placeholder:" " %>
-        <label for="email">Email</label>
+      <div class="field" style="margin-bottom: 0 !important;">
+        <%= f.text_field :name, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"Pharmacy name", value:"#{@registration.pharmacy_name}" %>
+      </div>
+      <div class="field" style="margin-bottom: 0 !important;">
+        <%= f.text_field :street, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"Street address", value:"#{@registration.pharmacy_address.split(', ')[0]}" %>
+      </div>
+      <div class="row">
+        <div class="col-md-4" style="margin-bottom: 0 !important;">
+          <%= f.text_field :town, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"Town", value:"#{@registration.pharmacy_address.split(', ')[1]}" %>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 0 !important;">
+          <%= f.text_field :state, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"State", value:"#{@registration.pharmacy_address.split(', ')[2]}" %>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 0 !important;">
+          <%= f.text_field :zipcode, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"Zipcode", value:"#{@registration.pharmacy_address.split(', ')[3]}" %>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom: 0 !important;">
+        <%= f.text_field :supervisor, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"Supervisor/manager", value:"#{@registration.pharmacy_manager}" %>
+      </div>
+      <div class="field" style="margin-bottom: 0 !important;">
+        <%= f.text_field :number, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"Pharmacy number", value:"#{@registration.pharmacy_phone}" %>
+      </div>
+      <div class="field" style="margin-bottom: 0 !important;">
+        <%= f.text_field :website, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"Pharmacy website", value:"#{@registration.pharmacy_website}" %>
+      </div>
+      <div class="field" style="margin-bottom: 0 !important;">
+        <%= f.email_field :email, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"Email", value:"#{@registration.pharmacy_email}" %>
       </div>
     
-      <div class="field">
-        <%= f.password_field :password, class:"form-control form--control font-14", autocomplete: "off", placeholder:" " %>
-        <label for="password">Password</label>
+      <div class="field" style="margin-bottom: 0 !important;">
+        <%= f.password_field :password, class:"form-control height-50 no-box-shadow", autocomplete: "off", placeholder:"Password" %>
       </div>
-      <div class="field">
-        <%= f.password_field :password_confirmation, class:"form-control form--control font-14", autocomplete: "off", placeholder:" " %>
-        <label for="password confirmation">Password Confirmation</label>
+      <div class="field" style="margin-bottom: 0 !important;">
+        <%= f.password_field :password_confirmation, class:"form-control height-50 no-box-shadow", autocomplete: "off", placeholder:"Password confirmation" %>
       </div>
     
-      <div class="actions" style="padding-top: 30px;">
+      <div class="actions" style="margin-top: 10px;">
         <div class="row">
           <div class="col-md-12">
-            <%= f.submit "Create account", class:"btn btn-primary btn-block" %>
+            <%= f.submit "Create account", class:"btn btn-primary btn-block box-shadow height-50" %>
           </div>
           <div class="col-md-12 add-padding-top">
-            <%= link_to "Log into existing account", pharmacy_login_path, class:"btn btn-info btn-block white" %>
+            <%= link_to "Log into existing account", pharmacy_login_path, class:"btn btn-link btn-block" %>
           </div>
         </div>
       </div>

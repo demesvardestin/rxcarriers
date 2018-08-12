@@ -1,33 +1,22 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
+  
   protect_from_forgery with: :exception
-  # before_action :redirect_from_cross_model
-  # before_action :check_payment_settings
+  before_action :check_token
   
   def check_driver_path
     
   end
   
-  # def check_payment_settings
-  #   @pharmacy = current_pharmacy
-  #   if @pharmacy.on_trial.nil? || @pharmacy.on_trial == false || @pharmacy.delinquent == true || @pharmacy.is_subscribed == false || @pharmacy.is_subscribed.nil?
-  #     redirect_to choose_subscription_path
-  #   end
-  # end
-  
-  
-  # def redirect_from_cross_model
-  #   url = request.original_url
-  #   current_driver = Driver.find_by(firebase_uid: params[:firebase_uid])
-  #   if current_pharmacy
-  #     if url.include?("courier")
-  #       redirect_to authenticated_pharmacy_root_path
-  #     end
-  #   end
-  # end
-  
-  # def 
+  def check_token
+    url = request.original_url
+    @token = params[:secure_token]
+    if url.include?('pharmacy/signup')
+      redirect_to root_path if @token.nil? || !RegistrationRequest.exists?(secure_token: @token)
+    end
+    @registration = RegistrationRequest.find_by(secure_token: @token)
+  end
   
   def check_current_pharmacy
     redirect_to :back unless current_pharmacy
