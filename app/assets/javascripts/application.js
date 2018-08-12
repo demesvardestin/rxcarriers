@@ -31,13 +31,13 @@ firebase.initializeApp(config);
 var database = firebase.firestore();
 var storage = firebase.storage();
 function urlB64ToUint8Array(base64String) {
-  const padding = '='.repeat((4 - base64String.length % 4) % 4);
-  const base64 = (base64String + padding)
+  var padding = '='.repeat((4 - base64String.length % 4) % 4);
+  var base64 = (base64String + padding)
     .replace(/\-/g, '+')
     .replace(/_/g, '/');
 
-  const rawData = window.atob(base64);
-  const outputArray = new Uint8Array(rawData.length);
+  var rawData = window.atob(base64);
+  var outputArray = new Uint8Array(rawData.length);
 
   for (let i = 0; i < rawData.length; ++i) {
     outputArray[i] = rawData.charCodeAt(i);
@@ -50,7 +50,7 @@ $( document ).on('turbolinks:load', function() {
     if (document.getElementById("sound") != null) {
         document.getElementById("sound").innerHTML='';
     }
-    const pharmacy_id = $('#pharmacy_id').text();
+    var pharmacy_id = $('#pharmacy_id').text();
     
     // set variables for firebase requests collections reference
     var requests = database.collection("requests").where('pharmacy_id', '==', parseInt(pharmacy_id))
