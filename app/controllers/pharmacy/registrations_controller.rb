@@ -9,7 +9,7 @@ class Pharmacy::RegistrationsController < Devise::RegistrationsController
     def configure_permitted_parameters
         devise_parameter_sanitizer.permit(:sign_up, keys: [:street, :town, :state, :zipcode, :name, :number, :supervisor, :website])
         devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password])
-        devise_parameter_sanitizer.permit(:account_update, keys: [:street, :town, :state, :zipcode, :identifier, :name])
+        devise_parameter_sanitizer.permit(:account_update, keys: [:password, :password_confirmation, :current_password])
     end
     
     def after_sign_up_path_for(resource)

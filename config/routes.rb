@@ -33,7 +33,8 @@ Rails.application.routes.draw do
   devise_scope :pharmacy do
     get 'pharmacy/login', to: 'devise/sessions#new'
     get 'pharmacy/signup', to: 'devise/registrations#new'
-    get 'pharmacy/retrieve-password', to: 'devise/passwords#edit'
+    get 'pharmacy/password-settings', to: 'pharmacy/registrations#edit'
+    get 'pharmacy/retrieve-password', to: 'devise/passwords#new'
   end
   
   
@@ -153,7 +154,7 @@ Rails.application.routes.draw do
   get '/low_available_count', to: 'pharmacies#low_available_count'
   get '/search_item', to: 'pharmacies#search_item'
   get '/validate_presence', to: 'pharmacies#validate_presence'
-  get '/remove_item', to: 'pharmacies#remove_item'
+  get '/make_item_inactive', to: 'pharmacies#make_item_inactive'
   get '/reg_a_pharma', to: 'pharmacies#reg_a_pharma', as: 'register'
   get '/calculate_tip', to: 'carts#calculate_tip'
   get '/confirmation', to: 'carts#confirmation'
@@ -172,6 +173,7 @@ Rails.application.routes.draw do
   get '/register-a-pharmacy', to: 'pharmacies#register_your_pharmacy'
   post '/registration_requests', to: 'pharmacies#submit_registration_request'
   get '/getting_started', to: 'pharmacies#getting_started'
+  get '/get_current_position', to: 'pharmacies#get_current_position'
   
   # resource path
   resources :invoices, only: [:create, :show, :index, :destroy]

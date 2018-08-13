@@ -28,7 +28,7 @@
         font-weight: 900;
     }
     #placeholder {
-        opacity: 0.5;
+        /*opacity: 0.5;*/
     }
     .credit-card {
         font-size: 40px;
@@ -82,8 +82,12 @@
             <div class="card">
                 <div class="card-body">
                     <div class="text-center">
-                        <i class="fa fa-credit-card credit-card"></i>
-                        <h6>You have no charges</h6>
+                        <h6>
+                            You will be redirected to Stripe's platform, then automatically redirected back here after setting up your account.
+                        </h6>
+                        <button class="btn btn-primary height-50 box-shadow font-16" onclick="window.location.replace('https://stripe.com')">
+                            <i class="fa fa-cc-stripe"></i> Set up your Stripe account
+                        </button>
                     </div>
                 </div>
             </div>

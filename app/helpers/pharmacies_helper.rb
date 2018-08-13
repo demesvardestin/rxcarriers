@@ -124,19 +124,19 @@ module PharmaciesHelper
     
     def refill_count_today
         id = current_pharmacy.id
-        @deliveries = Order.where(pharmacy_id: id, requested_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc, processed: true)
+        @deliveries = Order.where(pharmacy_id: id, ordered_at: DateTime.now.at_beginning_of_day.utc..Time.now.utc, processed: true)
         @deliveries.count if @deliveries
     end
     
     def refill_count_this_week
         id = current_pharmacy.id
-        @deliveries = Order.where(pharmacy_id: id, requested_at: DateTime.now.at_beginning_of_week.utc..Time.now.utc, processed: true)
+        @deliveries = Order.where(pharmacy_id: id, ordered_at: DateTime.now.at_beginning_of_week.utc..Time.now.utc, processed: true)
         @deliveries.count if @deliveries
     end
     
     def refill_count_this_month
         id = current_pharmacy.id
-        @deliveries = Order.where(pharmacy_id: id, requested_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc, processed: true)
+        @deliveries = Order.where(pharmacy_id: id, ordered_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc, processed: true)
         @deliveries.count if @deliveries
     end
     
@@ -181,11 +181,11 @@ module PharmaciesHelper
     def total_orders(period=nil)
         case period
         when 'this month'
-            Order.where(pharmacy_id: current_pharmacy.id, requested_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc)
+            Order.where(pharmacy_id: current_pharmacy.id, ordered_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc)
         when 'this week'
-            Order.where(pharmacy_id: current_pharmacy.id, requested_at: DateTime.now.at_beginning_of_week.utc..Time.now.utc)
+            Order.where(pharmacy_id: current_pharmacy.id, ordered_at: DateTime.now.at_beginning_of_week.utc..Time.now.utc)
         when 'this year'
-            Order.where(pharmacy_id: current_pharmacy.id, requested_at: DateTime.now.at_beginning_of_year.utc..Time.now.utc)
+            Order.where(pharmacy_id: current_pharmacy.id, ordered_at: DateTime.now.at_beginning_of_year.utc..Time.now.utc)
         else
             Order.where(pharmacy_id: current_pharmacy.id)
         end
@@ -194,11 +194,11 @@ module PharmaciesHelper
     def online_orders(period=nil)
         case period
         when 'this month'
-            Order.where(pharmacy_id: current_pharmacy.id, requested_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc, online: true)
+            Order.where(pharmacy_id: current_pharmacy.id, ordered_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc, online: true)
         when 'this week'
-            Order.where(pharmacy_id: current_pharmacy.id, requested_at: DateTime.now.at_beginning_of_week.utc..Time.now.utc, online: true)
+            Order.where(pharmacy_id: current_pharmacy.id, ordered_at: DateTime.now.at_beginning_of_week.utc..Time.now.utc, online: true)
         when 'this year'
-            Order.where(pharmacy_id: current_pharmacy.id, requested_at: DateTime.now.at_beginning_of_year.utc..Time.now.utc, online: true)
+            Order.where(pharmacy_id: current_pharmacy.id, ordered_at: DateTime.now.at_beginning_of_year.utc..Time.now.utc, online: true)
         else
             Order.where(pharmacy_id: current_pharmacy.id, online: true)
         end
@@ -207,11 +207,11 @@ module PharmaciesHelper
     def in_store_orders(period=nil)
         case period
         when 'this month'
-            Order.where(pharmacy_id: current_pharmacy.id, requested_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc, online: false)
+            Order.where(pharmacy_id: current_pharmacy.id, ordered_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc, online: false)
         when 'this week'
-            Order.where(pharmacy_id: current_pharmacy.id, requested_at: DateTime.now.at_beginning_of_week.utc..Time.now.utc, online: false)
+            Order.where(pharmacy_id: current_pharmacy.id, ordered_at: DateTime.now.at_beginning_of_week.utc..Time.now.utc, online: false)
         when 'this year'
-            Order.where(pharmacy_id: current_pharmacy.id, requested_at: DateTime.now.at_beginning_of_year.utc..Time.now.utc, online: false)
+            Order.where(pharmacy_id: current_pharmacy.id, ordered_at: DateTime.now.at_beginning_of_year.utc..Time.now.utc, online: false)
         else
             Order.where(pharmacy_id: current_pharmacy.id, online: false)
         end
@@ -295,7 +295,7 @@ module PharmaciesHelper
     end
     
     def revenue_per_unit_for(item, period=nil)
-        units_sold_for(item, period) * item_price_for(item).to_f.round(2)/100
+        units_sold_for(item, period) * item_price_for(item).to_f.round(2)
     end
     
     def last_order_for(item)
@@ -303,11 +303,12 @@ module PharmaciesHelper
         if order.nil?
             return 'n/a'
         end
-        order.created_at.strftime('%-m/%e/%y')
+        order.ordered_at.strftime('%-m/%e/%y')
     end
     
     def popular_items(period=nil)
         item_list = Order.popular_items(period)
+        item_list = item_list.map {|i| i if Item.exists?(id: i) }.compact
         return Item.find(item_list).sort_by {|i| i.units_sold_for(current_pharmacy, i.id, period)}.reverse
     end
     
@@ -327,6 +328,7 @@ module PharmaciesHelper
         end
     end
     
+    ## ADD WEEK_START FOR GROUP_BY
     def orders_grouped_by_month
         Order.where(pharmacy_id: current_pharmacy.id).group_by_month(:created_at, format: "%b %Y").count
     end

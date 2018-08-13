@@ -1,16 +1,25 @@
-<h2>Forgot your password?</h2>
+<div class="row" id="pharmacy-login" style="padding-top: 60px;">
+  <div class="col-md-4 offset-md-4 pharmacy-login-form" style="background: #fff !important;">
+    <div class="header">
+      <h5 class="text-center medium-gray">Forgot your password?</h5>
+      <hr style="text-align: center; width: 25%;">
+    </div>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= devise_error_messages! %>
+    
+      <div class="field">
+        <%= f.email_field :email, class:"form-control height-50 no-box-shadow", placeholder:"Email associated with your account" %>
+      </div>
+    
+      <div class="actions" style="margin-top: 10px;">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <%= f.submit "Send me reset password instructions", class:"btn btn-primary height-50 box-shadow btn-block" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <%= render "devise/shared/links" %>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

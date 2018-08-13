@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180812133524) do
+ActiveRecord::Schema.define(version: 20180812190314) do
 
   create_table "batches", force: :cascade do |t|
     t.datetime "created_at",           null: false
@@ -208,6 +208,7 @@ ActiveRecord::Schema.define(version: 20180812133524) do
     t.boolean  "delivered"
     t.string   "status"
     t.boolean  "online"
+    t.datetime "ordered_at"
   end
 
   create_table "pharmacies", force: :cascade do |t|

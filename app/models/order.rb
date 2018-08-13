@@ -4,12 +4,12 @@ class Order < ActiveRecord::Base
     has_one :cart
     has_one :refund
     
-    scope :this_month, -> { where(requested_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc) }
-    scope :last_month, -> { where(requested_at: DateTime.now.at_beginning_of_month.last_month.utc..DateTime.now.at_end_of_month.last_month.utc) }
-    scope :this_week, -> { where(requested_at: DateTime.now.at_beginning_of_week.utc..Time.now.utc) }
-    scope :last_week, -> { where(requested_at: DateTime.now.at_beginning_of_week.last_week.utc..DateTime.now.at_end_of_week.last_week.utc) }
-    scope :this_year, -> { where(requested_at: DateTime.now.at_beginning_of_year.utc..Time.now.utc) }
-    scope :last_year, -> { where(requested_at: DateTime.now.at_beginning_of_year.last_year.utc..DateTime.now.at_end_of_year.last_year.utc) }
+    scope :this_month, -> { where(ordered_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc) }
+    scope :last_month, -> { where(ordered_at: DateTime.now.at_beginning_of_month.last_month.utc..DateTime.now.at_end_of_month.last_month.utc) }
+    scope :this_week, -> { where(ordered_at: DateTime.now.at_beginning_of_week.utc..Time.now.utc) }
+    scope :last_week, -> { where(ordered_at: DateTime.now.at_beginning_of_week.last_week.utc..DateTime.now.at_end_of_week.last_week.utc) }
+    scope :this_year, -> { where(ordered_at: DateTime.now.at_beginning_of_year.utc..Time.now.utc) }
+    scope :last_year, -> { where(ordered_at: DateTime.now.at_beginning_of_year.last_year.utc..DateTime.now.at_end_of_year.last_year.utc) }
     
     def self.popular_items(period=nil)
         self.this_month.map(&:item_list_array).flatten.sort.uniq[0..14]
@@ -28,7 +28,7 @@ class Order < ActiveRecord::Base
     end
     
     def self.unprocess_all
-        self.all.each { |o| o.update(processed: false, requested_at: DateTime.now) } 
+        self.all.each { |o| o.update(processed: false, ordered_at: DateTime.now) } 
     end
     
     def self.process_all
@@ -58,25 +58,25 @@ class Order < ActiveRecord::Base
     def self.totals_to_array(pharma_id, period=nil)
         case period
         when 'this month'
-            self.all.where(pharmacy_id: pharma_id, requested_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc).map {|o| o.total.to_f }
+            self.all.where(pharmacy_id: pharma_id, ordered_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc).map {|o| o.total.to_f }
         when 'this week'
-            self.all.where(pharmacy_id: pharma_id, requested_at: DateTime.now.at_beginning_of_week.utc..Time.now.utc).map {|o| o.total.to_f }
+            self.all.where(pharmacy_id: pharma_id, ordered_at: DateTime.now.at_beginning_of_week.utc..Time.now.utc).map {|o| o.total.to_f }
         when 'this year'
-            self.all.where(pharmacy_id: pharma_id, requested_at: DateTime.now.at_beginning_of_year.utc..Time.now.utc).map {|o| o.total.to_f }
+            self.all.where(pharmacy_id: pharma_id, ordered_at: DateTime.now.at_beginning_of_year.utc..Time.now.utc).map {|o| o.total.to_f }
         else
             self.all.where(pharmacy_id: pharma_id).map {|o| o.total.to_f }
         end
     end
     
     def self.totals_to_array_last_month(pharma_id)
-        self.all.where(pharmacy_id: pharma_id, requested_at: DateTime.now.at_beginning_of_month.last_month.utc..DateTime.now.at_end_of_month.last_month.utc).map {|o| o.total.to_f }
+        self.all.where(pharmacy_id: pharma_id, ordered_at: DateTime.now.at_beginning_of_month.last_month.utc..DateTime.now.at_end_of_month.last_month.utc).map {|o| o.total.to_f }
     end
     
     def self.totals_to_array_last_week(pharma_id)
-        self.all.where(pharmacy_id: pharma_id, requested_at: DateTime.now.at_beginning_of_week.last_week.utc..DateTime.now.at_end_of_week.last_week.utc).map {|o| o.total.to_f }
+        self.all.where(pharmacy_id: pharma_id, ordered_at: DateTime.now.at_beginning_of_week.last_week.utc..DateTime.now.at_end_of_week.last_week.utc).map {|o| o.total.to_f }
     end
     def self.totals_to_array_last_year(pharma_id)
-        self.all.where(pharmacy_id: pharma_id, requested_at: DateTime.now.at_beginning_of_year.last_year.utc..DateTime.now.at_end_of_year.last_year.utc).map {|o| o.total.to_f }
+        self.all.where(pharmacy_id: pharma_id, ordered_at: DateTime.now.at_beginning_of_year.last_year.utc..DateTime.now.at_end_of_year.last_year.utc).map {|o| o.total.to_f }
     end
     
     def self.total_items(pharma_id=nil)

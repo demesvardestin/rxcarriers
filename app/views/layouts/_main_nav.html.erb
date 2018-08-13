@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg main-nav fixed-top">
-  <div class="container mobile-container">
+  <div class="container">
     <a class="navbar-brand background-transparent" href="/"><h3 class="logo ubuntu"><img src="/javascripts/pharmacy.png"></h3></a>
     <a class="navbar-toggler shopping-cart btn btn-light box-shadow" data-toggle="modal" data-target="#cartContent">
       <span id="currentItemCount" style="display: none;"><%= present_cart.item_count %></span>
@@ -11,7 +11,7 @@
         <span id="tempId" style="display: none;"><%= guest_shopper.email %></span>
         <span class="do-not-display-mobile">
           <li class="nav-item nav-item-logged-out-pharmacy-view" style="padding-left: 0 !important; padding-right: 0 !important;">
-            <a class="nav-link nav-link-right cta-login btn btn-link" href="/pharmacy/login" style="margin-right: 0 !important;">Pharmacy Login</a>
+            <a class="nav-link nav-link-right cta-login btn btn-link pharmacy-login" href="/pharmacy/login" style="margin-right: 0 !important;">Pharmacy Login</a>
           </li>
           <!--<li class="nav-item nav-item-logged-out-pharmacy-view" style="padding-left: 0 !important; padding-right: 0 !important;">-->
           <!--  <a class="nav-link nav-link-right blog-link btn btn-link" href="https://medium.com/@rxcarriers" target="_blank">Blog</a>-->
@@ -23,7 +23,7 @@
           </a>
         </li>
         <li class="nav-item nav-item-logged-out-pharmacy-view do-not-display-mobile" style="padding-left: 0 !important; padding-right: 0 !important; margin-left: 10px;">
-          <button class="nav-link nav-link-right shopping-cart btn btn-light box-shadow" data-toggle="modal" data-target="#cartContent">
+          <button class="nav-link nav-link-right shopping-cart btn btn-info box-shadow" data-toggle="modal" data-target="#cartContent">
             <span id="currentItemCount1" style="display: none;"><%= present_cart.item_count %></span>
             <i class="fa fa-shopping-cart"></i> | <span id="cartItemCount1"><%= pluralize(present_cart.item_count, 'item') %></span>
           </button>

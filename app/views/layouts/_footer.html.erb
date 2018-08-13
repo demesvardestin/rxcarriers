@@ -1,35 +1,73 @@
+<style>
+    #main-search, #newsletterForm {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        border-right: none;
+    }
+    .append-group {
+        border-top-right-radius: 5px !important;
+        border-bottom-right-radius: 5px !important;
+    }
+    #main-search, .append-group, #newsletterForm {
+        height: 50px;
+    }
+</style>
 <footer class="footer">
-    <div class="container">
+    <div class="container" style="padding-bottom: 100px;">
         <div class="row">
-            <div class="col-md-12 add-padding-bottom">
-                <div class="float-left" style="width: 33%;">
-                    <h6 class="white" style="margin-bottom: 20px;">COMPANY</h6>
-                    <h6><a class='footer-link background-transparent' href='/about'>About</a></h6>
-                    <h6><a class='footer-link background-transparent' href='https://medium.com/@rxcarriers' target="_blank">Blog</a></h6>
-                    <h6><a class='footer-link background-transparent' href='/contact'>Contact</a></h6>
+            <!--<div class="col-md-1 footer-columns2 add-padding-bottom">-->
+                <div class="col-md-4">
+                    <h6 class="white footer-column-header" style="margin-bottom: 20px; text-transform: uppercase;">Get free discount codes in your inbox</h6>
+                    <form action="/pharmacy_search" method="get" id="pharmacySearchForm">
+                        <div class="input-group mb-3">
+                            <input class="form-control font-16 no-box-shadow border-white" style="margin-top: 0 !important;" id="newsletterForm" name="newsletter_form" placeholder="Enter your email">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text background-transparent append-group border-white" id="basic-addon1">
+                                    <i class="fa fa-envelope-o white"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                    <img src="/images/visa.png" height="39">
+                    <img src="/images/amazon.png" height="39">
+                    <img src="/images/amex.png" height="39">
+                    <img src="/images/discover.png" height="39">
+                    <img src="/images/mastercard.png" height="39">
                 </div>
-                <div class="float-left" style="width: 33%;">
-                    <h6 class="white" style="margin-bottom: 20px;">SERVICES</h6>
-                    <h6><a class='footer-link background-transparent' href='/pharmacy/login'>Pharmacy Login</a></h6>
-                    <h6><a class='footer-link background-transparent' href='/legal/terms'>Rx Digital</a></h6>
-                    <h6><a class='footer-link background-transparent' href='https://rxcarriers.zendesk.com/hc/en-us' target="_blank">Support</a></h6>
+                <div class="col-md-1 footer-columns offset-md-1">
+                    <h6 class="white footer-column-header" style="margin-bottom: 20px;">COMPANY</h6>
+                    <h6 class="footer-item"><a class='footer-link background-transparent' href='/about'>About</a></h6>
+                    <h6 class="footer-item"><a class='footer-link background-transparent' href='https://medium.com/@rxcarriers' target="_blank">Blog</a></h6>
+                    <h6 class="footer-item"><a class='footer-link background-transparent' href='/contact'>Contact</a></h6>
                 </div>
-                <div class="float-left" style="width: 33%;">
-                    <h6 class="white" style="margin-bottom: 20px;">LEGAL</h6>
-                    <h6><a class='footer-link background-transparent' href='/legal/privacy'>Privacy</a></h6>
-                    <h6><a class='footer-link background-transparent' href='/legal/terms'>Terms</a></h6>
-                    <h6><a class='footer-link background-transparent' href='https://www.hhs.gov/hipaa/for-professionals/privacy/laws-regulations/index.html' target="_blank">Hippaa</a></h6>
+                <div class="col-md-1 footer-columns offset-md-2">
+                    <h6 class="white footer-column-header" style="margin-bottom: 20px;">SERVICES</h6>
+                    <h6 class="footer-item"><a class='footer-link background-transparent' href='/pharmacy/login'>Pharmacies</a></h6>
+                    <h6 class="footer-item"><a class='footer-link background-transparent' href='/legal/terms'>RxDigital</a></h6>
+                    <h6 class="footer-item"><a class='footer-link background-transparent' href='https://rxcarriers.zendesk.com/hc/en-us' target="_blank">Support</a></h6>
                 </div>
-            </div>
+                <div class="col-md-1 footer-columns offset-md-2">
+                    <h6 class="white footer-column-header" style="margin-bottom: 20px;">LEGAL</h6>
+                    <h6 class="footer-item"><a class='footer-link background-transparent' href='/legal/privacy'>Privacy</a></h6>
+                    <h6 class="footer-item"><a class='footer-link background-transparent' href='/legal/terms'>Terms</a></h6>
+                    <h6>
+                        <a class='footer-link background-transparent' href='https://stripe.com/us/privacy/' target="_blank">
+                            Stripe
+                        </a>
+                    </h6>
+                </div>
+            <!--</div>-->
         </div>
     </div>
     <div style="width: 100%; padding: 15px 0; background: #232830;">
         <div class="container">
             <div class="row">
-                <div class="text-left col-md-4" id="copyright">
+                <div class="text-left col-md-3" id="copyright">
                     <h6 class="font-14 background-transparent white">&copy; 2018 RxCarriers</h6>
                 </div>
-                <div class="text-right col-md-4 offset-md-4" id="socialTags">
+                <div class="text-right col-md-3 offset-md-6" id="socialTags">
                     <span class="badge badge-light badge-circle-medium">
                         <a href="https://instagram.com/rxcarriers" class="background-transparent theme-blue" target="_blank">
                             <i class="fa fa-instagram" style="font-size: 20px; margin-top: 2px;"></i>

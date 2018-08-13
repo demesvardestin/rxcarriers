@@ -35,7 +35,8 @@
 body {
     overflow-x: hidden !important;
     background: #fff;
-    font-family: 'Ubuntu', sans-serif !important;
+    font-family: "roboto", sans-serif;
+    // font-family: 'Ubuntu', sans-serif !important;
     color: #525f7f;
 }
 .auto-color {
@@ -67,8 +68,7 @@ a:hover {
 }
 .navbar {
     // border-top: 3px solid #04c004;
-    box-shadow: 0px 1px 5px #3484c6;
-    font-family: "Ubuntu", sans-serif !important;
+    font-family: "roboto", sans-serif !important;
     background-color: #3484c6;
     padding-top: 8px;
     padding-bottom: 8px;
@@ -77,7 +77,7 @@ a:hover {
     padding: 10px;
 }
 li > a.nav-link-right, .nav-item, .di-nav {
-    font-family: "Ubuntu", sans-serif !important;
+    font-family: "roboto", sans-serif !important;
 }
 .sidebar, .sidebar:hover {
     color: #4095e3 !important;
@@ -85,7 +85,7 @@ li > a.nav-link-right, .nav-item, .di-nav {
     padding: 1rem 0 !important;
     margin-left: 8px;
     font-size: 15px !important;
-    font-family: "Ubuntu", sans-serif !important;
+    font-family: "roboto", sans-serif !important;
 }
 .sidebar:hover {
     text-decoration: underline;
@@ -137,7 +137,10 @@ div.card-header.background-cyan {
     background-color: #56c681 !important;
 }
 .background-gray {
-    background-color: #e7e7e7 !important;
+    background: #D3CCE3;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #E9E4F0, #D3CCE3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 .background-dark {
     background-color: #454d5e !important;
@@ -155,10 +158,23 @@ div.card-header.background-cyan {
     border-bottom: 2px solid #fff;
 }
 .main-nav {
-    background: url('/images/gradient_background.jpg') !important;
+    background: #fff !important;
+    box-shadow: 0 6px 12px 0 rgba(50,50,70,.08), 0 3px 5px 0 rgba(0,0,0,.05);
     // background: -webkit-linear-gradient(to right, #2a5298, #1e3c72);
     // background: linear-gradient(to right, #2a5298, #1e3c72);
     box-shadow: none;
+    .pharmacy-login {
+        color: #4095e3;
+    }
+}
+.fixed-top.scrolled {
+    background-color: #fff !important;
+    transition: background-color 200ms linear;
+    .pharmacy-login {
+        color: #4095e3 !important;
+    }
+    // border-bottom: 1px solid #b4b4b4;
+    box-shadow: 0 6px 12px 0 rgba(50,50,70,.08), 0 3px 5px 0 rgba(0,0,0,.05) !important;
 }
 .theme-background {
     background: #1e3c72;
@@ -222,6 +238,15 @@ div.card-header.background-cyan {
 .card {
     border: 0.5px solid #e6e8ec !important;
     border-radius: 0;
+}
+#searchBoxCard {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+div#searchBoxCard > div.card-body {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 .form-control {
     border-radius: 3px !important;
@@ -1140,14 +1165,15 @@ div#rxCol {
     // padding: 0 !important;
     margin-right: 10px;
     border: none !important;
-    color: #fff !important;
+    color: #fff;
 }
 .shopping-cart, .shopping-cart:hover {
     font-size: 16px;
     margin: 0 !important;
-    border: 1px solid #fff !important;
+    color: #fff !important;
+    border: 1px solid #17a2b8 !important;
     padding: 8px 20px !important;
-    background-color: #fff !important;
+    background-color: #17a2b8 !important;
 }
 .reg-a-pharma, .reg-a-pharma:hover {
     font-size: 16px;
@@ -1492,6 +1518,9 @@ a.btn-link.cta-signup:hover, a.btn-link.cta-login:hover {
     color: #b4b4b4 !important;
     font-size: 16px !important;
 }
+.footer-item {
+    margin-bottom: 20px;
+}
 .footer-link:hover {
     color: #fff !important
 }
@@ -1748,10 +1777,6 @@ input:focus + label {
     .no-mobile-padding {
         padding: 0 !important;
     }
-    .container {
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-    }
     .order-summary-col {
         border: none !important;
     }
@@ -1768,10 +1793,30 @@ input:focus + label {
         display: none;
     }
     #homePageBanner {
-        height: 230px !important;
+        height: 600px !important;
+        margin-top: -250px !important;
     }
     #searchBox {
-        margin-top: -190px !important;
+        margin-top: -400px !important;
+    }
+    #searchBoxCard {
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+    div#searchBoxCard > div.card-body {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    #searchBoxCardBannerText {
+        color: #fff !important;
+        display: block !important;
+    }
+    .fa-search-mobile-home, .fa-spinner-mobile-home {
+        color: #fff;
+    }
+    input.main-search {
+        border-color: #fff !important;
     }
     .mbm {
         padding-bottom: 15px;
@@ -1779,4 +1824,25 @@ input:focus + label {
     #socialTags, #copyright {
         text-align: center !important;
     }
+    .footer-columns {
+        text-align: center !important;
+    }
+    .footer-column-header {
+        margin-top: 20px;
+        margin-bottom: 15px !important;
+    }
+    .do-not-display-mobile {
+        display: none;
+    }
+    #theWhy {
+        padding-top: 50px !important;
+    }
+    #getMyLocation, #submitLocationSearch {
+        display: block !important;
+        width: 100% !important;
+    }
+    .no-mobile-container {
+        padding: 0;
+    }
+    
 }

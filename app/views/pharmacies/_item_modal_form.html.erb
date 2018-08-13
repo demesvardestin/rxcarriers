@@ -53,7 +53,7 @@
         <div class="col-md-12 actions">
             <%= f.submit "Update item", class:"btn btn-success box-shadow btn-block font-16" %>
             <hr>
-            <%= link_to 'Remove this item from inventory', remove_item_path(:id => item.id), class:"btn btn-danger btn-block font-16 box-shadow", :remote => true %>
+            <%= link_to 'Make item inactive', make_item_inactive_path(:id => item.id), class:"btn btn-danger btn-block font-16 box-shadow", :remote => true %>
         </div>
     </div>
 <% end %>

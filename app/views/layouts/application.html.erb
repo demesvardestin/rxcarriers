@@ -53,6 +53,19 @@
     <!-- Size should be 32 x 32 pixels -->
     <%= favicon_link_tag '/javascripts/pharmacy.png', :rel => 'shortcut icon' %>
     <script>
+      window.onload = function() {
+        var startPos;
+        var geoSuccess = function(position) {
+          startPos = position;
+        };
+        navigator.geolocation.getCurrentPosition(geoSuccess);
+      };
+      $(function () {
+        $(document).scroll(function () {
+          var $nav = $(".fixed-top");
+          $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+        });
+      });
       <% if current_pharmacy %>
         var current_pharma_id = <%= current_pharmacy.id %>;
         function playSound(filename){   

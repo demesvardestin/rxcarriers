@@ -2,7 +2,7 @@ class PharmaciesController < ApplicationController
   before_action :set_pharmacy, only: [:update, :destroy]
   before_action :check_current_pharmacy, except: [:home, :contact, :blog, :terms,
                 :privacy, :press, :search, :search_pharmacy, :show, :create_review,
-                :landing, :register_your_pharmacy, :submit_registration_request]
+                :landing, :register_your_pharmacy, :submit_registration_request, :get_current_position]
   before_action :check_parameters, only: [:show]
   
   def edit
@@ -11,6 +11,18 @@ class PharmaciesController < ApplicationController
   
   def landing
     
+  end
+  
+  def get_current_position
+    coords = "#{params[:coords][:latitude]}, #{params[:coords][:longitude]}"
+    location_object = Geocoder.search(coords)[0].data["address_components"]
+    street_number = location_object[0]["long_name"]
+    street_name = location_object[1]["long_name"]
+    town = location_object[2]["long_name"]
+    state = location_object[4]["short_name"]
+    zipcode = location_object[6]["long_name"]
+    @location = "#{street_number} #{street_name}, #{town} #{state}, #{zipcode}"
+    render :layout => false
   end
   
   def getting_started
@@ -118,6 +130,15 @@ class PharmaciesController < ApplicationController
   def remove_item
     @item = Item.find_by(id: params[:id])
     @item.destroy
+    respond_to do |format|
+        @items = Item.where(pharmacy_id: current_pharmacy.id).sort_by(&:name)
+        format.js {render 'remove_item', :layout => false}
+    end
+  end
+  
+  def make_item_inactive
+    @item = Item.find_by(id: params[:id])
+    @item.make_inactive
     respond_to do |format|
         @items = Item.where(pharmacy_id: current_pharmacy.id).sort_by(&:name)
         format.js {render 'remove_item', :layout => false}
@@ -248,7 +269,7 @@ class PharmaciesController < ApplicationController
     ## TEXT CUSTOMER ORDER UPDATE
     @pharmacy = Pharmacy.find_by(id: @order.pharmacy_id)
     message = "Good news! Your order is now being prepared by #{@pharmacy.name}."
-    TwilioPatient.alert_patient(@order.phone, @pharmacy, message)
+    # TwilioPatient.alert_patient(@order.phone_number, @pharmacy, message)
     render :layout => false
   end
   
@@ -270,7 +291,7 @@ class PharmaciesController < ApplicationController
     ## TEXT CUSTOMER ORDER UPDATE
     @pharmacy = Pharmacy.find_by(id: @order.pharmacy_id)
     message = "Hey there, just confirming that your order has been cancelled. A refund should be on the way soon."
-    TwilioPatient.alert_patient(@order.phone, @pharmacy, message)
+    # TwilioPatient.alert_patient(@order.phone_number, @pharmacy, message)
     render :layout => false
   end
   
@@ -285,7 +306,7 @@ class PharmaciesController < ApplicationController
     ## TEXT CUSTOMER ORDER UPDATE
     @pharmacy = Pharmacy.find_by(id: @order.pharmacy_id)
     message = "Great news! Your order is now on the way. Keep your phone handy, as the courier may attempt to call you upon arrival."
-    TwilioPatient.alert_patient(@order.phone, @pharmacy, message)
+    # TwilioPatient.alert_patient(@order.phone_number, @pharmacy, message)
     render :layout => false
   end
   

@@ -1,33 +1,37 @@
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email" %>
+<div class="row" id="pharmacy-login" style="padding-top: 20px;">
+  <div class="col-md-4 offset-md-4 pharmacy-login-form" style="background: #fff !important;">
+    <div class="header">
+      <h5 class="text-center medium-gray">Reset your password</h5>
+      <hr style="text-align: center; width: 25%;">
+    </div>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= devise_error_messages! %>
+    
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+      
+      <div class="field">
+        <%= f.password_field :current_password, autocomplete: "off", class:"form-control height-50 no-box-shadow", autofocus: true, placeholder: "Current Password" %>
+      </div>
+      
+      <div class="field">
+        <%= f.password_field :password, autocomplete: "off", class:"form-control height-50 no-box-shadow", autofocus: true, placeholder: "New Password" %>
+      </div>
+    
+      <div class="field">
+        <%= f.password_field :password_confirmation, autocomplete: "off", class:"form-control height-50 no-box-shadow", autofocus: true, placeholder: "New Password Confirmation" %>
+      </div>
+    
+      <div class="actions" style="margin-top: 10px;">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <%= f.submit "Update", class:"btn btn-primary btn-block height-50 box-shadow" %>
+            <hr style="text-align: center; width: 25%;">
+            <%= button_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, class:"btn btn-link theme-red", method: :delete %>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="field">
-    <%= f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "New Password" %>
-  </div>
-
-  <div class="field">
-    <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: "New Password Confirmation" %>
-  </div>
-
-  <div class="field">
-    <%= f.password_field :current_password, autocomplete: "off", class: "form-control", placeholder: "Current Password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update", class:"btn btn-primary btn-block btn-lg no-border-radius new-batch-button" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
+</div>

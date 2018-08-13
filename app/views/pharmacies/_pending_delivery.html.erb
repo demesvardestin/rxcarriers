@@ -19,6 +19,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12" style="padding-bottom: 20px;">
+                                <p class="font-14 theme-green">Received: <%= ord.ordered_at.strftime('%m/%d/%y at %l:%M%p') %></p>
                                 <p class="font-16 bold">Items ordered</p>
                             </div>
                         </div>
@@ -46,6 +47,14 @@
                                 <p class="font-16 add-margin-bottom"><%= ord.phone_number %></p>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12" style="padding-top: 20px; ">
+                                <p class="font-16 bold">Tip</p>
+                            </div>
+                            <div class="col-md-12">
+                                <p class="font-16 theme-green">$<%= ord.cart.tip_amount %></p>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer" id="orderDetailsModalFooter<%= ord.id %>">
                         <%= link_to cancel_order_path(:id => ord.id), class:"btn btn-danger box-shadow", id:"cancelButton#{ord.id}", remote: true do %>
@@ -64,7 +73,7 @@
                 <h6><%= ord.confirmation %></h6>
             </div>
             <div class="float-left" style="width: 25%;">
-                <h6><%= ord.created_at.strftime('%-m/%e/%y at %l:%M%p') %></h6>
+                <h6><%= ord.ordered_at.strftime('%-m/%e/%y at %l:%M%p') %></h6>
             </div>
             <div class="float-left" style="width: 45%;">
                 <h6>

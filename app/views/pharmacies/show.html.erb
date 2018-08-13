@@ -120,7 +120,7 @@
                             Categories <span class="text-right" style="margin-left: 70%;"><i class="fa fa-angle-down"></i></span>
                         </button>
                         <div class="dropdown-menu no-border-radius"  style="margin-top: 300px !important;" aria-labelledby="dropdownMenuButton">
-                            <% @pharmacy.inventory.item_categories.each do |cat| %>
+                            <% @categories.each do |cat| %>
                                 <a class="dropdown-item" href="#<%= cat.name.split(' ').join('_') %>"><%= cat.name %></a>
                                 <div class="dropdown-divider"></div>
                             <% end %>

@@ -85,7 +85,7 @@ class Cart < ActiveRecord::Base
             town_state_zipcode: town_state_zip,
             phone_number: phone,
             apartment_number: apt_num,
-            requested_at: Time.now,
+            ordered_at: Time.zone.now,
             online: true,
             delivered: false,
             processed: false,

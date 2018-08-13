@@ -7,23 +7,22 @@
     }
 </style>
 
-<div class="add-padding-bottom"><p class="font-16 bold"><%= pluralize(@pharmacies.size, 'pharmacy') %> found</p></div>
+<div class="add-padding-bottom"><p class="font-16 bold"><%= pluralize(@pharmacies.size, 'pharmacy') + ' found' unless @pharmacies.empty? %></p></div>
 <div style="display: none; padding: 70px;" id="bulletSpinner"><%= render 'common/bullet_spinner' %></div>
 <div class="row search-results">
     <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
-    <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
-    <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
-    <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
-    <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
-    <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
-    <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
-    <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
-    <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
-    <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
-    <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
-    <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
 </div>
 <div class="row">
-    <div class="col-md-12 text-center">
+    <div class="col-md-6 offset-md-3 text-center">
+        <% if @pharmacies.empty? %>
+            <div class="card">
+                <div class="card-body">
+                    <i class="fa fa-map-marker theme-blue" style="font-size: 100px; margin-top: 20px; margin-bottom: 30px;"></i>
+                    <p class="font-16" style="margin-bottom: 20px;">
+                        Oops, looks like RxCarriers is not yet in your area. But no worries, we'll be there very soon!
+                    </p>
+                </div>
+            </div>
+        <% end %>
     </div>
 </div>

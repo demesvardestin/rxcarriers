@@ -12,7 +12,8 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-12" style="padding-bottom: 20px;">
+                    <div class="col-md-12" style="">
+                        <p class="font-14 theme-green">Received: <%= @order.ordered_at.strftime('%m/%d/%y at %l:%M%p') %></p>
                         <p class="font-16 bold">Items ordered</p>
                     </div>
                 </div>
@@ -29,7 +30,7 @@
                     </div>
                 <% end %>
                 <div class="row">
-                    <div class="col-md-12" style="padding-top: 20px; padding-bottom: 20px;">
+                    <div class="col-md-12" style="padding-top: 20px; ">
                         <p class="font-16 bold">Delivery details</p>
                     </div>
                 </div>
@@ -38,6 +39,14 @@
                         <p class="font-16 add-margin-bottom"><%= @order.street_address %><%= ' ' + @order.apartment_number if @order.apartment_number %></p>
                         <p class="font-16 add-margin-bottom"><%= @order.town_state_zipcode %></p>
                         <p class="font-16 add-margin-bottom"><%= @order.phone_number %></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="padding-top: 20px; ">
+                        <p class="font-16 bold">Tip</p>
+                    </div>
+                    <div class="col-md-12">
+                        <p class="font-16 theme-green">$<%= @order.cart.tip_amount %></p>
                     </div>
                 </div>
             </div>
