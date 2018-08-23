@@ -37,6 +37,7 @@
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                   <a class="nav-link active nav-link-settings font-14" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Account details</a>
                   <a class="nav-link nav-link-settings font-14" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Business operations</a>
+                  <!--<a class="nav-link nav-link-settings font-14" id="v-pills-notifications-tab" data-toggle="pill" href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications" aria-selected="false">Notifications</a>-->
                 </div>
                 <section class="notice" style="display: none;">
                     <div class="alert alert-success no-border-radius alert-dismissible fade show notice-alert" role="alert">
@@ -52,10 +53,10 @@
     </div>
     <div class="col-md-8">
         <div class="tab-content" id="v-pills-tabContent">
-            <div class="tab-pane fade show active bordered background-white" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" style="padding: 10px 15px; border-radius: 5px;">
+            <div class="tab-pane fade show active bordered background-white" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" style="padding: 10px 15px; border-radius: 3px;">
                 <%= render 'form' %>
             </div>
-            <div class="tab-pane fade bordered background-white" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" style="padding: 10px 15px; border-radius: 5px;">
+            <div class="tab-pane fade bordered background-white" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" style="padding: 20px 15px !important; border-radius: 3px;">
                 <%= render 'logistics_form' %>
             </div>
         </div>
@@ -73,4 +74,9 @@
             window.location.replace('/choose_subscription');
         }
     });
+    
+    function setDelivery(value=null) {
+        document.getElementById('pharmacyDelivers').value = value;
+        console.log(value);
+    }
 </script>

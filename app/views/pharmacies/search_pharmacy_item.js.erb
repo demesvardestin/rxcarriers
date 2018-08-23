@@ -1,0 +1,16 @@
+var results = <%= @items.count %>;
+var alert_text = (results).toString() + ' product(s) found';
+$('#pageSearchTotal').html(alert_text);
+if (results == 0 || document.getElementById('searchInPage').value.toLowerCase() == '') {
+    <!--alert('Your search did not match any item.');-->
+    $('#searchPharmacyItems').html(`
+        <% @categories.each do |category| %>
+            <%= render partial: 'items', locals: {category: category, items: @items} %>
+        <% end %>
+    `);
+    console.log('no results');
+} else {
+    $('#searchPharmacyItems').html(`
+        <%= render partial: 'inventory_search_item', locals: {items: @items} %>
+    `);
+}

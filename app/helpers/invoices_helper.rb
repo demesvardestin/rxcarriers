@@ -95,7 +95,7 @@ module InvoicesHelper
             when "/payment-settings?status=succeeded"
                 "succeeded_payments"
             when "/payment-settings?status=failed"
-                "failed_payments"
+                "refunded_payments"
             when "/payment-settings?amount=asc"
                 "low_high"
             when "/payment-settings?amount=desc"
@@ -107,6 +107,14 @@ module InvoicesHelper
             else
                 "all"
         end
+    end
+    
+    def current_pharmacy_available_balance
+        Stripe::Balance.retrieve({:stripe_account => current_pharmacy.stripe_cus}).available[0].amount/100.round(2)
+    end
+    
+    def current_pharmacy_pending_balance
+        Stripe::Balance.retrieve({:stripe_account => current_pharmacy.stripe_cus}).pending[0].amount/100.round(2)
     end
     
 end

@@ -4,7 +4,7 @@
         <div class="modal-content" id="orderDetailsContent<%= i.id %>">
             <div class="modal-header background-transparent">
                 <h4 class="modal-title" id="exampleModalLabel">
-                    <%= i.name %>
+                    <%= i.name %> <span class="badge badge-danger font-16" id="activeLabel-<%= i.id %>" style="<% if !i.inactive %>display: none;<% end %>">Inactive</span>
                 </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <div id="inventory-item<%= i.id %>">
+    <div id="inventory-item<%= i.id %>" class="<%= check_active(i.id) %>">
         <a class="background-transparent cursor-pointer" data-toggle="modal" data-target="#itemDetails<%= i.id %>">
             <div class="inventory-item" id="inventoryItem-<%= i.id %>">
                 <div class="row" style="padding: 15px 20px;">

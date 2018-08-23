@@ -60,37 +60,47 @@ class Cart < ActiveRecord::Base
        return self.item_list == '' && self.item_list_count == '' && self.instructions_list == '' && self.pending == true
     end
     
-    def process_payment(token, street, town_state_zip, phone, apt_num)
-        email = self.shopper_email
-        email.starts_with?('guest')? guest = true : guest = false
+    def process_payment(token, full_address, phone, apt_num, email, delivery_option)
+        shopper_email = self.shopper_email
+        shopper_email.starts_with?('guest')? guest = true : guest = false
         pharmacy_id = self.get_pharmacy.id
         confirmation = self.generate_confirmation
+        total_amount = (self.sale_total * 100).to_i
+        fee = (total_amount * 0.10).to_i
         charge = Stripe::Charge.create(
-          :amount => (self.sale_total * 100).to_i,
-          :currency => "usd",
-          :source => token[:id],
-          :description => "Order from cart ##{self.id}. Email: #{email}"
+            {
+                :amount => total_amount,
+                :currency => "usd",
+                :source => token[:id],
+                :description => "Order from cart ##{self.id}. Email: #{email}",
+                # :application_fee => fee,
+                :destination => {
+                    :account => self.get_pharmacy.stripe_cus,
+                }
+            }
         )
         order = Order.create(
             cart_id: self.id,
             pharmacy_id: pharmacy_id,
-            shopper_email: email,
+            shopper_email: shopper_email,
             guest: guest,
             item_list: self.item_list,
             item_list_count: self.item_list_count,
             total: self.total_cost,
             stripe_charge_id: charge.id,
             confirmation: confirmation,
-            street_address: street,
-            town_state_zipcode: town_state_zip,
+            street_address: full_address,
             phone_number: phone,
             apartment_number: apt_num,
             ordered_at: Time.zone.now,
             online: true,
             delivered: false,
             processed: false,
-            status: 'pending'
+            status: 'pending',
+            delivery_email: email,
+            delivery_option: delivery_option
         )
+        invoice = Invoice.set_invoice(fee=0.0, net=total_amount, order, self)
         self.update(order_id: order.id, completed: true, shopper_email: '')
     end
     
@@ -127,8 +137,10 @@ class Cart < ActiveRecord::Base
         tax_total = 0.0
         self.item_list.split(', ').each_with_index do |i, idx|
             @item = Item.find_by(id: i.to_i)
-            if @item.is_taxable?
+            if @item.is_taxable? && @item.pharmacy.state.downcase.include?('ny')
                 tax_total += (@item.get_price.to_f * 0.08875 * self.item_list_count.split(', ')[idx].to_i).round(2)
+            elsif @item.pharmacy.state.downcase.include?('ma')
+                tax_total += (@item.get_price.to_f * 0.05 * self.item_list_count.split(', ')[idx].to_i).round(2)
             end
         end
         return tax_total
@@ -163,5 +175,9 @@ class Cart < ActiveRecord::Base
     
     def item_list_count_array
         self.item_list_count.split(', ') 
+    end
+    
+    def instruction_list_array
+        self.instructions_list.split(', ') 
     end
 end

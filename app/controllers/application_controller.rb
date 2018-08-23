@@ -4,9 +4,21 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery with: :exception
   before_action :check_token
+  before_action :load_vapid_keys
   
   def check_driver_path
     
+  end
+  
+  def load_vapid_keys
+    @vapid_public = 'BKZPPLlOQmgaKAdnJd0ecmY92fB4_0jqJ8PktJqC5rjT9h_arlyzHvzpFBmowIJdnOLgU625bIPw_aA7NdEiej8'
+    @vapid_private = 'MsnNhjRXv5ePwAS3yfe2fYCA6HOl7OIX9_uSC9zZKXk'
+  end
+  
+  def check_push_subscription
+    if current_pharmacy && current_pharmacy.subscribed_to_push.nil?
+      redirect_to notifications_settings_path
+    end
   end
   
   def check_token
@@ -19,7 +31,7 @@ class ApplicationController < ActionController::Base
   end
   
   def check_current_pharmacy
-    redirect_to :back unless current_pharmacy
+    redirect_to root_path unless current_pharmacy
   end
   
   def check_current_driver

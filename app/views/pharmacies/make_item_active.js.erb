@@ -1,0 +1,7 @@
+document.getElementById('inventory-item<%= @item.id %>').classList.remove('background-lightred');
+document.getElementById('inventory-item<%= @item.id %>').classList.add('background-transparent');
+$('#activeButtons-<%= @item.id %>').html(`
+    <%= link_to 'Make item inactive', make_item_inactive_path(:id => @item.id), class:"btn btn-danger btn-block font-16 box-shadow", :remote => true %>
+`);
+$('#activeLabel-<%= @item.id %>').hide();
+toastr["success"]('Item is marked as active!');

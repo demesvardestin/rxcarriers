@@ -62,7 +62,8 @@
                                     <span class="theme-green " style="margin-right: 5px;">
                                         <%= @cart.item_list_count.split(', ')[idx] %>
                                     </span>
-                                    <span class="black"><%= get_item(i).name %></span>
+                                    <span class="black"><%= get_item(i).name %></span><br />
+                                    <span style="margin-left: 20px; font-size: 14px;"><em><%= "'#{@cart.instruction_list_array[idx]}'" if !(@cart.instruction_list_array[idx] == 'none') %></em></span>
                                 </p>
                             <% end %>
                             <hr style="height: 1px !important; color: #b4b4b4; border: 1px solid #b4b4b4; background: #b4b4b4;">
@@ -133,9 +134,20 @@
                             <h5><i class="fa fa-bicycle"></i> Delivery details</h5>
                         </div>
                         <div class="card-body">
-                            <input class="form-control radius-5 no-box-shadow" id="streetAddress" placeholder="Street address">
+                            <div class="col-md-12 text-center no-horizontal-padding">
+                                <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+                                  <label class="btn btn-secondary active no-box-shadow white" id="forDelivery" onclick="deliveryOption(option='delivery')">
+                                    <input type="radio" name="for_delivery" autocomplete="off"> <span>Delivery</span>
+                                  </label>
+                                  <label class="btn btn-secondary no-box-shadow white" id="forPickUp" onclick="deliveryOption(option='pickup')">
+                                    <input type="radio" name="for_pickup" autocomplete="off"> <span>Pickup</span>
+                                  </label>
+                                </div>
+                            </div>
+                            <input type="hidden" id="deliveryOption" value='delivery'>
+                            <input type="email" class="form-control radius-5 no-box-shadow" id="email" placeholder="Email">
+                            <input type="text" class="form-control radius-5 no-box-shadow" id="fullAddress" placeholder="Full address">
                             <input class="form-control radius-5 no-box-shadow" id="aptNum" placeholder="Apartment number (if applicable)">
-                            <input class="form-control radius-5 no-box-shadow" id="townStateZip" placeholder="Town, state, zipcode">
                             <input class="form-control radius-5 no-box-shadow" id="phone" placeholder="Phone number">
                         </div>
                     </div>
@@ -252,17 +264,19 @@
     
     function submitOrder(token) {
         $('#spinnerSubmit').show();
-        var street = document.getElementById('streetAddress').value;
-        var townStateZip = document.getElementById('townStateZip').value;
+        var email = document.getElementById('email').value;
+        var fullAddress = document.getElementById('fullAddress').value;
         var phone = document.getElementById('phone').value;
         var aptNum = document.getElementById('aptNum').value;
+        var deliveryOption = document.getElementById('deliveryOption').value;
         var cart = {
             'guest_shopper': document.getElementsByClassName('submit-button')[0].id,
             'stripeToken': token,
-            'street': street,
-            'townStateZip': townStateZip,
+            'fullAddress': fullAddress,
             'phone': phone,
-            'aptNum': aptNum
+            'aptNum': aptNum,
+            'email': email,
+            'deliveryOption': deliveryOption
         }
         $.get('/submit_order', { cart: cart })
         .fail(function(error) {
@@ -283,6 +297,13 @@
                     document.getElementById(active[i].id).classList.remove('active');
                 }
             }
+        }
+    }
+    
+    function deliveryOption(option=null) {
+        if (option) {
+            document.getElementById('deliveryOption').value = option;
+            console.log(option);
         }
     }
 </script>

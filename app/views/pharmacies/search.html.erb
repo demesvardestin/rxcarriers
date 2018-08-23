@@ -11,13 +11,13 @@
         border-bottom-left-radius: 5px;
     }
     .main-nav {
-        box-shadow: 0 6px 12px 0 rgba(50,50,70,.08), 0 3px 5px 0 rgba(0,0,0,.05);
+        /*box-shadow: 0 6px 12px 0 rgba(50,50,70,.08), 0 3px 5px 0 rgba(0,0,0,.05);*/
     }
 </style>
 
 <div class="jumbotron no-border-radius" style="padding-top: 0px; padding-bottom: 0;">
     <div class="container no-mobile-container">
-        <div class="col-md-4 no-horizontal-padding" style="padding-top: 30px; padding-bottom: 15px;">
+        <div class="col-md-6 no-horizontal-padding" style="padding-top: 30px; padding-bottom: 15px;">
             <form action="/pharmacy_search" method="get" id="pharmacySearchForm">
                 <div class="input-group mb-3" style="margin-bottom: 0 !important;">
                   <div class="input-group-prepend">
@@ -34,7 +34,7 @@
     </div>
 </div>
 <div class="container">
-    <div class="col-md-12 no-horizontal-padding" style="padding-top: 30px; padding-bottom: 60px;">
+    <div class="col-md-12 no-horizontal-padding" style="padding-top: 0; padding-bottom: 60px;">
         <div id="searchResults">
             <div class="add-padding-bottom"><p class="font-16 bold"><%= pluralize(@pharmacies.size, 'pharmacy') + ' found' unless @pharmacies.empty? %></p></div>
             <div style="display: none; padding: 70px;" id="bulletSpinner"><%= render 'common/bullet_spinner' %></div>

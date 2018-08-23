@@ -1,5 +1,10 @@
 <div class="row" id="pharmacy-login" style="padding-top: 20px;">
   <div class="col-md-4 offset-md-4 pharmacy-login-form" style="background: #fff !important;">
+    <% if flash[:notice] %>
+        <div class="alert alert-success font-16" role="alert">
+            <%= notice %>
+        </div>
+    <% end %>
     <div class="header">
       <h5 class="text-center medium-gray">Reset your password</h5>
       <hr style="text-align: center; width: 25%;">
@@ -28,10 +33,14 @@
           <div class="col-md-12 text-center">
             <%= f.submit "Update", class:"btn btn-primary btn-block height-50 box-shadow" %>
             <hr style="text-align: center; width: 25%;">
-            <%= button_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, class:"btn btn-link theme-red", method: :delete %>
           </div>
         </div>
       </div>
     <% end %>
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <%= button_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, class:"btn btn-link theme-red", method: :delete %>
+      </div>
+    </div>
   </div>
 </div>

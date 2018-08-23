@@ -23,14 +23,23 @@ class CartsController < ApplicationController
     when 'pending'
       @status = 'received'
       @text = 'Your order has been received by the pharmacy!'
-    when 'processed'
-      @status = 'prepared'
+    when 'ready for delivery'
+      @status = 'ready'
       @text = 'Your order has been prepared and is pending delivery!'
+    when 'ready for pickup'
+      @status = 'ready'
+      @text = 'Your order is ready for pickup!'
+    when 'picked up'
+      @status = 'picked up'
+      @text = 'You have picked up your order!'
     when 'delivered'
       @status = 'in transit'
       @text = 'Your delivery is on the way!'
+    when 'cancelled'
+      @status = 'cancelled'
+      @text = "Your order has been cancelled. Please contact us if you haven't received a refund"
     else
-      @status = 'pending'
+      @status = 'no status'
       @text = 'Please contact the pharmacy.'
     end
     render :layout => false
@@ -63,7 +72,7 @@ class CartsController < ApplicationController
   
   def process_payment
     guest = guest_shopper.email
-    if guest != params[:cart][:guest_shopper]
+    if guest != params[:cart][:guest_shopper] || params[:cart][:stripeToken].blank? || params[:cart][:stripeToken].nil?
       @error = 'There seems to be some information mismatch. Please try again'
       render :layout => false
       return
@@ -71,21 +80,26 @@ class CartsController < ApplicationController
     @error = ''
     begin
       @cart = Cart.find_by(shopper_email: params[:cart][:guest_shopper])
-      street = params[:cart][:street]
-      town_state_zip = params[:cart][:townStateZip]
+      email = params[:cart][:email]
+      full_address = params[:cart][:fullAddress]
       phone = params[:cart][:phone]
       apt_num = params[:cart][:aptNum]
-      @cart.process_payment(params[:cart][:stripeToken], street, town_state_zip, phone, apt_num)
+      delivery_option = params[:cart][:deliveryOption]
+      @cart.process_payment(params[:cart][:stripeToken], full_address, phone, apt_num, email, delivery_option)
+      @order = Order.find_by(cart_id: @cart.id)
     rescue
       @error = 'An error occured while processing this payment. Please try again'
     end
-    @order = Order.find_by(cart_id: @cart.id)
     pusher.trigger('new-rx', 'rx-request', {
       message: "New order!",
       id: @order.id,
       type: 'OTC',
       pharmacy_id: @order.pharmacy_id
     })
+    @pharmacy = Pharmacy.find_by(id: @order.pharmacy_id)
+    message = "Thank you for ordering on RxCarriers! Your request has been received by #{@pharmacy.name} and will be processed soon!"
+    TwilioPatient.alert_customer(phone, message)
+    PharmacyMailer.order_in_process(@order).deliver_now
     render :layout => false
   end
   

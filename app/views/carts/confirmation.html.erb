@@ -7,7 +7,7 @@
                 <div class="col-md-8">
                     <h4 class="white">Thanks for ordering!</h4>
                     <p class="font-16 white">
-                       Estimated delivery <i class="fa fa-clock-o" style="margin-left: 20px;"></i> <%= estimated_delivery %>
+                       Estimated delivery <i class="fa fa-clock-o" style="margin-left: 20px;"></i> <%= estimated_delivery(@cart.id) %>
                     </p>
                     <p class="font-14 white">
                        Check out your receipt details below.<br />
@@ -73,7 +73,7 @@
                                 Order date
                             </h6>
                             <h6>
-                                <%= @cart.order.requested_at.strftime('%m/%d/%y %l:%M %p') %>
+                                <%= @cart.order.ordered_at.strftime('%m/%d/%y %l:%M %p') %>
                             </h6>
                         </div>
                     </div>
@@ -103,7 +103,8 @@
                                         <span class="theme-green " style="margin-right: 5px;">
                                             <%= @cart.item_list_count_array[idx] %>
                                         </span>
-                                        <span><%= get_item(i).shorten_name %></span>
+                                        <span><%= get_item(i).shorten_name %></span><br />
+                                        <span style="margin-left: 20px; font-size: 14px;"><em><%= "'#{@cart.instruction_list_array[idx]}'" if !(@cart.instruction_list_array[idx] == 'none') %></em></span>
                                     </h6>
                                 </div>
                             <% end %>

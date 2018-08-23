@@ -140,6 +140,10 @@ class Pharmacy < ActiveRecord::Base
       end
     end
     
+    def has_stripe_account_setup
+      !self.stripe_cus.nil?
+    end
+    
     def billing_attributes
       self.card_number.present? && self.exp_year.present? && self.exp_month.present? && self.bill_street.present? && self.bill_city.present? && self.bill_state.present? && self.bill_zip.present?
     end
@@ -152,11 +156,27 @@ class Pharmacy < ActiveRecord::Base
     
     def orders_for(period)
       case period
+      when 'this week'
+          Order.this_week.where(pharmacy_id: self.id).all
       when 'this month'
           Order.this_month.where(pharmacy_id: self.id).all
+      when 'this year'
+          Order.this_year.where(pharmacy_id: self.id).all
       else
           Order.where(pharmacy_id: self.id).all
       end
+    end
+    
+    def weekday_hours
+      [opening_weekday, closing_weekday].join(' - ')
+    end
+    
+    def saturday_hours
+      [opening_saturday, closing_saturday].join(' - ')
+    end
+    
+    def sunday_hours
+      [opening_sunday, closing_sunday].join(' - ')
     end
     
 end

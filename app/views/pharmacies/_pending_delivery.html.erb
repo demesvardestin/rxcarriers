@@ -27,10 +27,15 @@
                             <div class="row">
                                 <div class="col-md-12 add-margin-bottom no-horizontal-padding">
                                     <div class="float-left theme-green" style="width: 10%;">
-                                        <p class="font-16 theme-blue"><%= ord.item_list_count_array[idx] %></p>
+                                        <p class="font-16 theme-blue no-margin-bottom"><%= ord.item_list_count_array[idx] %></p>
                                     </div>
                                     <div class="float-right" style="width: 90%;">
-                                        <p class="font-16"><%= ord.get_item(i).name %></p>
+                                        <p class="font-16 no-margin-bottom"><%= ord.get_item(i).name if !ord.get_item(i).nil? %></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="margin-bottom: 3px;">
+                                    <div class="float-right" style="width: 90%;">
+                                        <p class="font-14 no-margin-bottom"><em><%= "'#{ord.get_instruction(idx)}'" if !ord.get_instruction(idx).nil? %></em></p>
                                     </div>
                                 </div>
                             </div>

@@ -2,7 +2,7 @@
     <h5 class="font-18 black" id="<%= category.name.split(' ').join('_') %>"><%= category.name %></h5>
     <hr>
 </div>
-<% items.where(:item_category_id => category.id).each do |i| %>
+<% items.select{|i| i.item_category_id == category.id}.each do |i| %>
     <div class="modal" id="itemOrderDetails<%= i.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content no-border-radius" id="modalContent<%= i.id %>">

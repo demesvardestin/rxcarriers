@@ -1,0 +1,38 @@
+<% current_pharmacy.invoices.refunded.each do |i| %>
+    <div id="invoice-<%= i.id %>">
+        <div class="inventory-item" id="inventoryItem-<%= i.id %>">
+            <div class="row" style="padding: 15px 20px;">
+                <div class="col-md-2">
+                    <h6><%= i.order.confirmation %></h6>
+                </div>
+                <div class="col-md-1">
+                    <h6><%= i.subtotal.to_f.round(2) %></h6>
+                </div>
+                <div class="col-md-1 theme-red">
+                    <h6>+<%= i.tax %></h6>
+                </div>
+                <div class="col-md-1 theme-yellow">
+                    <h6>+<%= i.tip %></h6>
+                </div>
+                <div class="col-md-1">
+                    <h6>-<%= i.platform_fee.to_f/100.round(2) %></h6>
+                </div>
+                <div class="col-md-1 theme-green">
+                    <h6><%= i.final.to_f/100.round(2) %></h6>
+                </div>
+                <div class="col-md-2">
+                    <h6><%= i.transaction_id %></h6>
+                </div>
+                <div class="col-md-1">
+                    <h6><%= i.billing_date.strftime('%-m/%e/%y') %></h6>
+                </div>
+                <div class="col-md-2">
+                    <h6><%= i.stripe_status.upcase %></h6>
+                </div>
+            </div>
+            <div class="col-md-12 no-horizontal-padding">
+                <hr style="margin: 0;">
+            </div>
+        </div>
+    </div>
+<% end %>

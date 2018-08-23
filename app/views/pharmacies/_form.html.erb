@@ -1,3 +1,8 @@
+<style>
+  input {
+    margin-top: 0 !important;
+  }
+</style>
 <%= form_for(@pharmacy, :html => {:id => "profileForm",:multipart => true, :remote => true}) do |f| %>
   <% if @pharmacy.errors.any? %>
     <div id="error_explanation">
@@ -11,39 +16,47 @@
     </div>
   <% end %>
   
+  <h6>Pharmacy name</h6>
   <div class="field">
-    <%= f.text_field :name, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy name" %>
+    <%= f.text_field :name, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true %>
   </div>
+  <h6>Pharmacy number</h6>
   <div class="field">
-    <%= f.text_field :number, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy phone number" %>
+    <%= f.text_field :number, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true %>
   </div>
+  <h6>Manager/Supervisor name</h6>
   <div class="field">
-    <%= f.text_field :supervisor, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy manager/supervisor" %>
+    <%= f.text_field :supervisor, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true %>
   </div>
   <div class="row">
     <div class="col-md-5">
+      <h6>Street address</h6>
       <div class="field">
-        <%= f.text_field :street, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy street address" %>
+        <%= f.text_field :street, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true %>
       </div>
     </div>
     <div class="col-md-3">
+      <h6>Town</h6>
       <div class="field">
-        <%= f.text_field :town, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy town" %>
+        <%= f.text_field :town, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true %>
       </div>
     </div>
     <div class="col-md-2">
+      <h6>State</h6>
       <div class="field">
-        <%= f.text_field :state, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy state" %>
+        <%= f.text_field :state, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true %>
       </div>
     </div>
     <div class="col-md-2">
+      <h6>Zipcode</h6>
       <div class="field">
-        <%= f.text_field :zipcode, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Pharmacy zipcode" %>
+        <%= f.text_field :zipcode, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true %>
       </div>
     </div>
   </div>
+  <h6>Website</h6>
   <div class="field">
-    <%= f.text_field :website, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:" " %>
+    <%= f.text_field :website, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true %>
   </div>
   <!--<div class="field">-->
   <!--  <%= f.label :pharmacy_logo %>-->

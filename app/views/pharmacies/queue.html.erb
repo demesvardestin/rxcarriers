@@ -21,11 +21,17 @@
     <div class="card">
         <div class="card-header background-transparent">
             <ul class="nav nav-pills mb-3 no-margin-bottom" id="pills-tab" role="tablist">
-              <li class="nav-item order-nav">
-                <a class="nav-link active font-16" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Pending delivery</a>
+                <li class="nav-item order-nav">
+                <a class="nav-link active font-16" id="pills-pickup-tab" data-toggle="pill" href="#pills-pickup" role="tab" aria-controls="pills-pickup" aria-selected="true">Pending pick-up</a>
               </li>
               <li class="nav-item order-nav">
-                <a class="nav-link font-16" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Delivered</a>
+                <a class="nav-link font-16" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="false">Pending delivery</a>
+              </li>
+              <li class="nav-item order-nav">
+                <a class="nav-link font-16" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Delivered/Picked-up</a>
+              </li>
+              <li class="nav-item order-nav">
+                <a class="nav-link font-16" id="pills-cancelled-tab" data-toggle="pill" href="#pills-cancelled" role="tab" aria-controls="pills-cancelled" aria-selected="false">Cancelled</a>
               </li>
             </ul>
         </div>
@@ -45,13 +51,29 @@
                 </div>
             </div>
             <div class="tab-content" id="pills-tabContent">
-                <div class="tab-pane fade show active pending-orders" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="tab-pane fade show active pending-pickup-orders" id="pills-pickup" role="tabpanel" aria-labelledby="pills-profile-pickup">
+                    <%= render partial: 'pending_pickup', locals: { orders: @pending_pickup_orders }%>
+                </div>
+                <div class="tab-pane fade pending-orders" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                     <%= render partial: 'pending_delivery', locals: { orders: @pending_orders }%>
                 </div>
                 <div class="tab-pane fade delivered-orders" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                     <%= render partial: 'delivered', locals: { orders: @delivered_orders }%>
                 </div>
+                <div class="tab-pane fade cancelled-orders" id="pills-cancelled" role="tabpanel" aria-labelledby="pills-profile-cancelled">
+                    <%= render partial: 'cancelled', locals: { orders: @cancelled_orders }%>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $('.btn-danger').on('click', function() {
+        console.log($(this).text());
+        var text = $(this).text().toLowerCase();
+        if (text.includes('cancel')) {
+            $(this).html('cancelling...please wait');
+        }
+    });
+</script>

@@ -31,7 +31,7 @@
                 <form id="searchItemForm" style="margin: 0;">
                     <div class="row">
                         <div class="col-md-6">
-                            <input class="form-control no-box-shadow height-50" autofocus="true" id="searchItem" onkeyup="searchItem(this)" placeholder="Search an item by name or ndc" style="margin: 0;">
+                            <input class="form-control no-box-shadow height-50" id="searchItem" onkeyup="searchItem(this)" placeholder="Search an item by name or ndc" style="margin: 0;">
                         </div>
                         <div class="col-md-3">
                             <button class="btn btn-success box-shadow btn-block height-50" id="searchItemSubmit">
@@ -53,8 +53,11 @@
                     </div>
                 </form>
             </div>
-            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <%= render 'item_form' %>
+            <div class="tab-pane fade text-center" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <button class="btn btn-info box-shadow height-50" id="showForm" onclick="$('#hideForm').show(); $('#formDiv').fadeIn(); $(this).hide();">
+                    Open form
+                </button>
+                <div id="formDiv" style="display: none;"><%= render 'item_form' %></div>
             </div>
         </div>
     </div>
@@ -154,4 +157,13 @@
             taxed + ' <i class="fa fa-angle-down"></i>'
         );
     }
+    
+    $('.btn-danger').on('click', function() {
+        console.log($(this).text());
+        var text = $(this).text().toLowerCase();
+        if (text.includes('make')) {
+            console.log('yes');
+            $(this).html('cancelling...please wait');
+        }
+    });
 </script>

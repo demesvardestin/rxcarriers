@@ -13,33 +13,33 @@
     <div class="row">
         <div class="col-md-2 field">
             <%= f.label :ndc %>
-            <%= f.text_field :ndc, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"0000-0000-0000", id:"itemNDC" %>
+            <%= f.text_field :ndc, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"0000-0000-0000", id:"itemNDC", required: true %>
         </div>
         <div class="col-md-3 field">
             <%= f.label :name %>
-            <%= f.text_field :name, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"Tylenol PM", id:"itemName" %>
+            <%= f.text_field :name, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"Tylenol PM", id:"itemName", required: true %>
         </div>
         <div class="col-md-1 field">
             <%= f.label :price %>
-            <%= f.text_field :price, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"8.99", id:"itemPrice" %>
+            <%= f.text_field :price, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"8.99", id:"itemPrice", required: true %>
         </div>
         <div class="col-md-1 field">
             <%= f.label :size %>
-            <%= f.text_field :size, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"100", id:"itemSize" %>
+            <%= f.text_field :size, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"100", id:"itemSize", required: true %>
         </div>
         <div class="col-md-3 field">
             <%= f.label :size_type %>
-            <%= f.text_field :size_type, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"Caps, tabs, oz, ml, mg", id:"itemSizeType" %>
+            <%= f.text_field :size_type, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"Caps, tabs, oz, ml, mg", id:"itemSizeType", required: true %>
         </div>
         <div class="col-md-2 field">
             <%= f.label :item_expiration %>
-            <%= f.text_field :expiration, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"yyyy-mm-dd", id:"itemSizeType" %>
+            <%= f.text_field :expiration, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"yyyy-mm-dd", id:"itemSizeType", required: true %>
         </div>
     </div>
     <div class="row">
         <div class="col-md-2 field">
             <%= f.label :available_units %>
-            <%= f.text_field :quantity, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"20", id:"itemAvailability" %>
+            <%= f.text_field :quantity, class:"form-control no-box-shadow height-50", autofocus: true, placeholder:"20", id:"itemAvailability", required: true %>
         </div>
         <div class="col-md-5 field">
             <%= f.label :details %>
@@ -49,7 +49,7 @@
             <button class="btn btn-info box-shadow btn-block taxable-items height-50" style="margin-top: 10px;" id="taxableItem" id="dropdownTaxable" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Taxable? <i class="fa fa-angle-down"></i>
             </button>
-            <div class="dropdown-menu" style="width: 100%; margin-top: 300px;" aria-labelledby="dropdownTaxable">
+            <div class="dropdown-menu" style="width: 100%;" aria-labelledby="dropdownTaxable">
                 <% ['Yes', 'No'].each do |t| %>
                     <a class="dropdown-item theme-blue cursor-pointer" id="taxable-<%= t %>" onclick="setTaxable(this)"><%= t %></a>
                     <div class="dropdown-divider"></div>
@@ -71,12 +71,17 @@
             <%= f.text_field :item_category_id, class:"form-control no-box-shadow height-50", autofocus: true, id:"itemCategory" %>
         </div>
         <div class="col-md-12 field" style="display: none;">
-            <%= f.hidden_field :taxable, class:"form-control no-box-shadow height-50", autofocus: true, id:"itemTaxable" %>
+            <%= f.hidden_field :can_be_taxed, class:"form-control no-box-shadow height-50", autofocus: true, id:"itemTaxable" %>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 actions">
-            <%= f.submit "Add item", class:"btn btn-success box-shadow btn-block height-50 font-16" %>
+        <div class="col-md-6 actions">
+            <%= f.submit "Add item", class:"btn btn-success box-shadow btn-block height-50 font-16", id:"addItem" %>
+        </div>
+        <div class="col-md-6 actions" style="margin-top: 10px;">
+            <a class="btn btn-warning btn-block box-shadow height-50 font-16 add-padding-top" id="hideForm" role="button" onclick="$(this).hide(); $('#formDiv').hide(); $('#showForm').show();">
+                Close form
+            </a>
         </div>
     </div>
 <% end %>

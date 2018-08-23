@@ -160,3 +160,7 @@ $( document ).on('turbolinks:load', function() {
     }
     
 });
+
+// $('.btn-danger').on('click', function(elem) {
+//     console.log(elem.id);
+// });

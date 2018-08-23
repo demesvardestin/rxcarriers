@@ -1,5 +1,5 @@
 $( document ).on('turbolinks:load', function() {
-    const key = 'BNiq2vVEYf5MdCKMFhXLvICGnUz8Q_xQNjoBXTM3ex4FCYPr2tZU1-Jw2vrlGlNMToU9zfNlACW8rrbqYvwM5tw';
+    const key = 'BKZPPLlOQmgaKAdnJd0ecmY92fB4_0jqJ8PktJqC5rjT9h_arlyzHvzpFBmowIJdnOLgU625bIPw_aA7NdEiej8';
     console.log(window.vapidPublicKey);
     // const priv_ = 'SfjzRhYk6vNcVTEMw2ZTJo8Zh16b7c1oZvfXwRUX5ag';
     Notification.requestPermission(function(status) {
@@ -15,65 +15,26 @@ $( document ).on('turbolinks:load', function() {
     }
     
     $('#enablePush').on('click', e => {
-        $('#enablePush').css('opacity', '0.7').html('Enabling notifications...');
+        console.log('clicked');
+        $('#enablePush').css('opacity', '0.7').html('Enabling...');
         navigator.serviceWorker.getRegistration('/javascripts/sw.js')
         .then(function(reg) {
             const key_ = urlB64ToUint8Array(key);
             reg.pushManager.subscribe({
                 userVisibleOnly: true,
-                applicationServerKey: key_
+                // applicationServerKey: key_
             }).then(function(sub) {
                 console.log('Endpoint URL: ', sub.endpoint);
                 console.log(key_);
-                $('#notificationDiv').html(`
-                    <div class="card-body text-center">
-                        <h6 class="weighted font-14">Push notifications enabled.</h6>
-                        <h6 class="weighted font-14">No live deliveries at this time</h6>
-                    </div>` + JSON.stringify(sub) +
-                    `
-                        <button class="btn btn-danger" id="disablePush">
-                            Disable push notification
-                        </button>
-                `);
                 $.get('/store_push_endpoint', { sub: sub.toJSON() });
+                $('#enablePush').css('opacity', '1').html('<input type="radio" name="enable" autocomplete="off"> <span id="enableText">Enabled</span>');
+                document.getElementById('disablePush').removeAttribute('checked');
+                document.getElementById('enablePush').setAttribute('checked', 'true');
+                document.getElementById('disablePush').classList.remove('active');
+                document.getElementById('enablePush').classList.add('active');
+                $('#disableText').html('Disable');
                 console.log('endpoint stored!');
-                window.location.replace("/");
-            }).catch(function(e) {
-                if (Notification.permission === 'denied') {
-                  console.warn('Permission for notifications was denied');
-                } else {
-                  console.error('Unable to subscribe to push', e);
-                }
-            });
-        }).catch(function(error) {
-            console.log(error);
-        });
-    });
-    
-    $('#enablePharmacyPush').on('click', e => {
-        $('#enablePharmacyPush').css('opacity', '0.7').html('Enabling notifications...');
-        navigator.serviceWorker.getRegistration('/javascripts/sw.js')
-        .then(function(reg) {
-            const key_ = urlB64ToUint8Array(key);
-            reg.pushManager.subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: key_
-            }).then(function(sub) {
-                console.log('Endpoint URL: ', sub.endpoint);
-                console.log(key_);
-                $('#notificationPharmacyDiv').html(`
-                    <div class="card-body text-center">
-                        <h6 class="weighted font-14">Push notifications enabled.</h6>
-                        <h6 class="weighted font-14">No live deliveries at this time</h6>
-                    </div>` + JSON.stringify(sub) +
-                    `
-                        <button class="btn btn-danger" id="disablePharmacyPush">
-                            Disable push notification
-                        </button>
-                `);
-                $.get('/store_pharma_push_endpoint', { sub: sub.toJSON() });
-                console.log('endpoint stored!');
-                // window.location.replace("/");
+                toastr["success"]('Desktop notifications enabled!');
             }).catch(function(e) {
                 if (Notification.permission === 'denied') {
                   console.warn('Permission for notifications was denied');
@@ -87,48 +48,22 @@ $( document ).on('turbolinks:load', function() {
     });
     
     $('#disablePush').on('click', e => {
-        $('#disablePush').css('opacity', '0.7').html('Disabling notifications...');
+        $('#disablePush').css('opacity', '0.7').html('Disabling...');
         navigator.serviceWorker.getRegistration('/javascripts/sw.js')
         .then(function(reg) {
             const key_ = urlB64ToUint8Array(key);
             reg.pushManager.getSubscription().then(function(subscription) {
                 subscription.unsubscribe().then(function(successful) {
                     console.log(key_);
-                    $('#notificationDiv').html(`
-                        <button class="btn btn-light" id="enablePush">
-                            Enable push notification
-                        </button>
-                    `);
-                    console.log("Unsubscribed!");
                     $.get('/unsubscribe');
-                    window.location.replace("/");
-                }).catch(function(e) {
-                    console.error('Unable to unsubscribe user. Error: '+e);
-                });
-            }).catch(function(error) {
-                console.log(error);
-            });
-        }).catch(function(error) {
-            console.log(error);
-        });
-    });
-    
-    $('#disablePharmacyPush').on('click', e => {
-        $('#disablePharmacyPush').css('opacity', '0.7').html('Disabling notifications...');
-        navigator.serviceWorker.getRegistration('/javascripts/sw.js')
-        .then(function(reg) {
-            const key_ = urlB64ToUint8Array(key);
-            reg.pushManager.getSubscription().then(function(subscription) {
-                subscription.unsubscribe().then(function(successful) {
-                    console.log(key_);
-                    $('#notificationPharmacyDiv').html(`
-                        <button class="btn btn-light" id="enablePharmacyPush">
-                            Enable push notification
-                        </button>
-                    `);
+                    $('#disablePush').css('opacity', '1').html('<input type="radio" name="disable" autocomplete="off"> <span id="disableText">Disabled</span>');
+                    $('#enableText').html('Enable');
+                    document.getElementById('enablePush').removeAttribute('checked');
+                    document.getElementById('disablePush').setAttribute('checked', 'true');
+                    document.getElementById('enablePush').classList.remove('active');
+                    document.getElementById('disablePush').classList.add('active');
                     console.log("Unsubscribed!");
-                    $.get('/unsubscribe');
-                    window.location.replace("/");
+                    toastr["warning"]("Desktop notifications have been disabled. Customer order notifications will no longer appear in real-time!");
                 }).catch(function(e) {
                     console.error('Unable to unsubscribe user. Error: '+e);
                 });

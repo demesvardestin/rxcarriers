@@ -11,17 +11,58 @@
     </div>
   <% end %>
   
-  <div class="field">
-    <%= f.text_field :hours, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Weekday business hours (Ex: 9AM - 5PM or Closed)" %>
+  <h6 class="bold">Weekday business hours (REQUIRED FORMAT: 9:00AM - 5:00PM. Use 11:59 for Midnight)</h6>
+  <div class="field add-margin-top">
+    <div class="row">
+      <div class="col-md-6">
+        <h6 class="theme-green">Opening</h6>
+        <%= f.text_field :opening_weekday, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"9:00AM" %>
+      </div>
+      <div class="col-md-6">
+        <h6 class="theme-red">Closing</h6>
+        <%= f.text_field :closing_weekday, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"5:00PM" %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.text_field :saturday, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Saturday business hours (Ex: 9AM - 5PM or Closed)" %>
+  <h6 style="margin-top: 20px;" class="bold">Saturday business hours (REQUIRED FORMAT: 9AM - 5PM)</h6>
+  <div class="field add-margin-top">
+    <div class="row">
+      <div class="col-md-6">
+        <h6 class="theme-green">Opening</h6>
+        <%= f.text_field :opening_saturday, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"9:00AM" %>
+      </div>
+      <div class="col-md-6">
+        <h6 class="theme-red">Closing</h6>
+        <%= f.text_field :closing_saturday, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"5:00PM" %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.text_field :sunday, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Sunday business hours (Ex: 9AM - 5PM or closed)" %>
+  <h6 style="margin-top: 20px;" class="bold">Sunday business hours (REQUIRED FORMAT: 9AM - 5PM)</h6>
+  <div class="field add-margin-top">
+    <div class="row">
+      <div class="col-md-6">
+        <h6 class="theme-green">Opening</h6>
+        <%= f.text_field :opening_sunday, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"9:00AM" %>
+      </div>
+      <div class="col-md-6">
+        <h6 class="theme-red">Closing</h6>
+        <%= f.text_field :closing_sunday, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"5:00PM" %>
+      </div>
+    </div>
   </div>
+  <h6>Do you deliver?</h6>
   <div class="field">
-    <%= f.text_field :delivers, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"Do you deliver? (Ex: yes, no, or sometimes)" %>
+    <div class="col-md-12 text-center no-horizontal-padding">
+        <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+          <label class="btn btn-secondary active no-box-shadow white" id="deliverYes" onclick="setDelivery(value='yes');">
+            <input type="radio" name="yes_delivery" autocomplete="off"> <span>Yes</span>
+          </label>
+          <label class="btn btn-secondary no-box-shadow white" id="deliverNo" onclick="setDelivery(value='no');">
+            <input type="radio" name="no_pickup" autocomplete="off"> <span>No</span>
+          </label>
+        </div>
+    </div>
+    <%= f.hidden_field :delivers, id:"pharmacyDelivers", value:"yes" %>
   </div>
   <div class="actions text-right">
     <%= f.submit "Update!", class:"btn btn-info font-14 btn-lg cursor-pointer update-profile height-50" %>

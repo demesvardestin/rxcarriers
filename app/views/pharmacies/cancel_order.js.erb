@@ -1,6 +1,113 @@
 $('#orderBox<%= @order.id %>').fadeOut().remove();
-<!--$('#orderDetails<%= @order.id %>').remove();-->
+$('#processButton<%= @order.id %>').remove();
+$('#processPickUpButton<%= @order.id %>').remove();
+$('#sendForDeliveryButton<%= @order.id %>').remove();
+$('#markAsPickedUpButton<%= @order.id %>').remove();
+document.getElementById('cancelButton<%= @order.id %>').setAttribute('disabled', 'true');
 $('#cancelButton<%= @order.id %>').html(`
     Order cancelled!
 `);
+$('#pendingDelivery<%= @order.id %>').fadeOut().remove();
+$('#pendingPickUp<%= @order.id %>').fadeOut().remove();
+$('.cancelled-orders').prepend(`
+    <div class="modal" id="deliveredOrderDetails<%= @order.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" id="orderDetailsContent<%= @order.id %>">
+            <div class="modal-header background-transparent">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <%= @order.confirmation %>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" style="padding-bottom: 20px;">
+                        <p class="font-16 bold">Items ordered</p>
+                    </div>
+                </div>
+                <% @order.item_list_array.each_with_index do |i, idx| %>
+                    <div class="row">
+                        <div class="col-md-12 add-margin-bottom no-horizontal-padding">
+                            <div class="float-left theme-green" style="width: 10%;">
+                                <p class="font-16 theme-blue"><%= @order.item_list_count_array[idx] %></p>
+                            </div>
+                            <div class="float-right" style="width: 90%;">
+                                <p class="font-16"><%= @order.get_item(i).name %></p>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
+                <div class="row">
+                    <div class="col-md-12" style="padding-top: 20px; padding-bottom: 20px;">
+                        <p class="font-16 bold">Delivery details</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="font-16 add-margin-bottom"><%= @order.street_address %><%= ' ' + @order.apartment_number if @order.apartment_number %></p>
+                        <p class="font-16 add-margin-bottom"><%= @order.town_state_zipcode %></p>
+                        <p class="font-16 add-margin-bottom"><%= @order.phone_number %></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="table-body row" id="deliveredOrder<%= @order.id %>" style="padding: 15px !important;">
+        <div class="float-left" style="width: 15%;">
+            <h6><%= @order.confirmation %></h6>
+        </div>
+        <div class="float-left" style="width: 25%;">
+            <h6><%= @order.created_at.strftime('%-m/%e/%y at %l:%M%p') %></h6>
+        </div>
+        <div class="float-left" style="width: 45%;">
+            <h6>
+                <a class="background-transparent theme-blue cursor-pointer" data-toggle="modal" data-target="#deliveredOrderDetails<%= @order.id %>">
+                    View order details
+                </a>
+            </h6>
+        </div>
+        <div class="float-left theme-red" style="width: 15%;">
+            <h6><%= @order.status %></h6>
+        </div>
+    </div>
+    <div class="row" style="margin: 0;">
+        <div class="col-md-12 no-horizontal-padding">
+            <hr style="margin: 0;">
+        </div>
+    </div>
+`);
+var order_count = <%= @orders.count %>;
+var type = "<%= @type %>";
+var processed_count = <%= processed_order_count %>;
+console.log(type);
+if (order_count == 0) {
+    $('#liveRequestsUpdate').append(`
+        <div class="col-md-12 text-center no-delivery-requests" style="padding-top: 40px;">
+            <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
+        </div>
+        <div class="col-md-12 text-center medium-gray font-14 no-delivery-requests-spinner" style="padding-top: 20px;">
+            Waiting for new orders...
+        </div>
+    `);
+    if (type == 'delivery') {
+        $('.pending-orders').append(`
+            <div class="col-md-12 no-horizontal-padding add-padding-top add-padding-bottom">
+                <p class="font-16 text-center">No orders pending delivery</p>
+            </div>
+        `);
+    } else {
+        $('.pending-pickup-orders').append(`
+            <div class="col-md-12 no-horizontal-padding add-padding-top add-padding-bottom">
+                <p class="font-16 text-center">No orders pending pickup</p>
+            </div>
+        `);
+    }
+    $('.badge-circle-new-order').remove();
+    if (processed_count == 0) {
+        $('.badge-circle-processed-order').remove();
+    }
+}
 toastr["success"]('This order has been cancelled and a refund has been initiated!');

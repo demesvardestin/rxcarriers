@@ -1,6 +1,9 @@
 <nav class="navbar navbar-expand-lg background-white no-box-shadow fixed-top" style="padding-top: 0; padding-bottom: 0; border-bottom: 1px solid #e1e1e2;">
   <div class="container">
     <a class="navbar-brand background-transparent" href="/"><h3 class="logo ubuntu"><img src="/javascripts/pharmacy.png"></h3></a>
+    <button class="navbar-toggler theme-blue" style="border: 1px solid #b4b4b4 !important; color: #b4b4b4 !important; background-color: #b4b4b4 !important;" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon" style="border-color: #b4b4b4 !important;"></span>
+    </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
         <ul class="navbar-nav navbar-nav-second no-right-padding">
           <% if !current_pharmacy.not_subscribed %>
@@ -8,12 +11,12 @@
           <% end %>
           <li class="nav-item pharma-navbar">
             <a class="nav-link sidebar <% if home %><% end %>" href="/dashboard">
-              New orders
+              New orders <span class="new-orders"><% if unprocessed_order %><span class="badge badge-success badge-circle badge-circle-new-order"> </span></span><% end %>
             </a>
           </li>
           <li class="nav-item pharma-navbar">
-            <a class="nav-link sidebar <% if order_queue %><% end %>" href="/order_queue">
-              Processing-queue
+            <a class="nav-link sidebar <% if order_queue %><% end %> nav-processed-orders" href="/order_queue">
+              Processing-queue <% if processed_order %><span class="badge badge-warning badge-circle badge-circle-processed-order"> </span><% end %>
             </a>
           </li>
           <li class="nav-item pharma-navbar">
@@ -28,7 +31,7 @@
           </li>
           <li class="nav-item pharma-navbar">
             <a class="nav-link sidebar <% if inventory %><% end %>" href="/notifications">
-              Notifications <% if notifications_are_present == true %><span class="badge badge-success badge-circle"> </span><% end %>
+              Alerts <% if notifications_are_present == true %><span class="badge badge-success badge-circle badge-circle-notification"> </span><% end %>
             </a>
           </li>
           <li class="nav-item pharma-navbar dropdown show" style="margin: 0; padding-right: 0 !important;">
@@ -46,7 +49,7 @@
               <div class="dropdown-divider"></div>
               <li class="dropdown-item di-nav" href="/settings">
                 <%= link_to payment_settings_path, class:"no-underline background-transparent font-14 theme-blue" do %>
-                  Earnings
+                  Earnings <% if current_pharmacy.has_stripe_account_setup == false %><i class="fa fa-exclamation-circle theme-yellow"></i><% end %>
                 <% end %>
               </li>
               <div class="dropdown-divider"></div>

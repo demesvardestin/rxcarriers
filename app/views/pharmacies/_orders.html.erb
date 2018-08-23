@@ -20,12 +20,17 @@
                     </div>
                     <% ord.item_list_array.each_with_index do |i, idx| %>
                         <div class="row">
-                            <div class="col-md-12 add-margin-bottom">
+                            <div class="col-md-12" style="margin-bottom: 0;">
                                 <div class="float-left theme-green" style="width: 10%;">
-                                    <p class="font-16 theme-blue"><%= ord.item_list_count_array[idx] %></p>
+                                    <p class="font-16 no-margin-bottom theme-blue"><%= ord.item_list_count_array[idx] %></p>
                                 </div>
                                 <div class="float-right" style="width: 90%;">
-                                    <p class="font-16"><%= ord.get_item(i).name %></p>
+                                    <p class="font-16 no-margin-bottom"><%= ord.get_item(i).name %></p>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin-bottom: 3px;">
+                                <div class="float-right" style="width: 90%;">
+                                    <p class="font-14 no-margin-bottom"><em><%= "'#{ord.get_instruction(idx)}'" if !ord.get_instruction(idx).nil? %></em></p>
                                 </div>
                             </div>
                         </div>
@@ -55,8 +60,14 @@
                     <%= link_to cancel_order_path(:id => ord.id), class:"btn btn-danger box-shadow", id:"cancelButton#{ord.id}", remote: true do %>
                         <i class="fa fa-times-circle"></i> Cancel order
                     <% end %>
-                    <%= link_to process_order_path(:id => ord.id), class:"btn btn-success box-shadow", id:"processButton#{ord.id}", remote: true do %>
-                        <i class="fa fa-check-circle"></i> Process order
+                    <% if ord.for_delivery %>
+                        <%= link_to process_order_path(:id => ord.id), class:"btn btn-success box-shadow", id:"processButton#{ord.id}", remote: true do %>
+                            <i class="fa fa-check-circle"></i> Process order for delivery
+                        <% end %>
+                    <% else %>
+                        <%= link_to process_pickup_order_path(:id => ord.id), class:"btn btn-success box-shadow", id:"processPickUpButton#{ord.id}", remote: true do %>
+                            <i class="fa fa-check-circle"></i> Process order for pickup
+                        <% end %>
                     <% end %>
                 </div>
             </div>

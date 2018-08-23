@@ -1,3 +1,13 @@
-$('#inventoryItems').html(`
-    <%= render partial: 'inventory_item', locals: {items: @items} %>
-`);
+var results = <%= @items.count %>;
+if (results == 0) {
+    <!--alert('Your search did not match any item.');-->
+    $('#inventoryItems').html(`
+        <div class="text-center add-padding-top add-padding-bottom">
+            <p class="font-16 no-margin-bottom">No results</p>
+        </div>
+    `);
+} else {
+    $('#inventoryItems').html(`
+        <%= render partial: 'inventory_item', locals: {items: @items} %>
+    `);
+}

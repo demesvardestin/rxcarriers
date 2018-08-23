@@ -66,6 +66,18 @@ module PharmaciesHelper
         url.include?('/transactions') 
     end
     
+    def unprocessed_order
+        Order.exists?(pharmacy_id: current_pharmacy.id, processed: false, status: 'pending') 
+    end
+    
+    def processed_order
+        !Order.where('pharmacy_id = ? AND processed = ? AND delivered = ? AND status != ?', current_pharmacy.id, true, false, 'cancelled').blank?
+    end
+    
+    def processed_order_count
+        Order.where('pharmacy_id = ? AND processed = ? AND delivered = ? AND status != ?', current_pharmacy.id, true, false, 'cancelled').count
+    end
+    
     def check_current_plan(plan)
         @plan = StripePlan.find_by(pharmacy_id: current_pharmacy.id)
         if !@plan.nil?
@@ -76,6 +88,16 @@ module PharmaciesHelper
         else
             'Change subscription'
         end
+    end
+    
+    def check_active(item_id)
+        if Item.find_by(id: item_id).active == false
+            'background-lightred'
+        end
+    end
+    
+    def stripe_account_missing
+        current_pharmacy.has_stripe_account_setup == false 
     end
     
     def present_cart
@@ -101,6 +123,22 @@ module PharmaciesHelper
     def current_day?(day)
         if Date.today.strftime("%A").include? day[0..3]
             'bold'
+        end
+    end
+    
+    def pharmacy_is_closed(pharmacy)
+        if !Date.today.strftime("%A").downcase.include?('sat') || !Date.today.strftime("%A").downcase.include?('sun')
+            if (Time.zone.now - 4.hours) > ((Time.zone.now.strftime('20%y-%m-%d ') + pharmacy.weekday_hours.upcase[-7..-1].strip).to_datetime)
+                'show'
+            end
+        elsif Date.today.strftime("%A").downcase.include?('sat')
+            if (Time.zone.now - 4.hours) > ((Time.zone.now.strftime('20%y-%m-%d ') + pharmacy.saturday_hours.upcase[-7..-1].strip).to_datetime)
+                'show'
+            end
+        elsif Date.today.strftime("%A").downcase.include?('sun')
+            if (Time.zone.now - 4.hours) > ((Time.zone.now.strftime('20%y-%m-%d ') + pharmacy.sunday_hours.upcase[-7..-1].strip).to_datetime)
+                'show'
+            end
         end
     end
     
@@ -169,6 +207,12 @@ module PharmaciesHelper
             Order.this_week.where(pharmacy_id: current_pharmacy.id).all
         when 'last week'
             Order.last_week.where(pharmacy_id: current_pharmacy.id).all
+        when 'week 3'
+            Order.three_weeks_ago.where(pharmacy_id: current_pharmacy.id).all
+        when 'week 4'
+            Order.four_weeks_ago.where(pharmacy_id: current_pharmacy.id).all
+        when 'week 5'
+            Order.five_weeks_ago.where(pharmacy_id: current_pharmacy.id).all
         when 'this year'
             Order.this_year.where(pharmacy_id: current_pharmacy.id).all
         when 'last year'
@@ -184,6 +228,14 @@ module PharmaciesHelper
             Order.where(pharmacy_id: current_pharmacy.id, ordered_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc)
         when 'this week'
             Order.where(pharmacy_id: current_pharmacy.id, ordered_at: DateTime.now.at_beginning_of_week.utc..Time.now.utc)
+        when 'last week'
+            Order.where(pharmacy_id: current_pharmacy.id, ordered_at: DateTime.now.at_beginning_of_week.last_week.utc..DateTime.now.last_week.at_end_of_week.utc)
+        when 'week 3'
+            Order.where(pharmacy_id: current_pharmacy.id, ordered_at: DateTime.now.at_beginning_of_week.last_week.last_week.utc..Time.now.last_week.last_week.at_end_of_week.utc)
+        when 'week 4'
+            Order.where(pharmacy_id: current_pharmacy.id, ordered_at: DateTime.now.at_beginning_of_week.last_week.last_week.last_week.utc..Time.now.last_week.last_week.last_week.at_end_of_week.utc)
+        when 'week 5'
+            Order.where(pharmacy_id: current_pharmacy.id, ordered_at: DateTime.now.at_beginning_of_week.last_week.last_week.last_week.last_week.utc..Time.now.last_week.last_week.last_week.last_week.at_end_of_week.utc)
         when 'this year'
             Order.where(pharmacy_id: current_pharmacy.id, ordered_at: DateTime.now.at_beginning_of_year.utc..Time.now.utc)
         else
@@ -344,13 +396,25 @@ module PharmaciesHelper
     def total_refund_count(period=nil)
         case period
         when 'this week'
-            return Refund.where(pharmacy_id: current_pharmacy.id, completed: true, updated_at: DateTime.now.at_beginning_of_week.utc..Time.now.utc).count
+            return Refund.where(pharmacy_id: current_pharmacy.id, completed: true, created_at: DateTime.now.at_beginning_of_week.utc..Time.now.utc).count
         when 'this month'
-            return Refund.where(pharmacy_id: current_pharmacy.id, completed: true, updated_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc).count
+            return Refund.where(pharmacy_id: current_pharmacy.id, completed: true, created_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc).count
         when 'this year'
-            return Refund.where(pharmacy_id: current_pharmacy.id, completed: true, updated_at: DateTime.now.at_beginning_of_year.utc..Time.now.utc).count
+            return Refund.where(pharmacy_id: current_pharmacy.id, completed: true, created_at: DateTime.now.at_beginning_of_year.utc..Time.now.utc).count
         else
             return Refund.where(pharmacy_id: current_pharmacy.id, completed: true).count
+        end
+    end
+    
+    def map_data_total_orders(array)
+        array.map do |a|
+            total_orders(a).count
+        end
+    end
+    
+    def map_data_total_units(array)
+        array.map do |a|
+            total_units_sold(a)
         end
     end
 end

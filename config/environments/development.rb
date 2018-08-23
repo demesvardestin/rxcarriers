@@ -34,6 +34,7 @@ Rails.application.configure do
   # Adds additional error checking when serving assets at runtime.
   # Checks for improperly declared sprockets dependencies.
   # Raises helpful error messages.
+  config.action_mailer.preview_path = "#{Rails.root}/test/mailers/previews"
   config.assets.raise_runtime_errors = true
   config.action_mailer.delivery_method = :test
   config.action_mailer.default_url_options = { :host => 'https://udemy-class-demo07.c9users.io'}

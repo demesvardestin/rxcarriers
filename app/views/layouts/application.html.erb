@@ -29,6 +29,9 @@
     <!-- Stripe -->
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- ChartJS -->
+    <script src="node_modules/chartjs/dist/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -60,16 +63,19 @@
         };
         navigator.geolocation.getCurrentPosition(geoSuccess);
       };
+      
       $(function () {
         $(document).scroll(function () {
           var $nav = $(".fixed-top");
           $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
         });
       });
+      
       <% if current_pharmacy %>
         var current_pharma_id = <%= current_pharmacy.id %>;
+        
         function playSound(filename){   
-            document.getElementById("sound").innerHTML='<audio autoplay="autoplay"><source src="/sounds/' + filename + '.mp3" id="pingMP3" type="audio/mpeg" /><source src="/sounds/' + filename + '.ogg" type="audio/ogg" /><embed hidden="true" autostart="true" loop="false" src="/sounds/' + filename +'.mp3" /></audio>';
+          document.getElementById("sound").innerHTML='<audio autoplay="autoplay"><source src="/sounds/' + filename + '.mp3" id="pingMP3" type="audio/mpeg" /><source src="/sounds/' + filename + '.ogg" type="audio/ogg" /><embed hidden="true" autostart="true" loop="false" src="/sounds/' + filename +'.mp3" /></audio>';
         }
         
         toastr.options = {
@@ -79,9 +85,9 @@
           "progressBar": true,
           "positionClass": "toast-top-right",
           "preventDuplicates": false,
-          "showDuration": "2000",
-          "hideDuration": "1000",
-          "timeOut": "300000",
+          "showDuration": "500",
+          "hideDuration": "500",
+          "timeOut": "500",
           "extendedTimeOut": "1000",
           "showEasing": "swing",
           "hideEasing": "linear",
@@ -113,10 +119,16 @@
               $('.no-delivery-requests').hide();
               $('.no-delivery-requests-spinner').hide();
               $('#liveRequestsUpdate').prepend(data);
+              $('.new-orders').html('<span class="badge badge-success badge-circle badge-circle-new-order"> </span>');
             });
             playSound('ping');
           }
         });
+        
+        function loadButton(elem) {
+          document.getElementById(elem.id).setAttribute('disabled', 'true');
+          $('#'+elem.id).html('cancelling order...');
+        }
       <% end %>
     </script>
     <%= csrf_meta_tags %>
@@ -125,6 +137,7 @@
     // TrustLogo("https://www.rxcarriers.com/images/comodo_secure.png", "CL1", "none");
   </script>
   <!--<a  href="https://www.instantssl.com/" id="comodoTL">Essential SSL</a>-->
+  <!--<script type="text/javascript" src="/javascripts/notifications.js"></script>-->
   <body id="main-body">
     <div id="sound"></div>
     <% if current_pharmacy %>
@@ -132,6 +145,14 @@
       <section id="layout" class="add-padding-top">
         <div class="container">
           <div class="main-page">
+            <% if flash[:notice] %>
+              <div class="alert alert-success alert-dismissible fade show font-16" role="alert">
+                <%= notice %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            <% end %>
             <%= render 'layouts/notifications_modal' %>
             <%= yield %>
           </div>

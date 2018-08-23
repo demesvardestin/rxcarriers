@@ -341,5 +341,13 @@
             signatureName.value = '';
         });
     });
+    
+    $('.btn-danger').on('click', function() {
+        console.log($(this).text());
+        var text = $(this).text().toLowerCase();
+        if (text.includes('cancel')) {
+            $(this).html('cancelling...please wait');
+        }
+    });
   
 </script>

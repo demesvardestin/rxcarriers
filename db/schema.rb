@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180812190314) do
+ActiveRecord::Schema.define(version: 20180823020422) do
 
   create_table "batches", force: :cascade do |t|
     t.datetime "created_at",           null: false
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20180812190314) do
     t.boolean  "paid"
     t.boolean  "online"
     t.integer  "pharmacy_id"
+    t.string   "current_location"
   end
 
   create_table "deliveries", force: :cascade do |t|
@@ -130,8 +131,8 @@ ActiveRecord::Schema.define(version: 20180812190314) do
   end
 
   create_table "invoices", force: :cascade do |t|
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.integer  "pharmacy_id"
     t.string   "description"
     t.string   "stripe_invoice_id"
@@ -144,6 +145,13 @@ ActiveRecord::Schema.define(version: 20180812190314) do
     t.string   "stripe_status"
     t.string   "value"
     t.boolean  "active"
+    t.integer  "order_id"
+    t.string   "transaction_id"
+    t.string   "subtotal"
+    t.string   "tax"
+    t.string   "tip"
+    t.string   "final"
+    t.string   "platform_fee",      default: "n/a"
   end
 
   create_table "item_categories", force: :cascade do |t|
@@ -162,8 +170,8 @@ ActiveRecord::Schema.define(version: 20180812190314) do
     t.string   "price"
     t.string   "quantity"
     t.string   "details"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.integer  "item_category_id"
     t.integer  "cart_id"
     t.boolean  "taxable"
@@ -172,6 +180,8 @@ ActiveRecord::Schema.define(version: 20180812190314) do
     t.integer  "invoice_id"
     t.string   "expiration"
     t.string   "ndc"
+    t.boolean  "active",           default: true
+    t.string   "can_be_taxed"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -187,29 +197,8 @@ ActiveRecord::Schema.define(version: 20180812190314) do
     t.string   "title"
   end
 
-  create_table "orders", force: :cascade do |t|
-    t.integer  "cart_id"
-    t.integer  "pharmacy_id"
-    t.string   "shopper_email"
-    t.string   "item_list"
-    t.string   "item_list_count"
-    t.string   "total"
-    t.string   "stripe_charge_id"
-    t.string   "confirmation"
-    t.boolean  "guest"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.string   "street_address"
-    t.string   "town_state_zipcode"
-    t.string   "phone_number"
-    t.string   "apartment_number"
-    t.boolean  "processed"
-    t.time     "requested_at"
-    t.boolean  "delivered"
-    t.string   "status"
-    t.boolean  "online"
-    t.datetime "ordered_at"
-  end
+# Could not dump table "orders" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
   create_table "pharmacies", force: :cascade do |t|
     t.datetime "created_at",                                  null: false
@@ -277,6 +266,12 @@ ActiveRecord::Schema.define(version: 20180812190314) do
     t.string   "sunday"
     t.integer  "item_category_id"
     t.string   "delivery_option",        default: "delivers"
+    t.string   "opening_weekday"
+    t.string   "closing_weekday"
+    t.string   "opening_saturday"
+    t.string   "closing_saturday"
+    t.string   "opening_sunday"
+    t.string   "closing_sunday"
   end
 
   add_index "pharmacies", ["email"], name: "index_pharmacies_on_email"
@@ -298,8 +293,9 @@ ActiveRecord::Schema.define(version: 20180812190314) do
     t.boolean  "completed"
     t.string   "details"
     t.string   "stripe_cus"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.string   "connected_account"
   end
 
   create_table "registration_requests", force: :cascade do |t|

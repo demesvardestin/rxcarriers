@@ -61,38 +61,114 @@
 
 <%= render 'common/spinner' %>
 <div id="main">
-    <div class="card add-margin-bottom">
-        <div class="card-body">
-            <header class="top-panel row">
-                <div class="col-md-1 top-panel-div">
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle font-14" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Filter
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <%= render 'dropdown' %>
+    <% if current_pharmacy.has_stripe_account_setup == false %>
+        <section id="placeholder" class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="alert alert-warning font-16 height-50" role="alert">
+                    <i class="fa fa-exclamation-circle"></i> Your bank account has not been set up yet
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h6>
+                                You will be securely redirected to Stripe's platform, then automatically redirected back here after setting up your account.
+                                Check out Stripe's
+                                <a href="https://stripe.com/terms" class="background-transparent theme-blue">
+                                    terms and conditions
+                                </a>
+                                for more information on how your data is securely handled.
+                            </h6>
+                            <a class="btn btn-primary height-50 box-shadow font-16 white"
+                                href="https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_DQPe1Q3AjkMW0yGMO7N8hwVRU0EAU1Xr&scope=read_write"
+                                style="padding-top: 15px;">
+                                <i class="fa fa-cc-stripe"></i> Set up your Stripe account
+                            </a>
                         </div>
                     </div>
                 </div>
-            </header>
-        </div>
-    </div>     
-    <section id="placeholder" class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="text-center">
-                        <h6>
-                            You will be redirected to Stripe's platform, then automatically redirected back here after setting up your account.
-                        </h6>
-                        <button class="btn btn-primary height-50 box-shadow font-16" onclick="window.location.replace('https://stripe.com')">
-                            <i class="fa fa-cc-stripe"></i> Set up your Stripe account
-                        </button>
+            </div>
+        </section>
+    <% else %>
+        <section class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <header class="top-panel row">
+                            <div class="col-md-3 font-16">
+                                Pending balance: <span class="theme-blue">$<%= current_pharmacy_pending_balance %></span>
+                            </div>
+                            <div class="col-md-6 font-16">
+                                Next auto-payout: <span class="theme-blue">
+                                    <a href="https://dashboard.stripe.com/balance/overview" target="_blank" class="background-transparent theme-blue">
+                                        Check your Stripe dashboard for more info
+                                    </a>
+                                </span>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="dropdown">
+                                    <a class="btn btn-link no-border font-16" style="padding: 0 !important; line-height: 14px; vertical-align: top;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Filter payments <i class="fa fa-angle-down"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <%= render 'dropdown' %>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 font-16">
+                                <a href="/payment-settings" class="background-transparent theme-blue">
+                                    Reload
+                                </a>
+                            </div>
+                        </header>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+        <section class="row" id="allCharges">
+            <div class="col-md-12">
+                <div class="card" style="margin-top: 10px;">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <h6>Order #</h6>
+                            </div>
+                            <div class="col-md-1">
+                                <h6>Subtotal</h6>
+                            </div>
+                            <div class="col-md-1">
+                                <h6>Tax</h6>
+                            </div>
+                            <div class="col-md-1">
+                                <h6>Tip</h6>
+                            </div>
+                            <div class="col-md-1">
+                                <h6>Fees</h6>
+                            </div>
+                            <div class="col-md-1">
+                                <h6>Final</h6>
+                            </div>
+                            <div class="col-md-2">
+                                <h6>Transaction ID</h6>
+                            </div>
+                            <div class="col-md-1">
+                                <h6>Date</h6>
+                            </div>
+                            <div class="col-md-2">
+                                <h6>Status</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" id="inventoryItems" style="padding: 0;">
+                        <% if @invoices.empty? %>
+                            <%= render 'no_invoices' %>
+                        <% else %>
+                            <%= render invoice_sort %>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <% end %>
             
     <section id="placeholder-fail" class="row">
         <div class="card">
@@ -101,37 +177,6 @@
                     <i class="fa fa-frown"></i>
                     <h6>This page could not be loaded</h6>
                     <a class="btn btn-primary reload-button" href=""><i class="fa fa-sync"></i> Reload</a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section id="all-charges" class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header background-cyan font-14 white">
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-1 ">
-                            <span>Amount</span>
-                        </div>
-                        <div class="col-md-1">
-                            <span></span>
-                        </div>
-                        <div class="col-md-4">
-                            <span>Description</span>
-                        </div>
-                        <div class="col-md-3">
-                            <span>Date</span>
-                        </div>
-                        <div class="col-md-1">
-                            <span></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div id="invoices">
-                        <%= render invoice_sort %>
-                    </div>
                 </div>
             </div>
         </div>

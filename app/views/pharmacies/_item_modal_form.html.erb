@@ -53,7 +53,13 @@
         <div class="col-md-12 actions">
             <%= f.submit "Update item", class:"btn btn-success box-shadow btn-block font-16" %>
             <hr>
-            <%= link_to 'Make item inactive', make_item_inactive_path(:id => item.id), class:"btn btn-danger btn-block font-16 box-shadow", :remote => true %>
+            <div id="activeButtons-<%= item.id %>">
+                <% if item.active == true %>
+                    <%= link_to 'Make item inactive', make_item_inactive_path(:id => item.id), class:"btn btn-danger btn-block font-16 box-shadow", :remote => true %>
+                <% else %>
+                    <%= link_to 'Make item active', make_item_active_path(:id => item.id), class:"btn btn-primary btn-block font-16 box-shadow", :remote => true %>
+                <% end %>
+            </div>
         </div>
     </div>
 <% end %>

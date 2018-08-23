@@ -1,10 +1,27 @@
 class Item < ActiveRecord::Base
+    
+    before_create :format_ndc
+    before_create :set_description
+    before_destroy :prevent_destroy
+    
     belongs_to :pharmacy
     belongs_to :inventory
     belongs_to :item_category
     belongs_to :cart
     
-    scope :popular, -> { where(requested_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc) }
+    scope :popular, -> { where(ordered_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc) }
+    scope :active, -> { where('active = ?', true) }
+    
+    validates_presence_of :price
+    validates_presence_of :can_be_taxed
+    validates_presence_of :name
+    validates_presence_of :quantity
+    validates_presence_of :details
+    validates_presence_of :item_category_id
+    validates_presence_of :size
+    validates_presence_of :size_type
+    validates_presence_of :expiration
+    validates_presence_of :ndc
     
     def get_price
         self.price.to_f 
@@ -43,8 +60,24 @@ class Item < ActiveRecord::Base
         self.taxable == true 
     end
     
+    def is_active
+        self.active == true
+    end
+    
+    def inactive
+        !self.is_active
+    end
+    
+    def make_active
+        self.update(active: true) 
+    end
+    
+    def make_inactive
+        self.update(active: false)
+    end
+    
     def self.expire_soon(pharmacy_id)
-        self.all.where(pharmacy_id: pharmacy_id).select do |i|
+        where('pharmacy_id = ? AND quantity > ?', pharmacy_id, 0).select do |i|
             (((i.expiration.to_time - DateTime.now)/86400).round / 30) < 6
         end
     end
@@ -54,9 +87,7 @@ class Item < ActiveRecord::Base
     end
     
     def self.low_available_count(pharmacy_id)
-        self.all.where(pharmacy_id: pharmacy_id).select do |i|
-            i.quantity.to_i < 10
-        end
+        where('pharmacy_id = ? AND CAST(quantity AS INT) < ?', pharmacy_id, 10)
     end
     
     def self.search(param)
@@ -79,6 +110,7 @@ class Item < ActiveRecord::Base
     end
     
     def self.match_ndc(param, pharmacy_id)
+        # where('pharmacy_id = ? AND ndc like ?', pharmacy_id, "%#{param}")
         self.all.where(pharmacy_id: pharmacy_id).select do |i|
             i.ndc.split('-').join('').include?(param) if !i.ndc.nil?
         end
@@ -88,6 +120,27 @@ class Item < ActiveRecord::Base
         self.all.where(pharmacy_id: pharmacy_id).select do |i|
             i.ndc.split('-').join('') == ndc if !i.ndc.nil?
         end
+    end
+    
+    protected
+    
+    def format_ndc
+        self.ndc = self.ndc.split('-').join('')
+    end
+    
+    def set_description
+        if self.details.empty?
+            self.details = 'no description provided'
+        end
+    end
+    
+    def check_validity
+        self.valid? 
+    end
+    
+    def prevent_destroy
+        self.errors[:base] << "Model instances cannot be deleted"
+        return false
     end
     
 end

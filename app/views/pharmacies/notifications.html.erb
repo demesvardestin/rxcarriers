@@ -33,9 +33,13 @@
         </div>
     </div>
     <div class="col-md-8">
+        <div class="alert alert-primary font-16" role="alert">
+            <span id="unread_notification_count" style="display: none;"><%= @unread.count %></span>
+            You have <span id="unread_notification_text"><%= pluralize(@unread.count, 'unread alert') %></span>
+        </div>
         <div class="card">
             <div class="card-body" id="notificationBox">
-                <h5><i class="fa fa-bell-o theme-blue" style="font-size: 20px;"></i> Notifications</h5>
+                <h5><i class="fa fa-bell-o theme-blue" style="font-size: 20px;"></i> Alerts</h5>
                 <hr>
                 <p class="font-16">Loading...</p>
             </div>
@@ -51,14 +55,21 @@
         $('#main').css('opacity', '0.6');
         $('#loadingNotification').css('display', 'block');
         var badges = document.getElementsByClassName('badge-success');
+        var count = $('#unread_notification_count').text();
         $.get('/fetch_notification', { notification: notification }, function(data) {
             $('#notificationBox').html(data);
             $('#main').css('opacity', '1');
             $('#loadingNotification').css('display', 'none');
             $('.badge-'+notif_id).remove();
-            console.log(badges.length);
+            console.log(parseInt(count) - 1);
+            if (badges.length - 1 > 0) {
+                $('#unread_notification_count').html(parseInt(count) - 1);
+                $('#unread_notification_text').html((parseInt(count) - 1).toString() + ' unread alerts');
+            } else {
+                $('#unread_notification_text').html((0).toString() + ' unread alerts');
+            }
             if (badges.length - 1  == 0) {
-                $('.badge-circle').fadeOut();
+                $('.badge-circle-notification').fadeOut();
             }
         });
     }

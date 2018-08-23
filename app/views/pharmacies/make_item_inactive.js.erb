@@ -1,5 +1,7 @@
-$('#inventory-item<%= @item.id %>').remove();
-$('#itemDetails<%= @item.id %>').remove();
-document.getElementById('main-body').classList.remove('modal-open');
-$('.modal-backdrop').remove();
-toastr["success"]('Item is no longer active!');
+document.getElementById('inventory-item<%= @item.id %>').classList.add('background-lightred');
+document.getElementById('inventory-item<%= @item.id %>').classList.remove('background-transparent');
+$('#activeButtons-<%= @item.id %>').html(`
+    <%= link_to 'Make item active', make_item_active_path(:id => @item.id), class:"btn btn-primary btn-block font-16 box-shadow", :remote => true %>
+`);
+$('#activeLabel-<%= @item.id %>').show();
+toastr["success"]('Item is marked as inactive!');

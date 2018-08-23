@@ -1,17 +1,23 @@
 $('#orderBox<%= @order.id %>').fadeOut().remove();
+$('#cancelButton<%= @order.id %>').remove();
 var order_count = <%= @orders.count %>;
+var orange_label = document.getElementsByClassName('badge-circle-processed-order');
+if (!orange_label.length > 0) {
+    $('.nav-processed-orders').append('<span class="badge badge-warning badge-circle badge-circle-processed-order"> </span>');
+}
 if (order_count == 0) {
     $('#liveRequestsUpdate').append(`
         <div class="col-md-12 text-center no-delivery-requests" style="padding-top: 40px;">
             <i class="fa fa-spinner fa-pulse fa-3x fa-fw theme-blue"></i>
         </div>
         <div class="col-md-12 text-center medium-gray font-14 no-delivery-requests-spinner" style="padding-top: 20px;">
-            Awaiting new orders...
+            Waiting for new orders...
         </div>
     `);
+    $('.badge-circle-new-order').remove();
 }
 
 $('#processButton<%= @order.id %>').html(`
-    Order processed!
+    Order processed for delivery!
 `);
-toastr["success"]('This order has been added to the processing queue!');
+toastr["success"]('This order has been added to the pending-delivery processing queue!');

@@ -1,5 +1,7 @@
 $('#inventoryItems').html(`
     <%= render partial: 'inventory_item', locals: {items: @items} %>
 `);
+$('#taxableItem').html('Taxable? <i class="fa fa-angle-down"></i>');
+$('.filter-items').html('Category <i class="fa fa-angle-down"></i>');
 document.getElementById('itemForm').reset();
 toastr["success"]('Item successfully added!');

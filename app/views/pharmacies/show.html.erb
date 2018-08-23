@@ -7,16 +7,24 @@
     }
 </style>
 
-<div class="modal" id="deliveryHours" tabindex="-1" role="dialog">
+<div class="modal <%= pharmacy_is_closed(@pharmacy) %>" id="deliveryHours" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content box-shadow batch-list">
         <div class="modal-header background-transparent">
             <h5 class="modal-title font-18">Deliver Hours</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#deliveryHours').remove();">
               <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body" style="padding-top: 20px !important;">
+            <% if pharmacy_is_closed(@pharmacy) == 'show' %>
+                <div class="alert alert-danger alert-dismissible fade show font-16" role="alert">
+                    This store is currently closed
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <% end %>
             <div class="float-left" style="width: 33.3%;">
                 <% ['Monday', 'Tuesday', 'Wednesdday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].each do |day| %>
                     <p class="font-16 <%= current_day?(day) %>"><%= day %></p>
@@ -24,10 +32,10 @@
             </div>
             <div class="float-left" style="width: 66.6%;">
                 <% ['Monday', 'Tuesday', 'Wednesdday', 'Thursday', 'Friday'].each do |day| %>
-                    <p class="font-16 <%= current_day?(day) %>"><%= @pharmacy.hours %></p>
+                    <p class="font-16 <%= current_day?(day) %>"><%= @pharmacy.weekday_hours %></p>
                 <% end %>
-                <p class="font-16 <%= current_day?('Saturday') %>"><%= @pharmacy.saturday %></p>
-                <p class="font-16 <%= current_day?('Sunday') %>"><%= @pharmacy.sunday %></p>
+                <p class="font-16 <%= current_day?('Saturday') %>"><%= @pharmacy.saturday_hours %></p>
+                <p class="font-16 <%= current_day?('Sunday') %>"><%= @pharmacy.sunday_hours %></p>
             </div>
             <div class="row" style="width: 100%;">
                 <div class="col-md-12 add-padding-top">
@@ -66,8 +74,8 @@
     </div>
   </div>
 </div>
-<section id="pharmacyShowHeader">
-    <div class="jumbotron add-padding-top no-border-radius no-margin-bottom" style='background-image: url("/images/gradient_background.jpg"); background-size: cover;'>
+<section id="pharmacyShowHeader" class="no-border-radius no-margin-bottom" style='background-image: url("/images/gradient_background.jpg"); background-size: cover;'>
+    <div >
         <div class="container pharmacy-banner mobile-container">
             <div class="row">
                 <div class="col-md-5">
@@ -85,11 +93,6 @@
                                 <i class="fa fa-info-circle"></i> Contact Info
                             </button>
                         </div>
-                        <!--<div class="col-md-6">-->
-                        <!--    <button class="btn btn-light font-14" style="border-radius: 30px;" data-toggle="modal" data-target="#contactInfo">-->
-                        <!--        <i class="fa fa-info-circle"></i> Contact Info-->
-                        <!--    </button>-->
-                        <!--</div>-->
                     </div>
                 </div>
             </div>
@@ -142,9 +145,9 @@
 
 <section id="inventory<%= @pharmacy.inventory.id %>" style="padding-bottom: 20px;">
     <div class="container">
-        <div class="row">
+        <div class="row" id="searchPharmacyItems">
             <% @categories.each do |category| %>
-                <%= render partial: 'items', locals: {category: category, items: @pharmacy.inventory.items} %>
+                <%= render partial: 'items', locals: {category: category, items: @pharmacy.inventory.items.active} %>
             <% end %>
         </div>
     </div>
@@ -219,37 +222,47 @@
         $.post('/remove_item_from_cart', {cart: cart});
     }
     
-    $('#searchInPage').on('keyup', e => {
-        $('.pharmacy-item').show();
-        $('#inPageSearchCount').show()
+    // $('#searchInPage').on('keyup', e => {
+    //     $('.pharmacy-item').show();
+    //     $('#inPageSearchCount').show()
         
-        var value = document.getElementById('searchInPage').value.toLowerCase();
-        var items = document.getElementsByClassName('pharmacy-item');
-        var id, text;
-        var count = 0;
+    //     var value = document.getElementById('searchInPage').value.toLowerCase();
+    //     var items = document.getElementsByClassName('pharmacy-item');
+    //     var id, text;
+    //     var count = 0;
         
-        for (i = 0; i < items.length; i++) {
-            id = document.getElementsByClassName('pharmacy-item')[i].id.split('-')[1];
-            text = $('#itemName-'+id).text();
+    //     for (i = 0; i < items.length; i++) {
+    //         id = document.getElementsByClassName('pharmacy-item')[i].id.split('-')[1];
+    //         text = $('#itemName-'+id).text();
             
-            console.log(text.toLowerCase());
+    //         console.log(text.toLowerCase());
             
-            if (!text.includes(value)) {
-                $('#itemCol-'+id).hide();
-                count += 1;
-            }
-        }
+    //         if (!text.includes(value)) {
+    //             $('#itemCol-'+id).hide();
+    //             count += 1;
+    //         }
+    //     }
         
-        var alert_text = (items.length - count).toString() + ' product(s) found';
-        $('#pageSearchTotal').html(alert_text);
+    //     var alert_text = (items.length - count).toString() + ' product(s) found';
+    //     $('#pageSearchTotal').html(alert_text);
         
-        if (value == '') {
-            $('#inPageSearchCount').hide()
-        }
-    });
+    //     if (value == '') {
+    //         $('#inPageSearchCount').hide()
+    //     }
+    // });
     
     $('#itemSearchForm').on('submit', function(event) {
         event.preventDefault();
+    });
+    
+    $('#searchInPage').on('keyup', e => {
+        $('#inPageSearchCount').show()
+        var value = document.getElementById('searchInPage').value.toLowerCase();
+        if (value == '') {
+            $('#inPageSearchCount').hide()
+        }
+        var data = {"param": value, "pharmacy_id": <%= @pharmacy.id %>};
+        $.get('/search_pharmacy_item', { data: data });
     });
     
 </script>

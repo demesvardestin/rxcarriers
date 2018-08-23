@@ -1,5 +1,6 @@
 var box = document.getElementById('pendingDelivery<%= @order.id %>');
 var modal = document.getElementById('pendingOrderDetails<%= @order.id %>');
+$('#cancelButton<%= @order.id %>').remove();
 $('.delivered-orders').prepend(`
     <div class="modal" id="deliveredOrderDetails<%= @order.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -60,7 +61,7 @@ $('.delivered-orders').prepend(`
                 </a>
             </h6>
         </div>
-        <div class="float-left" style="width: 15%;">
+        <div class="float-left theme-green" style="width: 15%;">
             <h6><%= @order.status %></h6>
         </div>
     </div>
@@ -72,12 +73,16 @@ $('.delivered-orders').prepend(`
 `);
 $('#pendingDelivery<%= @order.id %>').fadeOut().remove();
 var order_count = <%= @orders.count %>;
+var processed_count = <%= processed_order_count %>;
 if (order_count == 0) {
     $('.pending-orders').append(`
         <div class="col-md-12 no-horizontal-padding add-padding-top add-padding-bottom">
             <p class="font-16 text-center">No orders pending delivery</p>
         </div>
     `);
+    if (processed_count == 0) {
+        $('.badge-circle-processed-order').remove();
+    }
 }
 $('#sendForDeliveryButton<%= @order.id %>').html(`
     Sent for delivery!

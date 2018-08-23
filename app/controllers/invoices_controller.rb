@@ -4,8 +4,7 @@ class InvoicesController < ApplicationController
   before_action :check_current_pharmacy
   
   def index
-    @invoices = Invoice.where(pharmacy_id: current_pharmacy.id).paginate(:page => params[:page], :per_page => 10)
-    @pharmacy = current_pharmacy
+    @invoices = Invoice.where(pharmacy_id: current_pharmacy.id).reverse
   end
   
   def create

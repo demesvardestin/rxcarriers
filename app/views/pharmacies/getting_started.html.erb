@@ -1,5 +1,22 @@
 <div class="row">
     <div class="col-md-12"><h5>Getting started</h5></div>
+        <% if current_pharmacy.stripe_cus.nil? %>
+            <div class="col-md-12">
+                <div class="alert alert-warning alert-dismissible fade show font-16" role="alert">
+                    <i class="fa fa-exclamation-triangle"></i> To start
+                    <a href="/inventory" class="background-transparent" style="text-decoration: underline;">
+                        listing
+                    </a>
+                    your OTCs for sale, you must
+                    <a href="/payment-settings" class="background-transparent" style="text-decoration: underline;">
+                        set up your bank account
+                    </a>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        <% end %>
     <div class="col-md-4">
         <div class="card">
             <div class="card-header">

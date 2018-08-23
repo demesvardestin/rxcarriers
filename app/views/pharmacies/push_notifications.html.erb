@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header background-transparent text-center" style="padding-top: 20px; padding-bottom: 20px;">
+                <h5>Notification settings</h5>
+            </div>
+            <div class="card-body text-center">
+                <p class="font-18">
+                    <strong>Desktop notifications</strong>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-bottom: 30px;">
+                      <label class="btn btn-secondary white <% if current_pharmacy.subscribed_to_push == true %>active<% end %>" id="enablePush" <% if current_pharmacy.subscribed_to_push == true %>checked<% end %>>
+                        <input type="radio" name="enable" autocomplete="off">
+                        <% if current_pharmacy.subscribed_to_push == true %>
+                            <span id="enableText">Enabled</span>
+                        <% else %>
+                            <span id="enableText">Enable</span>
+                        <% end %>
+                      </label>
+                      <label class="btn btn-secondary white <% if current_pharmacy.subscribed_to_push == false %>active<% end %>" id="disablePush" <% if current_pharmacy.subscribed_to_push == false %>checked<% end %>>
+                        <input type="radio" name="disable" autocomplete="off">
+                        <% if current_pharmacy.subscribed_to_push == false %>
+                            <span id="disableText">Disabled</span>
+                        <% else %>
+                            <span id="disableText">Disable</span>
+                        <% end %>
+                      </label>
+                    </div>
+                </p>
+                <p>
+                    <span class="font-18 bold">Sound notifications</span>
+                </p>
+                <button class="btn btn-primary box-shadow" onclick="playSound('ping');">
+                    Test notification sound
+                </button>
+                <p class="font-16 add-margin-top"><span class="theme-green">Make sure that your system's sound can be heard</span></p>
+            </div>
+            <div class="card-footer text-center pricing-card-bottom background-cyan" style="padding: 0;">
+                <a href="/dashboard" class="background-transparent no-underline">
+                    <p class="font-20 no-margin-bottom bold" style="color: #fff; padding-top: 25px; padding-bottom: 25px;">Return to dashboard
+                        <i class="fa fa-long-arrow-right"></i>
+                    </p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function playSound(filename){   
+        document.getElementById("sound").innerHTML='<audio autoplay="autoplay"><source src="/sounds/' + filename + '.mp3" id="pingMP3" type="audio/mpeg" /><source src="/sounds/' + filename + '.ogg" type="audio/ogg" /><embed hidden="true" autostart="true" loop="false" src="/sounds/' + filename +'.mp3" /></audio>';
+    }
+</script>

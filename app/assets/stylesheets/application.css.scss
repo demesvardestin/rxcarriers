@@ -39,6 +39,12 @@ body {
     // font-family: 'Ubuntu', sans-serif !important;
     color: #525f7f;
 }
+.pricing-card-bottom:hover {
+    background-color: #979fb2;
+    .pricing-card-bottom > a > p {
+        color: #fff !important;
+    }
+}
 .auto-color {
     color: #525f7f !important;
 }
@@ -374,6 +380,9 @@ div#rxCol {
 }
 .background-white {
     background: #fff !important;
+}
+.background-lightred {
+    background-color: #ffd6d6 !important;
 }
 .no-border-radius {
     border-radius: 0 !important;
@@ -1092,7 +1101,7 @@ div#rxCol {
     }
 }
 .navbar-toggler {
-    border: 1px solid #fff;
+    // border: 1px solid #fff;
 }
 .toggler-icon {
     color: #fff !important;
@@ -1253,8 +1262,8 @@ a.btn-link.cta-signup:hover, a.btn-link.cta-login:hover {
     font-weight: 600px;
 }
 .pharmacy-banner {
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 60px;
+    padding-bottom: 60px;
 }
 .logout-btn-div {
     padding-left: 0;
@@ -1654,6 +1663,24 @@ input:focus + label {
 
 /* Mobile Rules */
 
+@media only screen and (max-device-width: 1024px) {
+    .do-not-display-mobile {
+        display: none;
+    }
+    .integration-logo {
+        height: 20px !important;
+    }
+    .ipad {
+        display: block !important;
+    }
+    .text-center-ipad {
+        text-align: center !important;
+    }
+    .footer-columns {
+        text-align: left !important;
+    }
+}
+
 @media only screen and (max-device-width: 768px) {
     .avatar-col {
         display: block !important;
@@ -1793,11 +1820,11 @@ input:focus + label {
         display: none;
     }
     #homePageBanner {
-        height: 600px !important;
-        margin-top: -250px !important;
+        height: 750px !important;
+        margin-top: -300px !important;
     }
     #searchBox {
-        margin-top: -400px !important;
+        margin-top: -515px !important;
     }
     #searchBoxCard {
         background-color: transparent !important;

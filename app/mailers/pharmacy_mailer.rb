@@ -9,6 +9,11 @@ class PharmacyMailer < ApplicationMailer
         mail(to: @pharmacy.email, subject: 'Your RxCarriers Subscription')
     end
     
+    def order_in_process(order)
+        @order = order
+        mail(to: @order.pharmacy.email, subject: "Your order from #{@order.pharmacy.name}")
+    end
+    
     def subscription_deleted(pharmacy, plan)
         @pharmacy = pharmacy
         @plan = plan

@@ -29,7 +29,7 @@
                                     <p class="font-16 theme-blue"><%= ord.item_list_count_array[idx] %></p>
                                 </div>
                                 <div class="float-right" style="width: 90%;">
-                                    <p class="font-16"><%= ord.get_item(i).name %></p>
+                                    <p class="font-16"><%= ord.get_item(i).name if !ord.get_item(i).nil? %></p>
                                 </div>
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                     </a>
                 </h6>
             </div>
-            <div class="float-left" style="width: 15%;">
+            <div class="float-left theme-green" style="width: 15%;">
                 <h6><%= ord.status %></h6>
             </div>
         </div>

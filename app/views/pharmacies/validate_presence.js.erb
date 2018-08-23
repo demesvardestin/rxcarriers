@@ -1,7 +1,10 @@
-var count = <%= @items.count %>;
+document.getElementById('addItem').removeAttribute('disabled');
+var exists = "<%= @exists %>";
+console.log(exists);
 $('#alreadyExists').hide();
 $('#itemNDC').css('border-color', '#b4b4b4');
-if (count > 0) {
+if (exists ==  "true") {
     $('#itemNDC').css('border-color', 'red');
+    document.getElementById('addItem').setAttribute('disabled', 'true');
     alert('This item already exists');
 }

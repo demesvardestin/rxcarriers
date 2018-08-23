@@ -25,6 +25,10 @@ Rails.application.routes.draw do
 
     root to: "pharmacies#pharmacies"
   end
+  
+  # config.serviceworker.routes do
+  #   match "sw.js"
+  # end
 
   devise_for :shoppers
   devise_for :customers
@@ -89,10 +93,9 @@ Rails.application.routes.draw do
   get 'update_profile', to: 'pharmacies#update_profile'
   get '/mark_picked', to: 'batches#mark_picked', as: 'mark_picked'
   get '/cancel_request', to: 'batches#cancel_request'
-  get '/store_push_endpoint', to: 'drivers#store_push_endpoint'
-  get '/store_pharma_push_endpoint', to: 'pharmacies#store_push_endpoint'
-  get '/push', to: 'drivers#send_push'
-  get '/unsubscribe', to: 'drivers#unsubscribe'
+  get '/store_push_endpoint', to: 'pharmacies#store_push_endpoint'
+  get '/push', to: 'pharmacies#push'
+  get '/unsubscribe', to: 'pharmacies#unsubscribe'
   get '/accept_request', to: 'drivers#accept_request'
   get '/unavailable_request', to: 'drivers#unavailable_request'
   get '/push_to_pharmacy', to: 'batches#notifications'
@@ -153,8 +156,10 @@ Rails.application.routes.draw do
   get '/remove_filters', to: 'pharmacies#remove_filters'
   get '/low_available_count', to: 'pharmacies#low_available_count'
   get '/search_item', to: 'pharmacies#search_item'
+  get '/search_pharmacy_item', to: 'pharmacies#search_pharmacy_item'
   get '/validate_presence', to: 'pharmacies#validate_presence'
   get '/make_item_inactive', to: 'pharmacies#make_item_inactive'
+  get '/make_item_active', to: 'pharmacies#make_item_active'
   get '/reg_a_pharma', to: 'pharmacies#reg_a_pharma', as: 'register'
   get '/calculate_tip', to: 'carts#calculate_tip'
   get '/confirmation', to: 'carts#confirmation'
@@ -165,6 +170,8 @@ Rails.application.routes.draw do
   get '/analytics_annually', to: 'pharmacies#analytics_annually'
   get '/analytics_overall', to: 'pharmacies#analytics_overall'
   get '/process_order', to: 'pharmacies#process_order'
+  get '/process_pickup_order', to: 'pharmacies#process_pickup_order'
+  get '/mark_as_picked_up', to: 'pharmacies#mark_as_picked_up'
   get '/cancel_order', to: 'pharmacies#cancel_order'
   get '/send_for_delivery', to: 'pharmacies#send_for_delivery'
   get '/post_new_order', to: 'pharmacies#post_new_order'
@@ -174,12 +181,16 @@ Rails.application.routes.draw do
   post '/registration_requests', to: 'pharmacies#submit_registration_request'
   get '/getting_started', to: 'pharmacies#getting_started'
   get '/get_current_position', to: 'pharmacies#get_current_position'
+  get '/stripe_callback', to: 'pharmacies#stripe_callback'
+  get '/update_shopper', to: 'pharmacies#update_shopper'
+  get '/notifications/settings', to: 'pharmacies#push_notifications'
   
   # resource path
   resources :invoices, only: [:create, :show, :index, :destroy]
   resources :batches
   resources :reviews, only: [:create, :index]
-  resources :items
+  resources :items, except: [:destroy]
+  resources :orders, except: [:destroy]
   resources :rxes, only: [:create, :index]
   resources :pharmacies
   resources :deliveries, only: [:create, :show, :edit, :update, :destroy]
