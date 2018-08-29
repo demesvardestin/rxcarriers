@@ -4,6 +4,7 @@ class Order < ActiveRecord::Base
     has_one :cart
     has_one :refund
     has_one :invoice
+    has_one :referral
     
     scope :pending, -> { where('status = ? AND processed = ? AND delivered = ?', 'pending', false, false) }
     scope :this_month, -> { where(ordered_at: DateTime.now.at_beginning_of_month.utc..Time.now.utc) }
@@ -15,6 +16,14 @@ class Order < ActiveRecord::Base
     scope :five_weeks_ago, -> { where(ordered_at: DateTime.now.at_beginning_of_week.last_week.last_week.last_week.last_week.utc..Time.now.last_week.last_week.last_week.last_week.at_end_of_week.utc) }
     scope :this_year, -> { where(ordered_at: DateTime.now.at_beginning_of_year.utc..Time.now.utc) }
     scope :last_year, -> { where(ordered_at: DateTime.now.at_beginning_of_year.last_year.utc..DateTime.now.at_end_of_year.last_year.utc) }
+    
+    def estimated_completion
+        if delivery_option == 'delivery'
+            "#{(ordered_at + 45.minutes).strftime('%l:%M %p')} - #{(ordered_at + 1.hour).strftime('%l:%M %p')}"
+        else
+            "#{(ordered_at + 30.minutes).strftime('%l:%M %p')} - #{(ordered_at + 45.minutes).strftime('%l:%M %p')}"
+        end
+    end
     
     def self.popular_items(period=nil)
         case period
@@ -124,10 +133,14 @@ class Order < ActiveRecord::Base
     end
     
     def destination
-        if apartment_number.empty?
-            street_address
+        if delivery_option == 'delivery'
+            if apartment_number.empty?
+                street_address
+            else
+                [street_address, apartment_number].join(' ')
+            end
         else
-            [street_address, apartment_number].join(' ')
+            [delivery_email, phone_number].join(', ')
         end
     end
     

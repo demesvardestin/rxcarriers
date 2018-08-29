@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180823020422) do
+ActiveRecord::Schema.define(version: 20180824035159) do
 
   create_table "batches", force: :cascade do |t|
     t.datetime "created_at",           null: false
@@ -272,10 +272,22 @@ ActiveRecord::Schema.define(version: 20180823020422) do
     t.string   "closing_saturday"
     t.string   "opening_sunday"
     t.string   "closing_sunday"
+    t.boolean  "live",                   default: false
+    t.boolean  "activated",              default: true
   end
 
   add_index "pharmacies", ["email"], name: "index_pharmacies_on_email"
   add_index "pharmacies", ["reset_password_token"], name: "index_pharmacies_on_reset_password_token", unique: true
+
+  create_table "referrals", force: :cascade do |t|
+    t.integer  "order_id"
+    t.string   "purchase_confirmation"
+    t.string   "code"
+    t.boolean  "activated",             default: false
+    t.datetime "generated_on"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
 
   create_table "refill_deliveries", force: :cascade do |t|
     t.datetime "created_at",    null: false

@@ -87,7 +87,13 @@
         </div>
     </div>
     <div class="card-body" id="inventoryItems" style="padding: 0;">
-        <%= render partial: 'inventory_item', locals: {items: @items} %>
+        <% if !@items.empty? %>
+            <%= render partial: 'inventory_item', locals: {items: @items} %>
+        <% else %>
+            <div class="text-center add-padding-top add-padding-bottom">
+                <p class="font-16 no-margin-bottom">You haven't added any items to your online inventory yet</p>
+            </div>
+        <% end %>
     </div>
 </div>
 

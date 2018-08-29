@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>We're sorry, but something went wrong (500)</title>
+  <title>The page you were looking for doesn't exist (404)</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
+  nav {
+    height: 50px;
+    padding-top: 10px;
+    padding-left: 120px;
+    padding-right: 120px;
+    background-image: url("/images/gradient_background.jpg");
+    background-size: cover;
+  }
   body {
     background-color: #EFEFEF;
     color: #2E2F30;
     text-align: center;
-    font-family: arial, sans-serif;
+    font-family: 'roboto', sans-serif;
     margin: 0;
   }
 
@@ -23,12 +31,10 @@
     border-right-color: #999;
     border-left-color: #999;
     border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
     background-color: white;
     padding: 7px 12% 0;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
   }
 
   h1 {
@@ -39,28 +45,55 @@
 
   div.dialog > p {
     margin: 0 0 1em;
-    padding: 1em;
+    padding: 2em;
     background-color: #F7F7F7;
     border: 1px solid #CCC;
     border-right-color: #999;
     border-left-color: #999;
     border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
     border-top-color: #DADADA;
     color: #666;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
+  }
+
+  .go-home {
+    padding: 15px 20px;
+    box-shadow: 0 6px 12px 0 rgba(50,50,70,.08), 0 3px 5px 0 rgba(0,0,0,.05);
+    color: #fff;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    cursor: pointer;
+    margin: 8px 10px;
+    border-radius: 3px;
+    text-decoration: none;
+  }
+  .go-home:hover {
+    background-color: #006ee5 !important;
+    border: 1px solid #006ee5;
   }
   </style>
 </head>
 
 <body>
-  <!-- This file lives in public/500.html -->
+  <!-- This file lives in public/404.html -->
+  <nav>
+    <span style="float: left; font-size: 24px; color: #fff;"><img src="/javascripts/pharmacy.png"></span>
+    <span style="float: right; font-size: 24px;">
+      <a href="/" style="background-color: transparent; color: #fff; font-size: 16px; text-decoration: none;">
+        Home
+      </a>
+    </span>
+  </nav>
   <div class="dialog">
     <div>
-      <h1>We're sorry, but something went wrong.</h1>
+      <h1>Oops! Something seems to have gone wrong here...</h1>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
+    <p>
+      <a href="/" class="go-home">
+        Take me home
+      </a>
+    </p>
   </div>
 </body>
 </html>

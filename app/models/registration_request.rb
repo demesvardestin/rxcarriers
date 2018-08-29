@@ -20,5 +20,13 @@ class RegistrationRequest < ActiveRecord::Base
         token = RegistrationRequest.generate_token
         link = "https://udemy-class-demo07.c9users.io/pharmacy/signup?approved=true&pharmacy=verified&secure_token=#{token}"
         self.update(secure_token: token, registration_link: link)
+        reg = RegistrationRequest.find_by(id: self.id)
+        PharmacyMailer.registration_approved(reg).deliver_now
+    end
+    
+    def deny_registration
+        self.update(denied_on: Time.zone.now)
+        reg = RegistrationRequest.find_by(id: self.id)
+        PharmacyMailer.registration_denied(reg).delivery_now
     end
 end

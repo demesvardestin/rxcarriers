@@ -21,7 +21,7 @@ module Workspace
     # config.i18n.default_locale = :de
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.time_zone = 'Eastern Time (US & Canada)'
+    # config.time_zone = 'Eastern Time (US & Canada)'
     config.active_record.raise_in_transactional_callbacks = true
   end
 end

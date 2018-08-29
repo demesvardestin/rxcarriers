@@ -11,42 +11,117 @@
     </div>
   <% end %>
   
-  <h6 class="bold">Weekday business hours (REQUIRED FORMAT: 9:00AM - 5:00PM. Use 11:59 for Midnight)</h6>
   <div class="field add-margin-top">
     <div class="row">
       <div class="col-md-6">
-        <h6 class="theme-green">Opening</h6>
-        <%= f.text_field :opening_weekday, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"9:00AM" %>
+        <h6 class="theme-green">Weekday opening time</h6>
+        <button class="btn btn-info box-shadow btn-block set-time-opening height-50" style="margin-top: 10px;" id="filterItems" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <% if current_pharmacy.opening_weekday.nil? %>
+            Select time <i class="fa fa-angle-down"></i>
+          <% else %>
+            <%= current_pharmacy.opening_weekday %> <i class="fa fa-angle-down"></i>
+          <% end %>
+        </button>
+        <div class="dropdown-menu" style="width: 100%; margin-top: 225px;" aria-labelledby="dropdownMenuButton">
+          <% hours.each do |h| %>
+              <a class="dropdown-item theme-blue cursor-pointer" id="time-<%= h %>" onclick="setTime(this, 'openingWeekday', 'opening')"><%= h %></a>
+              <div class="dropdown-divider"></div>
+          <% end %>
+        </div>
+        <%= f.hidden_field :opening_weekday, class:"form-control no-box-shadow height-50 font-16 pf", id:"openingWeekday", autofocus: true, placeholder:"9:00AM" %>
       </div>
       <div class="col-md-6">
-        <h6 class="theme-red">Closing</h6>
-        <%= f.text_field :closing_weekday, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"5:00PM" %>
+        <h6 class="theme-red">Weekday closing time</h6>
+        <button class="btn btn-info box-shadow btn-block set-time-closing height-50" style="margin-top: 10px;" id="filterItems" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <% if current_pharmacy.closing_weekday.nil? %>
+            Select time <i class="fa fa-angle-down"></i>
+          <% else %>
+            <%= current_pharmacy.closing_weekday %> <i class="fa fa-angle-down"></i>
+          <% end %>
+        </button>
+        <div class="dropdown-menu" style="width: 100%; margin-top: 225px;" aria-labelledby="dropdownMenuButton">
+          <% hours.each do |h| %>
+              <a class="dropdown-item theme-blue cursor-pointer" id="time-<%= h %>" onclick="setTime(this, 'closingWeekday', 'closing')"><%= h %></a>
+              <div class="dropdown-divider"></div>
+          <% end %>
+        </div>
+        <%= f.hidden_field :closing_weekday, class:"form-control no-box-shadow height-50 font-16 pf", id:"closingWeekday", autofocus: true, placeholder:"5:00PM" %>
       </div>
     </div>
   </div>
-  <h6 style="margin-top: 20px;" class="bold">Saturday business hours (REQUIRED FORMAT: 9AM - 5PM)</h6>
-  <div class="field add-margin-top">
+  <div class="field" style="margin-top: 20px;">
     <div class="row">
       <div class="col-md-6">
-        <h6 class="theme-green">Opening</h6>
-        <%= f.text_field :opening_saturday, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"9:00AM" %>
+        <h6 class="theme-green">Saturday opening time</h6>
+        <button class="btn btn-info box-shadow btn-block set-time-opening-saturday height-50" style="margin-top: 10px;" id="filterItems" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <% if current_pharmacy.opening_saturday.nil? %>
+            Select time <i class="fa fa-angle-down"></i>
+          <% else %>
+            <%= current_pharmacy.opening_saturday %> <i class="fa fa-angle-down"></i>
+          <% end %>
+        </button>
+        <div class="dropdown-menu" style="width: 100%; margin-top: 225px;" aria-labelledby="dropdownMenuButton">
+          <% hours.each do |h| %>
+              <a class="dropdown-item theme-blue cursor-pointer" id="time-<%= h %>" onclick="setTime(this, 'openingSaturday', 'opening-saturday')"><%= h %></a>
+              <div class="dropdown-divider"></div>
+          <% end %>
+        </div>
+        <%= f.hidden_field :opening_saturday, class:"form-control no-box-shadow height-50 font-16 pf", id:"openingSaturday", autofocus: true, placeholder:"9:00AM" %>
       </div>
       <div class="col-md-6">
-        <h6 class="theme-red">Closing</h6>
-        <%= f.text_field :closing_saturday, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"5:00PM" %>
+        <h6 class="theme-red">Saturday closing time</h6>
+        <button class="btn btn-info box-shadow btn-block set-time-closing-saturday height-50" style="margin-top: 10px;" id="filterItems" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <% if current_pharmacy.closing_saturday.nil? %>
+            Select time <i class="fa fa-angle-down"></i>
+          <% else %>
+            <%= current_pharmacy.closing_saturday %> <i class="fa fa-angle-down"></i>
+          <% end %>
+        </button>
+        <div class="dropdown-menu" style="width: 100%; margin-top: 225px;" aria-labelledby="dropdownMenuButton">
+          <% hours.each do |h| %>
+              <a class="dropdown-item theme-blue cursor-pointer" id="time-<%= h %>" onclick="setTime(this, 'closingSaturday', 'closing-saturday')"><%= h %></a>
+              <div class="dropdown-divider"></div>
+          <% end %>
+        </div>
+        <%= f.hidden_field :closing_saturday, class:"form-control no-box-shadow height-50 font-16 pf", id:"closingSaturday", autofocus: true, placeholder:"5:00PM" %>
       </div>
     </div>
   </div>
-  <h6 style="margin-top: 20px;" class="bold">Sunday business hours (REQUIRED FORMAT: 9AM - 5PM)</h6>
-  <div class="field add-margin-top">
+  <div class="field" style="margin-top: 20px;">
     <div class="row">
       <div class="col-md-6">
-        <h6 class="theme-green">Opening</h6>
-        <%= f.text_field :opening_sunday, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"9:00AM" %>
+        <h6 class="theme-green">Sunday opening time</h6>
+        <button class="btn btn-info box-shadow btn-block set-time-opening-sunday height-50" style="margin-top: 10px;" id="filterItems" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <% if current_pharmacy.opening_sunday.nil? %>
+            Select time <i class="fa fa-angle-down"></i>
+          <% else %>
+            <%= current_pharmacy.opening_sunday %> <i class="fa fa-angle-down"></i>
+          <% end %>
+        </button>
+        <div class="dropdown-menu" style="width: 100%; margin-top: 225px;" aria-labelledby="dropdownMenuButton">
+          <% hours.each do |h| %>
+              <a class="dropdown-item theme-blue cursor-pointer" id="time-<%= h %>" onclick="setTime(this, 'openingSunday', 'opening-sunday')"><%= h %></a>
+              <div class="dropdown-divider"></div>
+          <% end %>
+        </div>
+        <%= f.hidden_field :opening_sunday, class:"form-control no-box-shadow height-50 font-16 pf", id:"openingSunday", autofocus: true, placeholder:"9:00AM" %>
       </div>
       <div class="col-md-6">
-        <h6 class="theme-red">Closing</h6>
-        <%= f.text_field :closing_sunday, class:"form-control no-box-shadow height-50 font-16 pf", autofocus: true, placeholder:"5:00PM" %>
+        <h6 class="theme-red">Sunday closing time</h6>
+        <button class="btn btn-info box-shadow btn-block set-time-closing-sunday height-50" style="margin-top: 10px;" id="filterItems" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <% if current_pharmacy.closing_sunday.nil? %>
+            Select time <i class="fa fa-angle-down"></i>
+          <% else %>
+            <%= current_pharmacy.closing_sunday %> <i class="fa fa-angle-down"></i>
+          <% end %>
+        </button>
+        <div class="dropdown-menu" style="width: 100%; margin-top: 225px;" aria-labelledby="dropdownMenuButton">
+          <% hours.each do |h| %>
+              <a class="dropdown-item theme-blue cursor-pointer" id="time-<%= h %>" onclick="setTime(this, 'closingSunday', 'closing-sunday')"><%= h %></a>
+              <div class="dropdown-divider"></div>
+          <% end %>
+        </div>
+        <%= f.hidden_field :closing_sunday, class:"form-control no-box-shadow height-50 font-16 pf", id:"closingSunday", autofocus: true, placeholder:"5:00PM" %>
       </div>
     </div>
   </div>
@@ -68,3 +143,16 @@
     <%= f.submit "Update!", class:"btn btn-info font-14 btn-lg cursor-pointer update-profile height-50" %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+  function setTime(elem, inputID, context) {
+    var id = elem.id;
+    var time = id.split('-')[1]
+    document.getElementById(inputID).value = time;
+    // var time = $('#'+id).text();
+    // console.log(time);
+    $('.set-time-'+context).html(
+        time + ' <i class="fa fa-angle-down"></i>'
+    );
+  }
+</script>

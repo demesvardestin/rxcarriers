@@ -184,6 +184,7 @@ Rails.application.routes.draw do
   get '/stripe_callback', to: 'pharmacies#stripe_callback'
   get '/update_shopper', to: 'pharmacies#update_shopper'
   get '/notifications/settings', to: 'pharmacies#push_notifications'
+  get '/go_live', to: 'pharmacies#go_live'
   
   # resource path
   resources :invoices, only: [:create, :show, :index, :destroy]

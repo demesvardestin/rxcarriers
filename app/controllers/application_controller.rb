@@ -15,12 +15,6 @@ class ApplicationController < ActionController::Base
     @vapid_private = 'MsnNhjRXv5ePwAS3yfe2fYCA6HOl7OIX9_uSC9zZKXk'
   end
   
-  def check_push_subscription
-    if current_pharmacy && current_pharmacy.subscribed_to_push.nil?
-      redirect_to notifications_settings_path
-    end
-  end
-  
   def check_token
     url = request.original_url
     @token = params[:secure_token]

@@ -5,7 +5,7 @@
 <% items.select{|i| i.item_category_id == category.id}.each do |i| %>
     <div class="modal" id="itemOrderDetails<%= i.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
-        <div class="modal-content no-border-radius" id="modalContent<%= i.id %>">
+        <div class="modal-content" id="modalContent<%= i.id %>">
           <div class="modal-header background-transparent no-border-bottom">
             <h4 class="modal-title black" id="exampleModalLabel"><%= i.name %>
                 <span class="font-18 badge badge-primary" stle="margin-left: 5px;"><%= i.item_size %></span>
@@ -47,7 +47,7 @@
       </div>
     </div>
     <div class="col-md-6 pharmacy-item" id="itemCol-<%= i.id %>" style="padding-bottom: 30px;">
-        <div class="card light-border no-border-radius">
+        <div class="card light-border">
             <a class="background-transparent no-underline cursor-pointer" <% if @pharmacy.is_not_related_to(present_cart) %>disabled<% end %> data-toggle="modal" data-target="#itemOrderDetails<%= i.id %>">
                 <div class="card-body">
                     <p class="font-16 no-margin-bottom" style="font-weight: 600;" id="itemName-<%= i.id %>"><%= i.name %></p>

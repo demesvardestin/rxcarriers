@@ -21,7 +21,6 @@ class Item < ActiveRecord::Base
     validates_presence_of :size
     validates_presence_of :size_type
     validates_presence_of :expiration
-    validates_presence_of :ndc
     
     def get_price
         self.price.to_f 

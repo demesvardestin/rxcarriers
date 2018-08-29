@@ -1,6 +1,7 @@
 var box = document.getElementById('pendingPickUp<%= @order.id %>');
 var modal = document.getElementById('pendingPickUpOrderDetails<%= @order.id %>');
 $('#cancelButton<%= @order.id %>').remove();
+$('.no-delivered-orders').hide();
 $('.delivered-orders').prepend(`
     <div class="modal" id="deliveredOrderDetails<%= @order.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -15,24 +16,28 @@ $('.delivered-orders').prepend(`
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-12" style="padding-bottom: 20px;">
-                        <p class="font-16 bold">Items ordered</p>
+                    <div class="col-md-12" style="padding-bottom: 10px;">
+                        <p class="font-14 theme-green">Received: <%= @order.ordered_at.strftime('%m/%d/%y at %l:%M%p') %></p>
+                        <p class="font-16 bold no-margin-bottom">Items ordered</p>
                     </div>
                 </div>
                 <% @order.item_list_array.each_with_index do |i, idx| %>
                     <div class="row">
-                        <div class="col-md-12 add-margin-bottom no-horizontal-padding">
+                        <div class="col-md-12 no-horizontal-padding">
                             <div class="float-left theme-green" style="width: 10%;">
                                 <p class="font-16 theme-blue"><%= @order.item_list_count_array[idx] %></p>
                             </div>
                             <div class="float-right" style="width: 90%;">
-                                <p class="font-16"><%= @order.get_item(i).name %></p>
+                                <p class="font-16"><%= @order.get_item(i).name if !@order.get_item(i).nil? %></p>
                             </div>
                         </div>
                     </div>
                 <% end %>
                 <div class="row">
-                    <div class="col-md-12" style="padding-top: 20px; padding-bottom: 20px;">
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
                         <p class="font-16 bold">Delivery details</p>
                     </div>
                 </div>
@@ -41,6 +46,43 @@ $('.delivered-orders').prepend(`
                         <p class="font-16 add-margin-bottom"><%= @order.street_address %><%= ' ' + @order.apartment_number if @order.apartment_number %></p>
                         <p class="font-16 add-margin-bottom"><%= @order.town_state_zipcode %></p>
                         <p class="font-16 add-margin-bottom"><%= @order.phone_number %></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="font-16 bold">Total</p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="font-16 bold">Tax</p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="font-16 bold">Tip</p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="font-16 bold">Fee</p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="font-16 bold">Net</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <p class="font-16 theme-green">$<%= @order.cart.total_cost %></p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="font-16 theme-green">$<%= @order.cart.calculate_tax %></p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="font-16 theme-green">$<%= @order.cart.tip_amount %></p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="font-16 theme-green">0.0</p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="font-16 theme-green">$<%= @order.cart.final_amount.to_f.round(2) %></p>
                     </div>
                 </div>
             </div>
@@ -52,7 +94,7 @@ $('.delivered-orders').prepend(`
             <h6><%= @order.confirmation %></h6>
         </div>
         <div class="float-left" style="width: 25%;">
-            <h6><%= @order.created_at.strftime('%-m/%e/%y at %l:%M%p') %></h6>
+            <h6><%= @order.ordered_at.strftime('%-m/%e/%y at %l:%M%p') %></h6>
         </div>
         <div class="float-left" style="width: 45%;">
             <h6>
@@ -61,7 +103,7 @@ $('.delivered-orders').prepend(`
                 </a>
             </h6>
         </div>
-        <div class="float-left" style="width: 15%;">
+        <div class="float-left theme-green" style="width: 15%;">
             <h6><%= @order.status %></h6>
         </div>
     </div>

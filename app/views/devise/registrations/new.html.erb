@@ -1,14 +1,14 @@
 <div class="row" id="pharmacy-login">
   <div class="col-md-4 offset-md-4 pharmacy-login-form" style="background: #fff !important;">
     <div class="header">
-      <h5 class="text-center medium-gray">Pharmacy signup</h5>
+      <h5 class="text-center medium-gray">Store signup</h5>
       <hr style="text-align: center; width: 25%;">
     </div>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
       
       <div class="field" style="margin-bottom: 0 !important;">
-        <%= f.text_field :name, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"Pharmacy name", value:"#{@registration.pharmacy_name}" %>
+        <%= f.text_field :name, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"Store name", value:"#{@registration.pharmacy_name}" %>
       </div>
       <div class="field" style="margin-bottom: 0 !important;">
         <%= f.text_field :street, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"Street address", value:"#{@registration.pharmacy_address.split(', ')[0]}" %>
@@ -28,10 +28,10 @@
         <%= f.text_field :supervisor, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"Supervisor/manager", value:"#{@registration.pharmacy_manager}" %>
       </div>
       <div class="field" style="margin-bottom: 0 !important;">
-        <%= f.text_field :number, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"Pharmacy number", value:"#{@registration.pharmacy_phone}" %>
+        <%= f.text_field :number, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"Store number", value:"#{@registration.pharmacy_phone}" %>
       </div>
       <div class="field" style="margin-bottom: 0 !important;">
-        <%= f.text_field :website, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"Pharmacy website", value:"#{@registration.pharmacy_website}" %>
+        <%= f.text_field :website, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"Store website", value:"#{@registration.pharmacy_website}" %>
       </div>
       <div class="field" style="margin-bottom: 0 !important;">
         <%= f.email_field :email, class:"form-control height-50 no-box-shadow", autofocus: true, placeholder:"Email", value:"#{@registration.pharmacy_email}" %>

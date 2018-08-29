@@ -22,7 +22,13 @@ class Pharmacy < ActiveRecord::Base
     
     # validations
     has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>", placeholder: '/images/user_full.png' }
+    
+    scope :live, -> { where(live: true, activated: true) }
+    
     validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
+    
+    after_create :send_welcome_alert
+    after_create :create_cart
     
     # methods
     
@@ -168,15 +174,30 @@ class Pharmacy < ActiveRecord::Base
     end
     
     def weekday_hours
-      [opening_weekday, closing_weekday].join(' - ')
+      [opening_weekday, closing_weekday].uniq.join(' - ')
     end
     
     def saturday_hours
-      [opening_saturday, closing_saturday].join(' - ')
+      [opening_saturday, closing_saturday].uniq.join(' - ')
     end
     
     def sunday_hours
-      [opening_sunday, closing_sunday].join(' - ')
+      [opening_sunday, closing_sunday].uniq.join(' - ')
+    end
+    
+    def ready_to_go_live
+      !stripe_cus.nil? && !inventory.items.nil? && !(opening_weekday.nil? || closing_weekday.nil?)
+    end
+    
+    protected
+    
+    def send_welcome_alert
+      Notification.create(pharmacy_id: self.id, content: "We're here to help you increase your OTC sales and retain more customers. To get started, we've set up a few short guides for you, available in: Account > Help. \n\nLet us know if you have any questions!", read: false, title: "Welcome to RxCarriers!")
+      PharmacyMailer.welcome_email(self).deliver_now
+    end
+    
+    def create_cart
+      Inventory.create(pharmacy_id: self.id)
     end
     
 end

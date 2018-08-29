@@ -4,7 +4,16 @@ class PharmaciesController < ApplicationController
                 :privacy, :press, :search, :search_pharmacy, :show, :create_review,
                 :landing, :register_your_pharmacy, :submit_registration_request, :get_current_position, :search_pharmacy_item]
   before_action :check_parameters, only: [:show]
-  before_action :check_push_subscription, only: [:dashboard]
+  
+  def go_live
+    if current_pharmacy.ready_to_go_live
+      current_pharmacy.update(live: true)
+      render :layout => false
+    else
+      render 'not_ready', :layout => false
+      return
+    end
+  end
   
   def edit
     @pharmacy = current_pharmacy
@@ -29,14 +38,6 @@ class PharmaciesController < ApplicationController
   
   def getting_started
     @ticket = HelpTicket.new
-    @inventory = Inventory.find_by(pharmacy_id: current_pharmacy.id)
-    if @inventory.nil?
-      @inventory = Inventory.create(pharmacy_id: current_pharmacy.id)
-    end
-    @notifications = Notification.where(pharmacy_id: current_pharmacy.id)
-    if @notifications.empty?
-      Notification.create(pharmacy_id: current_pharmacy.id, content: "We're here to help you increase your OTC sales and retain more customers. To get started, we've set up a few short guides for you, available in: Account > Help. \n\nLet us know if you have any questions!", read: false, title: "Welcome to RxCarriers!")
-    end
   end
   
   def notifications
@@ -244,7 +245,7 @@ class PharmaciesController < ApplicationController
   
   def search_pharmacy
     @param = params[:q]
-    @pharmacies = Pharmacy.sort_search(@param)
+    @pharmacies = Pharmacy.live.sort_search(@param)
     if @pharmacies == 'Invalid location'
       @invalid = @pharmacies
     end
@@ -253,7 +254,7 @@ class PharmaciesController < ApplicationController
   
   def search
     @param = params[:q]
-    @pharmacies = Pharmacy.sort_search(@param)
+    @pharmacies = Pharmacy.live.sort_search(@param)
     if @pharmacies == 'Invalid location'
       @invalid = @pharmacies
     end
@@ -325,7 +326,7 @@ class PharmaciesController < ApplicationController
   
   def mark_as_picked_up
     @order = Order.find_by(id: params[:id])
-    if @order.nil? || @order.processed == true
+    if @order.nil? || @order.delivered == true
       render :layout => false, notice: 'There was a problem performing this action'
       return
     end
@@ -395,10 +396,6 @@ class PharmaciesController < ApplicationController
   end
   
   def inventory
-    @inventory = Inventory.find_by(pharmacy_id: current_pharmacy.id)
-    if @inventory.nil?
-      @inventory = Inventory.create(pharmacy_id: current_pharmacy.id)
-    end
     @items = current_pharmacy.inventory.items.sort_by(&:name)
     @item = Item.new
   end

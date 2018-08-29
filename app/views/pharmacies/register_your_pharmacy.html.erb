@@ -9,7 +9,7 @@
     <div class="col-md-4 offset-md-4">
         <div class="card box-shadow">
             <div class="card-body">
-                <h5 class="text-center">Register your pharmacy</h5>
+                <h5 class="text-center">Register your store</h5>
                 <hr style="text-align: center; width: 50%;">
                 <span id="form">
                     <%= form_for(@registration, :html => {:id => "registrationRequestForm", :multipart => true, :remote => true}) do |f| %>
@@ -24,12 +24,12 @@
                                 </ul>
                             </div>
                         <% end %>
-                        <%= f.text_field :pharmacy_name, class:"form-control height-50 no-box-shadow", id:"pharmacyName", placeholder:"Pharmacy name", onkeyup:"changeColor(this)" %>
-                        <%= f.email_field :pharmacy_email, class:"form-control height-50 no-box-shadow", id:"pharmacyEmail", placeholder:"Pharmacy email", onkeyup:"changeColor(this)" %>
-                        <%= f.text_field :pharmacy_address, class:"form-control height-50 no-box-shadow", id:"pharmacyAddress", placeholder:"Pharmacy address", onkeyup:"changeColor(this)" %>
-                        <%= f.text_field :pharmacy_phone, class:"form-control height-50 no-box-shadow", id:"pharmacyPhone", placeholder:"Pharmacy phone number", onkeyup:"changeColor(this)" %>
-                        <%= f.text_field :pharmacy_manager, class:"form-control height-50 no-box-shadow", id:"pharmacyManager", placeholder:"Pharmacy manager/supervisor", onkeyup:"changeColor(this)" %>
-                        <%= f.text_field :pharmacy_website, class:"form-control height-50 no-box-shadow", id:"pharmacyWebsite", placeholder:"Pharmacy website", onkeyup:"changeColor(this)" %>
+                        <%= f.text_field :pharmacy_name, class:"form-control height-50 no-box-shadow", id:"pharmacyName", placeholder:"Store name", onkeyup:"changeColor(this)" %>
+                        <%= f.email_field :pharmacy_email, class:"form-control height-50 no-box-shadow", id:"pharmacyEmail", placeholder:"Store email", onkeyup:"changeColor(this)" %>
+                        <%= f.text_field :pharmacy_address, class:"form-control height-50 no-box-shadow", id:"pharmacyAddress", placeholder:"Store address", onkeyup:"changeColor(this)" %>
+                        <%= f.text_field :pharmacy_phone, class:"form-control height-50 no-box-shadow", id:"pharmacyPhone", placeholder:"Store phone number", onkeyup:"changeColor(this)" %>
+                        <%= f.text_field :pharmacy_manager, class:"form-control height-50 no-box-shadow", id:"pharmacyManager", placeholder:"Store manager/supervisor", onkeyup:"changeColor(this)" %>
+                        <%= f.text_field :pharmacy_website, class:"form-control height-50 no-box-shadow", id:"pharmacyWebsite", placeholder:"Store website", onkeyup:"changeColor(this)" %>
                         <%= f.submit "Send registration request", class:"btn btn-primary btn-block white box-shadow add-margin-top" %>
                     <% end %>
                 </span>

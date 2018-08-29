@@ -56,6 +56,7 @@
     <!-- Size should be 32 x 32 pixels -->
     <%= favicon_link_tag '/javascripts/pharmacy.png', :rel => 'shortcut icon' %>
     <script>
+      var audio = new Audio('/sounds/ping.mp3');
       window.onload = function() {
         var startPos;
         var geoSuccess = function(position) {
@@ -121,7 +122,7 @@
               $('#liveRequestsUpdate').prepend(data);
               $('.new-orders').html('<span class="badge badge-success badge-circle badge-circle-new-order"> </span>');
             });
-            playSound('ping');
+            audio.play();
           }
         });
         
@@ -162,6 +163,7 @@
       <%= render 'carts/cart' %>
       <%= render 'carts/track' %>
       <%= render 'layouts/main_nav' %>
+      <%= render 'layouts/referral_modal' %>
       <div style="padding-top: 45px !important; height: 100%;">
         <%= yield %>
       </div>

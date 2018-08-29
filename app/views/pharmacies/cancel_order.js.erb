@@ -9,6 +9,7 @@ $('#cancelButton<%= @order.id %>').html(`
 `);
 $('#pendingDelivery<%= @order.id %>').fadeOut().remove();
 $('#pendingPickUp<%= @order.id %>').fadeOut().remove();
+$('.no-cancelled-orders').hide();
 $('.cancelled-orders').prepend(`
     <div class="modal" id="deliveredOrderDetails<%= @order.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">

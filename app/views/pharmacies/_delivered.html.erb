@@ -1,5 +1,5 @@
 <% if orders.empty? %>
-    <div class="col-md-12 no-horizontal-padding add-padding-top add-padding-bottom">
+    <div class="col-md-12 no-horizontal-padding add-padding-top add-padding-bottom no-delivered-orders">
         <p class="font-16 text-center">No delivered orders</p>
     </div>
 <% else %>
@@ -17,14 +17,14 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12" style="padding-bottom: 20px;">
+                        <div class="col-md-12" style="padding-bottom: 10px;">
                             <p class="font-14 theme-green">Received: <%= ord.ordered_at.strftime('%m/%d/%y at %l:%M%p') %></p>
-                            <p class="font-16 bold">Items ordered</p>
+                            <p class="font-16 bold no-margin-bottom">Items ordered</p>
                         </div>
                     </div>
                     <% ord.item_list_array.each_with_index do |i, idx| %>
                         <div class="row">
-                            <div class="col-md-12 add-margin-bottom no-horizontal-padding">
+                            <div class="col-md-12 no-horizontal-padding">
                                 <div class="float-left theme-green" style="width: 10%;">
                                     <p class="font-16 theme-blue"><%= ord.item_list_count_array[idx] %></p>
                                 </div>
@@ -35,7 +35,10 @@
                         </div>
                     <% end %>
                     <div class="row">
-                        <div class="col-md-12" style="padding-top: 20px; padding-bottom: 20px;">
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
+                        <div class="col-md-12">
                             <p class="font-16 bold">Delivery details</p>
                         </div>
                     </div>
@@ -47,11 +50,40 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12" style="padding-top: 20px; ">
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="font-16 bold">Total</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="font-16 bold">Tax</p>
+                        </div>
+                        <div class="col-md-2">
                             <p class="font-16 bold">Tip</p>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-2">
+                            <p class="font-16 bold">Fee</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="font-16 bold">Net</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p class="font-16 theme-green">$<%= ord.cart.total_cost %></p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="font-16 theme-green">$<%= ord.cart.calculate_tax %></p>
+                        </div>
+                        <div class="col-md-2">
                             <p class="font-16 theme-green">$<%= ord.cart.tip_amount %></p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="font-16 theme-green">0.0</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="font-16 theme-green">$<%= ord.cart.final_amount.to_f.round(2) %></p>
                         </div>
                     </div>
                 </div>

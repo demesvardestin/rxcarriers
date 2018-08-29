@@ -304,6 +304,14 @@
         if (option) {
             document.getElementById('deliveryOption').value = option;
             console.log(option);
+            
+            if (option.toLowerCase() == 'pickup') {
+                $('#fullAddress').hide();
+                $('#aptNum').hide();
+            } else {
+                $('#fullAddress').show();
+                $('#aptNum').show();
+            }
         }
     }
 </script>

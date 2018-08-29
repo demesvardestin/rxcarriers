@@ -36,14 +36,14 @@
 <div class="container">
     <div class="col-md-12 no-horizontal-padding" style="padding-top: 0; padding-bottom: 60px;">
         <div id="searchResults">
-            <div class="add-padding-bottom"><p class="font-16 bold"><%= pluralize(@pharmacies.size, 'pharmacy') + ' found' unless @pharmacies.empty? %></p></div>
+            <div class="add-padding-bottom"><p class="font-16 bold"><%= pluralize(@pharmacies.size, 'store') + ' found' unless @pharmacies.empty? %></p></div>
             <div style="display: none; padding: 70px;" id="bulletSpinner"><%= render 'common/bullet_spinner' %></div>
             <div class="row search-results">
                 <%= render partial: 'pharmacies', locals: {pharmacies: @pharmacies, invalid: @invalid} %>
             </div>
             <div class="row">
                 <div class="col-md-6 offset-md-3 text-center">
-                    <% if @pharmacies.empty? %>
+                    <% if params[:q].length > 17  &&  @pharmacies.empty? %>
                         <div class="card">
                             <div class="card-body">
                                 <i class="fa fa-map-marker theme-blue" style="font-size: 100px; margin-top: 20px; margin-bottom: 30px;"></i>
@@ -52,6 +52,8 @@
                                 </p>
                             </div>
                         </div>
+                    <% else %>
+                        <div style="padding-bottom: 60px;"><p class="font-16 bold"><%= pluralize(@pharmacies.size, 'store') + ' found for that query'%></p></div>
                     <% end %>
                 </div>
             </div>

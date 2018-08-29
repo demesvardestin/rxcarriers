@@ -2,11 +2,9 @@ class PharmacyMailer < ApplicationMailer
     include SendGrid
     default from: 'hello@rxcarriers.com'
     
-    def welcome_email(pharmacy, plan)
+    def welcome_email(pharmacy)
         @pharmacy = pharmacy
-        @plan = plan
-        @url  = 'https://rxcarriers.zendesk.com/hc/en-us'
-        mail(to: @pharmacy.email, subject: 'Your RxCarriers Subscription')
+        mail(to: @pharmacy.email, subject: 'Welcome to RxCarriers!')
     end
     
     def order_in_process(order)
@@ -14,42 +12,19 @@ class PharmacyMailer < ApplicationMailer
         mail(to: @order.pharmacy.email, subject: "Your order from #{@order.pharmacy.name}")
     end
     
-    def subscription_deleted(pharmacy, plan)
-        @pharmacy = pharmacy
-        @plan = plan
-        @url  = 'https://rxcarriers.zendesk.com/hc/en-us'
-        mail(to: @pharmacy.email, subject: 'Your RxCarriers Subscription')
+    def registration_approved(registration)
+        @registration = registration
+        mail(to: @registration.pharmacy_email, subject: "Your registration request has been approved!")
+    end
+    
+    def registration_denied(registration)
+        @registration = registration
+        mail(to: @registration.pharmacy_email, subject: "Unfortunately, we cannot approve your registration request")
     end
     
     def new_user_email(pharmacy)
         @pharmacy = pharmacy
         # @url  = 'http://example.com/login'
         mail(to: @pharmacy.email, subject: 'Welcome to RxCarriers!')
-    end
-    
-    def successful_billing_notice(pharmacy, plan, amount)
-        @pharmacy = pharmacy
-        @plan = plan
-        @amount = amount
-        @url  = 'https://rxcarriers.zendesk.com/hc/en-us'
-        @url_ = 'https://www.rxcarriers.com/settings'
-        mail(to: @pharmacy.email, subject: 'Billing Notice')
-    end
-    
-    def failed_billing_notice(pharmacy, plan, amount)
-        @pharmacy = pharmacy
-        @plan = plan
-        @amount = amount
-        @url  = 'https://rxcarriers.zendesk.com/hc/en-us'
-        @url_ = 'https://www.rxcarriers.com/settings'
-        mail(to: @pharmacy.email, subject: 'Failed Billing Notice')
-    end
-    
-    def subscription_cancelled(pharmacy, plan, amount)
-        @pharmacy = pharmacy
-        @plan = plan
-        @url  = 'https://rxcarriers.zendesk.com/hc/en-us'
-        @url_ = 'https://www.rxcarriers.com/choose_subscription'
-        mail(to: @pharmacy.email, subject: 'Failed Billing Notice')
     end
 end

@@ -1,18 +1,25 @@
 <section style="border: 1px solid #b4b4b4; font-family: 'Roboto', sans-serif;">
-    <div id="emailHeader" style="padding: 2px; background-color: #4095e3; margin-bottom: 20px;">
+    <div id="emailHeader" style="padding: 2px; background-image: url('/images/gradient_background.jpg'); background-size: cover; margin-bottom: 20px;">
         <h1 style="color: #fff; text-align: center; font-family: 'Roboto', sans-serif;">
             RxCarriers
         </h1>
     </div>
     <div class="container" style="padding-left: 15px; padding-right: 15px;">
-        <div class="card" style="padding: 20px; background-color: #f0f0f0; text-align: center;">
-            <h3 align="center" style="color: #5a5a5a; margin-bottom: 45px;">Estimated delivery</h3>
+        <div class="card" style="padding: 20px; background-color: #f0f0f0; text-align: center; border-radius: 3px;">
+            <h3 align="center" style="color: #5a5a5a; margin-bottom: 45px;">Estimated
+                <% if @order.delivery_option == 'delivery' %>
+                    delivery:
+                <% else %>
+                    pickup:
+                <% end %>
+                <span style="margin-left: 5px;"><%= @order.estimated_completion %></span>
+            </h3>
             <a style="border: 1px solid #007bff; padding: 10px 20px; border-radius: 3px; background-color: #007bff; color: #fff; text-decoration: none;" href="https://rxcarriers.com" target="_blank">
                 Track Your Order
             </a>
             <h5 align="center" style="color: #5a5a5a; margin-top: 30px;">Order # <%= @order.confirmation %></h5>
         </div>
-        <div class="card" style="background-color: #f0f0f0; margin-top: 30px;">
+        <div class="card" style="background-color: #f0f0f0; margin-top: 30px; border-radius: 3px;">
             <div class="card-header" style="padding: 5px 0 0 20px; border-bottom: 1px solid #b4b4b4;">
                 <h3 style="color: #5a5a5a;">Order Details</h3>
             </div>
@@ -21,7 +28,7 @@
                 <h5 style="color: #5a5a5a;"><%= @order.pharmacy.full_address %></h5>
             </div>
         </div>
-        <div class="card" style="margin-top: 20px;">
+        <div class="card" style="margin-top: 20px; border-radius: 3px;">
             <div class="card-body" style="padding: 5px 20px 10px 20px;">
                 <% @order.cart.item_list_array.each_with_index do |i, idx| %>
                     <div id="orderItem<%= i %>" style="border-bottom: 1px dotted #b4b4b4;">
@@ -36,7 +43,7 @@
                 <% end %>
             </div>
         </div>
-        <div class="card" style="background-color: #f0f0f0; margin-top: 20px;">
+        <div class="card" style="background-color: #f0f0f0; margin-top: 20px; border-radius: 3px;">
             <div class="card-body" style="padding: 5px 20px 10px 20px;">
                 <h5 style="margin-top: 10px; color: #363636;">
                     <span style="float: left;">
@@ -66,7 +73,7 @@
                 </h5>
             </div>
         </div>
-        <div class="card" style="background-color: #f0f0f0; margin-top: 20px;">
+        <div class="card" style="background-color: #f0f0f0; margin-top: 20px; border-radius: 3px;">
             <div class="card-body" style="padding: 5px 20px 20px 20px;">
                 <h5 style="margin-top: 10px; color: #363636;">
                     <span style="float: left;">
@@ -88,7 +95,13 @@
                         <%= @order.cart.order.ordered_at.strftime('%m/%d/%y %l:%M %p') %>
                     </span><br />
                     <span style="float: left;">
-                        <strong>Deliver to</strong>:
+                        <strong>
+                            <% if @order.delivery_option == 'delivery' %>
+                                Deliver to:
+                            <% else %>
+                                Contact details:
+                            <% end %>
+                        </strong>
                     </span>
                     <span style="float: left; color: #5a5a5a;">
                         <%= @order.destination %>
@@ -96,7 +109,7 @@
                 </h5>
             </div>
         </div>
-        <div class="card" style="background-color: #f0f0f0; margin-top: 20px; margin-bottom: 20px;">
+        <div class="card" style="background-color: #f0f0f0; margin-top: 20px; margin-bottom: 20px; border-radius: 3px;">
             <div class="card-body" style="padding: 5px 20px 10px 20px;">
                 <h4 style="margin-top: 10px; color: #363636; text-align: center;">
                     <strong>Have questions about your order?</strong>
@@ -120,7 +133,7 @@
             </div>
         </div>
     </div>
-    <div id="emailFooter" style="padding: 2px; background-color: #4095e3;">
+    <div id="emailFooter" style="padding: 2px; background-image: url('/images/gradient_background.jpg'); background-size: cover;">
         <h6 style="color: #fff; text-align: center; font-family: 'Roboto', sans-serif; -webkit-margin-before: 15px; -webkit-margin-after: 5px;">
             &copy; RxCarriers. All rights reserved
         </h6>

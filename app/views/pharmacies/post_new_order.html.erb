@@ -12,14 +12,14 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-12" style="">
+                    <div class="col-md-12" style="padding-top: 10px;">
                         <p class="font-14 theme-green">Received: <%= @order.ordered_at.strftime('%m/%d/%y at %l:%M%p') %></p>
-                        <p class="font-16 bold">Items ordered</p>
+                        <p class="font-16 bold no-margin-bottom">Items ordered</p>
                     </div>
                 </div>
                 <% @order.item_list_array.each_with_index do |i, idx| %>
                     <div class="row">
-                        <div class="col-md-12 add-margin-bottom">
+                        <div class="col-md-12">
                             <div class="float-left theme-green" style="width: 10%;">
                                 <p class="font-16 theme-blue"><%= @order.item_list_count_array[idx] %></p>
                             </div>
@@ -30,23 +30,63 @@
                     </div>
                 <% end %>
                 <div class="row">
-                    <div class="col-md-12" style="padding-top: 20px; ">
-                        <p class="font-16 bold">Delivery details</p>
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <p class="font-16 no-margin-bottom bold">
+                            <% if @order.delivery_option == 'delivery' %>
+                                Delivery details
+                            <% else %>
+                                Customer contact
+                            <% end %>
+                        </p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="font-16 add-margin-bottom"><%= @order.street_address %><%= ' ' + @order.apartment_number if @order.apartment_number %></p>
-                        <p class="font-16 add-margin-bottom"><%= @order.town_state_zipcode %></p>
+                        <p class="font-16 add-margin-bottom"><%= @order.delivery_email %></p>
+                        <% if @order.delivery_option == 'delivery' %>
+                            <p class="font-16 add-margin-bottom"><%= @order.street_address %><%= ' ' + @order.apartment_number if @order.apartment_number %></p>
+                        <% end %>
                         <p class="font-16 add-margin-bottom"><%= @order.phone_number %></p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12" style="padding-top: 20px; ">
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="font-16 bold">Total</p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="font-16 bold">Tax</p>
+                    </div>
+                    <div class="col-md-2">
                         <p class="font-16 bold">Tip</p>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-2">
+                        <p class="font-16 bold">Fee</p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="font-16 bold">Net</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <p class="font-16 theme-green">$<%= @order.cart.total_cost %></p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="font-16 theme-green">$<%= @order.cart.calculate_tax %></p>
+                    </div>
+                    <div class="col-md-3">
                         <p class="font-16 theme-green">$<%= @order.cart.tip_amount %></p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="font-16 theme-green">0.0</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="font-16 theme-green">$<%= @order.cart.final_amount %></p>
                     </div>
                 </div>
             </div>

@@ -33,7 +33,7 @@
                     <div class="card-body text-center-ipad" style="padding-bottom: 40px;">
                         <div class="row">
                             <div class="col-md-8 offset-md-2" style="margin-bottom: 15px;">
-                                <h1 class="text-center bold white" id="searchBoxCardBannerText">Your meds, delivered to you, for free</h1>
+                                <h1 class="text-center bold white" id="searchBoxCardBannerText">OTC meds, delivered to you, for free</h1>
                             </div>
                         </div>
                         <div class="row text-center-ipad">
@@ -41,7 +41,7 @@
                                 <form action="/search" method="get" id="pharmacySearchForm">
                                     <div class="input-group mb-3">
                                         <input class="form-control font-16 no-box-shadow main-search border-white" style="margin-top: 0 !important;"
-                                            id="main-search" name="q" placeholder="Search a location or pharmacy name">
+                                            id="main-search" name="q" placeholder="Search a location or store name">
                                         <div class="input-group-prepend">
                                             <button class="input-group-text append-group cursor-pointer" id="basic-addon1">
                                                 <i class="fa fa-search fa-search-mobile-home theme-blue"></i>
@@ -129,7 +129,7 @@
                 <hr style="height: 3px; background-color: #4095e3; border-color: #4095e3; width: 50%;">
             </div>
             <div class="col-md-4 offset-md-4 text-center" style="padding-bottom: 20px;">
-                <button class="btn btn-primary box-shadow" onclick="referFriend()">
+                <button class="btn btn-primary box-shadow" data-toggle="modal" data-target="#referral">
                     <span class="font-20">Claim your free $5</span>
                 </button>
                 <p class="font-14" style="margin-bottom: 0; margin-top: 20px;">Terms and conditions apply
@@ -143,7 +143,7 @@
         <div class="row">
             <div class="col-md-4 offset-md-4 text-center" style="padding-bottom: 20px;">
                 <h4 class="white">
-                    For pharmacies
+                    For businesses (selling OTCs)
                 </h4>
                 <hr style="height: 3px; background-color: #4095e3; border-color: #4095e3; width: 50%;">
             </div>

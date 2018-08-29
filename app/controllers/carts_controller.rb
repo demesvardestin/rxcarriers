@@ -22,7 +22,7 @@ class CartsController < ApplicationController
     case @order.status
     when 'pending'
       @status = 'received'
-      @text = 'Your order has been received by the pharmacy!'
+      @text = 'Your order has been received by the store!'
     when 'ready for delivery'
       @status = 'ready'
       @text = 'Your order has been prepared and is pending delivery!'
@@ -40,7 +40,7 @@ class CartsController < ApplicationController
       @text = "Your order has been cancelled. Please contact us if you haven't received a refund"
     else
       @status = 'no status'
-      @text = 'Please contact the pharmacy.'
+      @text = "Please contact the store at #{Pharmacy.find_by(id: @order.pharmacy_id).number}."
     end
     render :layout => false
   end
@@ -87,6 +87,7 @@ class CartsController < ApplicationController
       delivery_option = params[:cart][:deliveryOption]
       @cart.process_payment(params[:cart][:stripeToken], full_address, phone, apt_num, email, delivery_option)
       @order = Order.find_by(cart_id: @cart.id)
+      # @referral = Referral.create(order_id: @order.id, code: rand(10000000..99999999), purchase_confirmation: @order.confirmation, generated_on: Time.zone.now)
     rescue
       @error = 'An error occured while processing this payment. Please try again'
     end
