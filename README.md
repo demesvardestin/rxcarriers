@@ -1,9 +1,8 @@
 ## RxCarriers
 
- RxCarriers is a pharmacy-to-patients web-based communication platform built to
- help pharmacists better serve their customers through task automation.
+ RxCarriers is an online marketplace for pharmacies to sell over-the-counter items including non-prescription medications.
  
- The live app can be found at https://rxcarriers.com
+ The live app can be found at http://rxcarriers.com
  
 #### APIs & 3rd Parties
 
